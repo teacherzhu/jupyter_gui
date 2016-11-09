@@ -33,22 +33,23 @@ class Chain:
                         self.cwd)
 
     # Submit form callback.
-    def submit(self, entryWidgets, functionName, libraryName, libraryPath, button):
+    def submit(self, entryWidgets, bead, button):
         values = [entry.value for entry in entryWidgets]
         print(values)
-        print(functionName)
-        print(libraryName)
-        print(libraryPath)
+        print(bead.functionName)
+        print(bead.libraryName)
+        print(bead.libraryPath)
         print(button)
         # Verify all parameters are present.
         if None in values or '' in values:
             print('Please provide all parameters.')
-        else:
-            sys.path.insert(0, libraryPath)
-            exec('from {} import {} as function'.format(
-                libraryName, functionName))
-            print("Executing ", libraryName,
-                  ".", functionName, "...")
+            return
+
+        sys.path.insert(0, bead.libraryPath)
+        exec('from {} import {} as function'.format(
+            bead.libraryName, bead.functionName))
+        print("Executing ", bead.libraryName,
+              ".", bead.functionName, "...")
 
     def returnData(self, value, dataType):
         '''

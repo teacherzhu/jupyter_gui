@@ -27,13 +27,17 @@ class BeadView:
         bead = self.bead
         entryBoxes = []  # grouped for layout
 
+        # create header
+        headingText = bead.title
+        heading = widgets.HTML('<h1>' + headingText + '</h1>')
+        entryBoxes.append()
         # create input fields
         for arg in bead.requiredArgs:
-            w = widgets.Text()
-            entry = widgets.VBox(
-                [widgets.Label(arg['label']), w])
-            entryBoxes.append(entry)
-            self.entryWidgets.append(w)
+            fieldLabel = widgets.Label(arg['label'])
+            field = widgets.Text()
+            entryBoxes.append(fieldLabel)
+            entryBoxes.append(field)
+            self.entryWidgets.append(field)
 
         # create submit button
         submitButton = widgets.Button(description="Run")
@@ -41,13 +45,19 @@ class BeadView:
 
         # register button for submit
         submitCallback = partial(self.myChain.submit,
-                                 self.entryWidgets, bead.functionName, bead.libraryName, bead.libraryPath)
+                                 self.entryWidgets, bead)
         submitButton.on_click(submitCallback)
         for entry in self.entryWidgets:
             entry.on_submit(submitCallback)
 
-        return widgets.VBox(tuple(entryBoxes))
+        # define layout
+        layout = widgets.Layout(display='flex',
+                                align_items='center',
+                                justify_content='center')
+
+        container = widgets.VBox(children=entryBoxes, layout=layout)
+
+        return container
 
     def submit(self, button):
-        self.myChain.submit(entryWidgets, functionName,
-                            libraryName, libraryPath)
+        self.myChain.submit(entryWidgets, bead)
