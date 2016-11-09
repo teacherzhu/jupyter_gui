@@ -27,16 +27,22 @@ class BeadView:
         bead = self.bead
         entryBoxes = []  # grouped for layout
 
+        # define layouts
+        centerLayout = widgets.Layout(display='flex',
+                                      align_items='center',
+                                      justify_content='center')
+
         # create header
         headingText = bead.title
         heading = widgets.HTML('<h1>' + headingText + '</h1>')
-        entryBoxes.append()
+        entryBoxes.append(heading)
+
         # create input fields
         for arg in bead.requiredArgs:
             fieldLabel = widgets.Label(arg['label'])
             field = widgets.Text()
-            entryBoxes.append(fieldLabel)
-            entryBoxes.append(field)
+            argBox = widgets.VBox(children=[fieldLabel, field])
+            entryBoxes.append(argBox)
             self.entryWidgets.append(field)
 
         # create submit button
@@ -50,12 +56,7 @@ class BeadView:
         for entry in self.entryWidgets:
             entry.on_submit(submitCallback)
 
-        # define layout
-        layout = widgets.Layout(display='flex',
-                                align_items='center',
-                                justify_content='center')
-
-        container = widgets.VBox(children=entryBoxes, layout=layout)
+        container = widgets.VBox(children=entryBoxes, layout=centerLayout)
 
         return container
 

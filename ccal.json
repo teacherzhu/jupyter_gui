@@ -1,6 +1,7 @@
 {
   "tasks": [
     {
+      "title": "CCAL - Define Components",
       "function_name": "define_components",
       "library_name": "ccal",
       "library_path": "/Users/ckmah/Documents/ccal/",
