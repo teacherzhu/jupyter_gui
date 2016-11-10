@@ -39,10 +39,8 @@ class BeadView:
 
         # create input fields
         for arg in bead.requiredArgs:
-            fieldLabel = widgets.Label(arg['label'])
-            field = widgets.Text()
-            argBox = widgets.VBox(children=[fieldLabel, field])
-            entryBoxes.append(argBox)
+            field = widgets.Text(placeholder=arg['label'])
+            entryBoxes.append(field)
             self.entryWidgets.append(field)
 
         # create submit button

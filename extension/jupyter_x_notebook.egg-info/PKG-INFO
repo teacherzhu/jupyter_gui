@@ -1,0 +1,18 @@
+Metadata-Version: 1.1
+Name: jupyter-x-notebook
+Version: 0.5.5
+Summary: Jupyter X Notebook extension for Jupyter
+Home-page: UNKNOWN
+Author: Clarence Mah
+Author-email: ckmah@ucsd.edu
+License: BSD
+Description: UNKNOWN
+Keywords: jupyter_x,genomics,bioinformatics,ipython,jupyter
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python
+Classifier: Framework :: IPython
