@@ -1,2 +1,2 @@
-include genepattern/static/*
-include genepattern/static/resources/*
+include jupyter_x/static/*
+include jupyter_x/static/resources/*

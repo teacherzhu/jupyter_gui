@@ -15,8 +15,6 @@ __version__ = '0.5.5'
 __status__ = 'Beta'
 __license__ = 'BSD-style'
 
-from gp import GPResource
-import gp
 import sys
 
 import IPython
@@ -133,7 +131,7 @@ def load_ipython_extension(ipython):
 
 def _jupyter_server_extension_paths():
     return [{
-        "module": "genepattern"
+        "module": "jupyter_x"
     }]
 
 

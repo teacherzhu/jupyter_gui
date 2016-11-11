@@ -57,7 +57,6 @@ setup(name='jupyter-x-notebook',
           'Framework :: IPython',
       ],
       install_requires=[
-          'genepattern-python',
           'jupyter',
           'notebook>=4.2.0',
           'ipywidgets>=5.0.0',

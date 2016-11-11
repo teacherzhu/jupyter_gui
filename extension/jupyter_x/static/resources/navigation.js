@@ -11,22 +11,22 @@
  * This software is supplied without any warranty or guaranteed support whatsoever. The Broad Institute is not
  * responsible for its use, misuse, or functionality.
  */
-var GenePattern = GenePattern || {};
-GenePattern.notebook = GenePattern.notebook || {};
+var Jupyter = Jupyter || {};
+Jupyter.notebook = Jupyter.notebook || {};
 
 // Add shim to support Jupyter 3.x and 4.x
 var Jupyter = Jupyter || IPython || {};
 
 // Add file path shim for Jupyter 3/4
-var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/genepattern/resources/";
+var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/jupyter_x/resources/";
 
 /**
  * Attach the left-hand slider tab
  *
  * @returns {*|jQuery}
  */
-GenePattern.notebook.sliderTab = function() {
-    var auth_view = GenePattern.authenticated ? "inline-block" : "none";
+Jupyter.notebook.sliderTab = function() {
+    var auth_view = Jupyter.authenticated ? "inline-block" : "none";
     return $("<span></span>")
             .addClass("fa fa-th sidebar-button sidebar-button-main")
             .attr("title", "GenePattern Options")
@@ -46,7 +46,7 @@ GenePattern.notebook.sliderTab = function() {
  * @param tags - List of tags
  * @returns {*|jQuery}
  */
-GenePattern.notebook.sliderOption = function(id, name, anno, desc, tags) {
+Jupyter.notebook.sliderOption = function(id, name, anno, desc, tags) {
     var tagString = tags.join(", ");
     return $("<div></div>")
         .addClass("well well-sm slider-option")
@@ -80,7 +80,7 @@ GenePattern.notebook.sliderOption = function(id, name, anno, desc, tags) {
  *
  * @returns {*|jQuery}
  */
-GenePattern.notebook.slider = function() {
+Jupyter.notebook.slider = function() {
     return $("<div></div>")
         .attr("id", "slider")
         .hide()
@@ -188,7 +188,7 @@ GenePattern.notebook.slider = function() {
  *
  * @param data
  */
-GenePattern.notebook.authenticate = function(data) {
+Jupyter.notebook.authenticate = function(data) {
     // Show the GenePattern cell button
     $(".gp-cell-button").css("visibility", "visible");
 
@@ -207,13 +207,13 @@ GenePattern.notebook.authenticate = function(data) {
                     tags.push(e['tag'])
                 });
                 tags.sort();
-                var option = GenePattern.notebook.sliderOption(module['lsid'], module['name'], "v" + module['version'], module['description'], tags);
+                var option = Jupyter.notebook.sliderOption(module['lsid'], module['name'], "v" + module['version'], module['description'], tags);
                 option.click(function() {
                     var index = Jupyter.notebook.get_selected_index();
                     Jupyter.notebook.insert_cell_below('code', index);
                     Jupyter.notebook.select_next();
                     var cell = Jupyter.notebook.get_selected_cell();
-                    var code = GenePattern.notebook.buildModuleCode(module);
+                    var code = Jupyter.notebook.buildModuleCode(module);
                     cell.set_text(code);
                     setTimeout(function() {
                         cell.execute();
@@ -242,7 +242,7 @@ GenePattern.notebook.authenticate = function(data) {
  * @param kind
  * @returns {Array}
  */
-GenePattern.notebook.taskWidgetsForKind = function(kind) {
+Jupyter.notebook.taskWidgetsForKind = function(kind) {
     var matches = [];
 
     $(".cell").each(function(index, node) {
@@ -271,7 +271,7 @@ GenePattern.notebook.taskWidgetsForKind = function(kind) {
  *
  * @param kindMap
  */
-GenePattern.notebook.removeKindVisualizers = function(kindMap) {
+Jupyter.notebook.removeKindVisualizers = function(kindMap) {
     $.each(kindMap, function(kind, taskList) {
         var currentLength = taskList.length;
         for (var i = 0; i < currentLength; i++) {
@@ -292,7 +292,7 @@ GenePattern.notebook.removeKindVisualizers = function(kindMap) {
  *
  * @param lsid
  */
-GenePattern.notebook.stripVersion = function(lsid) {
+Jupyter.notebook.stripVersion = function(lsid) {
     var parts = lsid.split(':');
     if (parts.length === 6) {
         parts.pop();
@@ -308,11 +308,11 @@ GenePattern.notebook.stripVersion = function(lsid) {
  *
  * @param module
  */
-GenePattern.notebook.buildModuleCode = function(module) {
+Jupyter.notebook.buildModuleCode = function(module) {
     var baseName = module["name"].toLowerCase().replace(/\./g, '_');
     var taskName = baseName + "_task";
     var specName = baseName + "_job_spec";
-    var baseLsid = GenePattern.notebook.stripVersion(module["lsid"]);
+    var baseLsid = Jupyter.notebook.stripVersion(module["lsid"]);
 
     return "# !AUTOEXEC\n\n" +
             taskName + " = gp.GPTask(gpserver, '" + baseLsid + "')\n" +
@@ -326,7 +326,7 @@ GenePattern.notebook.buildModuleCode = function(module) {
  * @param jobNumber
  * @returns {string}
  */
-GenePattern.notebook.buildJobCode = function(jobNumber) {
+Jupyter.notebook.buildJobCode = function(jobNumber) {
     return "# !AUTOEXEC\n\n" +
             "job" + jobNumber + " = gp.GPJob(gpserver, " + jobNumber + ")\n" +
             "job" + jobNumber + ".job_number = " + jobNumber + "\n" +
@@ -339,7 +339,7 @@ GenePattern.notebook.buildJobCode = function(jobNumber) {
  * @param statusObj
  * @returns {string}
  */
-GenePattern.notebook.statusIndicator = function(statusObj) {
+Jupyter.notebook.statusIndicator = function(statusObj) {
     if (statusObj["hasError"]) {                // Error
         return "Error";
     }
@@ -360,11 +360,11 @@ GenePattern.notebook.statusIndicator = function(statusObj) {
  * @param value
  * @returns {string}
  */
-GenePattern.notebook.fileLocationType = function(value) {
+Jupyter.notebook.fileLocationType = function(value) {
     if (typeof value === 'object') {
         return "Upload";
     }
-    else if (value.indexOf(GenePattern.server()) !== -1 || value.indexOf("<GenePatternURL>") !== -1) {
+    else if (value.indexOf(Jupyter.server()) !== -1 || value.indexOf("<GenePatternURL>") !== -1) {
         return "Internal"
     }
     else {
@@ -378,7 +378,7 @@ GenePattern.notebook.fileLocationType = function(value) {
  * @param url
  * @returns {string}
  */
-GenePattern.notebook.nameFromUrl = function(url) {
+Jupyter.notebook.nameFromUrl = function(url) {
     var parts = url.split("/");
     return decodeURIComponent(parts[parts.length - 1]);
 };
@@ -389,7 +389,7 @@ GenePattern.notebook.nameFromUrl = function(url) {
  * @param text
  * @returns {string}
  */
-GenePattern.notebook.htmlEncode = function(text) {
+Jupyter.notebook.htmlEncode = function(text) {
     return text.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 };
 
@@ -398,12 +398,12 @@ GenePattern.notebook.htmlEncode = function(text) {
  *
  * @param jobNumber
  */
-GenePattern.notebook.removeSliderJob = function(jobNumber) {
+Jupyter.notebook.removeSliderJob = function(jobNumber) {
     // Remove from jobs list
-    for (var i = 0; i < GenePattern._jobs.length; i++) {
-        var job = GenePattern._jobs[i];
+    for (var i = 0; i < Jupyter._jobs.length; i++) {
+        var job = Jupyter._jobs[i];
         if (job.jobNumber() === jobNumber) {
-            GenePattern._jobs.splice(i, 1);
+            Jupyter._jobs.splice(i, 1);
         }
     }
 
@@ -416,17 +416,17 @@ GenePattern.notebook.removeSliderJob = function(jobNumber) {
  *
  * @param job
  */
-GenePattern.notebook.updateSliderJob = function(job) {
+Jupyter.notebook.updateSliderJob = function(job) {
     // If the job does not yet exist in the list, add it
     var jobsSlider = $("#slider-jobs");
     var existingOption = jobsSlider.find(".slider-option[name='" + job.jobNumber() + "']");
     if (existingOption.length < 1) {
         // Add to jobs list
-        GenePattern._jobs.push(job);
+        Jupyter._jobs.push(job);
 
         // Update the UI
-        var option = GenePattern.notebook.sliderOption(job.jobNumber(), job.jobNumber() + ". " + job.taskName(),
-            GenePattern.notebook.statusIndicator(job.status()), "Submitted: " + job.dateSubmitted(), []);
+        var option = Jupyter.notebook.sliderOption(job.jobNumber(), job.jobNumber() + ". " + job.taskName(),
+            Jupyter.notebook.statusIndicator(job.status()), "Submitted: " + job.dateSubmitted(), []);
         option.click(function() {
             $('#site').animate({
                 scrollTop: $(".gp-widget-job[name='" + job.jobNumber() + "']").position().top
@@ -440,15 +440,15 @@ GenePattern.notebook.updateSliderJob = function(job) {
     // Otherwise update the view
     else {
         // Update in jobs list
-        for (var i = 0; i < GenePattern._jobs.length; i++) {
-            var jobInList = GenePattern._jobs[i];
+        for (var i = 0; i < Jupyter._jobs.length; i++) {
+            var jobInList = Jupyter._jobs[i];
             if (jobInList.jobNumber() === job.jobNumber()) {
-                GenePattern._jobs.splice(i, 1, job);
+                Jupyter._jobs.splice(i, 1, job);
             }
         }
 
         // Update the UI
-        existingOption.find(".slider-option-anno").text(GenePattern.notebook.statusIndicator(job.status()));
+        existingOption.find(".slider-option-anno").text(Jupyter.notebook.statusIndicator(job.status()));
     }
 };
 
@@ -457,7 +457,7 @@ GenePattern.notebook.updateSliderJob = function(job) {
  *
  * @param name
  */
-GenePattern.notebook.removeSliderData = function(name) {
+Jupyter.notebook.removeSliderData = function(name) {
     // Update the UI
     $("#slider-data").find(".slider-option[name='" + name + "']").remove();
 };
@@ -468,16 +468,16 @@ GenePattern.notebook.removeSliderData = function(name) {
  * @param url
  * @param value
  */
-GenePattern.notebook.updateSliderData = function(url, value) {
+Jupyter.notebook.updateSliderData = function(url, value) {
     // If the data does not yet exist in the list, add it
     var dataSlider = $("#slider-data");
     var existingOption = dataSlider.find(".slider-option[name='" + url + "']");
     if (existingOption.length < 1) {
         // Update the UI
-        var type = GenePattern.notebook.fileLocationType(value);
-        var name = GenePattern.notebook.nameFromUrl(url);
-        var urlWithPrefix = type === "Upload" ? "Ready to Upload: " + GenePattern.notebook.htmlEncode(url) : GenePattern.notebook.htmlEncode(url);
-        var option = GenePattern.notebook.sliderOption(url, name, type, urlWithPrefix, []);
+        var type = Jupyter.notebook.fileLocationType(value);
+        var name = Jupyter.notebook.nameFromUrl(url);
+        var urlWithPrefix = type === "Upload" ? "Ready to Upload: " + Jupyter.notebook.htmlEncode(url) : Jupyter.notebook.htmlEncode(url);
+        var option = Jupyter.notebook.sliderOption(url, name, type, urlWithPrefix, []);
         option.click(function() {
             // Close the slider
             $(".sidebar-button-slider").trigger("click");
@@ -493,23 +493,22 @@ GenePattern.notebook.updateSliderData = function(url, value) {
     }
 };
 
-GenePattern.notebook.toGenePatternCell = function(formerType, index) {
+Jupyter.notebook.toGenePatternCell = function(formerType, index) {
     var dialog = require('base/js/dialog');
     var cell;
-    if (index != null) {
-        cell = Jupyter.notebook.get_selected_cell();
+    if (index > -1) {
+        cell = Jupyter.notebook.get_cell(index);
     }
     else {
         index = Jupyter.notebook.get_selected_index();
         cell = Jupyter.notebook.get_selected_cell();
     }
-    var contents = cell.get_text().trim();
 
     // TODO Define cell change internal function
     var cellChange = function(cell) {
 
         // // Get the auth widget code
-        // var code = GenePattern.notebook.init.buildCode("https://genepattern.broadinstitute.org/gp", "", "");
+        // var code = Jupyter.notebook.init.buildCode("https://Jupyter.broadinstitute.org/gp", "", "");
         var code = "# !AUTOEXEC\n\
 from jupyter_x.chain import Chain\n\
 import json, os\n\n\
@@ -563,12 +562,12 @@ beadview.createFormView()";
             Jupyter.notebook.to_code(index);
         }
         setTimeout(function() {
-            var cell = Jupyter.notebook.get_selected_cell();
             cellChange(cell);
         }, 10);
     };
 
     // Prompt for change if the cell has contents
+    var contents = cell.get_text().trim();
     if (contents !== "") {
         dialog.modal({
             notebook: Jupyter.notebook,
@@ -602,7 +601,7 @@ beadview.createFormView()";
  *
  * @param cell
  */
-GenePattern.notebook.widgetSelectDialog = function(cell) {
+Jupyter.notebook.widgetSelectDialog = function(cell) {
     var modules = $("#slider-modules").clone();
     modules.attr("id", "dialog-modules");
     modules.css("height", $(window).height() - 200);
@@ -642,7 +641,7 @@ GenePattern.notebook.widgetSelectDialog = function(cell) {
         $(element).click(function() {
             var lsid = $(element).attr("data-id");
             var name = $(element).attr("data-name");
-            var code = GenePattern.notebook.buildModuleCode({"lsid":lsid, "name": name});
+            var code = Jupyter.notebook.buildModuleCode({"lsid":lsid, "name": name});
             cell.set_text(code);
             setTimeout(function() {
                 cell.execute();
@@ -684,7 +683,7 @@ GenePattern.notebook.widgetSelectDialog = function(cell) {
  * @param fullMenu - Whether this is a full menu or a log file menu
  * @returns {*|jQuery|HTMLElement}
  */
-GenePattern.notebook.buildMenu = function(widget, element, name, href, kind, indexString, fullMenu) {
+Jupyter.notebook.buildMenu = function(widget, element, name, href, kind, indexString, fullMenu) {
 
     // Attach simple menu
     if (!fullMenu) {
@@ -790,7 +789,7 @@ GenePattern.notebook.buildMenu = function(widget, element, name, href, kind, ind
         var modules = null;
         var fixedKind = Array.isArray(kind) ? kind[0] : kind;
         var sendToNewTask = popover.find('.gp-widget-job-new-task');
-        var kindsMap = GenePattern.kinds();
+        var kindsMap = Jupyter.kinds();
         if (kindsMap !==  null && kindsMap !== undefined) {
             modules = kindsMap[fixedKind];
             if (modules === null || modules === undefined) { modules = []; } // Protect against undefined & null
@@ -830,7 +829,7 @@ GenePattern.notebook.buildMenu = function(widget, element, name, href, kind, ind
                 if (lsid === undefined || lsid === null) return;
                 var name = option.text();
                 var cell = Jupyter.notebook.insert_cell_at_bottom();
-                var code = GenePattern.notebook.buildModuleCode({"lsid":lsid, "name": name});
+                var code = Jupyter.notebook.buildModuleCode({"lsid":lsid, "name": name});
                 cell.set_text(code);
 
                 // Execute the cell
@@ -870,7 +869,7 @@ GenePattern.notebook.buildMenu = function(widget, element, name, href, kind, ind
             });
 
             // Dynamically add options to "Send to Downstream Task" dropdown
-            var matchingTasks = GenePattern.notebook.taskWidgetsForKind(fixedKind);
+            var matchingTasks = Jupyter.notebook.taskWidgetsForKind(fixedKind);
             sendToExistingTask
                 .empty()
                 .append(
@@ -880,7 +879,7 @@ GenePattern.notebook.buildMenu = function(widget, element, name, href, kind, ind
             $.each(matchingTasks, function(i, pairing) {
                 var cellIndex = pairing[0];
                 var taskWidget = pairing[1];
-                var task = GenePattern.task(taskWidget.options.lsid);
+                var task = Jupyter.task(taskWidget.options.lsid);
                 sendToExistingTask
                     .append(
                         $("<option></option>")
@@ -924,17 +923,17 @@ GenePattern.notebook.buildMenu = function(widget, element, name, href, kind, ind
  * Initialization functions
  */
 
-GenePattern.notebook.init = GenePattern.notebook.init || {};
+Jupyter.notebook.init = Jupyter.notebook.init || {};
 
 /**
  * Wait for kernel and then init notebook widgets
  */
-GenePattern.notebook.init.wait_for_kernel = function (id) {
+Jupyter.notebook.init.wait_for_kernel = function (id) {
     console.log("wait_for_kernel");
-    if (!GenePattern.notebook.init.done_init  && Jupyter.notebook.kernel) {
-        GenePattern.notebook.init.notebook_init_wrapper();
+    if (!Jupyter.notebook.init.done_init  && Jupyter.notebook.kernel) {
+        Jupyter.notebook.init.notebook_init_wrapper();
     }
-    else if (GenePattern.notebook.init.done_init) {
+    else if (Jupyter.notebook.init.done_init) {
         clearInterval(id);
     }
 };
@@ -942,19 +941,20 @@ GenePattern.notebook.init.wait_for_kernel = function (id) {
 /**
  * Initialize GenePattern Notebook from the notebook page
  */
-GenePattern.notebook.init.notebook_init_wrapper = function () {
+Jupyter.notebook.init.notebook_init_wrapper = function () {
     console.log("notebook_init_wrapper");
-    if (!GenePattern.notebook.init.done_init  && Jupyter.notebook.kernel) {
+    if (!Jupyter.notebook.init.done_init  && Jupyter.notebook.kernel) {
         try {
             // Call the core init function
-            GenePattern.notebook.init.launch_init();
+            Jupyter.notebook.init.launch_init();
 
             // Initialize the GenePattern cell type keyboard shortcut
             Jupyter.keyboard_manager.command_shortcuts.add_shortcut('g', {
-                    help: 'to GenePattern',
+                    help: 'to JupyterX',
                     help_index: 'cc',
+                    console.log("")
                     handler: function () {
-                        GenePattern.notebook.toGenePatternCell();
+                        Jupyter.notebook.toGenePatternCell();
                         return false;
                     }
                 }
@@ -985,11 +985,11 @@ GenePattern.notebook.init.notebook_init_wrapper = function () {
             // });
 
             // Mark init as done
-            GenePattern.notebook.init.done_init = true;
+            Jupyter.notebook.init.done_init = true;
         }
         catch(e) {
             console.log(e);
-            GenePattern.notebook.init.wait_for_kernel();
+            Jupyter.notebook.init.wait_for_kernel();
         }
     }
 };
@@ -1001,12 +1001,12 @@ GenePattern.notebook.init.notebook_init_wrapper = function () {
  * @param username
  * @param password
  */
-GenePattern.notebook.init.buildCode = function(server, username, password) {
+Jupyter.notebook.init.buildCode = function(server, username, password) {
     return '# !AUTOEXEC\n\
 \n\
 %reload_ext genepattern\n\
 \n\
-# Don\'t have the GenePattern Notebook? It can be installed from PIP: \n\
+# Don\'t have the GenePattern Notebook? It can be in`stalled from PIP: \n\
 # pip install genepattern-notebook \n\
 import gp\n\
 \n\
@@ -1034,12 +1034,12 @@ GPAuthWidget(gpserver)';
 /**
  * Automatically run all GenePattern widgets on INITIALIZATION
  */
-GenePattern.notebook.init.auto_run_widgets = function() {
+Jupyter.notebook.init.auto_run_widgets = function() {
     console.log("auto_run_widgets");
     require(["nbextensions/jupyter-js-widgets/extension"], function() {
         $.each($(".cell"), function(index, val) {
             if ($(val).html().indexOf("# !AUTOEXEC") > -1) {
-                GenePattern.notebook.toGenePatternCell(cell_type, index);
+                Jupyter.notebook.toGenePatternCell(null, index);
             }
         });
     });
@@ -1048,11 +1048,11 @@ GenePattern.notebook.init.auto_run_widgets = function() {
 /**
  * Initialize GenePattern Notebook core functionality
  */
-GenePattern.notebook.init.launch_init = function() {
+Jupyter.notebook.init.launch_init = function() {
     // Add the sidebar
     var body = $("body");
-    // body.append(GenePattern.notebook.sliderTab());
-    // body.append(GenePattern.notebook.slider());
+    // body.append(Jupyter.notebook.sliderTab());
+    // body.append(Jupyter.notebook.slider());
 
     // // Hide or show the slider tab if a GenePattern cell is highlighted
     // $([Jupyter.events]).on('select.Cell', function() {
@@ -1060,7 +1060,7 @@ GenePattern.notebook.init.launch_init = function() {
     //     var isGPCell = cell.element.find(".gp-widget").length > 0;
 
     //     // If authenticated and the selected cell is a GenePattern cell, show
-    //     if (GenePattern.authenticated && isGPCell) {
+    //     if (Jupyter.authenticated && isGPCell) {
     //         $(".sidebar-button-main").show();
     //     }
 
@@ -1077,7 +1077,30 @@ GenePattern.notebook.init.launch_init = function() {
 
     // Auto-run widgets
     $(function () {
-        GenePattern.notebook.init.auto_run_widgets();
+        Jupyter.notebook.init.auto_run_widgets();
+    });
+
+    // TODO create new undo delete cell action
+    // register to z key
+    // register to menu "undo delete cell"
+    Jupyter.notebook.undelete_cell_or_widget = function() {
+        var backup = Jupyter.notebook.undelete_backup;
+        var startIndex = Jupyter.notebook.undelete_index;
+        var endIndex = startIndex + backup.length;
+        var indices = _.range(startIndex, endIndex);
+
+        // reinsert deleted cells appropriately
+        Jupyter.notebook.undelete_cell();
+        for each (var index in indices) {
+            if ($(val).html().indexOf("# !AUTOEXEC") > -1) {
+                Jupyter.notebook.toGenePatternCell(null, index);
+                console.log('yay');
+        }
+    }
+
+    var deleteCell = $('#undelete_cell');
+    deleteCell.onClick( function() {
+        Jupyter.notebook.undelete_cell_or_widget();
     });
 
     // Add GenePattern "cell type" if not already in menu
@@ -1092,7 +1115,7 @@ GenePattern.notebook.init.launch_init = function() {
             var type = $(event.target).find(":selected").text();
             if (type === "JupyterX") {
                 var former_type = Jupyter.notebook.get_selected_cell().cell_type;
-                GenePattern.notebook.toGenePatternCell(former_type);
+                Jupyter.notebook.toGenePatternCell(former_type);
             }
         });
 
@@ -1107,7 +1130,7 @@ GenePattern.notebook.init.launch_init = function() {
             .append(
                 $("<li id='to_jupyterx' title='Insert a JupyterX widget cell'><a href='#'>JupyterX</a></option>")
                     .click(function() {
-                        GenePattern.notebook.toGenePatternCell();
+                        Jupyter.notebook.toGenePatternCell();
                     })
             );
     }
