@@ -18,7 +18,7 @@ GenePattern.notebook = GenePattern.notebook || {};
 var Jupyter = Jupyter || IPython || {};
 
 // Add file path shim for Jupyter 3/4
-var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/genepattern/resources/";
+var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/jupyter_x/resources/";
 
 /**
  * Attach the left-hand slider tab
@@ -543,7 +543,7 @@ beadview.createFormView()";
         // }
 
         cell.execute();
-
+        clearTimeout();
         //     }
         //     if (!widgetPresent) {
         //         setTimeout(function() {
