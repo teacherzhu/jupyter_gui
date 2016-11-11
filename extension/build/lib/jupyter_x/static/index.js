@@ -7,7 +7,6 @@ var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/ju
 define([
     "base/js/namespace",
     'base/js/events',
-    "require",
     "jquery",
     STATIC_PATH + "gp.js",
     STATIC_PATH + "navigation.js",
@@ -36,7 +35,7 @@ define([
 
         // Wait for the kernel to be ready and then initialize the widgets
         var interval = setInterval(function() {
-            Jupyter.notebook.init.wait_for_kernel(interval);
+            GenePattern.notebook.init.wait_for_kernel(interval);
         }, 500);
     }
 
