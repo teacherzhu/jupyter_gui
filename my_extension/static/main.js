@@ -113,16 +113,19 @@ var toJupyterXCell = function(formerType, index) {
     var cellChange = function(cell) {
 
         // // Get the auth widget code
-        var code = AUTOEXEC_FLAG + "\n\
-from my_extension.chain import Chain\n\
-import json, os\n\n\
-# load wrapper\n\
-json_filepath = '/Users/ckmah/Documents/jupyter_x/binf_kits/ccal.json'\n\
-with open(json_filepath, 'r') as f:\n\
-    config = json.load(f)\n\n\
-controller = Chain(config, globals(), locals(), os.getcwd())\n\
-beadview = controller.createBeadView(controller.beads[0])\n\
+        var code = AUTOEXEC_FLAG + `
+from my_extension.chain import Chain
+import json, os
+
+# load wrapper
+json_filepath = '/Users/ckmah/Documents/jupyter_x/binf_kits/ccal.json'
+with open(json_filepath, 'r') as f:
+    config = json.load(f)
+
+controller = Chain(config, globals(), locals(), os.getcwd())
+beadview = controller.createBeadView(controller.beads[0])
 beadview.createPanel()";
+`
 
         // Put the code in the cell
         cell.code_mirror.setValue(code);
