@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-setup(name='my_extension',
-      packages=['my_extension'],
-      package_data={'my_extension': ['static/main.js', 'static/*']}
+setup(name='simplex',
+      packages=['simplex'],
+      package_data={'simplex': ['static/main.js', 'static/*']}
       )
