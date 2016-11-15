@@ -2,6 +2,7 @@ import os
 import sys
 from .bead import Bead
 from .beadview import BeadView
+from .engine import simplex
 
 
 class Chain:
@@ -34,23 +35,41 @@ class Chain:
 
     # TODO: SEE JAVASCRIPT
     # Submit form callback.
-    def submit(self, fields, bead, button):
-        values = [entry.value for entry in fields]
-        print(values)
+    def submit(self, input_fields, output_fields, bead, button):
+        # TODO dictionary
+        input_values = [entry.value for entry in input_fields]
+        # input_values = {arg_name = input_fields[arg_name].value for arg_name in input_fields}
+        output_values = [entry.value for entry in output_fields]
+        print(input_values)
+        print(output_values)
         print(bead.functionName)
         print(bead.libraryName)
         print(bead.libraryPath)
-        print(button)
         # Verify all parameters are present.
-        if None in values or '' in values:
+        if None in input_values or '' in input_values:
             print('Please provide all parameters.')
             return
 
-        sys.path.insert(0, bead.libraryPath)
-        exec('from {} import {} as function'.format(
-            bead.libraryName, bead.functionName))
-        print("Executing ", bead.libraryName,
-              ".", bead.functionName, "...")
+        # Verify all parameters are present.
+        if None in output_values or '' in output_values:
+            print('Please provide all parameters.')
+            return
+
+        results = simplex(path_to_include=bead.libraryPath,
+                library_name=bead.libraryName,
+                function_name=bead.functionName,
+                args=input_values,
+                return_names=output_values,
+                kwargs=output_values)
+
+            # Parse returned values
+        for n, r in zip(return_names, results):
+            exec('globals()["{}"]'.format(n))
+            exec('{} = r'.format(n))
+
+
+
+
 
     def returnData(self, value, dataType):
         '''

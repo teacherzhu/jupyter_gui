@@ -1,7 +1,6 @@
 from ipywidgets import widgets as w
 from functools import partial
 # from dominate.tags import *
-from IPython.core.display import HTML
 
 
 class BeadView:
@@ -10,12 +9,13 @@ class BeadView:
     '''
 
     def __init__(self, chain, bead, global_n, local_n, cwd):
-        self.myChain = chain
+        self.my_chain = chain
         self.bead = bead
         self.globals = global_n
         self.locals = local_n
         self.cwd = cwd
-        self.fields = []
+        self.input_fields = []
+        self.output_fields = []
 
     # MDL Themed Components
 
@@ -30,50 +30,64 @@ class BeadView:
         bead = self.bead
 
         # submit callback
-        submitCallback = partial(self.myChain.submit,
-                                 self.fields, self.bead)
+        submitCallback = partial(self.my_chain.submit,
+                                 self.input_fields,
+                                 self.output_fields,
+                                 self.bead)
 
         # define panel-body
         body = w.Box().add_class('panel-body')
 
         # create input fields
-        inputFields = [w.HTML('<h3>Input Parameters<h3/>')]
-        inputFields.extend([self.text_field(arg['label'], arg['description'])
-                            for arg in bead.requiredArgs])
+        input_elements = [w.HTML('<h3>Input Parameters<h3/>')]
+        input_elements.extend([self.text_field(arg['label'],
+                                               arg['description'],
+                                               True, arg['arg_name'])
+                               for arg in bead.requiredArgs])
 
         # create output fields
-        outputFields = [w.HTML('<h3>Output Parameters<h3/>')]
-        outputFields.extend([self.text_field(
-            arg['label'], arg['description']) for arg in bead.returns])
+        output_elements = [w.HTML('<h3>Output Parameters<h3/>')]
+        output_elements.extend([self.text_field(arg['label'],
+                                                arg['description'], False)
+                                for arg in bead.returns])
 
         # define run button
-        runButton = w.Button(description="RUN")
-        runButton.add_class('btn').add_class('btn-primary')
-        runButton.on_click(submitCallback)
+        run_button = w.Button(description="RUN")
+        run_button.add_class('btn').add_class('btn-primary')
+        run_button.on_click(submitCallback)
 
         # add to body
-        allElements = []
-        allElements.extend(inputFields)
-        allElements.extend(outputFields)
-        allElements.append(runButton)
-        body.children = tuple(allElements)
+        all_elements = []
+        all_elements.extend(input_elements)
+        all_elements.extend(output_elements)
+        all_elements.append(run_button)
+        body.children = tuple(all_elements)
 
         return body
 
-    def text_field(self, name, tooltip):
+    def text_field(self, name, tooltip, is_in_else_out, arg_name=''):
+        '''
+        is_in_else_out - flag for input or output field
+        '''
         # submit callback
-        submitCallback = partial(self.myChain.submit,
-                                 self.fields, self.bead)
+        submitCallback = partial(self.my_chain.submit,
+                                 self.input_fields,
+                                 self.output_fields,
+                                 self.bead)
 
         # parent wrapper
         parent = w.Box().add_class('my-text-field')
         field = w.Text(description=name).add_class('form-group')
+        field.on_submit(submitCallback)
         helpButton = w.Button(description='?', tooltip=tooltip)
 
-        field.on_submit(submitCallback)
-
         parent.children = tuple([field, helpButton])
-        self.fields.append(field)
+
+        # append to input/output list correclty
+        if is_in_else_out:
+            self.input_fields[arg_name] = field
+        else:
+            self.output_fields.append(field)
         return parent
 
     def createPanel(self):
@@ -91,4 +105,4 @@ class BeadView:
         return panel
 
     def submit(self, button):
-        self.myChain.submit(self.fields, bead)
+        self.my_chain.submit(self.input_fields, self.output_fields, bead)

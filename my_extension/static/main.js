@@ -62,7 +62,6 @@ var undelete_cell_or_widget = function() {
         var cell = $(".cell")[i];
         if ($(cell).html().indexOf(AUTOEXEC_FLAG) > -1) {
             toJupyterXCell(null, i);
-            console.log('yay');
         }
     }
 }
@@ -118,7 +117,7 @@ var toJupyterXCell = function(formerType, index) {
 from my_extension.chain import Chain\n\
 import json, os\n\n\
 # load wrapper\n\
-json_filepath = '/Users/ckmah/Documents/jupyter_x/ccal.json'\n\
+json_filepath = '/Users/ckmah/Documents/jupyter_x/binf_kits/ccal.json'\n\
 with open(json_filepath, 'r') as f:\n\
     config = json.load(f)\n\n\
 controller = Chain(config, globals(), locals(), os.getcwd())\n\
@@ -154,6 +153,8 @@ beadview.createPanel()";
         //     hideCode();
 
         cell.execute();
+        $("[data-toggle='tooltip']").tooltip();
+
         //     clearTimeout();
         // }
         // if (!widgetPresent) {
@@ -207,6 +208,7 @@ beadview.createPanel()";
 
 };
 
+// TODO
 var taskLibrary = function() {
     var dialog = require('base/js/dialog');
     dialog.modal({

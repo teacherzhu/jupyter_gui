@@ -7,35 +7,37 @@ import sys
         exec('{} = r'.format(n))
 """
 
-def simplex(path_to_include, library_name, function_name, args, kwargs, return_names):
+
+def simplex(path_to_include, library_name, function_name, args, return_names, kwargs):
     """
     """
-    
+
     # Import function
     sys.path.insert(0, path_to_include)
     print('Importing {} ...'.format(function_name))
     exec('from {} import {} as function'.format(library_name, function_name))
-    
+
     # Process args and kwargs
     processed_args = process_args(args)
     processed_kwargs = process_kwargs(kwargs)
-    
+
     print(processed_args, processed_kwargs)
     # Execute
     returned = locals()['function'](*processed_args, **processed_kwargs)
-   
-    return returned
-        
+
+    for n, r in zip(return_names, returned):
+        exec('globals()["{}"] = {}'.format(n, r))
+
 
 def process_args(args):
     """
-    
-    :param args: list;
+
+    :param args: dicitonary;
     :return: list;
     """
-    
-    processed_args = []
-    
+
+    processed_args = {}
+
     names = globals()
     for i, arg in enumerate(args):
         if arg in names:   # Use defined name
@@ -46,23 +48,23 @@ def process_args(args):
                 arg = arg.split(',')
                 arg = [cast_string_to_int_float_bool_or_str(a) for a in arg]
                 print('Argument #{}: \'{}\' ==> {} ...'.format(i, arg, a))
-                
+
             a = arg
-            
+
         processed_args.append(a)
-    
+
     return processed_args
 
 
 def process_kwargs(kwargs):
     """
-    
+
     :param kwargs: dict;
     :return: dict;
     """
-    
+
     processed_kwargs = kwargs
-    
+
     return processed_kwargs
 
 
