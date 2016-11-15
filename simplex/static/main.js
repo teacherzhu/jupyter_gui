@@ -117,7 +117,8 @@ var toJupyterXCell = function(formerType, index) {
 from simplex.chain import Chain\n\
 import json, os\n\n\
 # load wrapper\n\
-json_filepath = '/Users/ckmah/Documents/jupyter_x/binf_kits/ccal.json'\n\
+DIR_HOME = os.environ['HOME']\n\
+json_filepath = os.path.join(DIR_HOME, 'ccal.simplex')\n\
 with open(json_filepath, 'r') as f:\n\
     config = json.load(f)\n\n\
 controller = Chain(config, globals(), locals(), os.getcwd())\n\
@@ -283,9 +284,7 @@ var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/si
 define([
     "base/js/namespace",
     'base/js/events',
-    "jquery",
-    STATIC_PATH + "task.js"
-], function(Jupyter, events) {
+    "jquery"], function(Jupyter, events) {
 
     // NOTE: CSS injection point
     function load_ipython_extension() {
@@ -300,10 +299,6 @@ define([
             .attr("type", "text/css")
             .attr('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
         );
-        $('head').append(
-            $('<script/>')
-            .attr('type', 'text/javascript')
-            .html('$("[data-toggle=\'tooltip\']").tooltip()'));
         // Wait for the kernel to be ready and then initialize the widgets
         var interval = setInterval(function() {
             wait_for_kernel(interval);
