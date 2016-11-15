@@ -1,1 +1,4 @@
-jupyter_x/**/__pycache__/
+my_extension/__pycache__/
+.DS_Store
+build/
+my_extension/static/task.js

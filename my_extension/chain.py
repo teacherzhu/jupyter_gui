@@ -32,9 +32,10 @@ class Chain:
         return BeadView(self, beadModel, self.globals, self.locals,
                         self.cwd)
 
+    # TODO: SEE JAVASCRIPT
     # Submit form callback.
-    def submit(self, entryWidgets, bead, button):
-        values = [entry.value for entry in entryWidgets]
+    def submit(self, fields, bead, button):
+        values = [entry.value for entry in fields]
         print(values)
         print(bead.functionName)
         print(bead.libraryName)

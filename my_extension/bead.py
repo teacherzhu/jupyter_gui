@@ -1,5 +1,3 @@
-
-
 class Bead:
     '''
     Uses ipywidgets to create a submission form widget.
