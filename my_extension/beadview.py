@@ -7,6 +7,9 @@ class BeadView:
     '''
     Represents the bead view.
     '''
+    INPUT_FLAG = 'input'
+    OPT_INPUT_FLAG = 'opt_input'
+    OUTPUT_FLAG = 'output'
 
     def __init__(self, chain, bead, global_n, local_n, cwd):
         self.my_chain = chain
@@ -14,14 +17,15 @@ class BeadView:
         self.globals = global_n
         self.locals = local_n
         self.cwd = cwd
-        self.input_fields = []
-        self.output_fields = []
 
-    # MDL Themed Components
+        self.fields = {self.INPUT_FLAG: {},
+                       self.OPT_INPUT_FLAG: {},
+                       self.OUTPUT_FLAG: []
+                       }
 
     def panel_heading(self):
         heading = w.Box().add_class('panel-heading')
-        text = w.HTML('<h1>' + self.bead.title + '</h1>')
+        text = w.HTML('<h1>' + self.bead.label + '</h1>')
         heading.children = tuple([text])
         return heading
 
@@ -30,10 +34,9 @@ class BeadView:
         bead = self.bead
 
         # submit callback
-        submitCallback = partial(self.my_chain.submit,
-                                 self.input_fields,
-                                 self.output_fields,
-                                 self.bead)
+        run_callback = partial(self.my_chain.submit,
+                               self.fields,
+                               self.bead)
 
         # define panel-body
         body = w.Box().add_class('panel-body')
@@ -42,52 +45,61 @@ class BeadView:
         input_elements = [w.HTML('<h3>Input Parameters<h3/>')]
         input_elements.extend([self.text_field(arg['label'],
                                                arg['description'],
-                                               True, arg['arg_name'])
-                               for arg in bead.requiredArgs])
+                                               self.INPUT_FLAG,
+                                               arg['arg_name'])
+                               for arg in bead.required_args])
+
+        opt_input_elements = [w.HTML('<h3>Optional Input Parameters<h3/>')]
+        opt_input_elements.extend([self.text_field(arg['label'],
+                                                   arg['description'],
+                                                   self.INPUT_FLAG,
+                                                   arg['arg_name'])
+                                   for arg in bead.optional_args])
 
         # create output fields
         output_elements = [w.HTML('<h3>Output Parameters<h3/>')]
         output_elements.extend([self.text_field(arg['label'],
-                                                arg['description'], False)
-                                for arg in bead.returns])
+                                                arg['description'],
+                                                self.OUTPUT_FLAG)
+                                for arg in bead.return_names])
 
         # define run button
         run_button = w.Button(description="RUN")
         run_button.add_class('btn').add_class('btn-primary')
-        run_button.on_click(submitCallback)
+        run_button.on_click(run_callback)
 
         # add to body
         all_elements = []
         all_elements.extend(input_elements)
+        all_elements.extend(opt_input_elements)
         all_elements.extend(output_elements)
         all_elements.append(run_button)
         body.children = tuple(all_elements)
 
         return body
 
-    def text_field(self, name, tooltip, is_in_else_out, arg_name=''):
+    def text_field(self, name, tooltip, flag, arg_name=''):
         '''
-        is_in_else_out - flag for input or output field
+        flag - flag for input or output field
         '''
         # submit callback
-        submitCallback = partial(self.my_chain.submit,
-                                 self.input_fields,
-                                 self.output_fields,
-                                 self.bead)
+        run_callback = partial(self.my_chain.submit,
+                               self.fields,
+                               self.bead)
 
         # parent wrapper
         parent = w.Box().add_class('my-text-field')
         field = w.Text(description=name).add_class('form-group')
-        field.on_submit(submitCallback)
-        helpButton = w.Button(description='?', tooltip=tooltip)
+        field.on_submit(run_callback)
+        help_button = w.Button(description='?', tooltip=tooltip)
 
-        parent.children = tuple([field, helpButton])
+        parent.children = tuple([field, help_button])
 
-        # append to input/output list correclty
-        if is_in_else_out:
-            self.input_fields[arg_name] = field
+        # save field
+        if flag == self.OUTPUT_FLAG:
+            self.fields[flag].append(field)
         else:
-            self.output_fields.append(field)
+            self.fields[flag][arg_name] = field
         return parent
 
     def createPanel(self):
@@ -105,4 +117,4 @@ class BeadView:
         return panel
 
     def submit(self, button):
-        self.my_chain.submit(self.input_fields, self.output_fields, bead)
+        self.my_chain.submit(self.fields, bead)
