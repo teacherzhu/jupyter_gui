@@ -7,6 +7,9 @@ class BeadView:
     '''
     Represents the bead view.
     '''
+    INPUT_FLAG = 'input'
+    OPT_INPUT_FLAG = 'opt_input'
+    OUTPUT_FLAG = 'output'
 
     def __init__(self, chain, bead, global_n, local_n, cwd):
         self.my_chain = chain
@@ -14,11 +17,9 @@ class BeadView:
         self.globals = global_n
         self.locals = local_n
         self.cwd = cwd
-        self.INPUT_FLAG = 'input'
-        self.OPT_INPUT_FLAG = 'opt_input'
-        self.OUTPUT_FLAG = 'output'
-        self.fields = {self.INPUT_FLAG: [],
-                       self.OPT_INPUT_FLAG: [],
+
+        self.fields = {self.INPUT_FLAG: {},
+                       self.OPT_INPUT_FLAG: {},
                        self.OUTPUT_FLAG: []
                        }
 
@@ -48,6 +49,13 @@ class BeadView:
                                                arg['arg_name'])
                                for arg in bead.required_args])
 
+        opt_input_elements = [w.HTML('<h3>Optional Input Parameters<h3/>')]
+        opt_input_elements.extend([self.text_field(arg['label'],
+                                                   arg['description'],
+                                                   self.INPUT_FLAG,
+                                                   arg['arg_name'])
+                                   for arg in bead.optional_args])
+
         # create output fields
         output_elements = [w.HTML('<h3>Output Parameters<h3/>')]
         output_elements.extend([self.text_field(arg['label'],
@@ -63,6 +71,7 @@ class BeadView:
         # add to body
         all_elements = []
         all_elements.extend(input_elements)
+        all_elements.extend(opt_input_elements)
         all_elements.extend(output_elements)
         all_elements.append(run_button)
         body.children = tuple(all_elements)
@@ -87,7 +96,10 @@ class BeadView:
         parent.children = tuple([field, help_button])
 
         # save field
-        self.fields[flag][arg_name] = field
+        if flag == self.OUTPUT_FLAG:
+            self.fields[flag].append(field)
+        else:
+            self.fields[flag][arg_name] = field
         return parent
 
     def createPanel(self):

@@ -22,11 +22,11 @@ class Chain:
             bead = self.createBeadModel(version, library_path, task)
             self.beads.append(bead)
 
-    def createBeadModel(self, methodConfig):
+    def createBeadModel(self, version, library_path, task):
         '''
         Binds configuration to bead model and saves reference.
         '''
-        return Bead(methodConfig)
+        return Bead(version, library_path, task)
 
     def createBeadView(self, beadModel):
         '''
@@ -42,8 +42,10 @@ class Chain:
         output_fields = fields[BeadView.OUTPUT_FLAG]
 
         # retrieve user input
-        input_values = {arg_name = input_fields[arg_name].value for arg_name in input_fields}
-        opt_input_values = {arg_name = opt_input_fields[arg_name].value for arg_name in opt_input_fields}
+        input_values = {arg_name: input_fields[
+            arg_name].value for arg_name in input_fields}
+        opt_input_values = {arg_name: opt_input_fields[
+            arg_name].value for arg_name in opt_input_fields}
         output_values = [entry.value for entry in output_fields]
         print(input_values)
         print(opt_input_values)
@@ -51,11 +53,17 @@ class Chain:
         print(bead.function_name)
         print(bead.library_name)
         print(bead.library_path)
-
+        print(input_values)
+        print(opt_input_values)
+        print(output_values)
+        print(opt_input_fields)
         # Verify all input parameters are present.
         if None in input_values or '' in input_values:
             print('Please provide all required inputs.')
             return
+
+        if len(opt_input_values) == 0:
+            opt_input_values = {}
 
         # Verify all output parameters are present.
         if None in output_values or '' in output_values:
@@ -66,9 +74,9 @@ class Chain:
         results = simplex(path_to_include=bead.library_path,
                           library_name=bead.library_name,
                           function_name=bead.function_name,
-                          args=input_values,
-                          return_names=output_values,
-                          kwargs=opt_input_values)
+                          req_args=input_values,
+                          opt_args=opt_input_values,
+                          return_names=output_values)
 
         # Parse returned values
         for n, r in zip(return_names, results):

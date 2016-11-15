@@ -124,7 +124,7 @@ with open(json_filepath, 'r') as f:
 
 controller = Chain(config, globals(), locals(), os.getcwd())
 beadview = controller.createBeadView(controller.beads[0])
-beadview.createPanel()";
+beadview.createPanel()
 `
 
         // Put the code in the cell
@@ -287,7 +287,6 @@ define([
     "base/js/namespace",
     'base/js/events',
     "jquery",
-    STATIC_PATH + "task.js"
 ], function(Jupyter, events) {
 
     // NOTE: CSS injection point

@@ -12,4 +12,4 @@ class Bead:
         self.function_name = config['function_name']
         self.optional_args = config['optional_args']
         self.required_args = config['required_args']
-        self.return_names = config['returns']
+        self.return_names = config['return_names']
