@@ -56,11 +56,11 @@ class Chain:
             return
 
         results = simplex(path_to_include=bead.libraryPath,
-                library_name=bead.libraryName,
-                function_name=bead.functionName,
-                args=input_values,
-                return_names=output_values,
-                kwargs=output_values)
+                          library_name=bead.libraryName,
+                          function_name=bead.functionName,
+                          req_args=input_values,
+                          return_names=output_values,
+                          opt_args=output_values)
 
             # Parse returned values
         for n, r in zip(return_names, results):

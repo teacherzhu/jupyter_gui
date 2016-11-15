@@ -1,15 +1,16 @@
 import sys
 
-"""
-    # Parse returned values
-    for n, r in zip(return_names, simplex(...)):
-        exec('global {}'.format(n))
-        exec('{} = r'.format(n))
-"""
 
-
-def simplex(path_to_include, library_name, function_name, args, return_names, kwargs):
+def simplex(path_to_include, library_name, function_name, req_args, opt_args, return_names):
     """
+
+    :param path_to_include:
+    :param library_name:
+    :param function_name:
+    :param req_args:
+    :param opt_args:
+    :param return_names:
+    :return:
     """
 
     # Import function
@@ -17,41 +18,40 @@ def simplex(path_to_include, library_name, function_name, args, return_names, kw
     print('Importing {} ...'.format(function_name))
     exec('from {} import {} as function'.format(library_name, function_name))
 
-    # Process args and kwargs
-    processed_args = process_args(args)
-    processed_kwargs = process_kwargs(kwargs)
+    # Process args
+    args = process_args(req_args, opt_args)
 
-    print(processed_args, processed_kwargs)
     # Execute
-    returned = locals()['function'](*processed_args, **processed_kwargs)
+    returned = locals()['function'](**args)
 
     for n, r in zip(return_names, returned):
         exec('globals()["{}"] = {}'.format(n, r))
 
 
-def process_args(args):
+def process_args(req_args, opt_args):
     """
 
-    :param args: dicitonary;
-    :return: list;
+    :param req_args: dicitonary;
+    :param opt_args: dicitonary;
+    :return: dictionary;
     """
 
+    args = merge_dicts(req_args, opt_args)
     processed_args = {}
 
     names = globals()
-    for i, arg in enumerate(args):
-        if arg in names:   # Use defined name
+    for n, arg in args.items():
+        if arg in names:  # Use defined name
             a = names[arg]
-            print('Argument #{}: \'{}\' ==> {} ...'.format(i, arg, a))
+            print('Argument: \'{}\' ==> {} ...'.format(arg, a))
         else:
             if ',' in arg:  # Assume iterable
                 arg = arg.split(',')
-                arg = [cast_string_to_int_float_bool_or_str(a) for a in arg]
-                print('Argument #{}: \'{}\' ==> {} ...'.format(i, arg, a))
-
+                arg = [cast_string_to_int_float_bool_or_str(s) for s in arg]
+                print('Argument: \'{}\' ==> {} ...'.format(arg, a))
             a = arg
 
-        processed_args.append(a)
+        processed_args[n] = a
 
     return processed_args
 
@@ -66,6 +66,20 @@ def process_kwargs(kwargs):
     processed_kwargs = kwargs
 
     return processed_kwargs
+
+
+def merge_dicts(*dicts):
+    """
+    Shallow copy and merge dicts into a new dict; precedence goes to key value pairs in latter dict.
+    :param dicts: iterable of dict;
+    :return: dict;
+    """
+
+    merged = {}
+    for d in dicts:
+        merged.update(d)
+
+    return merged
 
 
 def cast_string_to_int_float_bool_or_str(string):
