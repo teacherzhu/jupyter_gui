@@ -207,6 +207,31 @@ beadview.createPanel()";
 
 };
 
+var taskLibrary = function() {
+    var dialog = require('base/js/dialog');
+    dialog.modal({
+        notebook: Jupyter.notebook,
+        keyboard_manager: Jupyter.notebook.keyboard_manager,
+        title: "Task Library",
+        body: "Are you sure you want to change this to a JupyterX cell? This will cause " +
+            "you to lose any code or other information already entered into the cell.",
+        buttons: {
+            "Cancel": {
+                "click": function() {
+                    if (formerType) $("#cell_type").val(formerType).trigger("change");
+                }
+            },
+            "Change Cell Type": {
+                "class": "btn-warning",
+                "click": function() {
+                    typeCheck(cell);
+                }
+            }
+        }
+    });
+}
+
+
 var init_shortcuts = function() {
     // Initialize the JupyterX cell type keyboard shortcut
     Jupyter.keyboard_manager.command_shortcuts.add_shortcut('g', {
