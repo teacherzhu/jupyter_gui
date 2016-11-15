@@ -25,7 +25,8 @@ def simplex(path_to_include, library_name, function_name, req_args, opt_args, re
     returned = locals()['function'](**args)
 
     for n, r in zip(return_names, returned):
-        exec('globals()["{}"] = {}'.format(n, r))
+        print('updating ', n, r)
+        globals()[n] = r
 
 
 def process_args(req_args, opt_args):
@@ -40,18 +41,25 @@ def process_args(req_args, opt_args):
     processed_args = {}
 
     names = globals()
-    for n, arg in args.items():
-        if arg in names:  # Use defined name
-            a = names[arg]
-            print('Argument: \'{}\' ==> {} ...'.format(arg, a))
-        else:
-            if ',' in arg:  # Assume iterable
-                arg = arg.split(',')
-                arg = [cast_string_to_int_float_bool_or_str(s) for s in arg]
-                print('Argument: \'{}\' ==> {} ...'.format(arg, a))
-            a = arg
 
-        processed_args[n] = a
+    for k, v in args.items():
+
+        if v in names:  # Use defined name
+            processed = names[v]
+            print('Argument: \'{}\' ==> {} ...'.format(v, processed))
+
+        else:  # Process arguments
+            if isinstance(v, int) or isinstance(v, float):
+                processed = v
+
+            elif ',' in v:  # Assume iterable
+                processed = [cast_string_to_int_float_bool_or_str(s) for s in v.split(',')]
+                print('Argument: \'{}\' ==> {} ...'.format(v, processed))
+
+            else:  # Using as it is (str)
+                processed = v
+
+        processed_args[k] = processed
 
     return processed_args
 
