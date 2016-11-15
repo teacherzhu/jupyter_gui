@@ -7,21 +7,18 @@ var AUTOEXEC_FLAG = "# !AUTOEXEC";
 /**
  * Wait for kernel and then init notebook widgets
  */
-var wait_for_kernel = function (id) {
-    console.log("wait_for_kernel");
+var wait_for_kernel = function(id) {
     if (!done_init && Jupyter.notebook.kernel) {
         notebook_init_wrapper();
-    }
-    else if (done_init) {
+    } else if (done_init) {
         clearInterval(id);
     }
 };
 
 /**
- * Initialize GenePattern Notebook from the notebook page
+ * Initialize JupyterX Notebook from the notebook page
  */
-var notebook_init_wrapper = function () {
-    console.log("notebook_init_wrapper");
+var notebook_init_wrapper = function() {
     if (!done_init && Jupyter.notebook.kernel) {
         try {
             // Call the core init function
@@ -29,8 +26,7 @@ var notebook_init_wrapper = function () {
 
             // Mark init as done
             done_init = true;
-        }
-        catch(e) {
+        } catch (e) {
             console.log(e);
             wait_for_kernel();
         }
@@ -42,7 +38,7 @@ var notebook_init_wrapper = function () {
  */
 var auto_run_widgets = function() {
     console.log("auto_run_widgets");
-    require(["nbextensions/jupyter-js-widgets/extension"], function() {
+    require(function() {
         $.each($(".cell"), function(index, val) {
             if ($(val).html().indexOf(AUTOEXEC_FLAG) > -1) {
                 toJupyterXCell(null, index);
@@ -71,15 +67,15 @@ var undelete_cell_or_widget = function() {
     }
 }
 
-var add_menu_options = function()  {
+var add_menu_options = function() {
 
     // Add GenePattern "cell type" if not already in menu
     var dropdown = $("#cell_type");
     var gpInDropdown = dropdown.find("option:contains('JupyterX')").length > 0;
     if (!gpInDropdown) {
         dropdown.append(
-                $("<option value='code'>JupyterX</option>")
-            );
+            $("<option value='code'>JupyterX</option>")
+        );
 
         dropdown.change(function(event) {
             var type = $(event.target).find(":selected").text();
@@ -99,9 +95,9 @@ var add_menu_options = function()  {
         cellMenu.find("ul.dropdown-menu")
             .append(
                 $("<li id='to_jupyterx' title='Insert a JupyterX widget cell'><a href='#'>JupyterX</a></option>")
-                    .click(function() {
-                        toJupyterXCell();
-                    })
+                .click(function() {
+                    toJupyterXCell();
+                })
             );
     }
 }
@@ -118,7 +114,6 @@ var toJupyterXCell = function(formerType, index) {
     var cellChange = function(cell) {
 
         // // Get the auth widget code
-        // var code = Jupyter.notebook.init.buildCode("https://Jupyter.broadinstitute.org/gp", "", "");
         var code = AUTOEXEC_FLAG + "\n\
 from my_extension.chain import Chain\n\
 import json, os\n\n\
@@ -128,39 +123,45 @@ with open(json_filepath, 'r') as f:\n\
     config = json.load(f)\n\n\
 controller = Chain(config, globals(), locals(), os.getcwd())\n\
 beadview = controller.createBeadView(controller.beads[0])\n\
-beadview.createFormView()";
+beadview.createPanel()";
+
         // Put the code in the cell
         cell.code_mirror.setValue(code);
 
-        // function isWidgetPresent() { return cell.element.find(".gp-widget").length > 0; }
-        // function isRunning() { return cell.element.hasClass("running") }
+        // TODO check for running state
+        function isWidgetPresent() {
+            return cell.element.find(".my-panel").length > 0;
+        }
 
-        // var widgetPresent = isWidgetPresent();
+        // function isRunning() {
+        //     return cell.element.hasClass("running") }
+
+        var widgetPresent = isWidgetPresent();
         // var running = isRunning();
 
         // function ensure_widget() {
-        //     if (!widgetPresent && !running) {
-
-        // var cell = element.closest(".cell");
-        // if (cell.length > 0) {
-        // cell.input
-        // .css("height", "0")
-        // .css("overflow", "hidden");
-        // }
-        // else {
-        //     setTimeout(hideCode, 10);
-        // }
+        //     // if (!widgetPresent && !running) {
+        //     if (!widgetPresent) {
+        //         function hideCode() {
+        //             if (cell.length > 0) {
+        //                 cell.input
+        cell.input.css("height", "0")
+            .css("overflow", "hidden");
+        //         } else {
+        //             setTimeout(hideCode(), 10);
+        //         }
+        //     }
+        //     hideCode();
 
         cell.execute();
-        clearTimeout();
-        //     }
-        //     if (!widgetPresent) {
-        //         setTimeout(function() {
-        //             widgetPresent = isWidgetPresent();
-        //             running = isRunning();
-        //             ensure_widget();
-        //         }, 500);
-        //     }
+        //     clearTimeout();
+        // }
+        // if (!widgetPresent) {
+        //     setTimeout(function() {
+        //         widgetPresent = isWidgetPresent();
+        //         ensure_widget();
+        //     }, 500);
+        // }
         // }
         // ensure_widget();
     };
@@ -183,25 +184,24 @@ beadview.createFormView()";
         dialog.modal({
             notebook: Jupyter.notebook,
             keyboard_manager: Jupyter.notebook.keyboard_manager,
-            title : "Change to JupyterX Cell?",
-            body : "Are you sure you want to change this to a JupyterX cell? This will cause " +
+            title: "Change to JupyterX Cell?",
+            body: "Are you sure you want to change this to a JupyterX cell? This will cause " +
                 "you to lose any code or other information already entered into the cell.",
-            buttons : {
-                "Cancel" : {
+            buttons: {
+                "Cancel": {
                     "click": function() {
                         if (formerType) $("#cell_type").val(formerType).trigger("change");
                     }
                 },
-                "Change Cell Type" : {
-                    "class" : "btn-warning",
-                    "click" : function() {
+                "Change Cell Type": {
+                    "class": "btn-warning",
+                    "click": function() {
                         typeCheck(cell);
                     }
                 }
             }
         });
-    }
-    else {
+    } else {
         typeCheck(cell);
     }
 
@@ -210,25 +210,23 @@ beadview.createFormView()";
 var init_shortcuts = function() {
     // Initialize the JupyterX cell type keyboard shortcut
     Jupyter.keyboard_manager.command_shortcuts.add_shortcut('g', {
-            help: 'to JupyterX',
-            help_index: 'cc',
-            handler: function () {
-                toJupyterXCell();
-                return false;
-            }
+        help: 'to JupyterX',
+        help_index: 'cc',
+        handler: function() {
+            toJupyterXCell();
+            return false;
         }
-    );
+    });
 
     // Initialize the undo delete keyboard shortcut
     Jupyter.keyboard_manager.command_shortcuts.add_shortcut('z', {
-            help: 'undo cell/widget deletion',
-            help_index: 'cc',
-            handler: function () {
-                undelete_cell_or_widget();
-                return false;
-            }
+        help: 'undo cell/widget deletion',
+        help_index: 'cc',
+        handler: function() {
+            undelete_cell_or_widget();
+            return false;
         }
-    );
+    });
 
     // Initialize the undo delete button
     var undeleteCell = $('#undelete_cell');
@@ -242,8 +240,13 @@ var launch_init = function() {
     add_menu_options();
     init_shortcuts();
 
+    $(document).ready(function() {
+        // enable tooltips
+        $("[data-toggle='tooltip']").tooltip();
+    });
+
     // Hide the loading screen
-    setTimeout(function () {
+    setTimeout(function() {
         $(".loading-screen").hide("fade");
     }, 100);
 };
@@ -254,40 +257,26 @@ define([
     "base/js/namespace",
     'base/js/events',
     "jquery",
-    ], function(Jupyter, events) {
+    STATIC_PATH + "task.js"
+], function(Jupyter, events) {
 
     // NOTE: CSS injection point
     function load_ipython_extension() {
         // custom CSS
         $('head').append(
-                $('<link rel="stylesheet" type="text/css" />')
-                    .attr("rel", "stylesheet")
-                    .attr("type", "text/css")
-                    .attr('href', STATIC_PATH + 'theme.css')
-        )
-
-        // Material Design Lite
+            $('<link />')
+            .attr("rel", "stylesheet")
+            .attr("type", "text/css")
+            .attr('href', STATIC_PATH + 'theme.css'),
+            $('<link />')
+            .attr("rel", "stylesheet")
+            .attr("type", "text/css")
+            .attr('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
+        );
         $('head').append(
-                $('<link rel="stylesheet" type="text/css" />')
-                    .attr("rel", "stylesheet")
-                    .attr("type", "text/css")
-                    .attr('href', STATIC_PATH + 'material.min.css')
-        )
-
-        $('head').append(
-                $('<link rel="stylesheet" type="text/css" />')
-                    .attr("rel", "stylesheet")
-                    .attr("type", "text/css")
-                    .attr('href', STATIC_PATH + 'material.min.js')
-        )
-
-        $('head').append(
-                $('<link rel="stylesheet" type="text/css" />')
-                    .attr("rel", "stylesheet")
-                    .attr("type", "text/css")
-                    .attr('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
-        )
-
+            $('<script/>')
+            .attr('type', 'text/javascript')
+            .html('$("[data-toggle=\'tooltip\']").tooltip()'));
         // Wait for the kernel to be ready and then initialize the widgets
         var interval = setInterval(function() {
             wait_for_kernel(interval);

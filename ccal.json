@@ -27,7 +27,7 @@
       "returns": [
         {
           "data_type": "dict",
-          "description:": "This is the description for the returned NMF Result Dictionary.",
+          "description": "This is the description for the returned NMF Result Dictionary.",
           "label": "NMF Result Dictionary"
         },
         {
