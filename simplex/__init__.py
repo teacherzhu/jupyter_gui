@@ -9,23 +9,16 @@ def _jupyter_nbextension_paths():
         # the path is relative to the `my_fancy_module` directory
         src="static",
         # directory in the `nbextension/` namespace
-        dest="my_extension",
+        dest="simplex",
         # _also_ in the `nbextension/` namespace
-        require="my_extension/main")]
-
-
-# class TaskWidget(widgets.DOMWidget):
-#     _view_name = Unicode('TaskView').tag(sync=True)
-#     _view_module = Unicode('task_form').tag(sync=True)
-#     _dict = Dict().tag(sync=True)
-#     value = Unicode().tag(sync=True)
+        require="simplex/main")]
 
 
 def _jupyter_server_extension_paths():
     return [{
-        "module": "my_extension"
+        "module": "simplex"
     }]
 
 
 def load_jupyter_server_extension(nbapp):
-    nbapp.log.info("my_extension enabled!")
+    nbapp.log.info("SimpleX enabled!")

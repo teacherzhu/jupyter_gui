@@ -114,7 +114,7 @@ var toJupyterXCell = function(formerType, index) {
 
         // // Get the auth widget code
         var code = AUTOEXEC_FLAG + "\n\
-from my_extension.chain import Chain\n\
+from simplex.chain import Chain\n\
 import json, os\n\n\
 # load wrapper\n\
 json_filepath = '/Users/ckmah/Documents/jupyter_x/binf_kits/ccal.json'\n\
@@ -278,7 +278,7 @@ var launch_init = function() {
     }, 100);
 };
 
-var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/my_extension/";
+var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/";
 
 define([
     "base/js/namespace",
