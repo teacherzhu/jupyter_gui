@@ -5,3 +5,5 @@ python setup.py install
 jupyter nbextension install --py --sys-prefix simplex
 jupyter nbextension enable --py --sys-prefix simplex
 jupyter serverextension enable --py --sys-prefix simplex
+
+jupyter notebook --no-browser

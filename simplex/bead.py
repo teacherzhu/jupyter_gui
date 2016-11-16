@@ -4,11 +4,12 @@ class Bead:
     Generates command to be executed by Chain class.
     '''
 
-    def __init__(self, config):
-        self.title = config['title']
-        self.functionName = config['function_name']
-        self.libraryName = config['library_name']
-        self.libraryPath = config['library_path']
-        self.optionalArgs = config['optional_args']
-        self.requiredArgs = config['required_args']
-        self.returns = config['returns']
+    def __init__(self, version, library_path, config):
+        self.version = version
+        self.library_path = library_path
+        self.library_name = config['library_name']
+        self.label = config['label']
+        self.function_name = config['function_name']
+        self.optional_args = config['optional_args']
+        self.required_args = config['required_args']
+        self.return_names = config['return_names']

@@ -1,6 +1,3 @@
-from ipywidgets import widgets
-from traitlets import Unicode, Dict
-from .chain import Chain
 
 
 def _jupyter_nbextension_paths():
@@ -21,4 +18,4 @@ def _jupyter_server_extension_paths():
 
 
 def load_jupyter_server_extension(nbapp):
-    nbapp.log.info("SimpleX enabled!")
+    nbapp.log.info("simplex enabled!")

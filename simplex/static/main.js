@@ -16,7 +16,7 @@ var wait_for_kernel = function(id) {
 };
 
 /**
- * Initialize JupyterX Notebook from the notebook page
+ * Initialize SimpleX Notebook from the notebook page
  */
 var notebook_init_wrapper = function() {
     if (!done_init && Jupyter.notebook.kernel) {
@@ -41,7 +41,7 @@ var auto_run_widgets = function() {
     require(function() {
         $.each($(".cell"), function(index, val) {
             if ($(val).html().indexOf(AUTOEXEC_FLAG) > -1) {
-                toJupyterXCell(null, index);
+                toSimpleXCell(null, index);
             }
         });
     });
@@ -61,7 +61,7 @@ var undelete_cell_or_widget = function() {
     for (var i in indices) {
         var cell = $(".cell")[i];
         if ($(cell).html().indexOf(AUTOEXEC_FLAG) > -1) {
-            toJupyterXCell(null, i);
+            toSimpleXCell(null, i);
         }
     }
 }
@@ -70,17 +70,17 @@ var add_menu_options = function() {
 
     // Add GenePattern "cell type" if not already in menu
     var dropdown = $("#cell_type");
-    var gpInDropdown = dropdown.find("option:contains('JupyterX')").length > 0;
+    var gpInDropdown = dropdown.find("option:contains('SimpleX')").length > 0;
     if (!gpInDropdown) {
         dropdown.append(
-            $("<option value='code'>JupyterX</option>")
+            $("<option value='code'>SimpleX</option>")
         );
 
         dropdown.change(function(event) {
             var type = $(event.target).find(":selected").text();
-            if (type === "JupyterX") {
+            if (type === "SimpleX") {
                 var former_type = Jupyter.notebook.get_selected_cell().cell_type;
-                toJupyterXCell(former_type);
+                toSimpleXCell(former_type);
             }
         });
 
@@ -89,19 +89,19 @@ var add_menu_options = function() {
     }
 
     var cellMenu = $("#change_cell_type");
-    var gpInMenu = cellMenu.find("#to_jupyterx").length > 0;
+    var gpInMenu = cellMenu.find("#to_simplex").length > 0;
     if (!gpInMenu) {
         cellMenu.find("ul.dropdown-menu")
             .append(
-                $("<li id='to_jupyterx' title='Insert a JupyterX widget cell'><a href='#'>JupyterX</a></option>")
+                $("<li id='to_simplex' title='Insert a SimpleX widget cell'><a href='#'>SimpleX</a></option>")
                 .click(function() {
-                    toJupyterXCell();
+                    toSimpleXCell();
                 })
             );
     }
 }
 
-var toJupyterXCell = function(formerType, index) {
+var toSimpleXCell = function(formerType, index) {
     var dialog = require('base/js/dialog');
     if (index === undefined) {
         // using selected cell
@@ -113,16 +113,23 @@ var toJupyterXCell = function(formerType, index) {
     var cellChange = function(cell) {
 
         // // Get the auth widget code
-        var code = AUTOEXEC_FLAG + "\n\
-from simplex.chain import Chain\n\
-import json, os\n\n\
-# load wrapper\n\
-json_filepath = '/Users/ckmah/Documents/jupyter_x/binf_kits/ccal.json'\n\
-with open(json_filepath, 'r') as f:\n\
-    config = json.load(f)\n\n\
-controller = Chain(config, globals(), locals(), os.getcwd())\n\
-beadview = controller.createBeadView(controller.beads[0])\n\
-beadview.createPanel()";
+        var code = AUTOEXEC_FLAG + `
+from simplex.chain import Chain
+import json, os
+
+# load wrapper
+DIR_HOME = os.environ['HOME']
+DIR_SIMPLEX = os.path.join(DIR_HOME, '.simplex')
+if not os.path.isdir(DIR_SIMPLEX):
+    os.mkdir(DIR_SIMPLEX)
+json_filepath = os.path.join(DIR_SIMPLEX, 'ccal.simplex')
+with open(json_filepath, 'r') as f:
+    config = json.load(f)
+
+controller = Chain(config, globals(), locals(), os.getcwd())
+beadview = controller.createBeadView(controller.beads[0])
+beadview.createPanel()
+`
 
         // Put the code in the cell
         cell.code_mirror.setValue(code);
@@ -185,8 +192,8 @@ beadview.createPanel()";
         dialog.modal({
             notebook: Jupyter.notebook,
             keyboard_manager: Jupyter.notebook.keyboard_manager,
-            title: "Change to JupyterX Cell?",
-            body: "Are you sure you want to change this to a JupyterX cell? This will cause " +
+            title: "Change to SimpleX Cell?",
+            body: "Are you sure you want to change this to a SimpleX cell? This will cause " +
                 "you to lose any code or other information already entered into the cell.",
             buttons: {
                 "Cancel": {
@@ -215,7 +222,7 @@ var taskLibrary = function() {
         notebook: Jupyter.notebook,
         keyboard_manager: Jupyter.notebook.keyboard_manager,
         title: "Task Library",
-        body: "Are you sure you want to change this to a JupyterX cell? This will cause " +
+        body: "Are you sure you want to change this to a SimpleX cell? This will cause " +
             "you to lose any code or other information already entered into the cell.",
         buttons: {
             "Cancel": {
@@ -235,12 +242,12 @@ var taskLibrary = function() {
 
 
 var init_shortcuts = function() {
-    // Initialize the JupyterX cell type keyboard shortcut
+    // Initialize the SimpleX cell type keyboard shortcut
     Jupyter.keyboard_manager.command_shortcuts.add_shortcut('g', {
-        help: 'to JupyterX',
+        help: 'to SimpleX',
         help_index: 'cc',
         handler: function() {
-            toJupyterXCell();
+            toSimpleXCell();
             return false;
         }
     });
@@ -284,7 +291,6 @@ define([
     "base/js/namespace",
     'base/js/events',
     "jquery",
-    STATIC_PATH + "task.js"
 ], function(Jupyter, events) {
 
     // NOTE: CSS injection point
