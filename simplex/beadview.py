@@ -52,7 +52,7 @@ class BeadView:
         opt_input_elements = [w.HTML('<h3>Optional Input Parameters<h3/>')]
         opt_input_elements.extend([self.text_field(arg['label'],
                                                    arg['description'],
-                                                   self.INPUT_FLAG,
+                                                   self.OPT_INPUT_FLAG,
                                                    arg['arg_name'])
                                    for arg in bead.optional_args])
 

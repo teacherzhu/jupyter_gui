@@ -18,7 +18,7 @@ def simplex(path_to_include, library_name, function_name, req_args, opt_args, re
 
     # Import function
     sys.path.insert(0, path_to_include)
-    print('Importing {} ...'.format(function_name))
+    print('From {} importing {} ...'.format(path_to_include, function_name))
     exec('from {} import {} as function'.format(library_name, function_name))
 
     # Process args
