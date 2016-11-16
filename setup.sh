@@ -1,3 +1,6 @@
+conda install -c conda-forge jupyter_nbextensions_configurator
+jupyter nbextensions_configurator enable 
+
 conda install -c conda-forge ipywidgets
 jupyter nbextension enable --py --sys-prefix widgetsnbextension
 

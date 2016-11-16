@@ -306,10 +306,6 @@ define([
             .attr("type", "text/css")
             .attr('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
         );
-        $('head').append(
-            $('<script/>')
-            .attr('type', 'text/javascript')
-            .html('$("[data-toggle=\'tooltip\']").tooltip()'));
         // Wait for the kernel to be ready and then initialize the widgets
         var interval = setInterval(function() {
             wait_for_kernel(interval);
