@@ -1,2 +1,2 @@
-# jupyter_x
-Jupyter X
+# simplex
+SimpleX (Simple Execution)
