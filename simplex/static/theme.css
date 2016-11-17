@@ -1,18 +1,48 @@
-.panel-heading, .panel-body {
+/******************** Notebook Controls ********************/
+
+#insert_simplex_below .btn {
+  background: orange;
+}
+
+/******************** SimpleX Widget ********************/
+
+.panel-heading,
+.panel-body {
   text-align: center;
 }
 
-.my-text-field {}
-
-.my-text-field > * {
-  display: inline-block !important;
+.output_subarea {
+  width: 100%;
+  max-width: 100% !important;
+  padding: 0;
 }
+
+.widget-label {
+  max-width: none !important;
+  text-align: left !important;
+}
+
+.simplex-hidden {
+  display: none !important;
+}
+
+.widget-area {
+  height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease-out;
+}
+
+/******************** Widget Text Field ********************/
 
 .form-group {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   width: 50%;
+}
+
+.my-text-field > * {
+  display: inline-block !important;
 }
 
 .my-text-field > .btn {
@@ -22,11 +52,8 @@
   border-radius: 50%;
 }
 
-.output_subarea {
-  width: 100%;
-  max-width: 100% !important;
-  padding: 0;
-}
+
+/******************** Widget Tooltip Buttons ********************/
 
 .btn[data-toggle="popover"] {
   box-sizing: content-box;
@@ -37,16 +64,6 @@
 .btn[data-toggle="popover"] > div {
   height: 20px;
   width: 20px;
-}
-
-#maintoolbar {
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
-.widget-label {
-  max-width: none !important;
-  text-align: left !important;
 }
 
 button.close {

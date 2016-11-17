@@ -34,7 +34,7 @@ var notebook_init_wrapper = function() {
 };
 
 /**
- * Automatically run all GenePattern widgets on INITIALIZATION
+ * Automatically run all SimpleX widgets on INITIALIZATION
  */
 var auto_run_widgets = function() {
     console.log("auto_run_widgets");
@@ -67,8 +67,7 @@ var undelete_cell_or_widget = function() {
 }
 
 var add_menu_options = function() {
-
-    // Add GenePattern "cell type" if not already in menu
+    // Add SimpleX "cell type" if not already in menu
     var dropdown = $("#cell_type");
     var gpInDropdown = dropdown.find("option:contains('SimpleX')").length > 0;
     if (!gpInDropdown) {
@@ -88,6 +87,7 @@ var add_menu_options = function() {
         $._data($("#cell_type")[0], "events").change.reverse();
     }
 
+    // add to Cell -> Cell Type -> SimpleX
     var cellMenu = $("#change_cell_type");
     var gpInMenu = cellMenu.find("#to_simplex").length > 0;
     if (!gpInMenu) {
@@ -99,6 +99,10 @@ var add_menu_options = function() {
                 })
             );
     }
+
+    // add to toolbar
+    var addButton = $('<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>')
+    $("#insert_above_below").after(addButton);
 }
 
 var toSimpleXCell = function(formerType, index) {
@@ -133,45 +137,22 @@ beadview.createPanel()
 
         // Put the code in the cell
         cell.code_mirror.setValue(code);
-
-        // TODO check for running state
-        function isWidgetPresent() {
-            return cell.element.find(".my-panel").length > 0;
-        }
-
-        // function isRunning() {
-        //     return cell.element.hasClass("running") }
-
-        var widgetPresent = isWidgetPresent();
-        // var running = isRunning();
-
-        // function ensure_widget() {
-        //     // if (!widgetPresent && !running) {
-        //     if (!widgetPresent) {
-        //         function hideCode() {
-        //             if (cell.length > 0) {
-        //                 cell.input
-        cell.input.css("height", "0")
-            .css("overflow", "hidden");
-        //         } else {
-        //             setTimeout(hideCode(), 10);
-        //         }
-        //     }
-        //     hideCode();
-
         cell.execute();
-        $("[data-toggle='tooltip']").tooltip();
 
-        //     clearTimeout();
-        // }
-        // if (!widgetPresent) {
-        //     setTimeout(function() {
-        //         widgetPresent = isWidgetPresent();
-        //         ensure_widget();
-        //     }, 500);
-        // }
-        // }
-        // ensure_widget();
+        // show widget when executed
+        var setupWidgetInterval;
+
+        function setupWidget() {
+            cell.input.addClass("simplex-hidden");
+            cell.element.find(".prompt").addClass("simplex-hidden");
+            if (cell.element.find(".my-panel").length > 0) {
+                cell.element.find(".widget-area").height(cell.element.find(".my-panel").height());
+                clearInterval(setupWidgetInterval);
+            }
+        };
+
+        setupWidgetInterval = setInterval(setupWidget, 100);
+
     };
 
     // Define cell type check
@@ -243,7 +224,7 @@ var taskLibrary = function() {
 
 var init_shortcuts = function() {
     // Initialize the SimpleX cell type keyboard shortcut
-    Jupyter.keyboard_manager.command_shortcuts.add_shortcut('g', {
+    Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-x', {
         help: 'to SimpleX',
         help_index: 'cc',
         handler: function() {
@@ -306,6 +287,10 @@ define([
             .attr("type", "text/css")
             .attr('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
         );
+        $('head').append(`<script type='text/javascript'>
+        $(document).ready(function() {
+           $("[data-toggle='tooltip']").tooltip();
+        });</script>`);
         // Wait for the kernel to be ready and then initialize the widgets
         var interval = setInterval(function() {
             wait_for_kernel(interval);
