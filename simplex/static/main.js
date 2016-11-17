@@ -107,9 +107,10 @@ var add_menu_options = function() {
     // add to toolbar
     var addButton = $('<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>');
     addButton.click(function() {
-        Jupyter.notebook.insert_cell_below();
-        Jupyter.notebook.select_next();
-        toSimpleXCell();
+        showLibraryPanel();
+        // Jupyter.notebook.insert_cell_below();
+        // Jupyter.notebook.select_next();
+        // toSimpleXCell();
     });
     $("#insert_above_below").after(addButton);
 }
@@ -209,33 +210,6 @@ beadview.createPanel()
     }
 };
 
-// TODO
-var taskLibrary = function() {
-    var dialog = require('base/js/dialog');
-    var libPanelBody = document.createElement('div');
-    libPanelBody
-    dialog.modal({
-        notebook: Jupyter.notebook,
-        keyboard_manager: Jupyter.notebook.keyboard_manager,
-        title: "Task Library",
-        body: libPanelBody,
-        buttons: {
-            "Cancel": {
-                "click": function() {
-                    if (formerType) $("#cell_type").val(formerType).trigger("change");
-                }
-            },
-            "Change Cell Type": {
-                "class": "btn-warning",
-                "click": function() {
-                    typeCheck(cell);
-                }
-            }
-        }
-    });
-}
-
-
 var init_shortcuts = function() {
     // Initialize the SimpleX cell type keyboard shortcut
     Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-x', {
@@ -280,26 +254,22 @@ var launch_init = function() {
     }, 100);
 };
 
-var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/";
+var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/resources/";
 
 define([
-    "base/js/namespace",
+    'base/js/namespace',
     'base/js/events',
-    "jquery",
+    'jquery',
+    STATIC_PATH + 'librarymodal.js'
 ], function(Jupyter, events) {
 
-    // NOTE: CSS injection point
     function load_ipython_extension() {
         // custom CSS
         $('head').append(
             $('<link />')
-            .attr("rel", "stylesheet")
-            .attr("type", "text/css")
-            .attr('href', STATIC_PATH + 'theme.css'),
-            $('<link />')
-            .attr("rel", "stylesheet")
-            .attr("type", "text/css")
-            .attr('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
+            .attr('rel', 'stylesheet')
+            .attr('type', 'text/css')
+            .attr('href', STATIC_PATH + 'theme.css')
         );
 
         // Wait for the kernel to be ready and then initialize the widgets
