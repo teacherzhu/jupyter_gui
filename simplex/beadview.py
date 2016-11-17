@@ -65,7 +65,7 @@ class BeadView:
 
         # define run button
         run_button = w.Button(description="RUN")
-        run_button.add_class('btn').add_class('btn-primary')
+        run_button.add_class('btn').add_class('btn-primary').add_class('run-btn')
         run_button.on_click(run_callback)
 
         # add to body

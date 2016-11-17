@@ -32,7 +32,7 @@
   transition: all 0.5s ease-out;
 }
 
-/******************** Widget Text Field ********************/
+/******************** Widget Elements ********************/
 
 .form-group {
   display: flex;
@@ -52,7 +52,9 @@
   border-radius: 50%;
 }
 
-
+.run-btn {
+  margin-top: 2em;
+}
 /******************** Widget Tooltip Buttons ********************/
 
 .btn[data-toggle="popover"] {

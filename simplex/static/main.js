@@ -51,6 +51,10 @@ var auto_run_widgets = function() {
  * Undo deleting last set of cells/widgets
  */
 var undelete_cell_or_widget = function() {
+    // make sure there are deleted cells to restore
+    if (Jupyter.notebook.undelete_backup == null)
+        return;
+
     var backup = Jupyter.notebook.undelete_backup;
     var startIndex = Jupyter.notebook.undelete_index;
     var endIndex = startIndex + backup.length;
@@ -101,7 +105,12 @@ var add_menu_options = function() {
     }
 
     // add to toolbar
-    var addButton = $('<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>')
+    var addButton = $('<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>');
+    addButton.click(function() {
+        Jupyter.notebook.insert_cell_below();
+        Jupyter.notebook.select_next();
+        toSimpleXCell();
+    });
     $("#insert_above_below").after(addButton);
 }
 
@@ -140,18 +149,22 @@ beadview.createPanel()
         cell.execute();
 
         // show widget when executed
-        var setupWidgetInterval;
 
-        function setupWidget() {
+        function setupWidget(id) {
+            // hide code immediately
             cell.input.addClass("simplex-hidden");
             cell.element.find(".prompt").addClass("simplex-hidden");
+            // show widget upon finished execution
             if (cell.element.find(".my-panel").length > 0) {
                 cell.element.find(".widget-area").height(cell.element.find(".my-panel").height());
-                clearInterval(setupWidgetInterval);
+                $("[data-toggle='tooltip']").tooltip();
+                clearInterval(id);
             }
         };
 
-        setupWidgetInterval = setInterval(setupWidget, 100);
+        var setupWidgetInterval = setInterval(function() {
+            setupWidget(setupWidgetInterval);
+        }, 100);
 
     };
 
@@ -169,6 +182,7 @@ beadview.createPanel()
     // Prompt for change if the cell has contents and
     // doesnt start with autoexec flag
     var contents = cell.get_text().trim();
+
     if (contents !== "" && contents.indexOf(AUTOEXEC_FLAG) < 0) {
         dialog.modal({
             notebook: Jupyter.notebook,
@@ -193,18 +207,18 @@ beadview.createPanel()
     } else {
         typeCheck(cell);
     }
-
 };
 
 // TODO
 var taskLibrary = function() {
     var dialog = require('base/js/dialog');
+    var libPanelBody = document.createElement('div');
+    libPanelBody
     dialog.modal({
         notebook: Jupyter.notebook,
         keyboard_manager: Jupyter.notebook.keyboard_manager,
         title: "Task Library",
-        body: "Are you sure you want to change this to a SimpleX cell? This will cause " +
-            "you to lose any code or other information already entered into the cell.",
+        body: libPanelBody,
         buttons: {
             "Cancel": {
                 "click": function() {
@@ -244,7 +258,7 @@ var init_shortcuts = function() {
     });
 
     // Initialize the undo delete button
-    var undeleteCell = $('#undelete_cell');
+    var undeleteCell = $('#undelete_cell a');
     undeleteCell.on("click", function(event) {
         undelete_cell_or_widget();
     });
@@ -287,10 +301,7 @@ define([
             .attr("type", "text/css")
             .attr('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
         );
-        $('head').append(`<script type='text/javascript'>
-        $(document).ready(function() {
-           $("[data-toggle='tooltip']").tooltip();
-        });</script>`);
+
         // Wait for the kernel to be ready and then initialize the widgets
         var interval = setInterval(function() {
             wait_for_kernel(interval);
