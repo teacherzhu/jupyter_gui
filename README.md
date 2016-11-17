@@ -1,4 +1,2 @@
 # simplex
-SimpleX
-
-Simple eXecution interphase for Jupyter Notebook.
+SimpleX: simple execution interphase for Jupyter Notebook.
