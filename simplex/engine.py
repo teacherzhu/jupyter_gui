@@ -19,14 +19,9 @@ def simplex(path_to_include, library_name, function_name, req_args, opt_args, re
 
     # Process args
     args = process_args(req_args, opt_args)
-
+    print('ARGS: ', args)
     # Execute
-    returned = locals()['function'](**args)
-
-    for n, r in zip(return_names, returned):
-        globals()[n] = r
-    print('hello')
-    print(globals())
+    return locals()['function'](**args)
 
 
 def process_args(req_args, opt_args):
@@ -46,21 +41,26 @@ def process_args(req_args, opt_args):
 
         if v in names:  # Use defined name
             processed = names[v]
-            print('Argument: \'{}\' ==> {} ...'.format(v, processed))
+            print('Argument VAR: \'{}\' ==> {} ...'.format(v, processed))
 
-        else:  # Process arguments
-            if isinstance(v, int) or isinstance(v, float):
-                processed = v
+        processed = [cast_string_to_int_float_bool_or_str(
+            s) for s in v.split(',') if s]
 
-            elif ',' in v:  # Assume iterable
-                processed = [cast_string_to_int_float_bool_or_str(s) for s in v.split(',') if s]
-                print('Argument: \'{}\' ==> {} ...'.format(v, processed))
+        if len(processed) == 1:
+            processed = processed[0]
+        # else:  # Process arguments
+        #     if isinstance(v, int) or isinstance(v, float):
+        #         processed = v
+        # print('Argument NUMBER: \'{}\' ==> {} ...'.format(v, processed))
 
-            else:  # Using as it is (str)
-                processed = v
+        #     elif ',' in v:  # Assume iterable
+        #         processed = [cast_string_to_int_float_bool_or_str(
+        #             s) for s in v.split(',') if s]
+        #     else:  # Using as it is (str)
+        #         processed = v
+        #         print('Argument STR: \'{}\' ==> {} ...'.format(v, processed))
 
         processed_args[k] = processed
-
     return processed_args
 
 

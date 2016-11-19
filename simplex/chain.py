@@ -15,6 +15,7 @@ class Chain:
         self.locals = local_n
         self.cwd = cwd
         self.beads = []
+        self.output = []
 
         version = config['version']
         library_path = config['library_path']
@@ -67,16 +68,18 @@ class Chain:
             return
 
         # Call function
-        results = simplex(path_to_include=bead.library_path,
-                          library_name=bead.library_name,
-                          function_name=bead.function_name,
-                          req_args=input_values,
-                          opt_args=opt_input_values,
-                          return_names=output_values)
+        self.output = simplex(path_to_include=bead.library_path,
+                              library_name=bead.library_name,
+                              function_name=bead.function_name,
+                              req_args=input_values,
+                              opt_args=opt_input_values,
+                              return_names=output_values)
 
         # Parse returned values
         # for n, r in zip(return_names, results):
         #     globals()[n] = r
+
+        # print(globals().keys())
 
     def returnData(self, value, dataType):
         '''
