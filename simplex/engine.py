@@ -1,20 +1,19 @@
 import sys
 
+from . import OUTPUT
 
-def test_setting_global_variable(returns=()):
-    globals()['*** TEST 1 ***'] = '*** TEST 1 ***'
-    print(globals())
+
+def test_setting_global_variable():
+    globals()['TEST_1'] = '*** TEST 1 ***'
+    print(sorted(globals().keys()))
     print('\n\n')
 
     global TEST_2
-    TEST_2 = '*** TEST 2 ***'
-    print(globals())
+    TEST_2 = 'TEST_2'
+    print(sorted(globals().keys()))
     print('\n\n')
 
-    if any(returns):
-        returns.append('*** TEST 3 ***')
-        print(globals())
-        print('\n\n')
+    OUTPUT['TEST_3'] = '*** TEST 3 ***'
 
 
 def simplex(path_to_include, library_name, function_name, req_args, opt_args, return_names):
@@ -41,9 +40,7 @@ def simplex(path_to_include, library_name, function_name, req_args, opt_args, re
     returned = locals()['function'](**args)
 
     for n, r in zip(return_names, returned):
-        globals()[n] = r
-    global x
-    x = 1000
+        OUTPUT[n] = r
 
 
 def process_args(req_args, opt_args):
