@@ -1,5 +1,6 @@
 import sys
 
+from . import OUTPUT
 
 def test_setting_global_variable():
     globals()['testglobal1'] = '*** TEST 1 ***'
