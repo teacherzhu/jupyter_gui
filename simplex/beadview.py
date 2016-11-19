@@ -65,7 +65,8 @@ class BeadView:
 
         # define run button
         run_button = w.Button(description="RUN")
-        run_button.add_class('btn').add_class('btn-primary')
+        run_button.add_class('btn').add_class(
+            'btn-primary').add_class('run-btn')
         run_button.on_click(run_callback)
 
         # add to body
@@ -86,6 +87,12 @@ class BeadView:
         run_callback = partial(self.my_chain.submit,
                                self.fields,
                                self.bead)
+
+        # TODO MAKE FANCIER
+        # <div class="input-group">
+        #   <span class="input-group-addon" id="basic-addon1">@</span>
+        #   <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        # </div>
 
         # parent wrapper
         parent = w.Box().add_class('my-text-field')

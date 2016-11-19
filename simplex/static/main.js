@@ -34,7 +34,7 @@ var notebook_init_wrapper = function() {
 };
 
 /**
- * Automatically run all GenePattern widgets on INITIALIZATION
+ * Automatically run all SimpleX widgets on INITIALIZATION
  */
 var auto_run_widgets = function() {
     console.log("auto_run_widgets");
@@ -51,6 +51,10 @@ var auto_run_widgets = function() {
  * Undo deleting last set of cells/widgets
  */
 var undelete_cell_or_widget = function() {
+    // make sure there are deleted cells to restore
+    if (Jupyter.notebook.undelete_backup == null)
+        return;
+
     var backup = Jupyter.notebook.undelete_backup;
     var startIndex = Jupyter.notebook.undelete_index;
     var endIndex = startIndex + backup.length;
@@ -67,8 +71,7 @@ var undelete_cell_or_widget = function() {
 }
 
 var add_menu_options = function() {
-
-    // Add GenePattern "cell type" if not already in menu
+    // Add SimpleX "cell type" if not already in menu
     var dropdown = $("#cell_type");
     var gpInDropdown = dropdown.find("option:contains('SimpleX')").length > 0;
     if (!gpInDropdown) {
@@ -88,6 +91,7 @@ var add_menu_options = function() {
         $._data($("#cell_type")[0], "events").change.reverse();
     }
 
+    // add to Cell -> Cell Type -> SimpleX
     var cellMenu = $("#change_cell_type");
     var gpInMenu = cellMenu.find("#to_simplex").length > 0;
     if (!gpInMenu) {
@@ -99,6 +103,16 @@ var add_menu_options = function() {
                 })
             );
     }
+
+    // add to toolbar
+    var addButton = $('<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>');
+    addButton.click(function() {
+        showLibraryPanel();
+        // Jupyter.notebook.insert_cell_below();
+        // Jupyter.notebook.select_next();
+        // toSimpleXCell();
+    });
+    $("#insert_above_below").after(addButton);
 }
 
 var toSimpleXCell = function(formerType, index) {
@@ -127,51 +141,50 @@ with open(json_filepath, 'r') as f:
     config = json.load(f)
 
 controller = Chain(config, globals(), locals(), os.getcwd())
+
+def set_globals():
+    for name, value in controller.output.items():
+        globals()[name] = value
+        # exec('global {}'.format(name), globals())
+        # exec('{} = value'.format(name))
+
+# register callback
+em = get_ipython().events
+if (set_globals not in em.callbacks['post_run_cell']):
+    em.register('post_execute', set_globals)
+
+# make and show widget
 beadview = controller.createBeadView(controller.beads[0])
 beadview.createPanel()
 `
 
         // Put the code in the cell
         cell.code_mirror.setValue(code);
-
-        // TODO check for running state
-        function isWidgetPresent() {
-            return cell.element.find(".my-panel").length > 0;
-        }
-
-        // function isRunning() {
-        //     return cell.element.hasClass("running") }
-
-        var widgetPresent = isWidgetPresent();
-        // var running = isRunning();
-
-        // function ensure_widget() {
-        //     // if (!widgetPresent && !running) {
-        //     if (!widgetPresent) {
-        //         function hideCode() {
-        //             if (cell.length > 0) {
-        //                 cell.input
-        // cell.input.css("height", "0")
-        //     .css("overflow", "hidden");
-        //         } else {
-        //             setTimeout(hideCode(), 10);
-        //         }
-        //     }
-        //     hideCode();
-
         cell.execute();
-        $("[data-toggle='tooltip']").tooltip();
 
-        //     clearTimeout();
-        // }
-        // if (!widgetPresent) {
-        //     setTimeout(function() {
-        //         widgetPresent = isWidgetPresent();
-        //         ensure_widget();
-        //     }, 500);
-        // }
-        // }
-        // ensure_widget();
+        // show widget when executed
+
+        function setupWidget(id) {
+            // hide code immediately
+            cell.input.addClass("simplex-hidden");
+            cell.element.find(".prompt").addClass("simplex-hidden");
+
+            // show widget upon finished execution
+            if (cell.element.find(".my-panel").length > 0) {
+                clearInterval(id);
+                $("[data-toggle='tooltip']").tooltip();
+
+                setTimeout(function() {
+                    cell.element.find(".widget-area").height(cell.element.find(".my-panel").height());
+                }, 300);
+
+            }
+        };
+
+        var setupWidgetInterval = setInterval(function() {
+            setupWidget(setupWidgetInterval);
+        }, 100);
+
     };
 
     // Define cell type check
@@ -188,6 +201,7 @@ beadview.createPanel()
     // Prompt for change if the cell has contents and
     // doesnt start with autoexec flag
     var contents = cell.get_text().trim();
+
     if (contents !== "" && contents.indexOf(AUTOEXEC_FLAG) < 0) {
         dialog.modal({
             notebook: Jupyter.notebook,
@@ -212,38 +226,11 @@ beadview.createPanel()
     } else {
         typeCheck(cell);
     }
-
 };
-
-// TODO
-var taskLibrary = function() {
-    var dialog = require('base/js/dialog');
-    dialog.modal({
-        notebook: Jupyter.notebook,
-        keyboard_manager: Jupyter.notebook.keyboard_manager,
-        title: "Task Library",
-        body: "Are you sure you want to change this to a SimpleX cell? This will cause " +
-            "you to lose any code or other information already entered into the cell.",
-        buttons: {
-            "Cancel": {
-                "click": function() {
-                    if (formerType) $("#cell_type").val(formerType).trigger("change");
-                }
-            },
-            "Change Cell Type": {
-                "class": "btn-warning",
-                "click": function() {
-                    typeCheck(cell);
-                }
-            }
-        }
-    });
-}
-
 
 var init_shortcuts = function() {
     // Initialize the SimpleX cell type keyboard shortcut
-    Jupyter.keyboard_manager.command_shortcuts.add_shortcut('g', {
+    Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-x', {
         help: 'to SimpleX',
         help_index: 'cc',
         handler: function() {
@@ -263,7 +250,7 @@ var init_shortcuts = function() {
     });
 
     // Initialize the undo delete button
-    var undeleteCell = $('#undelete_cell');
+    var undeleteCell = $('#undelete_cell a');
     undeleteCell.on("click", function(event) {
         undelete_cell_or_widget();
     });
@@ -273,6 +260,9 @@ var launch_init = function() {
     auto_run_widgets();
     add_menu_options();
     init_shortcuts();
+
+    // TODO
+    // Jupyter.notebook.kernel.execute(, callback);
 
     $(document).ready(function() {
         // enable tooltips
@@ -285,27 +275,24 @@ var launch_init = function() {
     }, 100);
 };
 
-var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/";
+var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/resources/";
 
 define([
-    "base/js/namespace",
+    'base/js/namespace',
     'base/js/events',
-    "jquery",
+    'jquery',
+    STATIC_PATH + 'librarymodal.js'
 ], function(Jupyter, events) {
 
-    // NOTE: CSS injection point
     function load_ipython_extension() {
         // custom CSS
         $('head').append(
             $('<link />')
-            .attr("rel", "stylesheet")
-            .attr("type", "text/css")
-            .attr('href', STATIC_PATH + 'theme.css'),
-            $('<link />')
-            .attr("rel", "stylesheet")
-            .attr("type", "text/css")
-            .attr('href', 'https://fonts.googleapis.com/icon?family=Material+Icons')
+            .attr('rel', 'stylesheet')
+            .attr('type', 'text/css')
+            .attr('href', STATIC_PATH + 'theme.css')
         );
+
         // Wait for the kernel to be ready and then initialize the widgets
         var interval = setInterval(function() {
             wait_for_kernel(interval);

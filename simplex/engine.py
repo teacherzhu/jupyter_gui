@@ -1,18 +1,5 @@
 import sys
 
-from . import OUTPUT
-
-def test_setting_global_variable():
-    globals()['testglobal1'] = '*** TEST 1 ***'
-    # print(globals())
-    # print('\n\n')
-
-    global TEST_2
-    TEST_2 = 'testglobal2'
-    # print(globals())
-    # print('\n\n')
-
-
 def simplex(path_to_include, library_name, function_name, req_args, opt_args, return_names):
     """
 
