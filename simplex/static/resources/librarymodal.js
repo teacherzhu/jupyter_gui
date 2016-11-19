@@ -3,17 +3,19 @@ var Jupyter = Jupyter || IPython || {};
 Jupyter.notebook = Jupyter.notebook || {};
 var STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/simplex_library/";
 var simplexLibrary = [];
+var parent, rightPanel, leftPanel;
 
 /******************** MAIN FUNCTIONS ********************/
 var showLibraryPanel = function() {
     var dialog = require('base/js/dialog');
+    initLibraryPanel();
+
     dialog.modal({
         notebook: Jupyter.notebook,
         keyboard_manager: Jupyter.notebook.keyboard_manager,
-        body: libraryPanel()
+        body: parent
     });
 
-    load_libraries();
     // add styling to parent modal container
     var interval = setInterval(function() {
         if ($('.library-parent').length > 0) {
@@ -33,24 +35,25 @@ var showLibraryPanel = function() {
 
 }
 
-var libraryPanel = function() {
-    var parent = $('<div/>')
+var initLibraryPanel = function() {
+    parent = $('<div/>')
         .addClass('library-parent');
 
-    parent.append(libraryRightPanel);
-    parent.append(libraryLeftPanel);
+    initRightPanel();
+    initLeftPanel();
 
-    return parent;
+    load_libraries();
 }
 
 /******************** HELPER FUNCTIONS ********************/
 
-var libraryRightPanel = function() {
+var initRightPanel = function() {
     // Display right panel
-    var rightPanel = $('<div/>')
+    rightPanel = $('<div/>')
         .addClass('library-right-panel')
         .addClass('pull-right')
-        .addClass('col-xs-4');
+        .addClass('col-xs-4')
+        .appendTo(parent);
 
     // Task information
     var taskInfo = $('<div/>')
@@ -95,38 +98,15 @@ var libraryRightPanel = function() {
 
     taskInfo.appendTo(rightPanel);
     modalButtons.appendTo(rightPanel);
-
-    return rightPanel;
 }
 
-var libraryLeftPanel = function() {
+var initLeftPanel = function() {
     // Display library elements
-    var leftPanel = $('<div/>')
+    leftPanel = $('<div/>')
         .addClass('library-left-panel')
         .addClass('pull-left')
-        .addClass('col-xs-8');
-    // Generate cards
-    for (var i = 0; i < 20; ++i) {
-
-        // var cardParent = $('<div/>')
-        //     .addClass('library-card-wrapper')
-        //     .addClass('col-md-4')
-        //     .addClass('col-sm-6')
-        //     .addClass('col-xs-12');
-        // var card = $('<a/>')
-        //     .addClass('library-card');
-        // var title = $('<h4/>')
-        //     .addClass('card-label')
-        //     .html('Define Components')
-        //     .appendTo(card);
-        // var description = $('<p/>')
-        //     .addClass('card-description')
-        //     .html('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime eius laudantium obcaecati voluptatibus dignissimos quas, fugit, debitis autem atque maiores at iusto quibusdam? Magni, iure sapiente in aut expedita sed!')
-        //     .appendTo(card);
-        // card.appendTo(cardParent);
-        // cardParent.appendTo(leftPanel);
-    }
-    return leftPanel;
+        .addClass('col-xs-8')
+        .appendTo(parent);
 }
 
 // read in file listing
@@ -135,23 +115,62 @@ var load_libraries = function() {
         url: STATIC_LIB_PATH + "library_list.txt",
         dataType: "text",
         success: function(data) {
-            var lib_files = data.split('\n');
+
+            var lib_files = $.trim(data).split('\n');
             // load all simplex json files
-            for (var i = 0; i < lib_files.length; ++i) {
+            for (var i in lib_files) {
 
                 // try to load each file
                 $.ajax({
                     url: STATIC_LIB_PATH + lib_files[i],
                     dataType: "text",
                     success: function(simplex_data) {
-                        simplexLibrary.push(simplex_data);
+                        addToLibrary(simplex_data);
                     },
                     error: function(result) {
-                        console.log(result);
+                        console.log(STATIC_LIB_PATH + lib_files[i]);
                         console.log('Unable to retrieve library simplex file, ' + lib_files[i] + '.');
                     }
                 });
             }
         }
     });
+}
+
+var addToLibrary = function(simplex_data) {
+    simplexLibrary.push(simplex_data);
+    var j = JSON.parse(simplex_data);
+    var tasks = j.tasks;
+    var path = j.library_path;
+    var package_title;
+    if (path.split('/')[path.split('/').length - 1] == "") {
+        package_title = path.split('/')[path.split('/').length - 2];
+    } else {
+        package_title = path.split('/')[path.split('/').length - 1];
+    }
+
+    for (var index in tasks) {
+        // Generate card
+        var cardParent = $('<div/>')
+            .addClass('library-card-wrapper')
+            .addClass('col-md-4')
+            .addClass('col-sm-6')
+            .addClass('col-xs-12');
+        var card = $('<a/>')
+            .addClass('library-card');
+        var label = $('<h4/>')
+            .addClass('card-label')
+            .html(tasks[index].label)
+            .appendTo(card);
+        var packageTitle = $('<p/>')
+            .addClass('card-package-title')
+            .html(package_title)
+            .appendTo(card);
+        var description = $('<p/>')
+            .addClass('card-description')
+            .html(tasks[index].description)
+            .appendTo(card);
+        card.appendTo(cardParent);
+    }
+    cardParent.appendTo(leftPanel);
 }

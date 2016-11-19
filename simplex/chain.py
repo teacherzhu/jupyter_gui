@@ -53,10 +53,6 @@ class Chain:
         print(bead.function_name)
         print(bead.library_name)
         print(bead.library_path)
-        print(input_values)
-        print(opt_input_values)
-        print(output_values)
-        print(opt_input_fields)
         # Verify all input parameters are present.
         if None in input_values or '' in input_values:
             print('Please provide all required inputs.')
@@ -79,9 +75,8 @@ class Chain:
                           return_names=output_values)
 
         # Parse returned values
-        for n, r in zip(return_names, results):
-            exec('globals()["{}"]'.format(n))
-            exec('{} = r'.format(n))
+        # for n, r in zip(return_names, results):
+        #     globals()[n] = r
 
     def returnData(self, value, dataType):
         '''

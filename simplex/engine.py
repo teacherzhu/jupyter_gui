@@ -1,9 +1,5 @@
 import sys
 
-def test():
-    globals()['XXX'] = 'XXX'
-
-
 def simplex(path_to_include, library_name, function_name, req_args, opt_args, return_names):
     """
 
@@ -29,8 +25,8 @@ def simplex(path_to_include, library_name, function_name, req_args, opt_args, re
 
     for n, r in zip(return_names, returned):
         globals()[n] = r
-    global x
-    x = 1000
+    print('hello')
+    print(globals())
 
 
 def process_args(req_args, opt_args):
