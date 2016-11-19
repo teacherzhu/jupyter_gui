@@ -5,8 +5,7 @@ jupyter nbextensions_configurator enable
 jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 # install notebook extension
-python setup.py develop --uninstall
-python setup.py develop
+pip install -e .
 jupyter nbextension install --py --sys-prefix simplex
 jupyter nbextension enable --py --sys-prefix simplex
 jupyter serverextension enable --py --sys-prefix simplex
@@ -17,4 +16,4 @@ ls *.simplex > library_list.txt
 
 cd ../../..
 
-# jupyter notebook --no-browser
+jupyter notebook --no-browser

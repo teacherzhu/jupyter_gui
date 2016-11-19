@@ -141,6 +141,19 @@ with open(json_filepath, 'r') as f:
     config = json.load(f)
 
 controller = Chain(config, globals(), locals(), os.getcwd())
+
+def set_globals():
+    for name, value in controller.output.items():
+        globals()[name] = value
+        # exec('global {}'.format(name), globals())
+        # exec('{} = value'.format(name))
+
+# register callback
+em = get_ipython().events
+if (set_globals not in em.callbacks['post_run_cell']):
+    em.register('post_execute', set_globals)
+
+# make and show widget
 beadview = controller.createBeadView(controller.beads[0])
 beadview.createPanel()
 `
@@ -155,11 +168,16 @@ beadview.createPanel()
             // hide code immediately
             cell.input.addClass("simplex-hidden");
             cell.element.find(".prompt").addClass("simplex-hidden");
+
             // show widget upon finished execution
             if (cell.element.find(".my-panel").length > 0) {
-                cell.element.find(".widget-area").height(cell.element.find(".my-panel").height());
-                $("[data-toggle='tooltip']").tooltip();
                 clearInterval(id);
+                $("[data-toggle='tooltip']").tooltip();
+
+                setTimeout(function() {
+                    cell.element.find(".widget-area").height(cell.element.find(".my-panel").height());
+                }, 300);
+
             }
         };
 
@@ -242,6 +260,9 @@ var launch_init = function() {
     auto_run_widgets();
     add_menu_options();
     init_shortcuts();
+
+    // TODO
+    // Jupyter.notebook.kernel.execute(, callback);
 
     $(document).ready(function() {
         // enable tooltips

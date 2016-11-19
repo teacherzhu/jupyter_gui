@@ -1,5 +1,4 @@
 MANIFEST.in
-setup.py
 simplex/__init__.py
 simplex/bead.py
 simplex/beadview.py
