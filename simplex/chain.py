@@ -15,6 +15,7 @@ class Chain:
         self.locals = local_n
         self.cwd = cwd
         self.beads = []
+        self.output = []
 
         version = config['version']
         library_path = config['library_path']
@@ -50,13 +51,10 @@ class Chain:
         print(input_values)
         print(opt_input_values)
         print(output_values)
-        print(bead.function_name)
-        print(bead.library_name)
-        print(bead.library_path)
-        print(input_values)
-        print(opt_input_values)
-        print(output_values)
-        print(opt_input_fields)
+        # print(bead.function_name)
+        # print(bead.library_name)
+        # print(bead.library_path)
+
         # Verify all input parameters are present.
         if None in input_values or '' in input_values:
             print('Please provide all required inputs.')
@@ -71,17 +69,18 @@ class Chain:
             return
 
         # Call function
-        results = simplex(path_to_include=bead.library_path,
-                          library_name=bead.library_name,
-                          function_name=bead.function_name,
-                          req_args=input_values,
-                          opt_args=opt_input_values,
-                          return_names=output_values)
+        self.output = simplex(path_to_include=bead.library_path,
+                              library_name=bead.library_name,
+                              function_name=bead.function_name,
+                              req_args=input_values,
+                              opt_args=opt_input_values,
+                              return_names=output_values)
 
         # Parse returned values
-        for n, r in zip(return_names, results):
-            exec('globals()["{}"]'.format(n))
-            exec('{} = r'.format(n))
+        # for n, r in zip(output_values, results):
+        #     exec('globals()["{}"] = r'.format(n))
+
+        # print(globals().keys())
 
     def returnData(self, value, dataType):
         '''

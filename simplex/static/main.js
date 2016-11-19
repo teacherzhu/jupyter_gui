@@ -151,8 +151,8 @@ beadview.createPanel()
         //         function hideCode() {
         //             if (cell.length > 0) {
         //                 cell.input
-        cell.input.css("height", "0")
-            .css("overflow", "hidden");
+        // cell.input.css("height", "0")
+        //     .css("overflow", "hidden");
         //         } else {
         //             setTimeout(hideCode(), 10);
         //         }
