@@ -1,9 +1,8 @@
 from ipywidgets import widgets as w
 from functools import partial
-# from dominate.tags import *
 
 
-class BeadView:
+class TaskView:
     '''
     Represents the bead view.
     '''

@@ -32,7 +32,6 @@ var showLibraryPanel = function() {
             clearInterval(interval);
         }
     }, 100);
-
 }
 
 var initLibraryPanel = function() {
@@ -157,7 +156,11 @@ var addToLibrary = function(simplex_data) {
             .addClass('col-sm-6')
             .addClass('col-xs-12');
         var card = $('<a/>')
-            .addClass('library-card');
+            .addClass('library-card')
+            .on('click', function(event) {
+                event.preventDefault();
+                toSimpleXCell();
+            });;
         var label = $('<h4/>')
             .addClass('card-label')
             .html(tasks[index].label)
