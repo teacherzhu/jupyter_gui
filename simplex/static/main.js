@@ -154,8 +154,7 @@ var undelete_cell_or_widget = function() {
     }
 };
 
-var toSimpleXCell = function(formerType, index, simplexJSON) {
-    var jsonString = JSON.stringify(simplexJSON);
+var toSimpleXCell = function(formerType, index, simplex_data) {
     var dialog = require('base/js/dialog');
     if (index === undefined) {
         // using selected cell
@@ -164,14 +163,13 @@ var toSimpleXCell = function(formerType, index, simplexJSON) {
     cell = Jupyter.notebook.get_cell(index);
     // TODO Define cell change internal function
     var cellChange = function(cell) {
-
         // // Get the auth widget code
         var code = AUTOEXEC_FLAG + `
 from simplex.taskmanager import TaskManager
 import json, os
 
 # load wrapper
-config = json.loads(${jsonString})
+config = json.loads('''${simplex_data}''')
 task_manager = TaskManager(config, globals(), locals(), os.getcwd())
 
 def set_globals():
