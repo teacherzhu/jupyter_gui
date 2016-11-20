@@ -3,6 +3,7 @@ var Jupyter = Jupyter || IPython || {};
 Jupyter.notebook = Jupyter.notebook || {};
 var STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/simplex_library/";
 var simplexLibrary = [];
+var selectedIndex;
 var parent, rightPanel, leftPanel;
 
 /******************** MAIN FUNCTIONS ********************/
@@ -93,6 +94,12 @@ var initRightPanel = function() {
         .addClass('btn-primary')
         .attr('data-dismiss', 'modal')
         .html('Select')
+        .on('click', function(event) {
+            event.preventDefault();
+            toSimpleXCell(null,
+                Jupyter.notebook.get_selected_index(),
+                simplexLibrary[selectedIndex]);
+        })
         .appendTo(modalButtons);
 
     taskInfo.appendTo(rightPanel);
@@ -154,13 +161,20 @@ var addToLibrary = function(simplex_data) {
             .addClass('library-card-wrapper')
             .addClass('col-md-4')
             .addClass('col-sm-6')
-            .addClass('col-xs-12');
+            .addClass('col-xs-12')
+            .on('click', function(event) {
+                event.preventDefault();
+                selectedIndex = $(this).index();
+                console.log(selectedIndex);
+            });
         var card = $('<a/>')
             .addClass('library-card')
             .on('click', function(event) {
                 event.preventDefault();
-                toSimpleXCell();
-            });;
+                // styling
+                $('.library-card-selected').removeClass('library-card-selected');
+                $(this).addClass('library-card-selected');
+            });
         var label = $('<h4/>')
             .addClass('card-label')
             .html(tasks[index].label)

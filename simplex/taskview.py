@@ -4,15 +4,15 @@ from functools import partial
 
 class TaskView:
     '''
-    Represents the bead view.
+    Represents the task view.
     '''
     INPUT_FLAG = 'input'
     OPT_INPUT_FLAG = 'opt_input'
     OUTPUT_FLAG = 'output'
 
-    def __init__(self, chain, bead, global_n, local_n, cwd):
+    def __init__(self, chain, task, global_n, local_n, cwd):
         self.my_chain = chain
-        self.bead = bead
+        self.task = task
         self.globals = global_n
         self.locals = local_n
         self.cwd = cwd
@@ -24,18 +24,18 @@ class TaskView:
 
     def panel_heading(self):
         heading = w.Box().add_class('panel-heading')
-        text = w.HTML('<h1>' + self.bead.label + '</h1>')
+        text = w.HTML('<h1>' + self.task.label + '</h1>')
         heading.children = tuple([text])
         return heading
 
     def panel_body(self):
         # shorter reference
-        bead = self.bead
+        task = self.task
 
         # submit callback
         run_callback = partial(self.my_chain.submit,
                                self.fields,
-                               self.bead)
+                               self.task)
 
         # define panel-body
         body = w.Box().add_class('panel-body')
@@ -46,21 +46,21 @@ class TaskView:
                                                arg['description'],
                                                self.INPUT_FLAG,
                                                arg['arg_name'])
-                               for arg in bead.required_args])
+                               for arg in task.required_args])
 
         opt_input_elements = [w.HTML('<h3>Optional Input Parameters<h3/>')]
         opt_input_elements.extend([self.text_field(arg['label'],
                                                    arg['description'],
                                                    self.OPT_INPUT_FLAG,
                                                    arg['arg_name'])
-                                   for arg in bead.optional_args])
+                                   for arg in task.optional_args])
 
         # create output fields
         output_elements = [w.HTML('<h3>Output Parameters<h3/>')]
         output_elements.extend([self.text_field(arg['label'],
                                                 arg['description'],
                                                 self.OUTPUT_FLAG)
-                                for arg in bead.return_names])
+                                for arg in task.return_names])
 
         # define run button
         run_button = w.Button(description="RUN")
@@ -85,7 +85,7 @@ class TaskView:
         # submit callback
         run_callback = partial(self.my_chain.submit,
                                self.fields,
-                               self.bead)
+                               self.task)
 
         # TODO MAKE FANCIER
         # <div class="input-group">
@@ -123,4 +123,4 @@ class TaskView:
         return panel
 
     def submit(self, button):
-        self.my_chain.submit(self.fields, bead)
+        self.my_chain.submit(self.fields, task)

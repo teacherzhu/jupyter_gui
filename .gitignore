@@ -5,4 +5,4 @@ dist/
 */**/.idea/
 simplex/static/simplex_library/*/
 simplex/bin/
-simplex.egg-info
+simplex.egg-info/

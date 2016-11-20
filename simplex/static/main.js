@@ -154,31 +154,24 @@ var undelete_cell_or_widget = function() {
     }
 };
 
-var toSimpleXCell = function(formerType, index) {
+var toSimpleXCell = function(formerType, index, simplexJSON) {
+    var jsonString = JSON.stringify(simplexJSON);
     var dialog = require('base/js/dialog');
     if (index === undefined) {
         // using selected cell
         index = Jupyter.notebook.get_selected_index();
     }
     cell = Jupyter.notebook.get_cell(index);
-
     // TODO Define cell change internal function
     var cellChange = function(cell) {
 
         // // Get the auth widget code
         var code = AUTOEXEC_FLAG + `
-from simplex.chain import Chain
+from simplex.taskmanager import TaskManager
 import json, os
 
 # load wrapper
-DIR_HOME = os.environ['HOME']
-DIR_SIMPLEX = os.path.join(DIR_HOME, '.simplex')
-if not os.path.isdir(DIR_SIMPLEX):
-    os.mkdir(DIR_SIMPLEX)
-json_filepath = os.path.join(DIR_SIMPLEX, 'ccal.simplex')
-with open(json_filepath, 'r') as f:
-    config = json.load(f)
-
+config = json.loads(${jsonString})
 task_manager = TaskManager(config, globals(), locals(), os.getcwd())
 
 def set_globals():
@@ -194,7 +187,7 @@ if (set_globals not in get_ipython().events.callbacks['post_run_cell']):
 # make and show widget
 task_view = task_manager.create_task_view(task_manager.tasks[0])
 task_view.createPanel()
-`
+`;
 
         // Put the code in the cell
         cell.code_mirror.setValue(code);

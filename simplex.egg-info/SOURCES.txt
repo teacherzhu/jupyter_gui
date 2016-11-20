@@ -1,9 +1,9 @@
 MANIFEST.in
 simplex/__init__.py
-simplex/bead.py
-simplex/beadview.py
-simplex/chain.py
 simplex/engine.py
+simplex/task.py
+simplex/taskmanager.py
+simplex/taskview.py
 simplex.egg-info/PKG-INFO
 simplex.egg-info/SOURCES.txt
 simplex.egg-info/dependency_links.txt
