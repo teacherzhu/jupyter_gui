@@ -59,7 +59,7 @@ var auto_run_widgets = function() {
 };
 
 var add_menu_options = function() {
-    // Add SimpleX "cell type" if not already in file menu
+    // Add SimpleX "cell type" if not already in menu
     var dropdown = $("#cell_type");
     var gpInDropdown = dropdown.find("option:contains('SimpleX')").length > 0;
     if (!gpInDropdown) {
@@ -87,7 +87,7 @@ var add_menu_options = function() {
             .append(
                 $("<li id='to_simplex' title='Insert a SimpleX widget cell'><a href='#'>SimpleX</a></option>")
                 .click(function() {
-                    showLibraryPanel();
+                    toSimpleXCell();
                 })
             );
     }
@@ -95,9 +95,9 @@ var add_menu_options = function() {
     // add to toolbar
     var addButton = $('<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>');
     addButton.click(function() {
-        Jupyter.notebook.insert_cell_below();
-        Jupyter.notebook.select_next();
         showLibraryPanel();
+        // Jupyter.notebook.insert_cell_below();
+        // Jupyter.notebook.select_next();
         // toSimpleXCell();
     });
     $("#insert_above_below").after(addButton);
@@ -109,7 +109,7 @@ var init_shortcuts = function() {
         help: 'to SimpleX',
         help_index: 'cc',
         handler: function() {
-            showLibraryPanel();
+            toSimpleXCell();
             return false;
         }
     });
@@ -225,7 +225,7 @@ task_view.createPanel()
         }
         setTimeout(function() {
             cellChange(cell);
-        }, 50);
+        }, 10);
     };
 
     // Prompt for change if the cell has contents and

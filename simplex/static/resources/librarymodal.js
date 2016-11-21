@@ -29,10 +29,7 @@ var showLibraryPanel = function() {
                 .find('.modal-footer')
                 .addClass('library-modal-footer');
             $('.library-parent').parents('.modal-dialog')
-                .addClass('library-modal-dialog')
-                .on('click', function(event) {
-                    event.preventDefault();
-                });;
+                .addClass('library-modal-dialog');
             clearInterval(interval);
         }
     }, 100);
@@ -95,8 +92,6 @@ var initRightPanel = function() {
         .addClass('btn')
         .addClass('btn-default')
         .addClass('btn-primary')
-        .attr('id', 'library-select-button')
-        .addClass('disabled')
         .attr('data-dismiss', 'modal')
         .html('Select')
         .on('click', function(event) {
@@ -121,16 +116,16 @@ var initLeftPanel = function() {
 }
 
 // read in file listing
-// TODO ajax calls are async; sort library?
 var load_libraries = function() {
     $.ajax({
         url: STATIC_LIB_PATH + "library_list.txt",
         dataType: "text",
         success: function(data) {
-            console.log('LIBRARY_LIST: ' + data);
+
             var lib_files = $.trim(data).split('\n');
             // load all simplex json files
             for (var i in lib_files) {
+
                 // try to load each file
                 $.ajax({
                     url: STATIC_LIB_PATH + lib_files[i],
@@ -149,7 +144,6 @@ var load_libraries = function() {
 }
 
 var addToLibrary = function(simplex_data) {
-    // load json to memory
     simplexLibrary.push(simplex_data);
     var j = JSON.parse(simplex_data);
     var tasks = j.tasks;
@@ -161,8 +155,8 @@ var addToLibrary = function(simplex_data) {
         package_title = path.split('/')[path.split('/').length - 1];
     }
 
-    // Generate cards
     for (var index in tasks) {
+        // Generate card
         var cardParent = $('<div/>')
             .addClass('library-card-wrapper')
             .addClass('col-md-4')
@@ -173,32 +167,27 @@ var addToLibrary = function(simplex_data) {
                 selectedIndex = $(this).index();
                 console.log(selectedIndex);
             });
-        // card style and click action
         var card = $('<a/>')
             .addClass('library-card')
             .on('click', function(event) {
                 event.preventDefault();
+                // styling
                 $('.library-card-selected').removeClass('library-card-selected');
                 $(this).addClass('library-card-selected');
-                $('#library-select-button').removeClass('disabled');
             });
-        // label/title of method
         var label = $('<h4/>')
             .addClass('card-label')
-            .html(tasks[index].label);
-        // function's parent package
-        var packageTitle = $('<small/>')
+            .html(tasks[index].label)
+            .appendTo(card);
+        var packageTitle = $('<p/>')
             .addClass('card-package-title')
             .html(package_title)
-            .appendTo(label);
-        // function description
+            .appendTo(card);
         var description = $('<p/>')
             .addClass('card-description')
-            .html(tasks[index].description);
-
-        label.appendTo(card);
-        description.appendTo(card);
+            .html(tasks[index].description)
+            .appendTo(card);
         card.appendTo(cardParent);
-        cardParent.appendTo(leftPanel);
     }
+    cardParent.appendTo(leftPanel);
 }
