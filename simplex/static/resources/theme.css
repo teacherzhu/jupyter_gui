@@ -119,7 +119,9 @@ button.close {
   overflow: hidden;
 }
 
+
 /******************** Information Panel ********************/
+
 .library-right-panel {
   background: lightgrey;
   height: 100%;
@@ -127,8 +129,8 @@ button.close {
   flex-direction: column;
   align-items: stretch;
   z-index: 2;
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.22));
-  -webkit-filter: drop-shadow(0 0px 5px rgba(0,0,0,0.45));
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.22));
+  -webkit-filter: drop-shadow(0 0px 5px rgba(0, 0, 0, 0.45));
 }
 
 .library-task-info {
@@ -136,9 +138,7 @@ button.close {
   margin: 0.5em 2em;
 }
 
-.library-task-heading {
-
-}
+.library-task-heading {}
 
 .library-task-info > div * {
   display: inline-block;
@@ -160,9 +160,7 @@ button.close {
   line-height: 2;
 }
 
-.library-task-ref-link {
-
-}
+.library-task-ref-link {}
 
 .library-task-description {
   margin: 0.5em 0;
@@ -170,15 +168,17 @@ button.close {
 }
 
 .library-button-group {
- margin: 1em;
- text-align: right;
+  margin: 1em;
+  text-align: right;
 }
 
 .library-button-group * {
   margin: 0.5em;
 }
 
+
 /******************** Library Panel ********************/
+
 .library-left-panel {
   background: #EFEFEF;
   height: 100%;
@@ -190,27 +190,36 @@ button.close {
   overflow-y: auto;
 }
 
-.library-card-wrapper {
-
-}
-
-.library-card, .library-card:hover {
+.library-card,
+.library-card:hover {
+  box-sizing:content-box;
   display: block;
-  padding: 0.8em;
+  height: 150px;;
+  padding: 0.8em; 
   margin: 0.4em;
   background: white;
   border-radius: 3px;
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.22));
-  -webkit-filter: drop-shadow(0 1px 1px rgba(0,0,0,0.22));
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.22));
+  -webkit-filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.22));
   color: #444;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.1s linear;
 }
 
+.library-card-selected,
 .library-card:hover {
-  filter: drop-shadow(0 3px 2px rgba(0,0,0,0.22));
-  -webkit-filter: drop-shadow(0 4px 4px rgba(0,0,0,0.22));
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.22));
+  -webkit-filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.22));
+  outline: 0.2em solid lightblue !important;
+  outline-offset: -0.2em;
+}
+
+.library-card-selected {
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.22)) !important;
+  -webkit-filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.22)) !important;
+  outline: 0.2em solid lightblue !important;
+  outline-offset: -0.2em;
 }
 
 .card-description {

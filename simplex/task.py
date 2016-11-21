@@ -1,7 +1,6 @@
-class Bead:
+class Task:
     '''
-    Uses ipywidgets to create a submission form widget.
-    Generates command to be executed by Chain class.
+    Model for SimpleX task.
     '''
 
     def __init__(self, version, library_path, config):
