@@ -1,8 +1,6 @@
-build/
-dist/
-*/**/__pycache__/
 .DS_Store
+*/**/__pycache__/
 */**/.idea/
-simplex/static/simplex_library/*/
+
 simplex/bin/
 simplex.egg-info/

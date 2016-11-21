@@ -13,6 +13,4 @@ simplex/static/main.js
 simplex/static/resources/librarymodal.js
 simplex/static/resources/theme.css
 simplex/static/simplex_library/ccal.simplex
-simplex/static/simplex_library/ccal1.simplex
-simplex/static/simplex_library/ccal2.simplex
 simplex/static/simplex_library/library_list.txt
