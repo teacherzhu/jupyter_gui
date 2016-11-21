@@ -1,6 +1,12 @@
 OUTPUT = {}
 
+
 def _jupyter_nbextension_paths():
+    """
+
+    :return:
+    """
+
     return [dict(
         section="notebook",
         # the path is relative to the `my_fancy_module` directory
