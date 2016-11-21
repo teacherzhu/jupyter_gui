@@ -11,9 +11,6 @@ jupyter nbextension enable --py --sys-prefix simplex
 jupyter serverextension enable --py --sys-prefix simplex
 
 # update simplex_library
-cd simplex/static/simplex_library
-ls *.simplex > library_list.txt
-
-cd ../../..
+ls simplex/static/simplex_library/*.simplex > simplex/static/simplex_library/library_list.txt
 
 jupyter notebook --no-browser
