@@ -5,6 +5,7 @@ jupyter nbextensions_configurator enable
 jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 # install notebook extension
+rm -rf *.egg-info*
 pip install -e .
 jupyter nbextension install --py --sys-prefix simplex
 jupyter nbextension enable --py --sys-prefix simplex
