@@ -1,6 +1,6 @@
 .DS_Store
 */**/__pycache__/
-*/**/.idea/
+.idea
 
 simplex/bin/
 simplex.egg-info/
