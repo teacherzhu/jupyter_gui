@@ -176,6 +176,10 @@ button.close {
   margin: 0.5em;
 }
 
+#library-select-button {
+
+}
+
 
 /******************** Library Panel ********************/
 
@@ -194,8 +198,8 @@ button.close {
 .library-card:hover {
   box-sizing:content-box;
   display: block;
-  height: 150px;;
-  padding: 0.8em; 
+  height: 200px;
+  padding: 0.8em;
   margin: 0.4em;
   background: white;
   border-radius: 3px;
@@ -207,7 +211,6 @@ button.close {
   transition: all 0.1s linear;
 }
 
-.library-card-selected,
 .library-card:hover {
   filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.22));
   -webkit-filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.22));
@@ -220,6 +223,10 @@ button.close {
   -webkit-filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.22)) !important;
   outline: 0.2em solid lightblue !important;
   outline-offset: -0.2em;
+}
+
+.card-package-title {
+  margin-left: 0.5em;
 }
 
 .card-description {

@@ -9,6 +9,5 @@ setup(name='simplex',
       ],
       package_data={'simplex': ['static/main.js',
                                 'static/resources/*',
-                                'static/simplex_library/*.simplex',
-                                'static/simplex_library/library_list.txt']}
+                                'static/simplex_library/*']}
       )
