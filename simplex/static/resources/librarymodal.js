@@ -29,7 +29,10 @@ var showLibraryPanel = function() {
                 .find('.modal-footer')
                 .addClass('library-modal-footer');
             $('.library-parent').parents('.modal-dialog')
-                .addClass('library-modal-dialog');
+                .addClass('library-modal-dialog')
+                .on('click', function(event) {
+                    event.preventDefault();
+                });;
             clearInterval(interval);
         }
     }, 100);
@@ -92,6 +95,8 @@ var initRightPanel = function() {
         .addClass('btn')
         .addClass('btn-default')
         .addClass('btn-primary')
+        .attr('id', 'library-select-button')
+        .addClass('disabled')
         .attr('data-dismiss', 'modal')
         .html('Select')
         .on('click', function(event) {
@@ -116,11 +121,13 @@ var initLeftPanel = function() {
 }
 
 // read in file listing
+// TODO ajax calls are async; sort library?
 var load_libraries = function() {
     $.ajax({
         url: STATIC_LIB_PATH + "library_list.txt",
         dataType: "text",
         success: function(data) {
+            console.log('LIBRARY_LIST: ' + data);
             var lib_files = $.trim(data).split('\n');
             // load all simplex json files
             for (var i in lib_files) {
@@ -173,22 +180,24 @@ var addToLibrary = function(simplex_data) {
                 event.preventDefault();
                 $('.library-card-selected').removeClass('library-card-selected');
                 $(this).addClass('library-card-selected');
+                $('#library-select-button').removeClass('disabled');
             });
         // label/title of method
         var label = $('<h4/>')
             .addClass('card-label')
-            .html(tasks[index].label)
-            .appendTo(card);
+            .html(tasks[index].label);
         // function's parent package
-        var packageTitle = $('<p/>')
+        var packageTitle = $('<small/>')
             .addClass('card-package-title')
             .html(package_title)
-            .appendTo(card);
+            .appendTo(label);
         // function description
         var description = $('<p/>')
             .addClass('card-description')
-            .html(tasks[index].description)
-            .appendTo(card);
+            .html(tasks[index].description);
+
+        label.appendTo(card);
+        description.appendTo(card);
         card.appendTo(cardParent);
         cardParent.appendTo(leftPanel);
     }

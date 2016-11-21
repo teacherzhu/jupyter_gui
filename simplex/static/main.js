@@ -109,7 +109,7 @@ var init_shortcuts = function() {
         help: 'to SimpleX',
         help_index: 'cc',
         handler: function() {
-            toSimpleXCell();
+            showLibraryPanel();
             return false;
         }
     });
