@@ -1,11 +1,11 @@
 {
   "version": "",
-  "library_path": "ccal/",
+  "library_path": "/Users/ckmah/ccal/",
   "tasks": [
-
     {
       "library_name": "ccal",
       "label": "Define Components",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
       "function_name": "define_components",
       "required_args": [
         {
@@ -19,11 +19,13 @@
           "description": "This is an argument description for Number of Components."
         }
       ],
-      "optional_args": [ {
-        "arg_name": "n_clusterings",
-        "label": "Number of Consensus Clusterings",
-        "description": "This is an argument description for Number of Consensus Clusterings."
-      }],
+      "optional_args": [
+        {
+          "arg_name": "n_clusterings",
+          "label": "Number of Consensus Clusterings",
+          "description": "This is an argument description for Number of Consensus Clusterings."
+        }
+      ],
       "return_names": [
         {
           "label": "NMF Result Dictionary",
@@ -38,6 +40,7 @@
     {
       "library_name": "ccal",
       "label": "Define States",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
       "function_name": "define_states",
       "required_args": [
         {
@@ -69,6 +72,7 @@
     {
       "library_name": "ccal",
       "label": "Make Onco-GPS Map",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
       "function_name": "make_oncogps_map",
       "required_args": [
         {
