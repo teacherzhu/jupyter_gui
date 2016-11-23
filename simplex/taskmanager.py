@@ -95,8 +95,8 @@ class TaskManager:
         :param library_path: str;
         :param library_name: str;
         :param function_name: str;
-        :param default_args: dict;
         :param req_args: dict;
+        :param default_args: dict;
         :param opt_args: dict;
         :param return_names: list;
         :return: list; raw output of the named function.
