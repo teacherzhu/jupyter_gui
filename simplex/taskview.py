@@ -21,7 +21,10 @@ class TaskView:
 
         # TODO: think of calling without partial
         # Hook for running the task
-        self.run_callback = partial(self.task_manager.submit, self.fields, self.task)
+
+    # TODO: test
+    def callback(self, unused_widget_item):
+        self.task_manager.submit(self.fields, self.task)
 
     def create(self):
         """
@@ -81,7 +84,7 @@ class TaskView:
         run_button = w.Button(description="RUN")
         run_button.add_class('btn').add_class(
             'btn-primary').add_class('execute_task-btn')
-        run_button.on_click(self.run_callback)
+        run_button.on_click(self.callback)
 
         # add to body
         all_elements = []
@@ -111,7 +114,7 @@ class TaskView:
         field = w.Text(description=label).add_class('form-group')
 
         # Hook the box with the callback
-        field.on_submit(self.run_callback)
+        field.on_submit(self.callback)
 
         # Make help button
         help_button = w.Button(description='?', tooltip=description)

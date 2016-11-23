@@ -46,6 +46,8 @@ class TaskManager:
         """
         Callback function for when the cell runs. Execute function.
         """
+        print(fields)
+        print(task)
 
         # Retrieve default arguments to execute_task the function
         default_values = {arg['arg_name']: arg['value'] for arg in task.default_args}
