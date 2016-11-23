@@ -1,16 +1,31 @@
 import sys
 
-def simplex(path_to_include, library_name, function_name, req_args, opt_args, return_names):
+
+def simplex(global_n, path_to_include, library_name, function_name,
+            default_args, req_args, opt_args, return_names):
+    """
+    Executes named function from specified python package path.
+
+    Takes in arguments for the named function, automatically detecting and
+    casting to the appropriate data type. Returns the results of the function.
+
+    Parameters
+    ----------
+    path_to_include : str
+    library_name : str
+    function_name : str
+    req_args : dict
+    opt_args : dict
+    return_names : list
+
+    Returns
+    ----------
+    results
+        Raw output of the named function.
+
     """
 
-    :param path_to_include:
-    :param library_name:
-    :param function_name:
-    :param req_args:
-    :param opt_args:
-    :param return_names:
-    :return:
-    """
+    simplex_globals = global_n
 
     # Import function
     sys.path.insert(0, path_to_include)
@@ -18,67 +33,47 @@ def simplex(path_to_include, library_name, function_name, req_args, opt_args, re
     exec('from {} import {} as function'.format(library_name, function_name))
 
     # Process args
-    args = process_args(req_args, opt_args)
-    print('ARGS: ', args)
+    args = process_args(default_args, req_args, opt_args, simplex_globals)
+
     # Execute
     return locals()['function'](**args)
 
 
-def process_args(req_args, opt_args):
+def process_args(default_args, req_args, opt_args, simplex_globals):
     """
 
-    :param req_args: dicitonary;
-    :param opt_args: dicitonary;
+    :param req_args: dictionary;
+    :param opt_args: dictionary;
     :return: dictionary;
     """
 
-    args = merge_dicts(req_args, opt_args)
+    args = merge_dicts(default_args, req_args, opt_args)
     processed_args = {}
 
-    names = globals()
-
     for k, v in args.items():
+        print('arg-key: {}; arg-val: {}'.format(k, v))
 
-        if v in names:  # Use defined name
-            processed = names[v]
-            print('Argument VAR: \'{}\' ==> {} ...'.format(v, processed))
+        # process as variable from notebook environment
+        if v in simplex_globals:
+            processed = simplex_globals[v]
+            print('+ {} in globals()'.format(v))
+        # process as float/int/bool/string
+        else:
+            processed = [cast_string_to_int_float_bool_or_str(
+                s) for s in v.split(',') if s]
+            print('- {} converted to {}'.format(v, type(processed[0])))
 
-        processed = [cast_string_to_int_float_bool_or_str(
-            s) for s in v.split(',') if s]
-
-        if len(processed) == 1:
-            processed = processed[0]
-        # else:  # Process arguments
-        #     if isinstance(v, int) or isinstance(v, float):
-        #         processed = v
-        # print('Argument NUMBER: \'{}\' ==> {} ...'.format(v, processed))
-
-        #     elif ',' in v:  # Assume iterable
-        #         processed = [cast_string_to_int_float_bool_or_str(
-        #             s) for s in v.split(',') if s]
-        #     else:  # Using as it is (str)
-        #         processed = v
-        #         print('Argument STR: \'{}\' ==> {} ...'.format(v, processed))
+            if len(processed) == 1:
+                processed = processed[0]
 
         processed_args[k] = processed
     return processed_args
 
 
-def process_kwargs(kwargs):
-    """
-
-    :param kwargs: dict;
-    :return: dict;
-    """
-
-    processed_kwargs = kwargs
-
-    return processed_kwargs
-
-
 def merge_dicts(*dicts):
     """
-    Shallow copy and merge dicts into a new dict; precedence goes to key value pairs in latter dict.
+    Shallow copy and merge dicts into a new dict; precedence goes to
+    key value pairs in latter dict.
     :param dicts: iterable of dict;
     :return: dict;
     """
@@ -92,13 +87,15 @@ def merge_dicts(*dicts):
 
 def cast_string_to_int_float_bool_or_str(string):
     """
-    Convert string into the following data types (return the first successful): int, float, bool, or str.
+    Convert string into the following data types (return the first successful):
+    int, float, bool, or str.
     :param string: str;
     :return: int, float, bool, or str;
     """
 
     value = string.strip()
 
+    # try to cast to int or float
     for var_type in [int, float]:
         try:
             converted_var = var_type(value)
@@ -106,9 +103,11 @@ def cast_string_to_int_float_bool_or_str(string):
         except ValueError:
             pass
 
+    # try to cast as boolean
     if value == 'True':
         return True
     elif value == 'False':
         return False
 
+    # return as string last priority
     return str(value)

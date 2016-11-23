@@ -1,1 +1,0 @@
-SIMPLEX_LIBRARY=''

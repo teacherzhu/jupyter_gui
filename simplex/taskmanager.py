@@ -1,6 +1,6 @@
+from .engine import simplex
 from .task import Task
 from .taskview import TaskView
-from .engine import simplex
 
 
 class TaskManager:
@@ -9,8 +9,14 @@ class TaskManager:
     '''
 
     def __init__(self, config, global_n, local_n, cwd):
-        self.globals = global_n
-        self.locals = local_n
+        '''
+        Constructor for TaskManager class.
+
+        Arguments
+        -----
+        '''
+        self.global_n = global_n
+        self.local_n = local_n
         self.cwd = cwd
         self.tasks = []
         self.output = {}
@@ -31,11 +37,21 @@ class TaskManager:
         '''
         Create a TaskView using Task model data.
         '''
-        return TaskView(self, task, self.globals, self.locals,
+        return TaskView(self, task, self.global_n, self.local_n,
                         self.cwd)
 
     # Submit form callback.
     def submit(self, fields, task, button):
+        '''
+        Callback function for when the cell is submitted. Executes function.
+        '''
+        default_values = {arg['arg_name']: arg[
+            'value'] for arg in task.default_args}
+
+        for arg in task.default_args:
+            arg_name = arg['arg_name']
+            arg_value = arg['value']
+
         input_fields = fields[TaskView.INPUT_FLAG]
         opt_input_fields = fields[TaskView.OPT_INPUT_FLAG]
         output_fields = fields[TaskView.OUTPUT_FLAG]
@@ -46,12 +62,7 @@ class TaskManager:
         opt_input_values = {arg_name: opt_input_fields[
             arg_name].value for arg_name in opt_input_fields}
         return_names = [entry.value for entry in output_fields]
-        print(input_values)
-        print(opt_input_values)
-        print(return_names)
-        print(task.function_name)
-        print(task.library_name)
-        print(task.library_path)
+
         # Verify all input parameters are present.
         if None in input_values or '' in input_values:
             print('Please provide all required inputs.')
@@ -66,12 +77,19 @@ class TaskManager:
             return
 
         # Call function
-        results = simplex(path_to_include=task.library_path,
+        results = simplex(global_n=self.global_n,
+                          path_to_include=task.library_path,
                           library_name=task.library_name,
                           function_name=task.function_name,
+                          default_args=default_values,
                           req_args=input_values,
                           opt_args=opt_input_values,
                           return_names=return_names)
 
-        for name, value in zip(return_names, results):
-            self.output[name] = value
+        # TODO: test
+        print('RETURN NAMES LENGTH: ', return_names)
+        if len(return_names) == 1:
+            self.output[return_names[0]] = results
+        elif len(return_names) > 1:
+            for name, value in zip(return_names, results):
+                self.output[name] = value

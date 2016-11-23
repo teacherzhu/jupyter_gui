@@ -9,6 +9,9 @@ class Task:
         self.library_name = config['library_name']
         self.label = config['label']
         self.function_name = config['function_name']
-        self.optional_args = config['optional_args']
+        self.default_args = config[
+            'default_args'] if 'default_args' in config else {}
         self.required_args = config['required_args']
+        self.optional_args = config[
+            'optional_args'] if 'optional_args' in config else {}
         self.return_names = config['return_names']

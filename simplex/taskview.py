@@ -70,9 +70,13 @@ class TaskView:
 
         # add to body
         all_elements = []
-        all_elements.extend(input_elements)
-        all_elements.extend(opt_input_elements)
-        all_elements.extend(output_elements)
+
+        if len(input_elements) > 1:
+            all_elements.extend(input_elements)
+        if len(opt_input_elements) > 1:
+            all_elements.extend(opt_input_elements)
+        if len(output_elements) > 1:
+            all_elements.extend(output_elements)
         all_elements.append(run_button)
         body.children = tuple(all_elements)
 
