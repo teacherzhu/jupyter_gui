@@ -49,6 +49,7 @@ class TaskView:
         Make task body, consisting of input, optional input, and output boxes.
         :return: Box;
         """
+        # TODO: modularize field making
 
         # Make parent box
         body = w.Box().add_class('panel-body')
@@ -62,7 +63,7 @@ class TaskView:
                                for arg in self.task.required_args])
 
         # Make optional input box(s)
-        opt_input_elements = [w.HTML('<h3>Optional Input Parameters<h3/>')]
+        opt_input_elements = [w.HTML('<h3>Optional Input<h3/>')]
         opt_input_elements.extend([self.text_field(arg['label'],
                                                    arg['description'],
                                                    'optional_input',
@@ -70,7 +71,7 @@ class TaskView:
                                    for arg in self.task.optional_args])
 
         # Make output box(s)
-        output_elements = [w.HTML('<h3>Output Parameters<h3/>')]
+        output_elements = [w.HTML('<h3>Output<h3/>')]
         output_elements.extend([self.text_field(arg['label'],
                                                 arg['description'],
                                                 'output')

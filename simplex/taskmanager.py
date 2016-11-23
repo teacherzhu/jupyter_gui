@@ -19,32 +19,26 @@ class TaskManager:
         self.tasks = []
 
         # Most recent Notebook namespace
-        self.notebook_namespace = {}
+        self.simplex_namespace = {}
 
-        # Most recent output namespace
-        self.output_namespace = {}
-
-    def update_notebook_namespace(self, namespace):
+    def update_simplex_namespace(self, namespace):
         """
         Update the notebook_namespace.
         :param namespace: dict;
         :return: None
         """
-        self.notebook_namespace = merge_dicts(self.notebook_namespace,
-                                              namespace)
+        self.simplex_namespace = merge_dicts(self.simplex_namespace,
+                                             namespace)
 
-    def create_task(self, task_dict):
-
-        # Make a Task and add it to the list of tasks
-        task = Task(task_dict)
-        self.tasks.append(task)
-
-    def create_task_view(self, task):
+    def create_task_view(self, task_dict):
         """
-        Create a TaskView using Task model.
-        :param task: Task;
+        Create a Task and display it as a TaskView.
+        :param task_dict: dict;
         :return: TaskView;
         """
+
+        task = Task(task_dict)
+        self.tasks.append(task)
 
         return TaskView(self, task)
 
@@ -81,10 +75,10 @@ class TaskManager:
                                     input_values, default_values, opt_input_values, return_names)
 
         if len(return_names) == 1:
-            self.output_namespace[return_names[0]] = results
+            self.simplex_namespace[return_names[0]] = results
         elif len(return_names) > 1:
             for name, value in zip(return_names, results):
-                self.output_namespace[name] = value
+                self.simplex_namespace[name] = value
 
     def execute_task(self, library_path, library_name, function_name, req_args, default_args, opt_args, return_names):
         """
@@ -132,8 +126,8 @@ class TaskManager:
 
         for arg_name, v in args.items():
 
-            if v in self.notebook_namespace:  # Process as already defined variable from the Notebook environment
-                processed = self.notebook_namespace[v]
+            if v in self.simplex_namespace:  # Process as already defined variable from the Notebook environment
+                processed = self.simplex_namespace[v]
 
             else:  # Process as float, int, bool, or string
 
