@@ -1,75 +1,75 @@
-from .engine import simplex
+import sys
+
 from .task import Task
 from .taskview import TaskView
 
 
+# TODO: use '_' prefix for local variables
 class TaskManager:
-    '''
-    Controller class used to manage tasks and their views.
-    '''
+    """
+    Controller class. Manages tasks and their views.
+    """
 
-    def __init__(self, config, global_n, local_n, cwd):
-        '''
-        Constructor for TaskManager class.
+    def __init__(self):
+        """
+        Constructor.
+        """
 
-        Arguments
-        -----
-        '''
-        self.global_n = global_n
-        self.local_n = local_n
-        self.cwd = cwd
+        # List of tasks
         self.tasks = []
-        self.output = {}
 
-        version = config['version']
-        library_path = config['library_path']
-        for task in config['tasks']:
-            task = self.create_task(version, library_path, task)
-            self.tasks.append(task)
+        # Most recent Notebook namespace
+        self.notebook_namespace = {}
 
-    def create_task(self, version, library_path, task):
-        '''
-        Binds configuration to Task model and saves reference.
-        '''
-        return Task(version, library_path, task)
+        # Most recent output namespace
+        self.output_namespace = {}
+
+    def update_notebook_namespace(self, namespace):
+        """
+        Update the notebook_namespace.
+        :param namespace: dict;
+        :return: None
+        """
+        self.notebook_namespace = merge_dicts(self.notebook_namespace,
+                                              namespace)
+
+    def create_task(self, task_dict):
+
+        # Make a Task and add it to the list of tasks
+        task = Task(task_dict)
+        self.tasks.append(task)
 
     def create_task_view(self, task):
-        '''
-        Create a TaskView using Task model data.
-        '''
-        return TaskView(self, task, self.global_n, self.local_n,
-                        self.cwd)
+        """
+        Create a TaskView using Task model.
+        :param task: Task;
+        :return: TaskView;
+        """
 
-    # Submit form callback.
-    def submit(self, fields, task, button):
-        '''
-        Callback function for when the cell is submitted. Executes function.
-        '''
-        default_values = {arg['arg_name']: arg[
-            'value'] for arg in task.default_args}
+        return TaskView(self, task)
 
-        for arg in task.default_args:
-            arg_name = arg['arg_name']
-            arg_value = arg['value']
+    def submit(self, fields, task):
+        """
+        Callback function for when the cell runs. Execute function.
+        """
 
-        input_fields = fields[TaskView.INPUT_FLAG]
-        opt_input_fields = fields[TaskView.OPT_INPUT_FLAG]
-        output_fields = fields[TaskView.OUTPUT_FLAG]
+        # Retrieve default arguments to execute_task the function
+        default_values = {arg['arg_name']: arg['value'] for arg in task.default_args}
 
-        # retrieve user input
-        input_values = {arg_name: input_fields[
-            arg_name].value for arg_name in input_fields}
-        opt_input_values = {arg_name: opt_input_fields[
-            arg_name].value for arg_name in opt_input_fields}
-        return_names = [entry.value for entry in output_fields]
+        # Retrieve fields
+        input_fields = fields['input']
+        opt_input_fields = fields['optional_input']
+        output_fields = fields['output']
+
+        # Retrieve user inputs in the corresponding fields
+        input_values = {input_name: field.value for input_name, field in input_fields.items()}
+        opt_input_values = {input_name: field.value for input_name, field in opt_input_fields.items()}
+        return_names = [field.value for field in output_fields]
 
         # Verify all input parameters are present.
         if None in input_values or '' in input_values:
             print('Please provide all required inputs.')
             return
-
-        if len(opt_input_values) == 0:
-            opt_input_values = {}
 
         # Verify all output parameters are present.
         if None in return_names or '' in return_names:
@@ -77,19 +77,119 @@ class TaskManager:
             return
 
         # Call function
-        results = simplex(global_n=self.global_n,
-                          path_to_include=task.library_path,
-                          library_name=task.library_name,
-                          function_name=task.function_name,
-                          default_args=default_values,
-                          req_args=input_values,
-                          opt_args=opt_input_values,
-                          return_names=return_names)
+        results = self.execute_task(task.library_path, task.library_name, task.function_name,
+                                    input_values, default_values, opt_input_values, return_names)
 
-        # TODO: test
-        print('RETURN NAMES LENGTH: ', return_names)
         if len(return_names) == 1:
-            self.output[return_names[0]] = results
+            self.output_namespace[return_names[0]] = results
         elif len(return_names) > 1:
             for name, value in zip(return_names, results):
-                self.output[name] = value
+                self.output_namespace[name] = value
+
+    def execute_task(self, library_path, library_name, function_name, req_args, default_args, opt_args, return_names):
+        """
+        Executes named function from specified python package path.
+
+        Takes in arguments for the named function, automatically detecting and
+        casting to the appropriate data type. Returns the results of the function.
+        :param library_path: str;
+        :param library_name: str;
+        :param function_name: str;
+        :param default_args: dict;
+        :param req_args: dict;
+        :param opt_args: dict;
+        :param return_names: list;
+        :return: list; raw output of the named function.
+        """
+
+        # Appenda library path
+        sys.path.insert(0, library_path)
+
+        # Import function
+        print('From {} importing {} ...'.format(library_name, function_name))
+        exec('from {} import {} as function'.format(library_name, function_name))
+
+        # Process args
+        args = self.process_args(req_args, default_args, opt_args)
+
+        # Execute
+        return locals()['function'](**args)
+
+    def process_args(self, req_args, default_args, opt_args):
+        """
+        Convert input str arguments to corresponding values:
+            If the str is the name of a existing variable in the Notebook namespace, use its corresponding value;
+            If the str contains ',', convert it into a list of strs
+            Try to cast str in the following order and use the 1st match: int, float, bool, and str;
+        :param req_args: dict;
+        :param default_args: dict;
+        :param opt_args: dict;
+        :return: dict;
+        """
+
+        args = merge_dicts(req_args, default_args, opt_args)
+        processed_args = {}
+
+        for arg_name, v in args.items():
+
+            if v in self.notebook_namespace:  # Process as already defined variable from the Notebook environment
+                processed = self.notebook_namespace[v]
+
+            else:  # Process as float, int, bool, or string
+
+                # First assume a list of strings to be passed
+                processed = [cast_string_to_int_float_bool_or_str(s) for s in v.split(',') if s]
+
+                # If there is only 1 item in the assumed list, use it directly
+                if len(processed) == 1:
+                    processed = processed[0]
+
+            processed_args[arg_name] = processed
+
+        return processed_args
+
+
+# ======================================================================================================================
+# Helper functions
+# ======================================================================================================================
+def merge_dicts(*dicts):
+    """
+    Shallow copy and merge dicts into a new dict; precedence goes to
+    key value pairs in latter dict.
+    :param dicts: iterable of dict;
+    :return: dict;
+    """
+
+    merged = {}
+    for d in dicts:
+        merged.update(d)
+
+    return merged
+
+
+def cast_string_to_int_float_bool_or_str(string):
+    """
+    Convert string into the following data types (return the first successful):
+    int, float, bool, or str.
+    :param string: str;
+    :return: int, float, bool, or str;
+    """
+
+    value = string.strip()
+
+    # try to cast to int or float
+    for var_type in [int, float]:
+        try:
+            converted_var = var_type(value)
+            return converted_var
+        except ValueError:
+            pass
+
+    # try to cast as boolean
+    if value == 'True':
+        return True
+    elif value == 'False':
+        return False
+
+    # return as string last priority
+    return str(value)

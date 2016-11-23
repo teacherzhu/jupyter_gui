@@ -3,70 +3,84 @@ from functools import partial
 
 
 class TaskView:
-    '''
-    Represents the task view.
-    '''
-    INPUT_FLAG = 'input'
-    OPT_INPUT_FLAG = 'opt_input'
-    OUTPUT_FLAG = 'output'
+    """
+    Viewing class for Task.
+    """
 
-    def __init__(self, chain, task, global_n, local_n, cwd):
-        self.my_chain = chain
+    def __init__(self, task_manager, task):
+        """
+        Constructor.
+        :param task_manager: TaskManager;
+        :param task: Task;
+        """
+
+        self.task_manager = task_manager
         self.task = task
-        self.globals = global_n
-        self.locals = local_n
-        self.cwd = cwd
 
-        self.fields = {self.INPUT_FLAG: {},
-                       self.OPT_INPUT_FLAG: {},
-                       self.OUTPUT_FLAG: []
-                       }
+        self.fields = {'input': {}, 'optional_input': {}, 'output': []}
 
-    def panel_heading(self):
+        # TODO: think of calling without partial
+        # Hook for running the task
+        self.run_callback = partial(self.task_manager.submit, self.fields, self.task)
+
+    def create(self):
+        """
+        Make the whole widget panel, containing input, optional input, and output fields.
+        :return: Box;
+        """
+
+        panel = w.Box().add_class('panel').add_class('panel-default').add_class('my-panel')
+        panel.children = tuple([self.heading(), self.body()])
+        return panel
+
+    def heading(self):
+        """
+        Make task heading.
+        :return: Box;
+        """
+
         heading = w.Box().add_class('panel-heading')
         text = w.HTML('<h1>' + self.task.label + '</h1>')
         heading.children = tuple([text])
         return heading
 
-    def panel_body(self):
-        # shorter reference
-        task = self.task
+    def body(self):
+        """
+        Make task body, consisting of input, optional input, and output boxes.
+        :return: Box;
+        """
 
-        # submit callback
-        run_callback = partial(self.my_chain.submit,
-                               self.fields,
-                               self.task)
-
-        # define panel-body
+        # Make parent box
         body = w.Box().add_class('panel-body')
 
-        # create input fields
+        # Make required input box(s)
         input_elements = [w.HTML('<h3>Input Parameters<h3/>')]
         input_elements.extend([self.text_field(arg['label'],
                                                arg['description'],
-                                               self.INPUT_FLAG,
-                                               arg['arg_name'])
-                               for arg in task.required_args])
+                                               'input',
+                                               input_name=arg['arg_name'])
+                               for arg in self.task.required_args])
 
+        # Make optional input box(s)
         opt_input_elements = [w.HTML('<h3>Optional Input Parameters<h3/>')]
         opt_input_elements.extend([self.text_field(arg['label'],
                                                    arg['description'],
-                                                   self.OPT_INPUT_FLAG,
-                                                   arg['arg_name'])
-                                   for arg in task.optional_args])
+                                                   'optional_input',
+                                                   input_name=arg['arg_name'])
+                                   for arg in self.task.optional_args])
 
-        # create output fields
+        # Make output box(s)
         output_elements = [w.HTML('<h3>Output Parameters<h3/>')]
         output_elements.extend([self.text_field(arg['label'],
                                                 arg['description'],
-                                                self.OUTPUT_FLAG)
-                                for arg in task.return_names])
+                                                'output')
+                                for arg in self.task.return_names])
 
-        # define run button
+        # Make execute_task box
         run_button = w.Button(description="RUN")
         run_button.add_class('btn').add_class(
-            'btn-primary').add_class('run-btn')
-        run_button.on_click(run_callback)
+            'btn-primary').add_class('execute_task-btn')
+        run_button.on_click(self.run_callback)
 
         # add to body
         all_elements = []
@@ -82,49 +96,33 @@ class TaskView:
 
         return body
 
-    def text_field(self, name, tooltip, flag, arg_name=''):
-        '''
-        flag - flag for input or output field
-        '''
-        # submit callback
-        run_callback = partial(self.my_chain.submit,
-                               self.fields,
-                               self.task)
+    def text_field(self, label, description, field_type, input_name=None):
+        """
+        Make a box.
+        :param label: str; label
+        :param description: str; description
+        :param field_type: str; box type
+        :param input_name: dictionary key if box_type is required input or optional input
+        :return: Box; parent
+        """
 
-        # TODO MAKE FANCIER
-        # <div class="input-group">
-        #   <span class="input-group-addon" id="basic-addon1">@</span>
-        #   <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-        # </div>
+        # Make box
+        field = w.Text(description=label).add_class('form-group')
 
-        # parent wrapper
+        # Hook the box with the callback
+        field.on_submit(self.run_callback)
+
+        # Make help button
+        help_button = w.Button(description='?', tooltip=description)
+
+        # Make parent box and have it host the box
         parent = w.Box().add_class('my-text-field')
-        field = w.Text(description=name).add_class('form-group')
-        field.on_submit(run_callback)
-        help_button = w.Button(description='?', tooltip=tooltip)
-
         parent.children = tuple([field, help_button])
 
-        # save field
-        if flag == self.OUTPUT_FLAG:
-            self.fields[flag].append(field)
+        # Update fields
+        if input_name:
+            self.fields[field_type][input_name] = field
         else:
-            self.fields[flag][arg_name] = field
+            self.fields[field_type].append(field)
+
         return parent
-
-    def createPanel(self):
-        '''
-        Creates a form for a given method configuration.
-
-        Returns
-        -----
-        widgets.VBox
-            Contains list of generated widgets.
-        '''
-        panel = w.Box().add_class('panel').add_class(
-            'panel-default').add_class('my-panel')
-        panel.children = tuple([self.panel_heading(), self.panel_body()])
-        return panel
-
-    def submit(self, button):
-        self.my_chain.submit(self.fields, task)
