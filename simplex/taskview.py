@@ -1,5 +1,4 @@
 from ipywidgets import widgets as w
-from functools import partial
 
 
 class TaskView:
