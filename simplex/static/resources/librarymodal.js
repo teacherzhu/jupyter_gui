@@ -159,24 +159,13 @@ var addToLibrary = function(simplex_data) {
   var j = JSON.parse(simplex_data);
   var tasks = j.tasks;
   var path = j.library_path;
-  var package_title;
-  if (path.split('/')[path.split('/')
-      .length - 1] == "") {
-    package_title = path.split('/')[path.split('/')
-      .length - 2];
-  } else {
-    package_title = path.split('/')[path.split('/')
-      .length - 1];
-  }
 
-  // Generate cards
-  // TODO temporary fix, may not work if reordering cards/also ajax async
+  // Generate a card for every task
+  // FIXME: may not work if reordering cards/also ajax async
   for (var index in tasks) {
-    var package_data = JSON.parse(simplex_data);
     var task_data = Object();
-    task_data.version = package_data.version
-    task_data.library_path = package_data.library_path;
-    task_data.tasks = [tasks[index]];
+    task_data = tasks[index];
+    task_data.library_path = j.library_path;
     simplexLibrary.push(JSON.stringify(task_data));
 
     var cardParent = $('<div/>')
@@ -185,11 +174,10 @@ var addToLibrary = function(simplex_data) {
       .addClass('col-xs-12')
       .on('click', function(event) {
         event.preventDefault();
-        selectedIndex = $(this)
-          .index();
-        console.log(selectedIndex);
+        selectedIndex = $(this).index();
       });
-    // card style and click action
+
+    // Card style and click action
     var card = $('<a/>')
       .addClass('library-card')
       .on('click', function(event) {
@@ -201,19 +189,22 @@ var addToLibrary = function(simplex_data) {
         $('#library-select-button')
           .removeClass('disabled');
       });
-    // label/title of method
+
+    // Label/title of method
     var label = $('<h4/>')
       .addClass('card-label')
-      .html(tasks[index].label);
-    // function's parent package
+      .html(task_data.label);
+
+    // Function's parent package
     var packageTitle = $('<small/>')
       .addClass('card-package-title')
-      .html(package_title)
+      .html(task_data.library_name)
       .appendTo(label);
-    // function description
+
+    // Function description
     var description = $('<p/>')
       .addClass('card-description')
-      .html(tasks[index].description);
+      .html(task_data.description);
 
     label.appendTo(card);
     description.appendTo(card);

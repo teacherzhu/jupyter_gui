@@ -46,11 +46,10 @@ class TaskManager:
         """
         Callback function for when the cell runs. Execute function.
         """
-        print(fields)
-        print(task)
 
         # Retrieve default arguments to execute_task the function
-        default_values = {arg['arg_name']: arg['value'] for arg in task.default_args}
+        default_values = {arg['arg_name']: arg['value']
+                          for arg in task.default_args}
 
         # Retrieve fields
         input_fields = fields['input']
@@ -58,8 +57,10 @@ class TaskManager:
         output_fields = fields['output']
 
         # Retrieve user inputs in the corresponding fields
-        input_values = {input_name: field.value for input_name, field in input_fields.items()}
-        opt_input_values = {input_name: field.value for input_name, field in opt_input_fields.items()}
+        input_values = {input_name: field.value for input_name,
+                        field in input_fields.items()}
+        opt_input_values = {
+            input_name: field.value for input_name, field in opt_input_fields.items()}
         return_names = [field.value for field in output_fields]
 
         # Verify all input parameters are present.
@@ -134,7 +135,8 @@ class TaskManager:
             else:  # Process as float, int, bool, or string
 
                 # First assume a list of strings to be passed
-                processed = [cast_string_to_int_float_bool_or_str(s) for s in v.split(',') if s]
+                processed = [cast_string_to_int_float_bool_or_str(
+                    s) for s in v.split(',') if s]
 
                 # If there is only 1 item in the assumed list, use it directly
                 if len(processed) == 1:

@@ -58,18 +58,22 @@ const init = function() {
  */
 const setupCallbacks = function() {
   var initCode = `
-from simplex import TaskManager
 global task_manager
 
 def init_task_manager():
+    global os
     import os
+
+    global json
     import json
 
+    global matplotlib
     import matplotlib
 
+    global TaskManager
     from simplex import TaskManager
 
-    # %matplotlib inline
+    %matplotlib inline
 
     # Initialize a TaskManager
     global task_manager
@@ -251,7 +255,7 @@ const toSimpleXCell = function(formerType, index, taskDict) {
     } else {
       var code = AUTOEXEC_FLAG + `
 # Make and show widget
-task_view = task_manager.create_task_view('''${taskDict}''')
+task_view = task_manager.create_task_view(json.loads('''${taskDict}'''))
 task_view.create()
       `;
 
@@ -263,9 +267,6 @@ task_view.create()
     function setupWidget(id) {
       // Hide code immediately
       cell.input.addClass("simplex-hidden");
-
-      // Clear output of selected cell
-      Jupyter.notebook.clear_output();
 
       // Show widget upon finished execution
       if (cell.element.find(".my-panel").length > 0) {
@@ -293,6 +294,8 @@ task_view.create()
       Jupyter.notebook.to_code(index);
     }
     setTimeout(function() {
+      // Clear output of selected cell
+      cell.clear_output();
       cellChange(cell);
     }, 10);
   };
