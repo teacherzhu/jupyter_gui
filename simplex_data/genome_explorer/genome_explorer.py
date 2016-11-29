@@ -2,8 +2,7 @@ import subprocess as sp
 
 FASTAS = {}
 
-
-# SPECIES = ('human')
+SPECIES = ('human')
 
 
 def load_fasta(species, filepath):
@@ -14,11 +13,19 @@ def load_fasta(species, filepath):
     :return: None
     """
 
-    # if species not in SPECIES:
-    #     raise ValueError('Unknown species {}; valid species are {}'.format(species, SPECIES))
+    if species not in SPECIES:
+        raise ValueError('Unknown species {}; valid species are {}'.format(species, SPECIES))
 
     FASTAS[species] = filepath
-    print('Loaded {} genome from {}'.format(species, filepath))
+    print('Loaded {} genome from: {}.'.format(species, filepath))
+
+
+def list_available_contigs():
+    """
+    List contigs for each species.
+    :return: dict; {species1:[contig1, contig2, ...], species2:[...], ...}
+    """
+    pass
 
 
 def explore_human_genome(chromosome, start, end):
@@ -29,6 +36,7 @@ def explore_human_genome(chromosome, start, end):
     :param end: int or str; end position; must be greater than or equal to start position
     :return: str; genomic sequences from region specified by chromosome:start-stop in reference_genome
     """
+
     explore_genome(FASTAS['human'], chromosome, start, end)
 
 
