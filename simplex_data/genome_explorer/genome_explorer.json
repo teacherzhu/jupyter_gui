@@ -1,0 +1,51 @@
+{
+  "library_path": "simplex/simplex_data/genome_explorer",
+  "library_name": "genome_explorer",
+  "tasks": [
+    {
+      "function_name": "load_genomic_filepath",
+      "label": "Load Human Genome",
+      "required_args": [
+        {
+          "arg_name": "filepath",
+          "label": "File Path to a Genome File (.fasta, .fa, or a their compressed form)."
+        }
+      ],
+      "default_args": [
+        {
+          "arg_name": "species",
+          "value": "human"
+        }
+      ]
+    },
+    {
+      "function_name": "explore_species_genome",
+      "label": "Explore Human Genome",
+      "required_args": [
+        {
+          "arg_name": "chromosome",
+          "label": "Chromosome"
+        },
+        {
+          "arg_name": "start",
+          "label": "Starting genomic position"
+        },
+        {
+          "arg_name": "end",
+          "label": "Ending genomic position"
+        }
+      ],
+      "default_args": [
+        {
+          "arg_name": "species",
+          "value": "human"
+        }
+      ],
+      "return_names": [
+        {
+          "label": "Genomic sequence"
+        }
+      ]
+    }
+  ]
+}

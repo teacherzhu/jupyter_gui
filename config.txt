@@ -1,0 +1,1 @@
+SIMPLEX_DATA_DIR=./simplex_data
