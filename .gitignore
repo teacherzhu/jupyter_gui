@@ -1,6 +1,6 @@
 .DS_Store
 */**/__pycache__/
 .idea/
-
+*.css.map
 simplex/bin/
 simplex.egg-info/
