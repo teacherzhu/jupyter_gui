@@ -43,6 +43,8 @@
 /******************** Form Panel ********************/
 .form-panel {
   width: 50%;
+  max-width: 600px;
+  min-width: 450px;
   margin: auto !important;
   border-radius: 2px;
   background: white;
@@ -67,7 +69,7 @@
   margin: 0 16px 30px 16px !important; }
 
 input.form-control[type="text"] {
-  width: 300px;
+  width: 250px;
   border: none;
   border-radius: 0;
   padding: 10px 0;
@@ -90,8 +92,8 @@ input.form-control[type="text"] {
 .form-input-group input[type="text"] {
   border-bottom: solid 1px #20D9BA;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #20D9BA 96%);
-  background-position: -300px 0;
-  background-size: 300px 100%;
+  background-position: -250px 0;
+  background-size: 250px 100%;
   background-repeat: no-repeat;
   will-change: background-position; }
   .form-input-group input[type="text"]:focus::-webkit-input-placeholder {
@@ -102,8 +104,8 @@ input.form-control[type="text"] {
 .form-optional_input-group input[type="text"] {
   border-bottom: solid 1px #9017E6;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #9017E6 96%);
-  background-position: -300px 0;
-  background-size: 300px 100%;
+  background-position: -250px 0;
+  background-size: 250px 100%;
   background-repeat: no-repeat;
   will-change: background-position; }
   .form-optional_input-group input[type="text"]:focus::-webkit-input-placeholder {
@@ -114,8 +116,8 @@ input.form-control[type="text"] {
 .form-output-group input[type="text"] {
   border-bottom: solid 1px #4E41D9;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #4E41D9 96%);
-  background-position: -300px 0;
-  background-size: 300px 100%;
+  background-position: -250px 0;
+  background-size: 250px 100%;
   background-repeat: no-repeat;
   will-change: background-position; }
   .form-output-group input[type="text"]:focus::-webkit-input-placeholder {

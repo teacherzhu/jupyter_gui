@@ -65,6 +65,8 @@ $form-side-margin: 16px;
 
 .form-panel {
   width: 50%;
+  max-width: 600px;
+  min-width: 450px;
   margin: auto !important;
   border-radius: 2px;
   background: white;
@@ -92,7 +94,7 @@ $form-side-margin: 16px;
 }
 
 // Input box width
-$input-width: 300px;
+$input-width: 250px;
 
 @mixin text-input-bg-mixin($color) {
   border-bottom: solid 1px $color;
