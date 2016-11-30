@@ -1,10 +1,9 @@
 {
-  "library_path": "simplex/simplex_data/sample_library/ (optional)",
   "library_name": "sample_library",
   "tasks": [
     {
       "function_name": "function",
-      "label": "Task 1 (optional)",
+      "label": "Task 1 (UID)",
       "description": "Description (optional)",
       "required_args": [
         {
@@ -26,7 +25,7 @@
           "arg_value": "default_value"
         }
       ],
-      "return_names": [
+      "returns": [
         {
           "label": "Return 1",
           "description": "Description for this returned value. (optional)"
