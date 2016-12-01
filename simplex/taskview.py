@@ -134,11 +134,7 @@ class TaskView:
         field.on_submit(self.callback)
 
         # Make help button
-        if len(description) > 0:
-            help_button = w.Button(description='?', tooltip=description)
-        else:
-            help_button = w.Button(
-                description='?', tooltip='No info provided.')
+        help_button = w.Button(description='?', tooltip=description)
 
         # Make parent box and have it host the box
         parent = w.Box().add_class('form-panel-text-field')

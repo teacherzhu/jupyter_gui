@@ -156,7 +156,6 @@ input.form-control[type="text"] {
   box-shadow: none !important;
   border: none; }
 
-/******************** Argument Description Panel ********************/
 /******************** Widget Tooltip Buttons ********************/
 .btn[data-toggle="popover"] {
   box-sizing: content-box;
@@ -185,13 +184,13 @@ button.close, .library-modal-header, .library-modal-footer {
 .library-modal-body {
   padding: 0 !important; }
 
-.library-parent {
+#library-parent {
   min-height: 600px;
   height: 90vh;
   overflow: hidden; }
 
 /******************** Information Panel ********************/
-.library-right-panel {
+#library-right-panel {
   background: lightgrey;
   height: 100%;
   display: flex;
@@ -201,28 +200,28 @@ button.close, .library-modal-header, .library-modal-footer {
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.22));
   -webkit-filter: drop-shadow(0 0px 5px rgba(0, 0, 0, 0.45)); }
 
-.library-task-info {
+#library-task-info {
   flex-grow: 1;
   margin: 0.5em 2em; }
 
-.library-task-info > div * {
+#library-task-info > div * {
   display: inline-block; }
-.library-task-info > div span {
+#library-task-info > div span {
   font-size: 1em; }
-.library-task-info > div p {
+#library-task-info > div p {
   margin-left: 1em; }
 
-.library-task-author, .library-task-affiliation {
+#library-task-author, #library-task-affiliation {
   line-height: 2; }
 
-.library-task-description {
+#library-task-description {
   margin: 0.5em 0;
   line-height: 1.5; }
 
-.library-button-group {
+#library-button-group {
   margin: 1em;
   text-align: right; }
-  .library-button-group * {
+  #library-button-group * {
     margin: 0.5em; }
 
 /******************** Library Panel ********************/
@@ -275,8 +274,9 @@ button.close, .library-modal-header, .library-modal-footer {
   outline: 0.2em solid lightblue !important;
   outline-offset: -0.2em; }
 
-.card-package-title {
-  margin-left: 0.5em; }
+#library-task-package, .card-package-title {
+  color: grey;
+  text-transform: uppercase; }
 
 .card-description {
   line-height: 1.5; }

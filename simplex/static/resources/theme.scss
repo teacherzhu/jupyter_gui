@@ -144,9 +144,9 @@ input.form-control[type="text"] {
 }
 
 .form-input-group {
-/*   h3 {
-    color: darken($input-color, 50%);
-  } */
+  /*   h3 {
+      color: darken($input-color, 50%);
+    } */
 
   input[type="text"] {
     @include text-input-bg-mixin($input-color);
@@ -158,9 +158,9 @@ input.form-control[type="text"] {
 }
 
 .form-optional_input-group {
-/*   h3 {
-    color: darken($opt-input-color, 20%);
-  } */
+  /*   h3 {
+      color: darken($opt-input-color, 20%);
+    } */
 
   input[type="text"] {
     @include text-input-bg-mixin($opt-input-color);
@@ -172,9 +172,9 @@ input.form-control[type="text"] {
 }
 
 .form-output-group {
-/*   h3 {
-    color: darken($output-color, 20%);
-  } */
+  /*   h3 {
+      color: darken($output-color, 20%);
+    } */
 
   input[type="text"] {
     @include text-input-bg-mixin($output-color);
@@ -215,10 +215,6 @@ input.form-control[type="text"] {
   box-shadow: none !important;
   border: none;
 }
-
-/******************** Argument Description Panel ********************/
-
-// TODO: style
 
 /******************** Widget Tooltip Buttons ********************/
 
@@ -265,7 +261,7 @@ button.close, .library-modal-header, .library-modal-footer {
   padding: 0 !important;
 }
 
-.library-parent {
+#library-parent {
   min-height: 600px;
   height: 90vh;
   overflow: hidden;
@@ -273,7 +269,7 @@ button.close, .library-modal-header, .library-modal-footer {
 
 /******************** Information Panel ********************/
 
-.library-right-panel {
+#library-right-panel {
   background: lightgrey;
   height: 100%;
   display: flex;
@@ -284,14 +280,16 @@ button.close, .library-modal-header, .library-modal-footer {
   -webkit-filter: drop-shadow(0 0px 5px rgba(0, 0, 0, 0.45));
 }
 
-.library-task-info {
+#library-task-info {
   flex-grow: 1;
   margin: 0.5em 2em;
 }
 
-.library-task-heading {}
+#library-task-heading {}
 
-.library-task-info > div {
+#library-task-package {}
+
+#library-task-info > div {
   * {
     display: inline-block;
   }
@@ -305,18 +303,18 @@ button.close, .library-modal-header, .library-modal-footer {
   }
 }
 
-.library-task-author, .library-task-affiliation {
+#library-task-author, #library-task-affiliation {
   line-height: 2;
 }
 
-.library-task-ref-link {}
+#library-task-ref-link {}
 
-.library-task-description {
+#library-task-description {
   margin: 0.5em 0;
   line-height: 1.5;
 }
 
-.library-button-group {
+#library-button-group {
   margin: 1em;
   text-align: right;
 
@@ -383,8 +381,9 @@ button.close, .library-modal-header, .library-modal-footer {
   outline-offset: -0.2em;
 }
 
-.card-package-title {
-  margin-left: 0.5em;
+#library-task-package, .card-package-title {
+  color: grey;
+  text-transform: uppercase;
 }
 
 .card-description {

@@ -1,4 +1,5 @@
 simplex/__init__.py
+simplex/support.py
 simplex/task.py
 simplex/taskmanager.py
 simplex/taskview.py
@@ -8,8 +9,8 @@ simplex.egg-info/dependency_links.txt
 simplex.egg-info/requires.txt
 simplex.egg-info/top_level.txt
 simplex/static/main.js
+simplex/static/resources/tasks.json
 simplex/static/resources/tasksDialog.js
 simplex/static/resources/theme.css
 simplex/static/resources/theme.css.map
 simplex/static/resources/theme.scss
-simplex/static/simplex_data/library_list.txt

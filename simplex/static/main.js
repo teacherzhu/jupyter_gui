@@ -190,7 +190,7 @@ const mapKeyboardShortcuts = function() {
     help: 'to SimpleX',
     help_index: 'cc',
     handler: function() {
-      showLibraryPanel();
+      showTasksPanel();
       return false;
     }
   });

@@ -1,15 +1,34 @@
 // Add shim to support Jupyter 3.x and 4.x
 var Jupyter = Jupyter || IPython || {}
 Jupyter.notebook = Jupyter.notebook || {};
-const STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/static/resources/";
+const STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/resources/";
 
 /**
  * Holds all JSON for tasks.
  * @type {Array}
  */
 var simplexTaskData = [];
+
+/**
+ * Index of selected task in reference to simplexTaskData.
+ * @type {Number}
+ */
 var selectedIndex;
-var tasksPanelParent, rightPanel, leftPanel;
+
+/**
+ * Inner container of dialog for task selection.
+ */
+var tasksPanelParent;
+
+/**
+ * Panel that displays selected task information.
+ */
+var rightPanel;
+
+/**
+ * Panel that lists all tasks detailed in simplexTaskData.
+ */
+var leftPanel;
 
 /******************** MAIN FUNCTIONS ********************/
 /**
@@ -22,13 +41,13 @@ const showTasksPanel = function() {
   dialog.modal({
     notebook: Jupyter.notebook,
     keyboard_manager: Jupyter.notebook.keyboard_manager,
-    body: parent
+    body: tasksPanelParent
   });
 
   // Add styling to parent modal container
   var interval = setInterval(function() {
-    if ($('.library-parent').length > 0) {
-      var libParent = $('.library-parent');
+    if ($('#library-parent').length > 0) {
+      var libParent = $('#library-parent');
       libParent.parent().addClass('library-modal-body');
       libParent.parents('.modal-content').find('.modal-header').addClass('library-modal-header');
       libParent.parents('.modal-content').find('.modal-footer').addClass('library-modal-footer');
@@ -44,9 +63,8 @@ const showTasksPanel = function() {
  * Initialize panels inside task dialog.
  */
 const initTasksPanel = function() {
-  tasksPanelParent = $('<div/>').addClass('library-parent');
-  initLeftPanel();
-  initRightPanel();
+  tasksPanelParent = $('<div/>').attr('id', 'library-parent');
+  renderTasks();
 }
 
 /******************** HELPER FUNCTIONS ********************/
@@ -54,7 +72,7 @@ const initTasksPanel = function() {
 /**
  * Create left panel showing list of tasks.
  */
-var initLeftPanel = function() {
+var renderTasks = function() {
   // Display tasks elements
   leftPanel = $('<div/>')
     .addClass('library-left-panel')
@@ -64,14 +82,15 @@ var initLeftPanel = function() {
 
   // Load tasks
   loadTasks();
-  // Load library data
-  // loadDefaultTaskData();
-  // loadLocalTaskData();
 }
 
+/**
+ * Read in tasks.json and parse tasks into list of stringified JSON
+ */
 var loadTasks = function() {
+  console.log('Called loadTasks()');
   $.ajax({
-    url: STATIC_LIB_PATH + "simplex.json",
+    url: STATIC_LIB_PATH + "tasks.json",
     dataType: "text",
     success: function(simplexData) {
       var tasksDict = JSON.parse(simplexData);
@@ -82,245 +101,177 @@ var loadTasks = function() {
         task.label = key;
         return JSON.stringify(task);
       });
+
+      // Generate all tasks
+      for (var task of simplexTaskData) {
+        renderTask(task);
+      }
+
+      // Try to select first one by default
+      if ($(leftPanel).find('.library-card').length > 0) {
+        $(leftPanel).find('.library-card').first().click();
+      }
     }
   });
 }
 
 /**
- * Create right panel showing package descriptions.
+.appendTo(tasksPanelParent);
+ * Render right panel and only updates inner content when necessary.
  */
-const initRightPanel = function() {
-
-  // Remove and remake with updated values
-  if (rightPanel !== undefined) {
-    $('.library-right-panel').remove();
-  }
-
-  // Display right panel
-  rightPanel = $('<div/>')
-    .addClass('library-right-panel')
-    .addClass('pull-right')
-    .addClass('col-xs-4')
-    .appendTo(tasksPanelParent);
+const renderRightPanel = function() {
 
   // Parse and display task information
-  var task = simplexTaskData[selectedIndex];
+  var task = JSON.parse(simplexTaskData[selectedIndex]);
 
-  // Parent container
-  var taskInfo = $('<div/>')
-    .addClass('library-task-info');
+  // Render right panel
+  var render = function() {
 
-  // Task title
-  var taskHeading = $('<h2/>')
-    .addClass('library-task-heading')
-    .html(task.label)
-    .appendTo(taskInfo);
+    // Define right panel
+    rightPanel = $('<div/>')
+      .attr('id', 'library-right-panel')
+      .addClass('pull-right')
+      .addClass('col-xs-4')
+      .appendTo(tasksPanelParent);
 
-  // Task library name
-  var taskLibraryName = $('<h3/>')
-    .addClass('library-task-package')
-    .html(task.library_name)
-    .appendTo(taskInfo);
+    // Parent container
+    var taskInfo = $('<div/>')
+      .attr('id', 'library-task-info');
 
-  // Package author
-  var taskAuthor = $('<div/>')
-    .addClass('library-task-author')
-    .html('<span class="label label-default">Author</span><p>' + task.author + '</p>')
-    .appendTo(taskInfo);
+    // Task title
+    var taskHeading = $('<h2/>')
+      .attr('id', 'library-task-heading')
+      .html(task.label)
+      .appendTo(taskInfo);
 
-  // Task affiliation
-  var taskAffiliation = $('<div/>')
-    .addClass('library-task-affiliation')
-    .html('<span class="label label-default">Affiliation</span><p>' + task.affiliation + '</p>')
-    .appendTo(taskInfo);
+    // Task library name
+    var taskLibraryName = $('<h3/>')
+      .attr('id', 'library-task-package')
+      .html(task.library_name)
+      .appendTo(taskInfo);
 
-  // Task description
-  var taskDescription = $('<div/>')
-    .addClass('library-task-description')
-    .html(task.description)
-    .appendTo(taskInfo);
+    // Package author
+    var taskAuthor = $('<div/>')
+      .attr('id', 'library-task-author')
+      .html('<span class="label label-default">Author</span><p>' + task.author + '</p>')
+      .appendTo(taskInfo);
 
-  // Select/cancel buttons
-  var modalButtons = $('<div/>')
-    .addClass('library-button-group');
-  var cancelButton = $('<button>')
-    .addClass('btn')
-    .addClass('btn-default')
-    .attr('data-dismiss', 'modal')
-    .html('Cancel')
-    .appendTo(modalButtons);
-  var selectButton = $('<button>')
-    .addClass('btn')
-    .addClass('btn-default')
-    .addClass('btn-primary')
-    .attr('id', 'library-select-button')
-    .addClass('disabled')
-    .attr('data-dismiss', 'modal')
-    .html('Select')
-    .on('click', function(event) {
-      event.preventDefault();
-      toSimpleXCell(null,
-        Jupyter.notebook.get_selected_index(),
-        simplexTaskData[selectedIndex]);
-    })
-    .appendTo(modalButtons);
+    // Task affiliation
+    var taskAffiliation = $('<div/>')
+      .attr('id', 'library-task-affiliation')
+      .html('<span class="label label-default">Affiliation</span><p>' + task.affiliation + '</p>')
+      .appendTo(taskInfo);
 
-  taskInfo.appendTo(rightPanel);
-  modalButtons.appendTo(rightPanel);
+    // Task description
+    var taskDescription = $('<div/>')
+      .attr('id', 'library-task-description')
+      .html(task.description)
+      .appendTo(taskInfo);
+
+    // Select/cancel buttons
+    var modalButtons = $('<div/>')
+      .attr('id', 'library-button-group');
+    var cancelButton = $('<button>')
+      .attr('id', 'library-cancel-btn')
+      .addClass('btn')
+      .addClass('btn-default')
+      .attr('data-dismiss', 'modal')
+      .html('Cancel')
+      .appendTo(modalButtons);
+    var selectButton = $('<button>')
+      .attr('id', 'library-select-btn')
+      .addClass('btn')
+      .addClass('btn-default')
+      .addClass('btn-primary')
+      .attr('id', 'library-select-button')
+      .attr('data-dismiss', 'modal')
+      .html('Select')
+      .on('click', function(event) {
+        event.preventDefault();
+        toSimpleXCell(null,
+          Jupyter.notebook.get_selected_index(),
+          simplexTaskData[selectedIndex]);
+      })
+      .appendTo(modalButtons);
+
+    taskInfo.appendTo(rightPanel);
+    modalButtons.appendTo(rightPanel);
+  };
+
+  /**
+   * Update existing rightPanel with currently selected task
+   */
+  var update = function() {
+    $(rightPanel).find('#library-task-heading').html(task.label);
+    $(rightPanel).find('#library-task-package').html(task.library_name);
+    $(rightPanel).find('#library-task-author').html(task.author);
+    $(rightPanel).find('#library-task-affiliation').html(task.affiliation);
+    $(rightPanel).find('#library-task-description').html(task.description);
+  }
+
+
+  // Wait for ajax call to load simplexTaskData JSON strings before rendering description.
+  var interval = setInterval(function() {
+    // Render when ajax call completes
+    if (simplexTaskData.length > 0) {
+      clearInterval(interval);
+
+      // Create elements as needed, otherwise simply update values
+      if ($('#library-right-panel').length == 0) {
+        render();
+      } else {
+        update();
+      }
+    }
+  }, 50);
 }
 
 /**
- * Load default package tasks from extension static directory.
+ * Render a card for a given task JSON string
+ * @param {String} task_data stringified JSON for a task
  */
-// const loadDefaultTaskData = function() {
-//   console.log('calling loadDefaultTaskData()');
-//   $.ajax({
-//     url: STATIC_LIB_PATH + "library_list.txt",
-//     dataType: "text",
-//     success: function(data) {
-//       // Load all simplex json files
-//       var lib_files = $.trim(data).split('\n');
-//
-//       // Async request each file
-//       for (var i in lib_files) {
-//         $.ajax({
-//           url: STATIC_LIB_PATH + lib_files[i],
-//           dataType: "text",
-//           success: function(simplex_data) {
-//             addToTasks(simplex_data);
-//           },
-//           error: function(result) {
-//             console.log(STATIC_LIB_PATH + lib_files[i]);
-//             console.log('Unable to retrieve library simplex file, ' + lib_files[i] + '.');
-//           }
-//         });
-//       }
-//     },
-//     // Unable to load library_list.txt file
-//     error: function(result) {
-//       console.log('library_list.txt file is missing.');
-//     }
-//   });
-// }
-
-// // Load local package tasks from $HOME via Jupyter notebook kernel.
-// const loadLocalTaskData = function() {
-//   console.log('calling loadLocalTaskData()');
-//   var code_input = `
-// home_prefix = os.environ['HOME']+'/simplex_data/'
-// json_files = os.listdir(home_prefix)
-// json_files = [home_prefix + '{}/{}.json'.format(d,d) for d in json_files]
-//
-// json_str_data = []
-// for file in json_files:
-//     try:
-//         with open(file) as json_file:
-//             json_str_data.append(json_file.read())
-//     except FileNotFoundError:
-//         print('Package JSON file not specified.')
-//
-// javascript = 'element.append("{}");'.format(json_str_data)
-// Javascript(javascript)
-// `;
-//
-//   /**
-//    * Import JSON from $HOME using python and export back to javascript.
-//    * @param  {[type]} output [description]
-//    * @return {[type]}        [description]
-//    */
-//   var handle_output = function(out) {
-//     var result = null;
-//     var res;
-//     // if output is a print statement
-//     if (out.msg_type == "stream") {
-//       res = out.content.data;
-//     }
-//     // if output is a python object
-//     else if (out.msg_type === "execute_result") {
-//       res = out.content.data["text/plain"];
-//     }
-//     // if output is a python error
-//     else if (out.msg_type == "pyerr") {
-//       res = out.content.ename + ": " + out.content.evalue;
-//     }
-//     // if output is something we haven't thought of
-//     else {
-//       res = "[out type not implemented]\n" + out;
-//     }
-//
-//     // TODO: Store task json
-//     console.log(res);
-//   }
-//
-//   var callbacks = {
-//     'iopub': {
-//       'output': handle_output
-//     }
-//   };
-//
-//   Jupyter.notebook.kernel.execute(code_input, callbacks);
-// }
-
-
-/**
- * Given a package JSON file, generate and display each task specified for the package.
- * @param {String} simplex_data Stringified JSON for a package.
- */
-const addToTasks = function(simplex_data) {
+const renderTask = function(task_data) {
   // Load json to memory
-  var j = JSON.parse(simplex_data);
-  var tasks = j.tasks;
-  var path = j.library_path;
+  var task = JSON.parse(task_data);
 
-  // Generate a card for every task
-  for (var index in tasks) {
-    var task_data = Object();
-    task_data = tasks[index];
-    task_data.library_path = j.library_path;
-    simplexTaskData.push(JSON.stringify(task_data));
+  // Generate a card from given task_data
+  var cardParent = $('<div/>')
+    .addClass('library-card-wrapper')
+    .addClass('col-md-6')
+    .addClass('col-xs-12')
+    .on('click', function(event) {
+      event.preventDefault();
+      selectedIndex = $(this).index();
+      renderRightPanel();
+    });
 
-    var cardParent = $('<div/>')
-      .addClass('library-card-wrapper')
-      .addClass('col-md-6')
-      .addClass('col-xs-12')
-      .on('click', function(event) {
-        event.preventDefault();
-        selectedIndex = $(this).index();
-        initRightPanel();
-      });
+  // Card style and click action
+  var card = $('<a/>')
+    .addClass('library-card')
+    .on('click', function(event) {
+      event.preventDefault();
+      $('.library-card-selected').removeClass('library-card-selected');
+      $(this).addClass('library-card-selected');
+    });
 
-    // Card style and click action
-    var card = $('<a/>')
-      .addClass('library-card')
-      .on('click', function(event) {
-        event.preventDefault();
-        $('.library-card-selected')
-          .removeClass('library-card-selected');
-        $(this)
-          .addClass('library-card-selected');
-        $('#library-select-button')
-          .removeClass('disabled');
-      });
+  // Label/title of method
+  var label = $('<h4/>')
+    .addClass('card-label')
+    .html(task.label);
 
-    // Label/title of method
-    var label = $('<h4/>')
-      .addClass('card-label')
-      .html(task_data.label);
+  // Function's parent package
+  var packageTitle = $('<h5/>')
+    .addClass('card-package-title')
+    .html(task.library_name);
 
-    // Function's parent package
-    var packageTitle = $('<small/>')
-      .addClass('card-package-title')
-      .html(task_data.library_name)
-      .appendTo(label);
+  // Function description
+  var description = $('<p/>')
+    .addClass('card-description')
+    .html(task.description);
 
-    // Function description
-    var description = $('<p/>')
-      .addClass('card-description')
-      .html(task_data.description);
-
-    label.appendTo(card);
-    description.appendTo(card);
-    card.appendTo(cardParent);
-    cardParent.appendTo(leftPanel);
-  }
+  label.appendTo(card);
+  packageTitle.appendTo(card);
+  description.appendTo(card);
+  card.appendTo(cardParent);
+  cardParent.appendTo(leftPanel);
 }
