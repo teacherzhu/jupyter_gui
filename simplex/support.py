@@ -1,6 +1,6 @@
-from os import environ, listdir
-from os.path import join, split, isfile, isdir
 import json
+from os import environ, listdir
+from os.path import isdir, isfile, join, split
 
 HOME_DIR = environ['HOME']
 
@@ -63,7 +63,8 @@ def make_task_json(directory_paths, filepath):
             tasks = load_json(fp_json)
             tasks_by_libraries.update(tasks)
         except FileNotFoundError:
-            raise FileNotFoundError('{} library is missing {}.json.'.format(dp, lib))
+            raise FileNotFoundError(
+                '{} library is missing {}.json.'.format(dp, lib))
         except KeyError:
             raise ValueError('Error loading {}.'.format(fp_json))
 
@@ -83,7 +84,8 @@ def load_json(filepath):
     print('Loading {} ...'.format(filepath))
 
     if not isfile(filepath):
-        raise FileNotFoundError('The file {} isn\'t found or isn\'t an absolute path.')
+        raise FileNotFoundError(
+            'The file {} isn\'t found or isn\'t an absolute path.')
 
     # Open .json
     with open(filepath) as f:
@@ -97,9 +99,11 @@ def load_json(filepath):
     # Library path
     if 'library_path' in library:  # Use specified library path
         library_path = library['library_path']
-        if not library_path.endswith('/'):  # Make sure the library path ends with '/'
+        # Make sure the library path ends with '/'
+        if not library_path.endswith('/'):
             library_path += '/'
-            print('\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
+            print(
+                '\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
         if not isdir(library_path):  # Use absolute path
             library_path = join(HOME_DIR, library_path)
             print('\tConverted the library path to the absolute path relative to the $HOME directory: {}.'.format(
@@ -107,7 +111,8 @@ def load_json(filepath):
 
     else:  # Guess library path
         library_path = join(split(filepath)[0], '')
-        print('\tNo library path is specified for {} library so guessed to be {}.'.format(library_name, library_path))
+        print('\tNo library path is specified for {} library so guessed to be {}.'.format(
+            library_name, library_path))
 
     # Tasks
     tasks = library['tasks']
@@ -116,7 +121,8 @@ def load_json(filepath):
         # Task label is this task's UID
         label = task['label']
         if label in processed_tasks:
-            raise ValueError('Multiple \'{}\' task labels found! Use unique task label for each task.'.format(label))
+            raise ValueError(
+                'Multiple \'{}\' task labels found! Use unique task label for each task.'.format(label))
         else:
             processed_tasks[label] = {}
 
@@ -133,41 +139,48 @@ def load_json(filepath):
             processed_tasks[label]['description'] = ''
 
         # Arguments
-        for a in ['required_args', 'optional_args', 'default_args']:
-            if a in task:
-                required_args = task[a]
-                processed_tasks[label][a] = process_args(required_args)
+        for arg_group in ['required_args', 'optional_args', 'default_args']:
+            if arg_group in task:
+                processed_tasks[label][
+                    arg_group] = process_args(task[arg_group])
             else:
-                processed_tasks[label][a] = []
+                processed_tasks[label][arg_group] = []
 
         # Returns
-        if 'returns' in task:
-            processed_tasks[label]['returns'] = task['returns']
+        if 'return_names' in task:
+            processed_tasks[label]['return_names'] = process_args(
+                task['return_names'], is_return_names=True)
+        else:
+            processed_tasks[label]['return_names'] = []
 
     return processed_tasks
 
 
-def process_args(args):
+def process_args(args, is_return_names=False):
     processed_args = []
-    for a in args:
+    for a_index, a in enumerate(args):
         processed_a = dict()
 
-        processed_a['arg_name'] = a['arg_name']
+        # Only assign arg_name and default value if is input argument
+        if not is_return_names:
+            processed_a['arg_name'] = a['arg_name']
 
-        if 'default_value' in a:
-            processed_a['value'] = a['value']
-        else:
-            processed_a['value'] = ''
+            if 'default_value' in a:
+                processed_a['value'] = a['value']
+            else:
+                processed_a['value'] = ''
 
         if 'label' in a:
             processed_a['label'] = a['label']
-        else:
+        elif 'arg_name' in a:
             processed_a['label'] = a['arg_name']
+        else:
+            processed_a['label'] = a_index
 
         if 'description' in a:
             processed_a['description'] = a['description']
         else:
-            processed_a['description'] = ''
+            processed_a['description'] = 'No description.'
 
         processed_args.append(processed_a)
 

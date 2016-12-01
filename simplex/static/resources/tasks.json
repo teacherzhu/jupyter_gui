@@ -26,6 +26,16 @@
         "label": "Numbers of Components",
         "value": ""
       }
+    ],
+    "return_names": [
+      {
+        "description": "This is the description for the returned NMF Result Dictionary.",
+        "label": "NMF Result Dictionary"
+      },
+      {
+        "description": "This is the description for the returned Cophentic Correlation Coefficients.",
+        "label": "Cophenetic Correlation Coefficients"
+      }
     ]
   },
   "Define States": {
@@ -48,13 +58,27 @@
         "label": "Numbers of States",
         "value": ""
       }
+    ],
+    "return_names": [
+      {
+        "description": "This is the description for returned Distance Matrix.",
+        "label": "Distance Matrix"
+      },
+      {
+        "description": "This is the description for the returned Clusterings.",
+        "label": "Clusterings"
+      },
+      {
+        "description": "This is the description for the returned Cophentic Correlation Coefficients.",
+        "label": "Cophenetic Correlation Coefficients"
+      }
     ]
   },
   "Explore Human Genome": {
     "default_args": [
       {
         "arg_name": "species",
-        "description": "",
+        "description": "No description.",
         "label": "species",
         "value": ""
       }
@@ -62,26 +86,32 @@
     "description": "",
     "function_name": "explore_species_genome",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/simplex/simplex_data/genome_explorer/",
+    "library_path": "/Users/ckmah/simplex/simplex_data/genome_explorer/",
     "optional_args": [],
     "required_args": [
       {
         "arg_name": "chromosome",
-        "description": "",
+        "description": "No description.",
         "label": "Chromosome",
         "value": ""
       },
       {
         "arg_name": "start",
-        "description": "",
+        "description": "No description.",
         "label": "Starting genomic position",
         "value": ""
       },
       {
         "arg_name": "end",
-        "description": "",
+        "description": "No description.",
         "label": "Ending genomic position",
         "value": ""
+      }
+    ],
+    "return_names": [
+      {
+        "description": "No description.",
+        "label": "Genomic sequence"
       }
     ]
   },
@@ -89,7 +119,7 @@
     "default_args": [
       {
         "arg_name": "w_or_h",
-        "description": "",
+        "description": "No description.",
         "label": "w_or_h",
         "value": ""
       }
@@ -111,6 +141,12 @@
         "description": "This is an argument description for Number of Components.",
         "label": "Number of Components",
         "value": ""
+      }
+    ],
+    "return_names": [
+      {
+        "description": "This is the description for the returned Cophentic Correlation Coefficients.",
+        "label": "H Matrix"
       }
     ]
   },
@@ -118,7 +154,7 @@
     "default_args": [
       {
         "arg_name": "w_or_h",
-        "description": "",
+        "description": "No description.",
         "label": "w_or_h",
         "value": ""
       }
@@ -141,13 +177,19 @@
         "label": "Number of Components",
         "value": ""
       }
+    ],
+    "return_names": [
+      {
+        "description": "This is the description for the returned Cophentic Correlation Coefficients.",
+        "label": "W Matrix"
+      }
     ]
   },
   "Load Human Genome": {
     "default_args": [
       {
         "arg_name": "species",
-        "description": "",
+        "description": "No description.",
         "label": "species",
         "value": ""
       }
@@ -155,16 +197,17 @@
     "description": "",
     "function_name": "load_genomic_filepath",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/simplex/simplex_data/genome_explorer/",
+    "library_path": "/Users/ckmah/simplex/simplex_data/genome_explorer/",
     "optional_args": [],
     "required_args": [
       {
         "arg_name": "filepath",
-        "description": "",
+        "description": "No description.",
         "label": "File Path to a Genome File (.fasta, .fa, or a their compressed form).",
         "value": ""
       }
-    ]
+    ],
+    "return_names": []
   },
   "Make Onco-GPS Map": {
     "default_args": [],
@@ -186,13 +229,14 @@
         "label": "Sample State Labels",
         "value": ""
       }
-    ]
+    ],
+    "return_names": []
   },
   "Task 1 (UID)": {
     "default_args": [
       {
         "arg_name": "arg3",
-        "description": "",
+        "description": "No description.",
         "label": "arg3",
         "value": ""
       }
@@ -200,7 +244,7 @@
     "description": "Description (optional)",
     "function_name": "function",
     "library_name": "sample_library",
-    "library_path": "/home/cyborg/simplex/simplex/default_libs/sample_library/",
+    "library_path": "/Users/ckmah/simplex/simplex/default_libs/sample_library/",
     "optional_args": [
       {
         "arg_name": "arg2",
@@ -217,11 +261,6 @@
         "value": ""
       }
     ],
-    "returns": [
-      {
-        "description": "Description for this returned value. (optional)",
-        "label": "Return 1"
-      }
-    ]
+    "return_names": []
   }
 }

@@ -41,5 +41,6 @@ setup(name='simplex',
       install_requires=['jupyter', 'notebook>=4.2.0',
                         'ipywidgets>=5.2.0', 'matplotlib'],
       cmdclass={'install': InstallCommand},
-      package_data={'simplex': ['static/main.js', 'static/resources/*']}
+      package_data={'simplex': [
+          'static/main.js', 'static/resources/*', 'static/resources/tasks.json']}
       )
