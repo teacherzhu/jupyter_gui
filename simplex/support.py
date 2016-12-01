@@ -5,24 +5,24 @@ from os.path import isdir, isfile, join, split
 HOME_DIR = environ['HOME']
 
 
-def load_config(filepath):
-    """
-
-    :param filepath: str; config.txt
-    :return:
-    """
-
-    config = {}
-    with open(filepath) as f:
-        for line in f:
-            k, v = line.strip().split('=')
-            config[k] = v
-
-    print('Simplex configuration:')
-    for k, v in sorted(config.items()):
-        print('\t{} : {}'.format(k, v))
-
-    return config
+# def load_config(filepath):
+#     """
+#
+#     :param filepath: str; config.txt
+#     :return:
+#     """
+#
+#     config = {}
+#     with open(filepath) as f:
+#         for line in f:
+#             k, v = line.strip().split('=')
+#             config[k] = v
+#
+#     print('Simplex configuration:')
+#     for k, v in sorted(config.items()):
+#         print('\t{} : {}'.format(k, v))
+#
+#     return config
 
 
 def load_libraries(directory_path):
