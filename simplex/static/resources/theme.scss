@@ -111,6 +111,10 @@ $input-width: 250px;
 
 .form-group {
   margin: 0 $form-side-margin 30px $form-side-margin !important;
+
+  h3 {
+    color: grey;
+  }
 }
 
 input.form-control[type="text"] {
@@ -133,16 +137,16 @@ input.form-control[type="text"] {
     }
   }
 
-  &:focus::-webkit-input-placeholder {
+  &::-webkit-input-placeholder {
     transition: all 0.2s $cubic;
     visibility: visible !important;
   }
 }
 
 .form-input-group {
-  h3 {
-    color: darken($input-color, 20%);
-  }
+/*   h3 {
+    color: darken($input-color, 50%);
+  } */
 
   input[type="text"] {
     @include text-input-bg-mixin($input-color);
@@ -154,9 +158,9 @@ input.form-control[type="text"] {
 }
 
 .form-optional_input-group {
-  h3 {
+/*   h3 {
     color: darken($opt-input-color, 20%);
-  }
+  } */
 
   input[type="text"] {
     @include text-input-bg-mixin($opt-input-color);
@@ -168,9 +172,9 @@ input.form-control[type="text"] {
 }
 
 .form-output-group {
-  h3 {
+/*   h3 {
     color: darken($output-color, 20%);
-  }
+  } */
 
   input[type="text"] {
     @include text-input-bg-mixin($output-color);
