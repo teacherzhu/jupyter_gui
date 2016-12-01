@@ -1,5 +1,26 @@
+from os import environ
+from os.path import join
+
+from .support import load_libraries, make_task_json
 from .taskmanager import TaskManager
 
+# ======================================================================================================================
+# Set up environment
+# ======================================================================================================================
+HOME_DIR = environ['HOME']
+SIMPLEX_REPO_DIR = join(HOME_DIR, 'simplex/')
+SIMPLEX_DIR = join(SIMPLEX_REPO_DIR, 'simplex/')
+
+SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'default_libs/')
+SIMPLEX_LIBRARIES = load_libraries(SIMPLEX_DATA_DIR)
+
+TASK_JSON_FILEPATH = join(SIMPLEX_DIR, 'static', 'resources', 'tasks.json')
+make_task_json(SIMPLEX_LIBRARIES, TASK_JSON_FILEPATH)
+
+
+# ======================================================================================================================
+# Set up Jupyter widget
+# ======================================================================================================================
 
 # TODO: understand better
 def _jupyter_nbextension_paths():
@@ -39,4 +60,4 @@ def load_jupyter_server_extension(nbapp):
     """
 
     # Print statement to show extension is loaded
-    nbapp.log.info('----- SimpleX enabled! -----')
+    nbapp.log.info('----- SimpleX On -----')

@@ -1,0 +1,8 @@
+test/result
+*Icon*
+*.DS_Store
+*_pycache_*
+*.py[cod]
+*.ipynb_checkpoints*
+*.idea
+*.swp

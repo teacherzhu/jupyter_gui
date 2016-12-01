@@ -1,5 +1,6 @@
 import sys
 
+from .support import merge_dicts, cast_string_to_int_float_bool_or_str
 from .task import Task
 from .taskview import TaskView
 
@@ -57,8 +58,7 @@ class TaskManager:
         output_fields = fields['output']
 
         # Retrieve user inputs in the corresponding fields
-        input_values = {input_name: field.value for input_name,
-                        field in input_fields.items()}
+        input_values = {input_name: field.value for input_name, field in input_fields.items()}
         opt_input_values = {
             input_name: field.value for input_name, field in opt_input_fields.items()}
         return_names = [field.value for field in output_fields]
@@ -145,49 +145,3 @@ class TaskManager:
             processed_args[arg_name] = processed
 
         return processed_args
-
-
-# ======================================================================================================================
-# Helper genome_explorer
-# ======================================================================================================================
-def merge_dicts(*dicts):
-    """
-    Shallow copy and merge dicts into a new dict; precedence goes to
-    key value pairs in latter dict.
-    :param dicts: iterable of dict;
-    :return: dict;
-    """
-
-    merged = {}
-    for d in dicts:
-        merged.update(d)
-
-    return merged
-
-
-def cast_string_to_int_float_bool_or_str(string):
-    """
-    Convert string into the following data types (return the first successful):
-    int, float, bool, or str.
-    :param string: str;
-    :return: int, float, bool, or str;
-    """
-
-    value = string.strip()
-
-    # try to cast to int or float
-    for var_type in [int, float]:
-        try:
-            converted_var = var_type(value)
-            return converted_var
-        except ValueError:
-            pass
-
-    # try to cast as boolean
-    if value == 'True':
-        return True
-    elif value == 'False':
-        return False
-
-    # return as string last priority
-    return str(value)
