@@ -86,7 +86,7 @@
     "description": "",
     "function_name": "explore_species_genome",
     "library_name": "genome_explorer",
-    "library_path": "/Users/ckmah/simplex/simplex_data/genome_explorer/",
+    "library_path": "/home/cyborg/simplex/simplex_data/genome_explorer/",
     "optional_args": [],
     "required_args": [
       {
@@ -197,7 +197,7 @@
     "description": "",
     "function_name": "load_genomic_filepath",
     "library_name": "genome_explorer",
-    "library_path": "/Users/ckmah/simplex/simplex_data/genome_explorer/",
+    "library_path": "/home/cyborg/simplex/simplex_data/genome_explorer/",
     "optional_args": [],
     "required_args": [
       {
@@ -244,7 +244,7 @@
     "description": "Description (optional)",
     "function_name": "function",
     "library_name": "sample_library",
-    "library_path": "/Users/ckmah/simplex/simplex/default_libs/sample_library/",
+    "library_path": "/home/cyborg/simplex/simplex/default_libs/sample_library/",
     "optional_args": [
       {
         "arg_name": "arg2",
