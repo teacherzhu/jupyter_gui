@@ -1,79 +1,4 @@
 {
-  "Define Components": {
-    "default_args": [],
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
-    "function_name": "define_components",
-    "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
-    "optional_args": [
-      {
-        "arg_name": "n_clusterings",
-        "description": "This is an argument description for Number of Consensus Clusterings.",
-        "label": "Number of Consensus Clusterings",
-        "value": ""
-      }
-    ],
-    "required_args": [
-      {
-        "arg_name": "matrix",
-        "description": "This is an argument description for Expression Matrix.",
-        "label": "Expression Matrix",
-        "value": ""
-      },
-      {
-        "arg_name": "ks",
-        "description": "This is an argument description for Number of Components.",
-        "label": "Numbers of Components",
-        "value": ""
-      }
-    ],
-    "return_names": [
-      {
-        "description": "This is the description for the returned NMF Result Dictionary.",
-        "label": "NMF Result Dictionary"
-      },
-      {
-        "description": "This is the description for the returned Cophentic Correlation Coefficients.",
-        "label": "Cophenetic Correlation Coefficients"
-      }
-    ]
-  },
-  "Define States": {
-    "default_args": [],
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
-    "function_name": "define_states",
-    "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "matrix",
-        "description": "This is an argument description for H Matrix.",
-        "label": "H Matrix",
-        "value": ""
-      },
-      {
-        "arg_name": "ks",
-        "description": "This is an argument description for Number of States.",
-        "label": "Numbers of States",
-        "value": ""
-      }
-    ],
-    "return_names": [
-      {
-        "description": "This is the description for returned Distance Matrix.",
-        "label": "Distance Matrix"
-      },
-      {
-        "description": "This is the description for the returned Clusterings.",
-        "label": "Clusterings"
-      },
-      {
-        "description": "This is the description for the returned Cophentic Correlation Coefficients.",
-        "label": "Cophenetic Correlation Coefficients"
-      }
-    ]
-  },
   "Explore Human Genome": {
     "default_args": [
       {
@@ -115,76 +40,6 @@
       }
     ]
   },
-  "Get H Matrix": {
-    "default_args": [
-      {
-        "arg_name": "w_or_h",
-        "description": "No description.",
-        "label": "w_or_h",
-        "value": ""
-      }
-    ],
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
-    "function_name": "get_w_or_h_matrix",
-    "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "nmf_results",
-        "description": "This is an argument description for NMF Results.",
-        "label": "NMF Results",
-        "value": ""
-      },
-      {
-        "arg_name": "k",
-        "description": "This is an argument description for Number of Components.",
-        "label": "Number of Components",
-        "value": ""
-      }
-    ],
-    "return_names": [
-      {
-        "description": "This is the description for the returned Cophentic Correlation Coefficients.",
-        "label": "H Matrix"
-      }
-    ]
-  },
-  "Get W Matrix": {
-    "default_args": [
-      {
-        "arg_name": "w_or_h",
-        "description": "No description.",
-        "label": "w_or_h",
-        "value": ""
-      }
-    ],
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
-    "function_name": "get_w_or_h_matrix",
-    "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "nmf_results",
-        "description": "This is an argument description for NMF Results.",
-        "label": "NMF Results",
-        "value": ""
-      },
-      {
-        "arg_name": "k",
-        "description": "This is an argument description for Number of Components.",
-        "label": "Number of Components",
-        "value": ""
-      }
-    ],
-    "return_names": [
-      {
-        "description": "This is the description for the returned Cophentic Correlation Coefficients.",
-        "label": "W Matrix"
-      }
-    ]
-  },
   "Load Human Genome": {
     "default_args": [
       {
@@ -204,29 +59,6 @@
         "arg_name": "filepath",
         "description": "No description.",
         "label": "File Path to a Genome File (.fasta, .fa, or a their compressed form).",
-        "value": ""
-      }
-    ],
-    "return_names": []
-  },
-  "Make Onco-GPS Map": {
-    "default_args": [],
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
-    "function_name": "make_oncogps_map",
-    "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "training_h",
-        "description": "This is an argument description for H Matrix.",
-        "label": "H Matrix",
-        "value": ""
-      },
-      {
-        "arg_name": "training_states",
-        "description": "This is an argument description for Sample State Labels.",
-        "label": "Sample State Labels",
         "value": ""
       }
     ],

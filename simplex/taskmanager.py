@@ -1,6 +1,8 @@
 import sys
 
-from .support import merge_dicts, cast_string_to_int_float_bool_or_str
+from IPython.display import clear_output
+
+from .support import cast_string_to_int_float_bool_or_str, merge_dicts
 from .task import Task
 from .taskview import TaskView
 
@@ -58,7 +60,8 @@ class TaskManager:
         output_fields = fields['output']
 
         # Retrieve user inputs in the corresponding fields
-        input_values = {input_name: field.value for input_name, field in input_fields.items()}
+        input_values = {input_name: field.value for input_name,
+                        field in input_fields.items()}
         opt_input_values = {
             input_name: field.value for input_name, field in opt_input_fields.items()}
         return_names = [field.value for field in output_fields]
@@ -72,6 +75,9 @@ class TaskManager:
         if None in return_names or '' in return_names:
             print('Please provide all output variable names.')
             return
+
+        # Clear any existing output
+        clear_output()
 
         # Call function
         results = self.execute_task(task.library_path, task.library_name, task.function_name,

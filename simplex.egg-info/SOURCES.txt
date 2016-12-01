@@ -12,5 +12,4 @@ simplex/static/main.js
 simplex/static/resources/tasks.json
 simplex/static/resources/tasksDialog.js
 simplex/static/resources/theme.css
-simplex/static/resources/theme.css.map
 simplex/static/resources/theme.scss
