@@ -228,3 +228,20 @@ def cast_string_to_int_float_bool_or_str(string):
 
     # return as string last priority
     return str(value)
+
+
+def get_name(obj, namesapce):
+    """
+
+    :param obj: object;
+    :param namesapce: dict;
+    :return: str;
+    """
+
+    for obj_name_in_namespace, obj_in_namespace in namesapce.items():
+        if obj_in_namespace is obj:
+            # obj is a existing obj
+            return obj_name_in_namespace
+
+    # obj is a str
+    return '\'{}\''.format(obj)

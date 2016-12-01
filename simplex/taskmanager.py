@@ -1,6 +1,6 @@
 import sys
 
-from .support import merge_dicts, cast_string_to_int_float_bool_or_str
+from .support import merge_dicts, cast_string_to_int_float_bool_or_str, get_name
 from .task import Task
 from .taskview import TaskView
 
@@ -101,15 +101,20 @@ class TaskManager:
 
         # Appenda library path
         sys.path.insert(0, library_path)
+        print('sys.path.insert(0, \'{}\')'.format(library_path))
 
         # Import function
-        print('From {} importing {} ...'.format(library_name, function_name))
         exec('from {} import {} as function'.format(library_name, function_name))
+        print('from {} import {} as function'.format(library_name, function_name))
 
         # Process args
         args = self.process_args(req_args, default_args, opt_args)
 
         # Execute
+        print('Executing {} with:'.format(locals()['function']))
+        for k, v in sorted(args.items()):
+            print('\t{}={} ({})'.format(k, get_name(v, self.simplex_namespace), type(v)))
+
         return locals()['function'](**args)
 
     def process_args(self, req_args, default_args, opt_args):
@@ -131,6 +136,7 @@ class TaskManager:
 
             if v in self.simplex_namespace:  # Process as already defined variable from the Notebook environment
                 processed = self.simplex_namespace[v]
+                print(v)
 
             else:  # Process as float, int, bool, or string
 

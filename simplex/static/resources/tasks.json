@@ -4,7 +4,7 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
     "function_name": "define_components",
     "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
+    "library_path": "/home/cyborg/ccal/",
     "optional_args": [
       {
         "arg_name": "n_clusterings",
@@ -43,7 +43,7 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
     "function_name": "define_states",
     "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
+    "library_path": "/home/cyborg/ccal/",
     "optional_args": [],
     "required_args": [
       {
@@ -124,10 +124,10 @@
         "value": ""
       }
     ],
-    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+    "description": "",
     "function_name": "get_w_or_h_matrix",
     "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
+    "library_path": "/home/cyborg/ccal/",
     "optional_args": [],
     "required_args": [
       {
@@ -162,7 +162,7 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
     "function_name": "get_w_or_h_matrix",
     "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
+    "library_path": "/home/cyborg/ccal/",
     "optional_args": [],
     "required_args": [
       {
@@ -214,7 +214,7 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
     "function_name": "make_oncogps_map",
     "library_name": "ccal",
-    "library_path": "/Users/ckmah/ccal/",
+    "library_path": "/home/cyborg/ccal/",
     "optional_args": [],
     "required_args": [
       {
@@ -231,6 +231,28 @@
       }
     ],
     "return_names": []
+  },
+  "Read .GCT File": {
+    "default_args": [],
+    "description": "",
+    "function_name": "read_gct",
+    "library_name": "ccal",
+    "library_path": "/home/cyborg/ccal/",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "filepath",
+        "description": "No description.",
+        "label": ".GCT file",
+        "value": ""
+      }
+    ],
+    "return_names": [
+      {
+        "description": "No description.",
+        "label": "Matrix"
+      }
+    ]
   },
   "Task 1 (UID)": {
     "default_args": [
