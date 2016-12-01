@@ -44,7 +44,7 @@ const showTasksPanel = function() {
     body: tasksPanelParent
   });
 
-  // Add styling to parent modal container
+  // Style parent after it renders
   var interval = setInterval(function() {
     if ($('#library-parent').length > 0) {
       var libParent = $('#library-parent');
@@ -60,7 +60,7 @@ const showTasksPanel = function() {
 }
 
 /**
- * Initialize panels inside task dialog.
+ * Initialize panels inside task dialog and saves to tasksPanelParent object.
  */
 const initTasksPanel = function() {
   tasksPanelParent = $('<div/>').attr('id', 'library-parent');
@@ -73,6 +73,8 @@ const initTasksPanel = function() {
  * Create left panel showing list of tasks.
  */
 var renderTasks = function() {
+  console.log('Called renderTasks()');
+
   // Display tasks elements
   leftPanel = $('<div/>')
     .addClass('library-left-panel')
@@ -80,37 +82,49 @@ var renderTasks = function() {
     .addClass('col-xs-8')
     .appendTo(tasksPanelParent);
 
-  // Load tasks
-  loadTasks();
-}
+  // code to read library JSON files
+  var code =
+    `
+from os import environ
+from os.path import join
+from simplex.support import load_libraries, make_task_json
 
-/**
- * Read in tasks.json and parse tasks into list of stringified JSON
- */
-var loadTasks = function() {
-  console.log('Called loadTasks()');
-  $.ajax({
-    url: STATIC_LIB_PATH + "tasks.json",
-    dataType: "text",
-    success: function(simplexData) {
-      var tasksDict = JSON.parse(simplexData);
+HOME_DIR = environ['HOME']
+SIMPLEX_REPO_DIR = join(HOME_DIR, 'simplex/')
+SIMPLEX_DIR = join(SIMPLEX_REPO_DIR, 'simplex/')
 
-      // Convert dictionary to stringified list
-      simplexTaskData = Object.keys(tasksDict).map(function(key) {
-        var task = tasksDict[key];
-        task.label = key;
-        return JSON.stringify(task);
-      });
+SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'default_libs/')
+SIMPLEX_LIBRARIES = load_libraries(SIMPLEX_DATA_DIR)
 
-      // Generate all tasks
-      for (var task of simplexTaskData) {
-        renderTask(task);
-      }
+print(make_task_json(SIMPLEX_LIBRARIES))
+  `;
 
-      // Try to select first one by default
-      if ($(leftPanel).find('.library-card').length > 0) {
-        $(leftPanel).find('.library-card').first().click();
-      }
+  // Callback from
+  var callback = function(out) {
+    console.log(out.content.text);
+    var tasksDict = JSON.parse(out.content.text);
+    // Convert dictionary to stringified list
+    simplexTaskData = Object.keys(tasksDict).map(function(key) {
+      var task = tasksDict[key];
+      task.label = key;
+      return JSON.stringify(task);
+    });
+
+    // Generate all tasks
+    for (var task of simplexTaskData) {
+      renderTask(task);
+    }
+
+    // Try to select first one by default
+    if ($(leftPanel).find('.library-card').length > 0) {
+      $(leftPanel).find('.library-card').first().click();
+    }
+  }
+
+  // Use kernel to read library JSONs
+  Jupyter.notebook.kernel.execute(code, {
+    'iopub': {
+      'output': callback
     }
   });
 }
@@ -227,7 +241,7 @@ const renderRightPanel = function() {
 }
 
 /**
- * Render a card for a given task JSON string
+ * Render a card for a given task JSON string. Also responsible for triggering right panel display.
  * @param {String} task_data stringified JSON for a task
  */
 const renderTask = function(task_data) {

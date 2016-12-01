@@ -5,26 +5,6 @@ from os.path import isdir, isfile, join, split
 HOME_DIR = environ['HOME']
 
 
-def load_config(filepath):
-    """
-
-    :param filepath: str; config.txt
-    :return:
-    """
-
-    config = {}
-    with open(filepath) as f:
-        for line in f:
-            k, v = line.strip().split('=')
-            config[k] = v
-
-    print('Simplex configuration:')
-    for k, v in sorted(config.items()):
-        print('\t{} : {}'.format(k, v))
-
-    return config
-
-
 def load_libraries(directory_path):
     """
 
@@ -39,14 +19,14 @@ def load_libraries(directory_path):
             libs.append(fp)
     libs = sorted(libs)
 
-    print('SimpleX libraries:')
-    for lib in libs:
-        print('\t{}'.format(lib))
+    # print('SimpleX libraries:')
+    # for lib in libs:
+    #     print('\t{}'.format(lib))
 
     return libs
 
 
-def make_task_json(directory_paths, filepath):
+def make_task_json(directory_paths, filepath=None):
     """
 
     :param directory_paths: list; list of library directory paths
@@ -68,10 +48,11 @@ def make_task_json(directory_paths, filepath):
         except KeyError:
             raise ValueError('Error loading {}.'.format(fp_json))
 
-    with open(filepath, 'w') as f:
-        json.dump(tasks_by_libraries, f, sort_keys=True, indent=2)
+    if filepath:
+        with open(filepath, 'w') as f:
+            json.dump(tasks_by_libraries, f, sort_keys=True, indent=2)
 
-    return tasks_by_libraries
+    return json.dumps(tasks_by_libraries)
 
 
 def load_json(filepath):
@@ -81,7 +62,7 @@ def load_json(filepath):
     :return: None
     """
 
-    print('Loading {} ...'.format(filepath))
+    # print('Loading {} ...'.format(filepath))
 
     if not isfile(filepath):
         raise FileNotFoundError(
@@ -102,17 +83,17 @@ def load_json(filepath):
         # Make sure the library path ends with '/'
         if not library_path.endswith('/'):
             library_path += '/'
-            print(
-                '\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
+            # print(
+            #     '\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
         if not isdir(library_path):  # Use absolute path
             library_path = join(HOME_DIR, library_path)
-            print('\tConverted the library path to the absolute path relative to the $HOME directory: {}.'.format(
-                library_path))
+            # print('\tConverted the library path to the absolute path relative to the $HOME directory: {}.'.format(
+            #     library_path))
 
     else:  # Guess library path
         library_path = join(split(filepath)[0], '')
-        print('\tNo library path is specified for {} library so guessed to be {}.'.format(
-            library_name, library_path))
+        # print('\tNo library path is specified for {} library so guessed to be {}.'.format(
+        #     library_name, library_path))
 
     # Tasks
     tasks = library['tasks']
