@@ -5,30 +5,11 @@ from os.path import isdir, isfile, join, split
 HOME_DIR = environ['HOME']
 
 
-# def load_config(filepath):
-#     """
-#
-#     :param filepath: str; config.txt
-#     :return:
-#     """
-#
-#     config = {}
-#     with open(filepath) as f:
-#         for line in f:
-#             k, v = line.strip().split('=')
-#             config[k] = v
-#
-#     print('Simplex configuration:')
-#     for k, v in sorted(config.items()):
-#         print('\t{} : {}'.format(k, v))
-#
-#     return config
-
-
-def load_libraries(directory_path):
+def load_libraries(directory_path, verbose=True):
     """
 
     :param directory_path: str; simplex_data directory
+    :param verbose: bool;
     :return: list; list of library directory paths
     """
 
@@ -39,18 +20,21 @@ def load_libraries(directory_path):
             libs.append(fp)
     libs = sorted(libs)
 
-    print('SimpleX libraries:')
-    for lib in libs:
-        print('\t{}'.format(lib))
+    if verbose:
+        print('Available SimpleX libraries:')
+        for lib in libs:
+            print('\t{}'.format(lib))
 
     return libs
 
 
-def make_task_json(directory_paths, filepath):
+def compile_task_jsons(directory_paths, filepath=None, return_type=str, verbose=True):
     """
 
     :param directory_paths: list; list of library directory paths
     :param filepath: str; tasks.json containing all available SimpleX task specifications
+    :param return_type: type; dict or str
+    :param verbose: bool;
     :return: dict; all available SimpleX task specifications
     """
 
@@ -60,32 +44,37 @@ def make_task_json(directory_paths, filepath):
 
         fp_json = join(dp, '{}.json'.format(lib))
         try:
-            tasks = load_json(fp_json)
+            tasks = load_json(fp_json, verbose=verbose)
             tasks_by_libraries.update(tasks)
         except FileNotFoundError:
-            raise FileNotFoundError(
-                '{} library is missing {}.json.'.format(dp, lib))
+            raise FileNotFoundError('{} library is missing {}.json.'.format(dp, lib))
         except KeyError:
             raise ValueError('Error loading {}.'.format(fp_json))
 
-    with open(filepath, 'w') as f:
-        json.dump(tasks_by_libraries, f, sort_keys=True, indent=2)
+    if filepath:
+        with open(filepath, 'w') as f:
+            json.dump(tasks_by_libraries, f, sort_keys=True, indent=2)
 
-    return tasks_by_libraries
+    if return_type == str:
+        return json.dumps(tasks_by_libraries)
+
+    if return_type == dict:
+        return tasks_by_libraries
 
 
-def load_json(filepath):
+def load_json(filepath, verbose=True):
     """
 
     :param filepath: str; full path to library.json
+    :param verbose: bool;
     :return: None
     """
 
-    print('Loading {} ...'.format(filepath))
+    if verbose:
+        print('Loading {} ...'.format(filepath))
 
     if not isfile(filepath):
-        raise FileNotFoundError(
-            'The file {} isn\'t found or isn\'t an absolute path.')
+        raise FileNotFoundError('The file {} isn\'t found or isn\'t an absolute path.')
 
     # Open .json
     with open(filepath) as f:
@@ -102,17 +91,19 @@ def load_json(filepath):
         # Make sure the library path ends with '/'
         if not library_path.endswith('/'):
             library_path += '/'
-            print(
-                '\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
+            if verbose:
+                print('\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
         if not isdir(library_path):  # Use absolute path
             library_path = join(HOME_DIR, library_path)
-            print('\tConverted the library path to the absolute path relative to the $HOME directory: {}.'.format(
-                library_path))
+            if verbose:
+                print('\tConverted the library path to the absolute path relative to the $HOME directory: {}.'.format(
+                    library_path))
 
     else:  # Guess library path
         library_path = join(split(filepath)[0], '')
-        print('\tNo library path is specified for {} library so guessed to be {}.'.format(
-            library_name, library_path))
+        if verbose:
+            print('\tNo library path is specified for {} library so guessed to be {}.'.format(library_name,
+                                                                                              library_path))
 
     # Tasks
     tasks = library['tasks']
@@ -121,8 +112,7 @@ def load_json(filepath):
         # Task label is this task's UID
         label = task['label']
         if label in processed_tasks:
-            raise ValueError(
-                'Multiple \'{}\' task labels found! Use unique task label for each task.'.format(label))
+            raise ValueError('Multiple \'{}\' task labels found! Use unique task label for each task.'.format(label))
         else:
             processed_tasks[label] = {}
 
@@ -141,15 +131,13 @@ def load_json(filepath):
         # Arguments
         for arg_group in ['required_args', 'optional_args', 'default_args']:
             if arg_group in task:
-                processed_tasks[label][
-                    arg_group] = process_args(task[arg_group])
+                processed_tasks[label][arg_group] = process_args(task[arg_group])
             else:
                 processed_tasks[label][arg_group] = []
 
         # Returns
         if 'return_names' in task:
-            processed_tasks[label]['return_names'] = process_args(
-                task['return_names'], is_return_names=True)
+            processed_tasks[label]['return_names'] = process_args(task['return_names'], is_return_names=True)
         else:
             processed_tasks[label]['return_names'] = []
 
@@ -165,7 +153,7 @@ def process_args(args, is_return_names=False):
         if not is_return_names:
             processed_a['arg_name'] = a['arg_name']
 
-            if 'default_value' in a:
+            if 'value' in a:
                 processed_a['value'] = a['value']
             else:
                 processed_a['value'] = ''
@@ -237,10 +225,11 @@ def get_name(obj, namesapce):
     :param namesapce: dict;
     :return: str;
     """
+    if isinstance(obj, int):  # obj is an int
+        return obj
 
     for obj_name_in_namespace, obj_in_namespace in namesapce.items():
-        if obj_in_namespace is obj:
-            # obj is a existing obj
+        if obj_in_namespace is obj:  # obj is a existing obj
             return obj_name_in_namespace
 
     # obj is a str

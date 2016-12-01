@@ -99,21 +99,23 @@ class TaskManager:
         :return: list; raw output of the named function.
         """
 
+        print('Executing task ...')
+
         # Appenda library path
         sys.path.insert(0, library_path)
-        print('sys.path.insert(0, \'{}\')'.format(library_path))
+        print('\tsys.path.insert(0, \'{}\')'.format(library_path))
 
         # Import function
         exec('from {} import {} as function'.format(library_name, function_name))
-        print('from {} import {} as function'.format(library_name, function_name))
+        print('\tfrom {} import {} as function'.format(library_name, function_name))
 
         # Process args
         args = self.process_args(req_args, default_args, opt_args)
 
         # Execute
-        print('Executing {} with:'.format(locals()['function']))
+        print('\tExecuting {} with:'.format(locals()['function']))
         for k, v in sorted(args.items()):
-            print('\t{}={} ({})'.format(k, get_name(v, self.simplex_namespace), type(v)))
+            print('\t\t{}={} ({})'.format(k, get_name(v, self.simplex_namespace), type(v)))
 
         return locals()['function'](**args)
 
@@ -136,7 +138,6 @@ class TaskManager:
 
             if v in self.simplex_namespace:  # Process as already defined variable from the Notebook environment
                 processed = self.simplex_namespace[v]
-                print(v)
 
             else:  # Process as float, int, bool, or string
 

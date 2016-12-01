@@ -1,7 +1,7 @@
 from os import environ
 from os.path import join
 
-from .support import load_libraries, make_task_json
+from .support import load_libraries, compile_task_jsons
 from .taskmanager import TaskManager
 
 # ======================================================================================================================
@@ -14,8 +14,8 @@ SIMPLEX_DIR = join(SIMPLEX_REPO_DIR, 'simplex/')
 SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'default_libs/')
 SIMPLEX_LIBRARIES = load_libraries(SIMPLEX_DATA_DIR)
 
-TASK_JSON_FILEPATH = join(SIMPLEX_DIR, 'static', 'resources', 'tasks.json')
-make_task_json(SIMPLEX_LIBRARIES, TASK_JSON_FILEPATH)
+TASK_JSON_FILEPATH = join(SIMPLEX_REPO_DIR, 'tasks.json')
+compile_task_jsons(SIMPLEX_LIBRARIES, TASK_JSON_FILEPATH)
 
 
 # ======================================================================================================================
