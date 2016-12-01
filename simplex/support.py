@@ -58,7 +58,7 @@ def check_jsons(directory_paths):
         print('All .json files are good.')
 
 
-def load_json(filepath, directory_path=SIMPLEX_DATA_DIR):
+def load_json(filepath, directory_path):
     """
 
     :param filepath:
