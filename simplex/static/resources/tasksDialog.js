@@ -101,8 +101,8 @@ print(make_task_json(SIMPLEX_LIBRARIES))
 
   // Callback from
   var callback = function(out) {
-    console.log(out.content.text);
     var tasksDict = JSON.parse(out.content.text);
+
     // Convert dictionary to stringified list
     simplexTaskData = Object.keys(tasksDict).map(function(key) {
       var task = tasksDict[key];
@@ -197,7 +197,6 @@ const renderRightPanel = function() {
       .addClass('btn')
       .addClass('btn-default')
       .addClass('btn-primary')
-      .attr('id', 'library-select-button')
       .attr('data-dismiss', 'modal')
       .html('Select')
       .on('click', function(event) {
@@ -257,6 +256,11 @@ const renderTask = function(task_data) {
       event.preventDefault();
       selectedIndex = $(this).index();
       renderRightPanel();
+    })
+    // Double click auto selects task
+    .on('dblclick', function(event) {
+      event.preventDefault();
+      $('#library-select-btn').click();
     });
 
   // Card style and click action
