@@ -2,26 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tasks.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/data/H.gct" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/.ipynb_checkpoints/Educational-checkpoint.ipynb" afterPath="$PROJECT_DIR$/demo/.ipynb_checkpoints/Educational-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/.ipynb_checkpoints/Onco-GPS-checkpoint.ipynb" afterPath="$PROJECT_DIR$/demo/.ipynb_checkpoints/Onco-GPS-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/Educational.ipynb" afterPath="$PROJECT_DIR$/demo/Educational.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/Onco-GPS.ipynb" afterPath="$PROJECT_DIR$/demo/Onco-GPS.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.sh" afterPath="$PROJECT_DIR$/setup.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/__init__.py" afterPath="$PROJECT_DIR$/simplex/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/default_libs/ccal/ccal.json" afterPath="$PROJECT_DIR$/simplex/default_libs/ccal/ccal.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer.json" afterPath="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/VCF Analysis.ipynb" afterPath="$PROJECT_DIR$/demo/VCF Analysis.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/genome_explorer.py" afterPath="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/genome_explorer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/static/resources/tasksDialog.js" afterPath="$PROJECT_DIR$/simplex/static/resources/tasksDialog.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/static/resources/theme.css" afterPath="$PROJECT_DIR$/simplex/static/resources/theme.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/static/resources/theme.scss" afterPath="$PROJECT_DIR$/simplex/static/resources/theme.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/support.py" afterPath="$PROJECT_DIR$/simplex/support.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/task.py" afterPath="$PROJECT_DIR$/simplex/task.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/taskmanager.py" afterPath="$PROJECT_DIR$/simplex/taskmanager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/taskview.py" afterPath="$PROJECT_DIR$/simplex/taskview.py" />
     </list>
     <ignored path="simplex.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,32 +18,23 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="genome_explorer.json" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer.json">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="153">
-                    <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="simplex" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="genome_explorer.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/genome_explorer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -109,16 +83,22 @@
         <option value="$PROJECT_DIR$/simplex/support.py" />
         <option value="$PROJECT_DIR$/simplex/static/resources/theme.scss" />
         <option value="$PROJECT_DIR$/simplex/static/resources/theme.css" />
-        <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/genome_explorer.py" />
         <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer.json" />
         <option value="$PROJECT_DIR$/simplex/taskmanager.py" />
         <option value="$PROJECT_DIR$/simplex/default_libs/ccal/ccal.json" />
+        <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/genome_explorer.py" />
+        <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.remap_37to38.py" />
+        <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/bgzip_tabix.py" />
+        <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.annotate.py" />
+        <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.concat.py" />
+        <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.extract_chr.py" />
+        <option value="$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.rename_chr_sort.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="52" />
-    <option name="width" value="1422" />
+    <option name="y" value="1327" />
+    <option name="width" value="1720" />
     <option name="height" value="1388" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -142,7 +122,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -155,8 +134,111 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default_libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default_libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="genome_explorer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default_libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="genome_explorer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="genome_explorer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default_libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ccal" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -474,14 +556,23 @@
     <option name="localTasksCounter" value="21" />
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="52" width="1422" height="1388" extended-state="4" />
-    <editor active="false" />
+    <frame x="0" y="1327" width="1720" height="1388" extended-state="4" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23066103" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.094767444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32597107" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3258762" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15003808" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980755" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -496,6 +587,25 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15003808" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.094767444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32597107" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980755" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
@@ -525,51 +635,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/simplex/taskmanager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/taskview.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="9" column="31" lean-forward="false" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/engine.py" />
-    <entry file="file://$PROJECT_DIR$/simplex/task.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/taskmanager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simplex/taskview.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -601,19 +666,12 @@
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/__init__.py" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/ccal/ccal/support.py" />
     <entry file="file://$PROJECT_DIR$/simplex/static/resources/tasks.json" />
-    <entry file="file://$PROJECT_DIR$/tasks.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/tasks.json" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/ccal/ccal/__init__.py" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="29" lean-forward="false" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -621,7 +679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="6" lean-forward="false" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -630,7 +687,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="34">
             <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -661,7 +717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2117">
           <caret line="172" column="166" lean-forward="false" selection-start-line="172" selection-start-column="166" selection-end-line="172" selection-end-column="166" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -670,24 +725,8 @@
         <state relative-caret-position="153">
           <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/genome_explorer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -695,9 +734,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="34" column="18" lean-forward="true" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -705,9 +741,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="107" column="13" lean-forward="false" selection-start-line="107" selection-start-column="13" selection-end-line="107" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -715,7 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="603">
           <caret line="118" column="48" lean-forward="false" selection-start-line="118" selection-start-column="48" selection-end-line="118" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -723,7 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
           <caret line="46" column="8" lean-forward="false" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -731,7 +762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="55" lean-forward="false" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -739,7 +769,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="100" column="33" lean-forward="false" selection-start-line="100" selection-start-column="33" selection-end-line="100" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -747,7 +776,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="28" column="14" lean-forward="false" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -755,7 +783,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
           <caret line="88" column="6" lean-forward="false" selection-start-line="88" selection-start-column="6" selection-end-line="88" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -763,7 +790,137 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4472">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/genome_explorer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding>
+            <marker date="1480705392738" expanded="false" signature="0:145" ph="import ..." />
+            <marker date="1480705392738" expanded="true" signature="147:401" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="1479:1636" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="1773:1940" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="1942:2041" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="2066:3028" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="3032:3290" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="3340:3733" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="3345:3447" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="3475:3652" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="3736:3995" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="4019:4246" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="4024:4095" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="4266:4449" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="4271:4332" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="4469:4653" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="4474:4535" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="4706:5103" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="4711:4770" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="4878:5030" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="4945:5030" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="5106:5368" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="5398:5506" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="5403:5463" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="5538:5646" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="5543:5603" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="5710:5946" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="5715:5805" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="5861:5932" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="5949:6209" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="6235:6375" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="6240:6324" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="6423:6848" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="6428:6780" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="6908:7668" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="6913:7315" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="7671:7929" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="7972:8396" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="7977:8112" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="8427:9423" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="8432:8563" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="9457:9815" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="9462:9528" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="9864:10606" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="9869:10039" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="10631:11241" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="10636:10717" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="11279:12024" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="11284:11416" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="11449:11531" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="11564:11649" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="12061:13059" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="12066:12204" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1480705392738" expanded="true" signature="12248:12650" ph="..." />
+            <marker date="1480705392738" expanded="true" signature="12690:12952" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/bgzip_tabix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="23" lean-forward="false" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+          <folding>
+            <marker date="1480705605985" expanded="true" signature="0:58" ph="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.annotate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding>
+            <marker date="1480705605977" expanded="true" signature="0:59" ph="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.extract_chr.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding>
+            <marker date="1480705605965" expanded="true" signature="0:62" ph="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.concat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding>
+            <marker date="1480705605957" expanded="true" signature="0:62" ph="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.remap_37to38.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="5" lean-forward="false" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+          <folding>
+            <marker date="1480705605989" expanded="true" signature="0:63" ph="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.rename_chr_sort.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
