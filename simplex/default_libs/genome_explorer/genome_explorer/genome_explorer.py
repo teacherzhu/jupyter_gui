@@ -1,6 +1,6 @@
 import subprocess as sp
 
-GENOMES = {}
+GENOME_FILEPATH = None
 CODON_TO_AMINO_ACID = {'GUC': 'V', 'ACC': 'T', 'GUA': 'V', 'GUG': 'V', 'GUU': 'V', 'AAC': 'N', 'CCU': 'P', 'UGG': 'W',
                        'AGC': 'S', 'auc': 'I', 'CAU': 'H', 'AAU': 'N', 'AGU': 'S', 'ACU': 'T', 'CAC': 'H', 'ACG': 'T',
                        'CCG': 'P', 'CCA': 'P', 'ACA': 'T', 'CCC': 'P', 'GGU': 'G', 'UCU': 'S', 'GCG': 'A', 'UGC': 'C',
@@ -12,40 +12,38 @@ CODON_TO_AMINO_ACID = {'GUC': 'V', 'ACC': 'T', 'GUA': 'V', 'GUG': 'V', 'GUU': 'V
                        'AUC': 'I'}
 
 
-def load_genomic_filepath(species, filepath):
+def load_genome_filepath(filepath):
     """
-    Set up species' filepath.
-    :param species: str;
+    Set up genomic filepath.
     :param filepath: str;
     :return: None
     """
 
-    GENOMES[species] = filepath
-    print('Loaded {} genome from: {}.'.format(species, filepath))
+    global GENOME_FILEPATH
+    GENOME_FILEPATH = filepath
 
 
 def list_available_contigs():
     """
-    List contigs for each species.
-    :return: dict; {species1:[contig1, contig2, ...], species2:[...], ...}
+    List contigs in the genome.
+    :return: list; list of contig
     """
     pass
 
 
-def get_species_dna_sequence(species, chromosome, start, end):
+def get_dna_sequence(chromosome, start, end):
     """
-    Return species' genomic sequences from region specified by chromosome:start-stop.
-    :param species: str; genome file must alrady be loaded via load_genomic_filepath
+    Return genomic sequences from region specified by chromosome:start-stop.
     :param chromosome: int or str; chromosome
     :param start: int or str; start position
     :param end: int or str; end position; must be greater than or equal to start position
-    :return: str; species' genomic sequences from region specified by chromosome:start-stop
+    :return: str; genomic sequences from region specified by chromosome:start-stop
     """
 
-    return get_dna_sequence(GENOMES[species], chromosome, start, end)
+    return query_genome(GENOME_FILEPATH, chromosome, start, end)
 
 
-def get_dna_sequence(filepath, chromosome, start, end):
+def query_genome(filepath, chromosome, start, end):
     """
     Return genomic sequences from region specified by chromosome:start-stop in filepath.
     :param filepath: str;

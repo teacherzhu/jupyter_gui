@@ -91,46 +91,46 @@ input.form-control[type="text"] {
     transition: all 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
     visibility: visible !important; }
 
-.form-input-group {
+.form-required_args-group {
   /*   h3 {
       color: darken($input-color, 50%);
     } */ }
-  .form-input-group input[type="text"] {
+  .form-required_args-group input[type="text"] {
     border-bottom: solid 1px #20D9BA;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #20D9BA 96%);
     background-position: -250px 0;
     background-size: 250px 100%;
     background-repeat: no-repeat;
     will-change: background-position; }
-    .form-input-group input[type="text"]:focus::-webkit-input-placeholder {
+    .form-required_args-group input[type="text"]:focus::-webkit-input-placeholder {
       color: #13806e; }
 
-.form-optional_input-group {
+.form-optional_args-group {
   /*   h3 {
       color: darken($opt-input-color, 20%);
     } */ }
-  .form-optional_input-group input[type="text"] {
+  .form-optional_args-group input[type="text"] {
     border-bottom: solid 1px #9017E6;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #9017E6 96%);
     background-position: -250px 0;
     background-size: 250px 100%;
     background-repeat: no-repeat;
     will-change: background-position; }
-    .form-optional_input-group input[type="text"]:focus::-webkit-input-placeholder {
+    .form-optional_args-group input[type="text"]:focus::-webkit-input-placeholder {
       color: #560e89; }
 
-.form-output-group {
+.form-returns-group {
   /*   h3 {
       color: darken($output-color, 20%);
     } */ }
-  .form-output-group input[type="text"] {
+  .form-returns-group input[type="text"] {
     border-bottom: solid 1px #4E41D9;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #4E41D9 96%);
     background-position: -250px 0;
     background-size: 250px 100%;
     background-repeat: no-repeat;
     will-change: background-position; }
-    .form-output-group input[type="text"]:focus::-webkit-input-placeholder {
+    .form-returns-group input[type="text"]:focus::-webkit-input-placeholder {
       color: #281e96; }
 
 .form-panel-text-field > .btn {

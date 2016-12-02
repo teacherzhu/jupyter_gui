@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # conda install -c conda-forge jupyter_nbextensions_configurator
 jupyter nbextensions_configurator enable
 

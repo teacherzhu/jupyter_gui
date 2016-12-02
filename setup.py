@@ -1,12 +1,10 @@
-import os
-
 from setuptools import setup
 from setuptools.command.install import install
 
 
 class InstallCommand(install):
-
     def run(self):
+
         # Install Python package
         install.run(self)
 

@@ -3,72 +3,58 @@
   "library_name": "genome_explorer",
   "tasks": [
     {
-      "label": "Load Human Genome",
-      "function_name": "load_genomic_filepath",
+      "label": "Load Genome",
+      "function_name": "load_genome_filepath",
       "required_args": [
         {
           "arg_name": "filepath",
-          "label": "File Path to a Genome File (.fasta, .fa, or a their compressed form)"
-        }
-      ],
-      "default_args": [
-        {
-          "arg_name": "species",
-          "value": "human"
+          "description": "File path to a genome file (.fasta, .fa, or a their compressed form)."
         }
       ]
     },
     {
-      "label": "Get Human DNA Sequence",
-      "function_name": "get_species_dna_sequence",
+      "label": "Get DNA Sequence",
+      "function_name": "get_dna_sequence",
       "required_args": [
         {
           "arg_name": "chromosome"
         },
         {
-          "arg_name": "start",
-          "label": "Starting genomic position"
+          "arg_name": "start"
         },
         {
-          "arg_name": "end",
-          "label": "Ending genomic position"
+          "arg_name": "end"
         }
       ],
-      "default_args": [
+      "returns": [
         {
-          "arg_name": "species",
-          "value": "human"
-        }
-      ],
-      "return_names": [
-        {
-          "label": "Genomic sequence"
+          "label": "DNA Sequence"
         }
       ]
     },
     {
-      "label": "Transcription",
+      "label": "Transcribe DNA",
       "function_name": "dna_to_rna",
       "required_args": [
         {
           "arg_name": "dna_sequence"
         }
       ],
-      "return_names": [
+      "returns": [
         {
           "label": "RNA Sequence"
         }
       ]
     },
     {
-      "label": "Translation",
-      "function_name": "rna_to_dna",
+      "label": "Translate RNA",
+      "function_name": "rna_to_aa",
       "required_args": [
         {
           "arg_name": "rna_sequence"
         }
       ],
-      "return_names": [
+      "returns": [
         {
           "label": "Amino Acid Sequence"
         }

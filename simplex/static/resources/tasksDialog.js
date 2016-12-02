@@ -85,18 +85,8 @@ var renderTasks = function() {
   // code to read library JSON files
   var code =
     `
-from os import environ
-from os.path import join
-from simplex.support import load_libraries, compile_task_jsons
-
-HOME_DIR = environ['HOME']
-SIMPLEX_REPO_DIR = join(HOME_DIR, 'simplex/')
-SIMPLEX_DIR = join(SIMPLEX_REPO_DIR, 'simplex/')
-
-SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'default_libs/')
-SIMPLEX_LIBRARIES = load_libraries(SIMPLEX_DATA_DIR, verbose=False)
-
-print(compile_task_jsons(SIMPLEX_LIBRARIES, verbose=False))
+from simplex import compile_tasks
+print(compile_tasks())
   `;
 
   // Callback from

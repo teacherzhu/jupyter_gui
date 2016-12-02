@@ -9,7 +9,7 @@ from .taskview import TaskView
 # TODO: use '_' prefix for local variables
 class TaskManager:
     """
-    Controller class. Manages tasks and their views.
+    Controller class that manages tasks and their views.
     """
 
     def __init__(self):
@@ -20,90 +20,87 @@ class TaskManager:
         # List of tasks
         self.tasks = []
 
-        # Most recent Notebook namespace
+        # Most recent Jupyter Notebook namespace
         self.simplex_namespace = {}
 
     def update_simplex_namespace(self, namespace):
         """
-        Update the notebook_namespace.
+        Update with the notebook_namespace.
         :param namespace: dict;
         :return: None
         """
+
         self.simplex_namespace = merge_dicts(self.simplex_namespace, namespace)
 
     def create_task_view(self, task_dict):
         """
-        Create a Task and display it as a TaskView.
+        Make a Task and display it as a TaskView.
         :param task_dict: dict;
         :return: TaskView;
         """
 
+        # Make a new Task
         task = Task(task_dict)
         self.tasks.append(task)
 
+        # Return its TaskView
         return TaskView(self, task)
 
     def submit(self, fields, task):
         """
-        Callback function for when the cell runs. Execute function.
+        Execute function for when the cell runs.
         """
 
-        # Retrieve default arguments to execute_task the function
-        default_args = {arg['arg_name']: arg['value']
-                        for arg in task.default_args}
+        # Retrieve default arguments
+        default_args = {arg['arg_name']: arg['value'] for arg in task.default_args}
 
-        # Retrieve fields
-        input_fields = fields['input']
-        opt_input_fields = fields['optional_input']
-        output_fields = fields['output']
-
-        # Retrieve user inputs in the corresponding fields
-        req_args = {input_name: field.value for input_name, field in input_fields.items()}
-        opt_args = {input_name: field.value for input_name, field in opt_input_fields.items()}
-        return_names = [field.value for field in output_fields]
+        # Retrieve required and/or optional arguments
+        # TODO: rename the keys
+        required_args = {input_name: field.value for input_name, field in fields['required_args'].items()}
+        optional_args = {input_name: field.value for input_name, field in fields['optional_args'].items()}
+        returns = [field.value for field in fields['returns']]
 
         # Verify all input parameters are present.
-        if None in req_args or '' in req_args:
+        if None in required_args or '' in required_args:
             print('Please provide all required arguments.')
             return
 
         # Verify all output parameters are present.
-        if None in return_names or '' in return_names:
+        if None in returns or '' in returns:
             print('Please provide all return names.')
             return
 
-        #
+        # Clear any existing output
         clear_output()
 
         # Call function
-        results = self.execute_task(task.library_path, task.library_name, task.function_name,
-                                    req_args, default_args, opt_args, return_names)
+        returned = self.execute_task(task.library_path, task.library_name, task.function_name,
+                                     required_args, default_args, optional_args, returns)
 
-        if len(return_names) == 1:
-            self.simplex_namespace[return_names[0]] = results
-        elif len(return_names) > 1:
-            for name, value in zip(return_names, results):
+        if len(returns) == 1:
+            self.simplex_namespace[returns[0]] = returned
+        elif len(returns) > 1:
+            for name, value in zip(returns, returned):
                 self.simplex_namespace[name] = value
 
-    def execute_task(self, library_path, library_name, function_name, req_args, default_args, opt_args, return_names):
+    def execute_task(self, library_path, library_name, function_name, required_args, default_args, optional_args,
+                     returns):
         """
-        Executes named function from specified python package path.
-
-        Takes in arguments for the named function, automatically detecting and
-        casting to the appropriate data type. Returns the results of the function.
+        Execute a task.
         :param library_path: str;
         :param library_name: str;
         :param function_name: str;
-        :param req_args: dict;
+        :param required_args: dict;
         :param default_args: dict;
-        :param opt_args: dict;
-        :param return_names: list;
-        :return: list; raw output of the named function.
+        :param optional_args: dict;
+        :param returns: list;
+        :return: list; raw output of the function
         """
 
-        print('Executing a task ...')
+        print('Executing ...')
 
-        # Appenda library path
+        # Append a library path
+        # TODO: what's the effect of the last '/' in the path?
         print('\tsys.path.insert(0, \'{}\')'.format(library_path))
         sys.path.insert(0, library_path)
 
@@ -112,48 +109,49 @@ class TaskManager:
         exec('from {} import {} as function'.format(library_name, function_name))
 
         # Process args
-        args = self.process_args(req_args, default_args, opt_args)
+        args = self.process_args(required_args, default_args, optional_args)
 
         # Execute
-        print('\tExecuting {} with:'.format(locals()['function']))
-        for k, v in sorted(args.items()):
-            print('\t\t{}={} ({})'.format(k, get_name(v, self.simplex_namespace), type(v)))
+        print('\n\tExecuting {}:'.format(locals()['function']))
+        for a, v in sorted(args.items()):
+            print('\t\t{} = {} ({})'.format(a, get_name(v, self.simplex_namespace), type(v)))
 
         return locals()['function'](**args)
 
-    def process_args(self, req_args, default_args, opt_args):
+    def process_args(self, required_args, default_args, optional_args):
         """
         Convert input str arguments to corresponding values:
             If the str is the name of a existing variable in the Notebook namespace, use its corresponding value;
-            If the str contains ',', convert it into a list of strs
+            If the str contains ',', convert it into a list of str
             Try to cast str in the following order and use the 1st match: int, float, bool, and str;
-        :param req_args: dict;
+        :param required_args: dict;
         :param default_args: dict;
-        :param opt_args: dict;
-        :return: dict;
+        :param optional_args: dict;
+        :return: dict; merged dict
         """
 
-        print('Processing arguments ...')
+        # print('Processing arguments ...')
 
-        args = merge_dicts(req_args, default_args, opt_args)
+        if any(set(required_args.keys() & default_args.keys() & optional_args.keys())):
+            raise ValueError('Argument {} is duplicated.')
+
+        args = merge_dicts(required_args, default_args, optional_args)
         processed_args = {}
 
-        for arg_name, v in args.items():
+        for n, v in args.items():
 
             if v in self.simplex_namespace:  # Process as already defined variable from the Notebook environment
-                processed = self.simplex_namespace[v]
+                processed_v = self.simplex_namespace[v]
 
             else:  # Process as float, int, bool, or string
-
                 # First assume a list of strings to be passed
-                processed = [cast_string_to_int_float_bool_or_str(s) for s in v.split(',') if s]
+                processed_v = [cast_string_to_int_float_bool_or_str(s) for s in v.split(',') if s]
 
                 # If there is only 1 item in the assumed list, use it directly
-                if len(processed) == 1:
-                    processed = processed[0]
+                if len(processed_v) == 1:
+                    processed_v = processed_v[0]
 
-            processed_args[arg_name] = processed
-            print('\t{}: {} ==> {} ({})'.format(arg_name, v, get_name(processed, self.simplex_namespace),
-                                                type(processed)))
+            processed_args[n] = processed_v
+            # print('\t{}: {} ==> {} ({})'.format(n, v, get_name(processed_v, self.simplex_namespace), type(processed_v)))
 
         return processed_args
