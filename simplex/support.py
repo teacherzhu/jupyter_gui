@@ -89,10 +89,14 @@ def load_json(filepath, verbose=True):
     if 'library_path' in library:  # Use specified library path
         library_path = library['library_path']
         # Make sure the library path ends with '/'
-        if not library_path.endswith('/'):
-            library_path += '/'
+        if library_path.endswith('/'):
+            library_path += library_path[:-1]
             if verbose:
-                print('\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
+                print('\tRemoved the last \'/\' from library_path, which is now: {}.'.format(library_path))
+        # if not library_path.endswith('/'):
+        #     library_path += '/'
+        #     if verbose:
+        #         print('\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
         if not isdir(library_path):  # Use absolute path
             library_path = join(HOME_DIR, library_path)
             if verbose:
@@ -168,7 +172,7 @@ def process_args(args, is_return_names=False):
         if 'description' in a:
             processed_a['description'] = a['description']
         else:
-            processed_a['description'] = 'No description.'
+            processed_a['description'] = 'No description :('
 
         processed_args.append(processed_a)
 
@@ -226,8 +230,7 @@ def get_name(obj, namesapce):
     :return: str;
     """
 
-    if isinstance(obj, int):  # obj is an int
-        return obj
+    # TODO: print non-strings as non-strings
 
     for obj_name_in_namespace, obj_in_namespace in namesapce.items():
         if obj_in_namespace is obj:  # obj is a existing obj

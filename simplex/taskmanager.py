@@ -101,15 +101,15 @@ class TaskManager:
         :return: list; raw output of the named function.
         """
 
-        print('Executing task ...')
+        print('Executing a task ...')
 
         # Appenda library path
-        sys.path.insert(0, library_path)
         print('\tsys.path.insert(0, \'{}\')'.format(library_path))
+        sys.path.insert(0, library_path)
 
         # Import function
-        exec('from {} import {} as function'.format(library_name, function_name))
         print('\tfrom {} import {} as function'.format(library_name, function_name))
+        exec('from {} import {} as function'.format(library_name, function_name))
 
         # Process args
         args = self.process_args(req_args, default_args, opt_args)
@@ -152,7 +152,8 @@ class TaskManager:
                 if len(processed) == 1:
                     processed = processed[0]
 
-            print('\t{}: {} ==> {} ({})'.format(arg_name, v, get_name(processed), type(processed)))
             processed_args[arg_name] = processed
+            print('\t{}: {} ==> {} ({})'.format(arg_name, v, get_name(processed, self.simplex_namespace),
+                                                type(processed)))
 
         return processed_args

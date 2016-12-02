@@ -2,8 +2,8 @@
   "library_name": "sample_library",
   "tasks": [
     {
-      "function_name": "function",
       "label": "Task 1 (UID)",
+      "function_name": "function",
       "description": "Description (optional)",
       "required_args": [
         {

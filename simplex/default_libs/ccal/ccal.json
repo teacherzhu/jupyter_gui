@@ -21,6 +21,23 @@
       ]
     },
     {
+      "label": "Write .GCT File",
+      "function_name": "write_gct",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "required_args": [
+        {
+          "arg_name": "matrix",
+          "label": "Matrix to be written as a .GCT",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "arg_name": "filepath",
+          "label": ".GCT file",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ]
+    },
+    {
       "label": "Define NMF Components",
       "function_name": "define_components",
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",

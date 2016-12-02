@@ -3,14 +3,12 @@
   "library_name": "genome_explorer",
   "tasks": [
     {
-      "function_name": "load_genomic_filepath",
       "label": "Load Human Genome",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "function_name": "load_genomic_filepath",
       "required_args": [
         {
           "arg_name": "filepath",
-          "label": "File Path to a Genome File (.fasta, .fa, or a their compressed form).",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+          "label": "File Path to a Genome File (.fasta, .fa, or a their compressed form)"
         }
       ],
       "default_args": [
@@ -21,24 +19,19 @@
       ]
     },
     {
-      "function_name": "explore_species_genome",
-      "label": "Explore Human Genome",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "label": "Get Human DNA Sequence",
+      "function_name": "get_species_dna_sequence",
       "required_args": [
         {
-          "arg_name": "chromosome",
-          "label": "Chromosome",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+          "arg_name": "chromosome"
         },
         {
           "arg_name": "start",
-          "label": "Starting genomic position",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+          "label": "Starting genomic position"
         },
         {
           "arg_name": "end",
-          "label": "Ending genomic position",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+          "label": "Ending genomic position"
         }
       ],
       "default_args": [
@@ -49,8 +42,35 @@
       ],
       "return_names": [
         {
-          "label": "Genomic sequence",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+          "label": "Genomic sequence"
+        }
+      ]
+    },
+    {
+      "label": "Transcription",
+      "function_name": "dna_to_rna",
+      "required_args": [
+        {
+          "arg_name": "dna_sequence"
+        }
+      ],
+      "return_names": [
+        {
+          "label": "RNA Sequence"
+        }
+      ]
+    },
+    {
+      "label": "Translation",
+      "function_name": "rna_to_dna",
+      "required_args": [
+        {
+          "arg_name": "rna_sequence"
+        }
+      ],
+      "return_names": [
+        {
+          "label": "Amino Acid Sequence"
         }
       ]
     }
