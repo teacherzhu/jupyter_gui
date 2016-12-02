@@ -18,4 +18,5 @@ jupyter serverextension enable --py --sys-prefix simplex
 # ls */*.json > library_list.txt
 # cd ../../..
 
+# cd $HOME
 jupyter notebook --no-browser

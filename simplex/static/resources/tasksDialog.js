@@ -87,22 +87,23 @@ var renderTasks = function() {
     `
 from os import environ
 from os.path import join
-from simplex.support import load_libraries, make_task_json
+from simplex.support import load_libraries, compile_task_jsons
 
 HOME_DIR = environ['HOME']
 SIMPLEX_REPO_DIR = join(HOME_DIR, 'simplex/')
 SIMPLEX_DIR = join(SIMPLEX_REPO_DIR, 'simplex/')
 
 SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'default_libs/')
-SIMPLEX_LIBRARIES = load_libraries(SIMPLEX_DATA_DIR)
+SIMPLEX_LIBRARIES = load_libraries(SIMPLEX_DATA_DIR, verbose=False)
 
-print(make_task_json(SIMPLEX_LIBRARIES))
+print(compile_task_jsons(SIMPLEX_LIBRARIES, verbose=False))
   `;
 
   // Callback from
   var callback = function(out) {
-    console.log(out.content.text);
+    console.log(out);
     var tasksDict = JSON.parse(out.content.text);
+
     // Convert dictionary to stringified list
     simplexTaskData = Object.keys(tasksDict).map(function(key) {
       var task = tasksDict[key];
@@ -197,7 +198,6 @@ const renderRightPanel = function() {
       .addClass('btn')
       .addClass('btn-default')
       .addClass('btn-primary')
-      .attr('id', 'library-select-button')
       .attr('data-dismiss', 'modal')
       .html('Select')
       .on('click', function(event) {
@@ -257,6 +257,11 @@ const renderTask = function(task_data) {
       event.preventDefault();
       selectedIndex = $(this).index();
       renderRightPanel();
+    })
+    // Double click auto selects task
+    .on('dblclick', function(event) {
+      event.preventDefault();
+      $('#library-select-btn').click();
     });
 
   // Card style and click action

@@ -1,4 +1,15 @@
+from os import environ
+from os.path import join
+
+from .support import compile_task_jsons, load_libraries
 from .taskmanager import TaskManager
+
+
+# ======================================================================================================================
+# Set up Jupyter widget
+# ======================================================================================================================
+
+# TODO: understand better
 
 
 def _jupyter_nbextension_paths():
@@ -6,7 +17,6 @@ def _jupyter_nbextension_paths():
     Required function to add things to the nbextension path.
     :return: list; List of 1 dictionary
     """
-    # TODO: understand better
 
     # section: the path is relative to the simplex/ directory (if viewing from the repository: it's simplex/simplex/)
     # dest: Jupyter sets up: server(such as localhost:8888)/nbextensions/dest/
