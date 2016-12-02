@@ -6,7 +6,9 @@ $cubic: cubic-bezier(0.64, 0.09, 0.08, 1) !default;
 /******************** Notebook Controls ********************/
 
 #insert_simplex_below .btn {
-  background: orange;
+  background: $input-color;
+  border: 1px solid white !important;
+  border-radius: 3px !important;
 }
 
 /******************** General Formatting ********************/

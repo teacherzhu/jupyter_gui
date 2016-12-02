@@ -1,6 +1,8 @@
 /******************** Notebook Controls ********************/
 #insert_simplex_below .btn {
-  background: orange; }
+  background: #20D9BA;
+  border: 1px solid white !important;
+  border-radius: 3px !important; }
 
 /******************** General Formatting ********************/
 .simplex-hidden {
