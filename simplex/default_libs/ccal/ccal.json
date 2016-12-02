@@ -1,0 +1,180 @@
+{
+  "library_path": "ccal",
+  "library_name": "ccal",
+  "tasks": [
+    {
+      "label": "Read .GCT File",
+      "function_name": "read_gct",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "required_args": [
+        {
+          "arg_name": "filepath",
+          "label": ".GCT file",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ],
+      "return_names": [
+        {
+          "label": "Matrix",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ]
+    },
+    {
+      "label": "Define NMF Components",
+      "function_name": "define_components",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "required_args": [
+        {
+          "arg_name": "matrix",
+          "label": "Expression Matrix",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "arg_name": "ks",
+          "label": "Numbers of Components",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ],
+      "return_names": [
+        {
+          "label": "NMF Result Dictionary",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "label": "Cophenetic Correlation Coefficients",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ]
+    },
+    {
+      "label": "Get W Matrix",
+      "function_name": "get_w_or_h_matrix",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "required_args": [
+        {
+          "arg_name": "nmf_results",
+          "label": "NMF Results",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "arg_name": "k",
+          "label": "Number of Components",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ],
+      "default_args": [
+        {
+          "arg_name": "w_or_h",
+          "value": "w"
+        }
+      ],
+      "return_names": [
+        {
+          "label": "W Matrix",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ]
+    },
+    {
+      "label": "Get H Matrix",
+      "function_name": "get_w_or_h_matrix",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "required_args": [
+        {
+          "arg_name": "nmf_results",
+          "label": "NMF Results",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "arg_name": "k",
+          "label": "Number of Components",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ],
+      "default_args": [
+        {
+          "arg_name": "w_or_h",
+          "value": "h"
+        }
+      ],
+      "return_names": [
+        {
+          "label": "H Matrix",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ]
+    },
+    {
+      "label": "Get State Labels",
+      "function_name": "get_state_labels",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "required_args": [
+        {
+          "arg_name": "clusterings",
+          "label": "Clusterings",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "arg_name": "k",
+          "label": "Number of States",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ],
+      "return_names": [
+        {
+          "label": "State Labels",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ]
+    },
+    {
+      "label": "Define States",
+      "function_name": "define_states",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "required_args": [
+        {
+          "arg_name": "matrix",
+          "label": "H Matrix",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "arg_name": "ks",
+          "label": "Numbers of States",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ],
+      "return_names": [
+        {
+          "label": "Distance Matrix",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "label": "Clusterings",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "label": "Cophenetic Correlation Coefficients",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ]
+    },
+    {
+      "label": "Make Onco-GPS Map",
+      "function_name": "make_oncogps_map",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci.",
+      "required_args": [
+        {
+          "arg_name": "training_h",
+          "label": "H Matrix",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        },
+        {
+          "arg_name": "training_states",
+          "label": "Sample State Labels",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, eligendi? Eaque modi reprehenderit sequi, nulla amet magni inventore id fugit laborum ducimus nam, tempora incidunt quos, sapiente labore ratione adipisci."
+        }
+      ]
+    }
+  ]
+}
