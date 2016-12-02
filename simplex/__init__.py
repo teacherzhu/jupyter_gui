@@ -1,12 +1,33 @@
+from os import environ
+from os.path import join
+
+from .support import load_libraries, compile_task_jsons
 from .taskmanager import TaskManager
 
+# ======================================================================================================================
+# Set up environment
+# ======================================================================================================================
+HOME_DIR = environ['HOME']
+SIMPLEX_REPO_DIR = join(HOME_DIR, 'simplex/')
+SIMPLEX_DIR = join(SIMPLEX_REPO_DIR, 'simplex/')
 
+SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'default_libs/')
+SIMPLEX_LIBRARIES = load_libraries(SIMPLEX_DATA_DIR)
+
+TASK_JSON_FILEPATH = join(SIMPLEX_REPO_DIR, 'tasks.json')
+compile_task_jsons(SIMPLEX_LIBRARIES, TASK_JSON_FILEPATH)
+
+
+# ======================================================================================================================
+# Set up Jupyter widget
+# ======================================================================================================================
+
+# TODO: understand better
 def _jupyter_nbextension_paths():
     """
     Required function to add things to the nbextension path.
     :return: list; List of 1 dictionary
     """
-    # TODO: understand better
 
     # section: the path is relative to the simplex/ directory (if viewing from the repository: it's simplex/simplex/)
     # dest: Jupyter sets up: server(such as localhost:8888)/nbextensions/dest/
