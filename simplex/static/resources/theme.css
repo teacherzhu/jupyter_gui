@@ -274,6 +274,9 @@ button.close, .library-modal-header, .library-modal-footer {
   outline: 0.2em solid lightblue !important;
   outline-offset: -0.2em; }
 
+.card-label {
+  font-weight: 700; }
+
 #library-task-package, .card-package-title {
   color: grey;
   text-transform: uppercase; }

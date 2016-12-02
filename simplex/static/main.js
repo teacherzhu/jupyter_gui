@@ -53,7 +53,8 @@ const init = function() {
  * Setup cell execution callbacks to the notebook kernel.
  */
 const setupCallbacks = function() {
-  var initCode = `
+  var initCode =
+    `
 global task_manager
 
 def init_task_manager():
@@ -168,7 +169,9 @@ const addMenuOptions = function() {
   }
 
   // Add button for creating SimpleX cell to toolbar
-  const addButton = $('<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>');
+  const addButton = $(
+    '<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>'
+  );
   addButton.click(function() {
     showTasksPanel();
   });
@@ -247,7 +250,8 @@ const toSimpleXCell = function(formerType, index, taskDict) {
   var cellChange = function(cell) {
     // If taskDict is not passed, the cell is auto-executed.
     if (taskDict) {
-      var code = AUTOEXEC_FLAG + `
+      var code = AUTOEXEC_FLAG +
+        `
 # Make and show widget
 task_view = task_manager.create_task_view(json.loads('''${taskDict}'''))
 task_view.create()
