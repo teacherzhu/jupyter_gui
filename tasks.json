@@ -5,7 +5,7 @@
         "arg_name": "species",
         "description": "No description.",
         "label": "species",
-        "value": ""
+        "value": "human"
       }
     ],
     "description": "",
@@ -40,6 +40,30 @@
       }
     ]
   },
+  "Load Human Genome": {
+    "default_args": [
+      {
+        "arg_name": "species",
+        "description": "No description.",
+        "label": "species",
+        "value": "human"
+      }
+    ],
+    "description": "",
+    "function_name": "load_genomic_filepath",
+    "library_name": "genome_explorer",
+    "library_path": "/Users/ckmah/simplex/simplex_data/genome_explorer/",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "filepath",
+        "description": "No description.",
+        "label": "File Path to a Genome File (.fasta, .fa, or a their compressed form).",
+        "value": ""
+      }
+    ],
+    "return_names": []
+  },
   "Task 1 (UID)": {
     "default_args": [
       {
@@ -66,30 +90,6 @@
         "arg_name": "arg1",
         "description": "Description for this required argument. (optional)",
         "label": "Argument 1 (optional)",
-        "value": ""
-      }
-    ],
-    "return_names": []
-  },
-  "aaaLoad Human Genome": {
-    "default_args": [
-      {
-        "arg_name": "species",
-        "description": "No description.",
-        "label": "species",
-        "value": ""
-      }
-    ],
-    "description": "",
-    "function_name": "load_genomic_filepath",
-    "library_name": "genome_explorer",
-    "library_path": "/Users/ckmah/simplex/simplex_data/genome_explorer/",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "filepath",
-        "description": "No description.",
-        "label": "File Path to a Genome File (.fasta, .fa, or a their compressed form).",
         "value": ""
       }
     ],

@@ -1,6 +1,6 @@
 {
   "library_path": "simplex/simplex_data/genome_explorer",
-  "library_name": "genome_explorer",
+  "library_name": "gaaaaenome_explorer",
   "tasks": [
     {
       "function_name": "load_genomic_filepath",
