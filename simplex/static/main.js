@@ -170,7 +170,7 @@ const addMenuOptions = function() {
 
   // Add button for creating SimpleX cell to toolbar
   const addButton = $(
-    '<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa-plus-square-o fa"></i></button></div>'
+    '<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class=fa fa-th-large"></i></button></div>'
   );
   addButton.click(function() {
     showTasksPanel();

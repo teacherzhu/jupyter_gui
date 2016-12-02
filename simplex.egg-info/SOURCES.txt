@@ -11,5 +11,4 @@ simplex.egg-info/top_level.txt
 simplex/static/main.js
 simplex/static/resources/tasksDialog.js
 simplex/static/resources/theme.css
-simplex/static/resources/theme.css.map
 simplex/static/resources/theme.scss

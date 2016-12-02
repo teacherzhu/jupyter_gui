@@ -225,6 +225,7 @@ def get_name(obj, namesapce):
     :param namesapce: dict;
     :return: str;
     """
+
     if isinstance(obj, int):  # obj is an int
         return obj
 
