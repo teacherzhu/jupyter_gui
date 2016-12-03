@@ -1,7 +1,10 @@
-.DS_Store
-*/**/__pycache__/
-.idea/
-.sass-cache/*
-*.css.map
-simplex/bin/
 simplex.egg-info/
+
+*Icon*
+*.DS_Store
+*_pycache_*
+*.py[cod]
+*.ipynb_checkpoints*
+*.idea
+*.swp
+*.css.map

@@ -11,7 +11,7 @@
     "description": "",
     "function_name": "define_components",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -43,7 +43,7 @@
     "description": "",
     "function_name": "define_states",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -86,7 +86,7 @@
     "description": "",
     "function_name": "get_w_or_h_matrix",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -121,7 +121,7 @@
     "description": "",
     "function_name": "get_w_or_h_matrix",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -149,7 +149,7 @@
     "description": "",
     "function_name": "get_dna_sequence",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/genome_explorer",
+    "library_path": "genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -183,7 +183,7 @@
     "description": "",
     "function_name": "get_state_labels",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -211,7 +211,7 @@
     "description": "",
     "function_name": "load_fasta",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/genome_explorer",
+    "library_path": "genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -228,7 +228,7 @@
     "description": "",
     "function_name": "make_oncogps",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -251,7 +251,7 @@
     "description": "",
     "function_name": "read_gct",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -309,7 +309,7 @@
     "description": "",
     "function_name": "dna_to_rna",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/genome_explorer",
+    "library_path": "genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -331,7 +331,7 @@
     "description": "",
     "function_name": "rna_to_aa",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/genome_explorer",
+    "library_path": "genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -360,7 +360,7 @@
     "description": "",
     "function_name": "vcf_annotate",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/genome_explorer",
+    "library_path": "genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -382,7 +382,7 @@
     "description": "",
     "function_name": "vcf_concat_snp_indel",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/genome_explorer",
+    "library_path": "genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -416,7 +416,7 @@
     "description": "",
     "function_name": "vcf_extract_chr",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/genome_explorer",
+    "library_path": "genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -444,7 +444,7 @@
     "description": "",
     "function_name": "vcf_remap_37to38",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/genome_explorer",
+    "library_path": "genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -466,7 +466,7 @@
     "description": "",
     "function_name": "write_gct",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
