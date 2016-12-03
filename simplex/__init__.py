@@ -4,8 +4,8 @@ from os.path import join
 HOME_DIR = environ['HOME']
 SIMPLEX_REPO_DIR = join(HOME_DIR, 'simplex/')
 SIMPLEX_DIR = join(SIMPLEX_REPO_DIR, 'simplex/')
-SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'default_libs/')
-SIMPLEX_TASK_RECORD_FILEPATH = join(SIMPLEX_REPO_DIR, 'task_records.json')
+SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'libs/')
+SIMPLEX_TASK_RECORD_FILEPATH = join(SIMPLEX_DATA_DIR, 'task_records.json')
 
 from .support import compile_tasks
 from .taskmanager import TaskManager

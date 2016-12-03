@@ -280,7 +280,7 @@
     "description": "Description (optional)",
     "function_name": "function",
     "library_name": "sample_library",
-    "library_path": "/home/cyborg/simplex/simplex/default_libs/sample_library/",
+    "library_path": "/home/cyborg/simplex/simplex/libs/sample_library/",
     "optional_args": [
       {
         "arg_name": "arg2",

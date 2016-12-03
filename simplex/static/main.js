@@ -278,7 +278,7 @@ task_view.create()
 
           // Enable javascript tooltips
           $("[data-toggle='tooltip']").tooltip();
-        }, 1000);
+        }, 200);
       }
     };
 
