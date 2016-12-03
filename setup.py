@@ -37,7 +37,7 @@ class InstallCommand(install):
 setup(name='simplex',
       packages=['simplex'],
       install_requires=['jupyter', 'notebook>=4.2.0',
-                        'ipywidgets>=5.2.0', 'matplotlib'],
+                        'ipywidgets>=5.2.0', 'matplotlib', 'IPython'],
       cmdclass={'install': InstallCommand},
       package_data={'simplex': [
           'static/main.js', 'static/resources/*', 'static/resources/tasks.json']}
