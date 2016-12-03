@@ -342,6 +342,7 @@ define([
     'base/js/namespace',
     'base/js/events',
     'jquery',
+    STATIC_PATH + 'tinysort.min.js',
     STATIC_PATH + 'tasksDialog.js'
 ], function(Jupyter, events) {
   function load_ipython_extension() {

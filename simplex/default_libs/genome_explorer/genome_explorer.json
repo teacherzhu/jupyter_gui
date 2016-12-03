@@ -1,10 +1,10 @@
 {
-  "library_path": "/home/cyborg/simplex/simplex/default_libs/genome_explorer",
+  "library_path": "genome_explorer",
   "library_name": "genome_explorer",
   "tasks": [
     {
       "label": "Load Genome",
-      "function_name": "load_genome_filepath",
+      "function_name": "load_fasta",
       "required_args": [
         {
           "arg_name": "filepath",
@@ -57,6 +57,79 @@
       "returns": [
         {
           "label": "Amino Acid Sequence"
+        }
+      ]
+    },
+    {
+      "label": "VCF: Combine SNPs and InDels",
+      "function_name": "vcf_concat_snp_indel",
+      "required_args": [
+        {
+          "arg_name": "snp_filepath"
+        },
+        {
+          "arg_name": "indel_filepath"
+        },
+        {
+          "arg_name": "output_fname",
+          "label": "Output Filename Prefix"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Combined VCF File"
+        }
+      ]
+    },
+    {
+      "label": "VCF: Remap Assembly 37 to 38",
+      "function_name": "vcf_remap_37to38",
+      "required_args": [
+        {
+          "arg_name": "fname"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Remapped VCF File"
+        }
+      ]
+    },
+    {
+      "label": "VCF: Extract Chr1-23, X, Y, and M",
+      "function_name": "vcf_extract_chr",
+      "required_args": [
+        {
+          "arg_name": "fname"
+        },
+        {
+          "arg_name": "Chromosome Format",
+          "Desctiption": "Ensemble or UCSC"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Extracted VCF File"
+        }
+      ]
+    },
+    {
+      "label": "VCF: Annotate with DBSNP, SNPEff, & ClinVar",
+      "function_name": "vcf_annotate",
+      "required_args": [
+        {
+          "arg_name": "fname"
+        }
+      ],
+      "default_args": [
+        {
+          "arg_name": "pipeline",
+          "value": "dbsnp-snpeff-clinvar"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Annotated VCF File"
         }
       ]
     }

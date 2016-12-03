@@ -149,7 +149,7 @@
     "description": "",
     "function_name": "get_dna_sequence",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/simplex/simplex/default_libs/genome_explorer",
+    "library_path": "/home/cyborg/genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -209,9 +209,9 @@
   "Load Genome": {
     "default_args": [],
     "description": "",
-    "function_name": "load_genome_filepath",
+    "function_name": "load_fasta",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/simplex/simplex/default_libs/genome_explorer",
+    "library_path": "/home/cyborg/genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -309,7 +309,7 @@
     "description": "",
     "function_name": "dna_to_rna",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/simplex/simplex/default_libs/genome_explorer",
+    "library_path": "/home/cyborg/genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -331,7 +331,7 @@
     "description": "",
     "function_name": "rna_to_aa",
     "library_name": "genome_explorer",
-    "library_path": "/home/cyborg/simplex/simplex/default_libs/genome_explorer",
+    "library_path": "/home/cyborg/genome_explorer",
     "optional_args": [],
     "required_args": [
       {
@@ -345,6 +345,119 @@
       {
         "description": "No description :(",
         "label": "Amino Acid Sequence"
+      }
+    ]
+  },
+  "VCF: Annotate with DBSNP, SNPEff, & ClinVar": {
+    "default_args": [
+      {
+        "arg_name": "pipeline",
+        "description": "No description :(",
+        "label": "Pipeline",
+        "value": "dbsnp-snpeff-clinvar"
+      }
+    ],
+    "description": "",
+    "function_name": "vcf_annotate",
+    "library_name": "genome_explorer",
+    "library_path": "/home/cyborg/genome_explorer",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "fname",
+        "description": "No description :(",
+        "label": "Fname",
+        "value": ""
+      }
+    ],
+    "returns": [
+      {
+        "description": "No description :(",
+        "label": "Annotated VCF File"
+      }
+    ]
+  },
+  "VCF: Combine SNPs and InDels": {
+    "default_args": [],
+    "description": "",
+    "function_name": "vcf_concat_snp_indel",
+    "library_name": "genome_explorer",
+    "library_path": "/home/cyborg/genome_explorer",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "snp_filepath",
+        "description": "No description :(",
+        "label": "Snp Filepath",
+        "value": ""
+      },
+      {
+        "arg_name": "indel_filepath",
+        "description": "No description :(",
+        "label": "Indel Filepath",
+        "value": ""
+      },
+      {
+        "arg_name": "output_fname",
+        "description": "No description :(",
+        "label": "Output Filename Prefix",
+        "value": ""
+      }
+    ],
+    "returns": [
+      {
+        "description": "No description :(",
+        "label": "Combined VCF File"
+      }
+    ]
+  },
+  "VCF: Extract Chr1-23, X, Y, and M": {
+    "default_args": [],
+    "description": "",
+    "function_name": "vcf_extract_chr",
+    "library_name": "genome_explorer",
+    "library_path": "/home/cyborg/genome_explorer",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "fname",
+        "description": "No description :(",
+        "label": "Fname",
+        "value": ""
+      },
+      {
+        "arg_name": "Chromosome Format",
+        "description": "No description :(",
+        "label": "Chromosome Format",
+        "value": ""
+      }
+    ],
+    "returns": [
+      {
+        "description": "No description :(",
+        "label": "Extracted VCF File"
+      }
+    ]
+  },
+  "VCF: Remap Assembly 37 to 38": {
+    "default_args": [],
+    "description": "",
+    "function_name": "vcf_remap_37to38",
+    "library_name": "genome_explorer",
+    "library_path": "/home/cyborg/genome_explorer",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "fname",
+        "description": "No description :(",
+        "label": "Fname",
+        "value": ""
+      }
+    ],
+    "returns": [
+      {
+        "description": "No description :(",
+        "label": "Remapped VCF File"
       }
     ]
   },
