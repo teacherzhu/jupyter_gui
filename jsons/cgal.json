@@ -1,0 +1,29 @@
+{
+  "library_path": "cgal",
+  "library_name": "cgal",
+  "tasks": [
+    {
+      "label": "Get DNA Sequence",
+      "function_name": "get_sequence",
+      "required_args": [
+        {
+          "arg_name": "filepath"
+        },
+        {
+          "arg_name": "chromosome"
+        },
+        {
+          "arg_name": "start"
+        },
+        {
+          "arg_name": "end"
+        }
+      ],
+      "returns": [
+        {
+          "label": "DNA Sequence"
+        }
+      ]
+    }
+  ]
+}
