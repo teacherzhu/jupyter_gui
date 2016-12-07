@@ -47,6 +47,8 @@ const init = function() {
     $(".loading-screen")
       .hide("fade");
   }, 100);
+
+  console.log('SimpleX nbextension initialized.');
 };
 
 /**

@@ -3,6 +3,7 @@ from setuptools.command.install import install
 
 
 class InstallCommand(install):
+
     def run(self):
 
         # Install Python package
@@ -13,6 +14,7 @@ class InstallCommand(install):
         log.set_verbosity(log.DEBUG)
 
         try:
+            å
             # Enable the required nbextension for ipywidgets
             subprocess.call(["jupyter", "nbextension",
                              "enable", "--py", "widgetsnbextension"])
@@ -33,12 +35,17 @@ class InstallCommand(install):
                      "jupyter serverextension enable --py simplex\n")
 
 
-# TODO: understand better
 setup(name='simplex',
       packages=['simplex'],
+      version='0.9.0',
+      description='SimpleX Jupyter Notebook extension',
+      author='Clarence Mah',
+      author_email='ckmah@ucsd.edu',
+      classifiers=['Programming Language :: Python :: 3.5'],
+      keywords=['widget development bioinformatics'],
       install_requires=['jupyter', 'notebook>=4.2.0',
                         'ipywidgets>=5.2.0', 'matplotlib', 'IPython'],
       cmdclass={'install': InstallCommand},
       package_data={'simplex': [
-          'static/main.js', 'static/resources/*', 'static/resources/tasks.json']}
+          'static/main.js', 'static/resources/*']},
       )

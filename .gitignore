@@ -1,4 +1,6 @@
 simplex.egg-info/
+build/*
+dist/*
 
 *Icon*
 *.DS_Store
@@ -8,3 +10,4 @@ simplex.egg-info/
 *.idea
 *.swp
 *.css.map
+*.sass-cache

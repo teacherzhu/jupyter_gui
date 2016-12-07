@@ -229,7 +229,7 @@
     "description": "Description (optional)",
     "function_name": "function",
     "library_name": "sample_library",
-    "library_path": "/home/cyborg/simplex/jsons/",
+    "library_path": "/Users/ckmah/simplex/jsons/",
     "optional_args": [
       {
         "arg_name": "arg2",
