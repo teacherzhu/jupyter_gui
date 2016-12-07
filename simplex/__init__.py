@@ -2,13 +2,11 @@ from os import environ
 from os.path import join
 
 HOME_DIR = environ['HOME']
-SIMPLEX_REPO_DIR = join(HOME_DIR, 'simplex/')
-SIMPLEX_DIR = join(SIMPLEX_REPO_DIR, 'simplex/')
-SIMPLEX_DATA_DIR = join(SIMPLEX_DIR, 'libs/')
-SIMPLEX_TASK_RECORD_FILEPATH = join(SIMPLEX_DATA_DIR, 'task_records.json')
 
-from .support import compile_tasks
-from .taskmanager import TaskManager
+SIMPLEX_JSON_DIR = join(HOME_DIR, 'simplex', 'jsons/')
+SIMPLEX_TASK_RECORD_FILEPATH = join(SIMPLEX_JSON_DIR, 'COMPILED.json')
+
+from .taskmanager import TaskManager, compile_tasks
 
 
 # ======================================================================================================================

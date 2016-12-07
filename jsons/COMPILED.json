@@ -144,40 +144,6 @@
       }
     ]
   },
-  "Get DNA Sequence": {
-    "default_args": [],
-    "description": "",
-    "function_name": "get_dna_sequence",
-    "library_name": "genome_explorer",
-    "library_path": "genome_explorer",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "chromosome",
-        "description": "No description :(",
-        "label": "Chromosome",
-        "value": ""
-      },
-      {
-        "arg_name": "start",
-        "description": "No description :(",
-        "label": "Start",
-        "value": ""
-      },
-      {
-        "arg_name": "end",
-        "description": "No description :(",
-        "label": "End",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "No description :(",
-        "label": "DNA Sequence"
-      }
-    ]
-  },
   "Get State Labels": {
     "default_args": [],
     "description": "",
@@ -205,23 +171,6 @@
         "label": "State Labels"
       }
     ]
-  },
-  "Load Genome": {
-    "default_args": [],
-    "description": "",
-    "function_name": "load_fasta",
-    "library_name": "genome_explorer",
-    "library_path": "genome_explorer",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "filepath",
-        "description": "File path to a genome file (.fasta, .fa, or a their compressed form).",
-        "label": "Filepath",
-        "value": ""
-      }
-    ],
-    "returns": []
   },
   "Make Onco-GPS": {
     "default_args": [],
@@ -280,7 +229,7 @@
     "description": "Description (optional)",
     "function_name": "function",
     "library_name": "sample_library",
-    "library_path": "/home/cyborg/simplex/simplex/libs/sample_library/",
+    "library_path": "/home/cyborg/simplex/jsons/",
     "optional_args": [
       {
         "arg_name": "arg2",
@@ -301,163 +250,6 @@
       {
         "description": "Description for this returned value. (optional)",
         "label": "Return 1"
-      }
-    ]
-  },
-  "Transcribe DNA": {
-    "default_args": [],
-    "description": "",
-    "function_name": "dna_to_rna",
-    "library_name": "genome_explorer",
-    "library_path": "genome_explorer",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "dna_sequence",
-        "description": "No description :(",
-        "label": "Dna Sequence",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "No description :(",
-        "label": "RNA Sequence"
-      }
-    ]
-  },
-  "Translate RNA": {
-    "default_args": [],
-    "description": "",
-    "function_name": "rna_to_aa",
-    "library_name": "genome_explorer",
-    "library_path": "genome_explorer",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "rna_sequence",
-        "description": "No description :(",
-        "label": "Rna Sequence",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "No description :(",
-        "label": "Amino Acid Sequence"
-      }
-    ]
-  },
-  "VCF: Annotate with DBSNP, SNPEff, & ClinVar": {
-    "default_args": [
-      {
-        "arg_name": "pipeline",
-        "description": "No description :(",
-        "label": "Pipeline",
-        "value": "dbsnp-snpeff-clinvar"
-      }
-    ],
-    "description": "",
-    "function_name": "vcf_annotate",
-    "library_name": "genome_explorer",
-    "library_path": "genome_explorer",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "fname",
-        "description": "No description :(",
-        "label": "Fname",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "No description :(",
-        "label": "Annotated VCF File"
-      }
-    ]
-  },
-  "VCF: Combine SNPs and InDels": {
-    "default_args": [],
-    "description": "",
-    "function_name": "vcf_concat_snp_indel",
-    "library_name": "genome_explorer",
-    "library_path": "genome_explorer",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "snp_filepath",
-        "description": "No description :(",
-        "label": "Snp Filepath",
-        "value": ""
-      },
-      {
-        "arg_name": "indel_filepath",
-        "description": "No description :(",
-        "label": "Indel Filepath",
-        "value": ""
-      },
-      {
-        "arg_name": "output_fname",
-        "description": "No description :(",
-        "label": "Output Filename Prefix",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "No description :(",
-        "label": "Combined VCF File"
-      }
-    ]
-  },
-  "VCF: Extract Chr1-23, X, Y, and M": {
-    "default_args": [],
-    "description": "",
-    "function_name": "vcf_extract_chr",
-    "library_name": "genome_explorer",
-    "library_path": "genome_explorer",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "fname",
-        "description": "No description :(",
-        "label": "Fname",
-        "value": ""
-      },
-      {
-        "arg_name": "Chromosome Format",
-        "description": "No description :(",
-        "label": "Chromosome Format",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "No description :(",
-        "label": "Extracted VCF File"
-      }
-    ]
-  },
-  "VCF: Remap Assembly 37 to 38": {
-    "default_args": [],
-    "description": "",
-    "function_name": "vcf_remap_37to38",
-    "library_name": "genome_explorer",
-    "library_path": "genome_explorer",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "fname",
-        "description": "No description :(",
-        "label": "Fname",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "No description :(",
-        "label": "Remapped VCF File"
       }
     ]
   },

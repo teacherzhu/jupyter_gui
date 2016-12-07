@@ -1,9 +1,10 @@
 import sys
+from os import listdir
 from os.path import isdir, isfile, join, split
 from json import dump, dumps, load
 from IPython.display import clear_output
 
-from . import HOME_DIR, SIMPLEX_DATA_DIR, SIMPLEX_TASK_RECORD_FILEPATH
+from . import HOME_DIR, SIMPLEX_JSON_DIR, SIMPLEX_TASK_RECORD_FILEPATH
 from .support import get_name, merge_dicts, list_only_dirs, title_str, cast_string_to_int_float_bool_or_str
 from .task import Task
 from .taskview import TaskView
@@ -164,26 +165,25 @@ class TaskManager:
 # SimpleX support functions
 # ======================================================================================================================
 # TODO: return as only dictionary
-def compile_tasks(library_directory_path=SIMPLEX_DATA_DIR, record_filepath=SIMPLEX_TASK_RECORD_FILEPATH,
+def compile_tasks(json_directory_path=SIMPLEX_JSON_DIR, record_filepath=SIMPLEX_TASK_RECORD_FILEPATH,
                   return_type=str):
     """
 
-    :param library_directory_path: str; the main directory that contains all library directories
+    :param json_directory_path: str; the main directory that contains all library directories
     :param record_filepath: str; .json containing all available tasks' specifications
     :param return_type: type; dict or str
     :return: dict; all tasks' specifications
     """
 
     tasks_by_libraries = dict()
-    for dp in list_only_dirs(library_directory_path):
-        lib = split(dp)[1]
+    for f in listdir(json_directory_path):
+        if f.startswith('COMPILED'):
+            continue
 
-        fp_json = join(dp, '{}.json'.format(lib))
+        fp_json = join(json_directory_path, f)
         try:
             tasks = load_task(fp_json)
             tasks_by_libraries.update(tasks)
-        except FileNotFoundError:
-            raise FileNotFoundError('{} library is missing {}.json (couldn\'t find {}).'.format(dp, lib, fp_json))
         except KeyError:
             raise ValueError('Error loading {}.'.format(fp_json))
 
