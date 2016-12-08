@@ -5,7 +5,7 @@ from json import dump, dumps, load
 from IPython.display import clear_output
 
 from . import HOME_DIR, SIMPLEX_JSON_DIR, SIMPLEX_TASK_RECORD_FILEPATH
-from .support import get_name, merge_dicts, list_only_dirs, title_str, cast_string_to_int_float_bool_or_str
+from .support import get_name, merge_dicts, title_str, cast_string_to_int_float_bool_or_str
 from .task import Task
 from .taskview import TaskView
 
@@ -83,6 +83,7 @@ class TaskManager:
 
         if len(returns) == 1:
             self.simplex_namespace[returns[0]] = returned
+            print(returned)
         elif len(returns) > 1:
             for name, value in zip(returns, returned):
                 self.simplex_namespace[name] = value
