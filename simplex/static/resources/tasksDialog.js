@@ -284,5 +284,5 @@ const renderTask = function(task_data) {
   card.appendTo(cardParent);
   cardParent.appendTo(leftPanel);
 
-//  tinysort($(leftPanel).children(), '.library-card .card-label');
+  //  tinysort($(leftPanel).children(), '.library-card .card-label');
 }

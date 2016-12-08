@@ -193,7 +193,6 @@ const mapKeyboardShortcuts = function() {
   // Initialize the SimpleX cell type keyboard shortcut
   Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-x', {
     help: 'to SimpleX',
-    help_index: 'cc',
     handler: function() {
       showTasksPanel();
       return false;
@@ -203,10 +202,24 @@ const mapKeyboardShortcuts = function() {
   // Initialize the undo delete keyboard shortcut
   Jupyter.keyboard_manager.command_shortcuts.add_shortcut('z', {
     help: 'undo cell/widget deletion',
-    help_index: 'cc',
     handler: function() {
       undoDeleteCell();
       return false;
+    }
+  });
+
+  // Handle esc key
+  $('body').keydown(function(event) {
+
+    // Remove focus from active element
+    if (event.keyCode == 27) {
+      document.activeElement.blur();
+    }
+
+    // Close the library
+    if (event.keyCode == 27 && $('#library-cancel-btn').length) {
+      $('#library-cancel-btn').click();
+      return;
     }
   });
 }
@@ -274,8 +287,10 @@ task_view.create()
       if (cell.element.find(".form-panel").length > 0 && cell.element.find(".form-panel").outerHeight() > 50) {
         clearInterval(id);
 
+
+        // Wait for widget to fully render before modifying it
         setTimeout(function() {
-          // Wait for widget to fully render before showing
+          // Show widget
           cell.element.find(".widget-area").height(cell.element.find(".panel-wrapper").outerHeight());
 
           // Enable javascript tooltips
