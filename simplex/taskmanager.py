@@ -186,7 +186,7 @@ def compile_tasks(json_directory_path=SIMPLEX_JSON_DIR, record_filepath=SIMPLEX_
             tasks = load_task(fp_json)
             tasks_by_libraries.update(tasks)
         except KeyError:
-            raise ValueError('Error loading {}.'.format(fp_json))
+            print('Error loading {}.'.format(fp_json))
 
     if record_filepath:
         if not record_filepath.endswith('.json'):
