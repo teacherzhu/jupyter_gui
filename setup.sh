@@ -3,8 +3,6 @@
 # conda install -c conda-forge jupyter_nbextensions_configurator
 jupyter nbextensions_configurator enable
 
-# conda install -c conda-forge ipywidgets
-jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 # Install notebook extension
 rm -rf *.egg-info*
@@ -15,5 +13,8 @@ jupyter nbextension install --py --sys-prefix simplex
 jupyter nbextension enable --py --sys-prefix simplex
 jupyter serverextension enable --py --sys-prefix simplex
 
+# conda install -c conda-forge ipywidgets
+jupyter nbextension enable --py --sys-prefix widgetsnbextension
+
 cd $HOME
-jupyter notebook --no-browser
+jupyter notebook
