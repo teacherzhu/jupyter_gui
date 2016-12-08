@@ -11,7 +11,7 @@
     "description": "",
     "function_name": "define_components",
     "library_name": "ccal",
-    "library_path": "ccal",
+    "library_path": "/home/cyborg/ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -43,7 +43,7 @@
     "description": "",
     "function_name": "define_states",
     "library_name": "ccal",
-    "library_path": "ccal",
+    "library_path": "/home/cyborg/ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -86,7 +86,7 @@
     "description": "",
     "function_name": "get_w_or_h_matrix",
     "library_name": "ccal",
-    "library_path": "ccal",
+    "library_path": "/home/cyborg/ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -121,7 +121,7 @@
     "description": "",
     "function_name": "get_w_or_h_matrix",
     "library_name": "ccal",
-    "library_path": "ccal",
+    "library_path": "/home/cyborg/ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -144,12 +144,92 @@
       }
     ]
   },
+  "Get DNA Sequence": {
+    "default_args": [],
+    "description": "",
+    "function_name": "get_sequence",
+    "library_name": "cgal",
+    "library_path": "/home/cyborg/cgal",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "filepath",
+        "description": "No description :(",
+        "label": "Filepath",
+        "value": ""
+      },
+      {
+        "arg_name": "chromosome",
+        "description": "No description :(",
+        "label": "Chromosome",
+        "value": ""
+      },
+      {
+        "arg_name": "start",
+        "description": "No description :(",
+        "label": "Start",
+        "value": ""
+      },
+      {
+        "arg_name": "end",
+        "description": "No description :(",
+        "label": "End",
+        "value": ""
+      }
+    ],
+    "returns": [
+      {
+        "description": "No description :(",
+        "label": "DNA Sequence"
+      }
+    ]
+  },
+  "Get RNA Sequence": {
+    "default_args": [],
+    "description": "",
+    "function_name": "get_sequence",
+    "library_name": "cgal",
+    "library_path": "/home/cyborg/cgal",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "filepath",
+        "description": "No description :(",
+        "label": "Filepath",
+        "value": ""
+      },
+      {
+        "arg_name": "chromosome",
+        "description": "No description :(",
+        "label": "Chromosome",
+        "value": ""
+      },
+      {
+        "arg_name": "start",
+        "description": "No description :(",
+        "label": "Start",
+        "value": ""
+      },
+      {
+        "arg_name": "end",
+        "description": "No description :(",
+        "label": "End",
+        "value": ""
+      }
+    ],
+    "returns": [
+      {
+        "description": "No description :(",
+        "label": "RNA Sequence"
+      }
+    ]
+  },
   "Get State Labels": {
     "default_args": [],
     "description": "",
     "function_name": "get_state_labels",
     "library_name": "ccal",
-    "library_path": "ccal",
+    "library_path": "/home/cyborg/ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -177,7 +257,7 @@
     "description": "",
     "function_name": "make_oncogps",
     "library_name": "ccal",
-    "library_path": "ccal",
+    "library_path": "/home/cyborg/ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -200,7 +280,7 @@
     "description": "",
     "function_name": "read_gct",
     "library_name": "ccal",
-    "library_path": "ccal",
+    "library_path": "/home/cyborg/ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -217,48 +297,12 @@
       }
     ]
   },
-  "Task 1 (UID)": {
-    "default_args": [
-      {
-        "arg_name": "arg3",
-        "description": "No description :(",
-        "label": "Arg3",
-        "value": ""
-      }
-    ],
-    "description": "Description (optional)",
-    "function_name": "function",
-    "library_name": "sample_library",
-    "library_path": "/home/cyborg/simplex/jsons/",
-    "optional_args": [
-      {
-        "arg_name": "arg2",
-        "description": "Description for this optional argument. (optional)",
-        "label": "Optional Argument 2 (optional)",
-        "value": ""
-      }
-    ],
-    "required_args": [
-      {
-        "arg_name": "arg1",
-        "description": "Description for this required argument. (optional)",
-        "label": "Argument 1 (optional)",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "Description for this returned value. (optional)",
-        "label": "Return 1"
-      }
-    ]
-  },
   "Write .GCT File": {
     "default_args": [],
     "description": "",
     "function_name": "write_gct",
     "library_name": "ccal",
-    "library_path": "ccal",
+    "library_path": "/home/cyborg/ccal",
     "optional_args": [],
     "required_args": [
       {
