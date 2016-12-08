@@ -24,6 +24,21 @@
           "label": "DNA Sequence"
         }
       ]
+    },
+    {
+      "label": "DNA to RNA",
+      "function_name": "dna_to_rna",
+      "required_args": [
+        {
+          "arg_name": "dna_sequence",
+          "label": "DNA sequence",
+        }
+      ],
+      "returns": [
+        {
+          "label": "RNA Sequence"
+        }
+      ]
     }
   ]
 }
