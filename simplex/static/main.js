@@ -85,13 +85,14 @@ def sync_namespaces():
     :return: None
     '''
 
+    # TaskManager namespace ==> Notebook namespace
+    for name, value in task_manager.simplex_namespace.items():
+        globals()[name] = value
+
     # Notebook namespace ==> TaskManager namespace
     global task_manager
     task_manager.update_simplex_namespace(globals())
 
-    # TaskManager namespace ==> Notebook namespace
-    for name, value in task_manager.simplex_namespace.items():
-        globals()[name] = value
 
 # Register post execute cell callback
 if sync_namespaces not in get_ipython().events.callbacks['post_execute']:
