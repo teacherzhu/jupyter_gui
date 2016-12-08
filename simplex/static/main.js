@@ -149,7 +149,7 @@ const addMenuOptions = function() {
       var type = $(event.target).find(":selected").text();
       if (type === "SimpleX") {
         var former_type = Jupyter.notebook.get_selected_cell().cell_type;
-        toSimpleXCell(former_type);
+        showTasksPanel();
       }
     });
 
@@ -165,7 +165,7 @@ const addMenuOptions = function() {
     cellMenu.find("ul.dropdown-menu").append(
       $("<li id='to_simplex' title='Insert a SimpleX widget cell'><a href='#'>SimpleX</a></option>")
       .click(function() {
-        toSimpleXCell();
+        showTasksPanel();
       })
     );
   }
@@ -175,6 +175,8 @@ const addMenuOptions = function() {
     '<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa fa-th-large"></i></button></div>'
   );
   addButton.click(function() {
+    Jupyter.notebook.insert_cell_below();
+    Jupyter.notebook.select_next();
     showTasksPanel();
   });
   $("#insert_above_below").after(addButton); // add after insert cell button
