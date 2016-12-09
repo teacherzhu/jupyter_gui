@@ -1,3 +1,4 @@
+jsons/COMPILED.json
 *.egg-info/
 build/*
 dist/*
