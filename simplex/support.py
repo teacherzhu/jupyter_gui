@@ -109,6 +109,16 @@ def cast_string_to_int_float_bool_or_str(a_str):
     return str(value)
 
 
+def reset_encoding(a_str):
+    """
+
+    :param a_str: str;
+    :return: str;
+    """
+
+    return a_str.replace(u'\u201c', '"').replace(u'\u201d', '"')
+
+
 def merge_dicts(*dicts):
     """
     Shallow copy and merge dicts into a new dict; precedence goes to

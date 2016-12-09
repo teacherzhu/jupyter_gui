@@ -1,11 +1,11 @@
 import sys
 from os import listdir
 from os.path import isdir, isfile, join, split
-from json import dump, dumps, load
+from json import dump, dumps, loads
 from IPython.display import clear_output
 
 from . import HOME_DIR, SIMPLEX_JSON_DIR, SIMPLEX_TASK_RECORD_FILEPATH
-from .support import get_name, merge_dicts, title_str, cast_string_to_int_float_bool_or_str
+from .support import get_name, merge_dicts, title_str, cast_string_to_int_float_bool_or_str, reset_encoding
 from .task import Task
 from .taskview import TaskView
 
@@ -215,7 +215,8 @@ def load_task(json_filepath):
 
     # Open .json
     with open(json_filepath) as f:
-        library = load(f)
+        read = f.read()
+        library = loads(reset_encoding(read))
 
     processed_tasks = dict()
 
@@ -342,7 +343,3 @@ def process_returns(dicts):
         processed_dicts.append(processed_d)
 
     return processed_dicts
-
-# ======================================================================================================================
-# General support functions
-# ======================================================================================================================
