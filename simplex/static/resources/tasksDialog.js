@@ -64,6 +64,27 @@ const showTasksPanel = function() {
  */
 const initTasksPanel = function() {
   tasksPanelParent = $('<div/>').attr('id', 'library-parent');
+
+  // Display tasks elements
+  leftPanel = $('<div/>')
+    .addClass('library-left-panel')
+    .addClass('pull-left')
+    .addClass('col-xs-8')
+    .appendTo(tasksPanelParent);
+
+  // Specifically to hold cards
+  var leftPanelInner = $('<div/>')
+    .addClass('library-left-panel-inner')
+    .appendTo(leftPanel);
+
+  // Define right panel
+  rightPanel = $('<div/>')
+    .attr('id', 'library-right-panel')
+    .addClass('pull-right')
+    .addClass('col-xs-4')
+    .appendTo(tasksPanelParent);
+
+  renderRightPanel();
   renderTasks();
 }
 
@@ -75,12 +96,10 @@ const initTasksPanel = function() {
 var renderTasks = function() {
   console.log('Called renderTasks()');
 
-  // Display tasks elements
-  leftPanel = $('<div/>')
-    .addClass('library-left-panel')
-    .addClass('pull-left')
-    .addClass('col-xs-8')
-    .appendTo(tasksPanelParent);
+  var loadText = $('<div/>')
+    .addClass('library-load-text')
+    .html('Loading...')
+    .appendTo(leftPanel);
 
   // code to read library JSON files
   var code =
@@ -92,32 +111,51 @@ print(compile_tasks())
   // Callback from
   var callback = function(out) {
     console.log(out);
-    var tasksDict = JSON.parse(out.content.text);
 
     // Convert dictionary to stringified list
+    var tasksDict = JSON.parse(out.content.text);
     simplexTaskData = Object.keys(tasksDict).map(function(key) {
       var task = tasksDict[key];
       task.label = key;
-      return JSON.stringify(task);
+      return task;
     });
+    simplexTaskData.sort(function(a, b) {
+      if (a.label > b.label) {
+        return 1;
+      } else if (a.label < b.label) {
+        return -1;
+      } else {
+        return 0;
+      }
+    })
 
-    // Generate all tasks
-    for (var task of simplexTaskData) {
-      renderTask(task);
-    }
+    // Hide loading text
+    $(leftPanel).find('.library-load-text').addClass('library-load-text-hidden');
 
-    // Try to select first one by default
-    if ($(leftPanel).find('.library-card').length > 0) {
+    // Render all tasks after loading text fades
+    setTimeout(function() {
+      for (var task of simplexTaskData) {
+        renderTask(task);
+      }
+
       $(leftPanel).find('.library-card').first().click();
-    }
+    }, 200);
+
   }
 
-  // Use kernel to read library JSONs
-  Jupyter.notebook.kernel.execute(code, {
-    'iopub': {
-      'output': callback
+  // Wait for kernel to not be busy
+  var interval = setInterval(function() {
+    // Use kernel to read library JSONs
+    if (!Jupyter.notebook.kernel_busy) {
+      clearInterval(interval);
+      Jupyter.notebook.kernel.execute(code, {
+        'iopub': {
+          'output': callback
+        }
+      });
     }
-  });
+  }, 10);
+
 }
 
 /**
@@ -125,19 +163,8 @@ print(compile_tasks())
  * Render right panel and only updates inner content when necessary.
  */
 const renderRightPanel = function() {
-
-  // Parse and display task information
-  var task = JSON.parse(simplexTaskData[selectedIndex]);
-
   // Render right panel
   var render = function() {
-
-    // Define right panel
-    rightPanel = $('<div/>')
-      .attr('id', 'library-right-panel')
-      .addClass('pull-right')
-      .addClass('col-xs-4')
-      .appendTo(tasksPanelParent);
 
     // Parent container
     var taskInfo = $('<div/>')
@@ -146,31 +173,26 @@ const renderRightPanel = function() {
     // Task title
     var taskHeading = $('<h2/>')
       .attr('id', 'library-task-heading')
-      .html(task.label)
       .appendTo(taskInfo);
 
     // Task library name
     var taskLibraryName = $('<h3/>')
       .attr('id', 'library-task-package')
-      .html(task.library_name)
       .appendTo(taskInfo);
 
     // Package author
     var taskAuthor = $('<div/>')
       .attr('id', 'library-task-author')
-      .html('<span class="label label-default">Author</span><p>' + task.author + '</p>')
       .appendTo(taskInfo);
 
     // Task affiliation
     var taskAffiliation = $('<div/>')
       .attr('id', 'library-task-affiliation')
-      .html('<span class="label label-default">Affiliation</span><p>' + task.affiliation + '</p>')
       .appendTo(taskInfo);
 
     // Task description
     var taskDescription = $('<div/>')
       .attr('id', 'library-task-description')
-      .html(task.description)
       .appendTo(taskInfo);
 
     // Select/cancel buttons
@@ -206,6 +228,9 @@ const renderRightPanel = function() {
    * Update existing rightPanel with currently selected task
    */
   var update = function() {
+    // Parse and display task information
+    var task = simplexTaskData[selectedIndex];
+
     $(rightPanel).find('#library-task-heading').html(task.label);
     $(rightPanel).find('#library-task-package').html(task.library_name);
     $(rightPanel).find('#library-task-author').html(task.author);
@@ -213,30 +238,21 @@ const renderRightPanel = function() {
     $(rightPanel).find('#library-task-description').html(task.description);
   }
 
-
-  // Wait for ajax call to load simplexTaskData JSON strings before rendering description.
-  var interval = setInterval(function() {
-    // Render when ajax call completes
-    if (simplexTaskData.length > 0) {
-      clearInterval(interval);
-
-      // Create elements as needed, otherwise simply update values
-      if ($('#library-right-panel').length == 0) {
-        render();
-      } else {
-        update();
-      }
-    }
-  }, 50);
+  // Render if first call
+  if (rightPanel.children().length == 0) {
+    render();
+  }
+  // Update with selected task data
+  else {
+    update();
+  }
 }
 
 /**
  * Render a card for a given task JSON string. Also responsible for triggering right panel display.
  * @param {String} task_data stringified JSON for a task
  */
-const renderTask = function(task_data) {
-  // Load json to memory
-  var task = JSON.parse(task_data);
+const renderTask = function(task) {
 
   // Generate a card from given task_data
   var cardParent = $('<div/>')
@@ -278,11 +294,10 @@ const renderTask = function(task_data) {
     .addClass('card-description')
     .html(task.description);
 
+  // Structure elements appropriately
   label.appendTo(card);
   packageTitle.appendTo(card);
   description.appendTo(card);
   card.appendTo(cardParent);
-  cardParent.appendTo(leftPanel);
-
-  //  tinysort($(leftPanel).children(), '.library-card .card-label');
+  cardParent.appendTo($('.library-left-panel-inner'));
 }

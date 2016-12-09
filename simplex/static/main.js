@@ -223,6 +223,11 @@ const mapKeyboardShortcuts = function() {
       $('#library-cancel-btn').click();
       return;
     }
+
+    // Select current task
+    if (event.keyCode == 13 && $('#library-select-btn').length) {
+      $('#library-select-btn').click();
+    }
   });
 }
 
@@ -254,7 +259,7 @@ const undoDeleteCell = function() {
  * Converts indicated cell to SimpleX widget and hiding code input.
  * @param  {String} formerType   type of cell to be converted
  * @param  {number} index        index of cell in notebook
- * @param  {String} simplex_data stringified task JSON
+ * @param  {Object} simplex_data task JSON object
  */
 const toSimpleXCell = function(formerType, index, taskDict) {
   // Use index if provided. Otherwise index of currently selected cell.
@@ -265,6 +270,7 @@ const toSimpleXCell = function(formerType, index, taskDict) {
   cell = Jupyter.notebook.get_cell(index);
 
   var cellChange = function(cell) {
+    taskDict = JSON.stringify(taskDict);
     // If taskDict is not passed, the cell is auto-executed.
     if (taskDict) {
       var code = AUTOEXEC_FLAG +
@@ -310,20 +316,25 @@ task_view.create()
 
   // Forces cell type to change to code before executing
   var typeCheck = function(cell) {
-    var cell_type = cell.cell_type;
-    if (cell_type !== "code") {
-      Jupyter.notebook.to_code(index);
-    }
+    // Wait for kernel to not be busy
+    var interval = setInterval(function() {
+      if (!Jupyter.notebook.kernel_busy) {
+        clearInterval(interval);
+        var cell_type = cell.cell_type;
+        if (cell_type !== "code") {
+          Jupyter.notebook.to_code(index);
+        }
 
-    setTimeout(function() {
-      // Clear output of selected cell
-      cell.clear_output();
-      cellChange(cell);
+        setTimeout(function() {
+          // Clear output of selected cell
+          cell.clear_output();
+          cellChange(cell);
+        }, 10);
+      }
     }, 10);
   };
 
-  // Prompt for change if the cell has contents and
-  // doesnt start with autoexec flag
+  // Prompt for change if the cell has contents and doesnt start with autoexec flag
   var contents = cell.get_text().trim();
   if (contents !== "" && contents.indexOf(AUTOEXEC_FLAG) < 0) {
     // Use dialog modal Boostrap plugin
@@ -361,7 +372,6 @@ define([
     'base/js/namespace',
     'base/js/events',
     'jquery',
-    STATIC_PATH + 'tinysort.min.js',
     STATIC_PATH + 'tasksDialog.js'
 ], function(Jupyter, events) {
   function load_ipython_extension() {

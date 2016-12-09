@@ -144,49 +144,6 @@
       }
     ]
   },
-<<<<<<< Updated upstream
-=======
-  "Get DNA Sequence": {
-    "default_args": [],
-    "description": "",
-    "function_name": "get_sequence",
-    "library_name": "cgal",
-    "library_path": "cgal",
-    "optional_args": [],
-    "required_args": [
-      {
-        "arg_name": "filepath",
-        "description": "No description :(",
-        "label": "Filepath",
-        "value": ""
-      },
-      {
-        "arg_name": "chromosome",
-        "description": "No description :(",
-        "label": "Chromosome",
-        "value": ""
-      },
-      {
-        "arg_name": "start",
-        "description": "No description :(",
-        "label": "Start",
-        "value": ""
-      },
-      {
-        "arg_name": "end",
-        "description": "No description :(",
-        "label": "End",
-        "value": ""
-      }
-    ],
-    "returns": [
-      {
-        "description": "No description :(",
-        "label": "DNA Sequence"
-      }
-    ]
-  },
->>>>>>> Stashed changes
   "Get State Labels": {
     "default_args": [],
     "description": "",
