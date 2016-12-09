@@ -231,11 +231,25 @@ button.close, .library-modal-header, .library-modal-footer {
   background: #EFEFEF;
   height: 100%;
   display: flex;
+  position: relative;
   flex-wrap: wrap;
   align-content: flex-start;
   padding: 0.4em;
   padding-right: 0.8em;
   overflow-y: auto; }
+
+.library-load-text {
+  position: absolute;
+  opacity: 1;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100px;
+  transition: all 0.2s cubic-bezier(0.64, 0.09, 0.08, 1); }
+
+.library-load-text-hidden {
+  visibility: hidden;
+  opacity: 0; }
 
 .library-card {
   box-sizing: content-box;

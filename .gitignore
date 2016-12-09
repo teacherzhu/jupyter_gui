@@ -1,3 +1,6 @@
+*.egg-info/
+build/*
+dist/*
 *Icon*
 *.DS_Store
 *_pycache_*
@@ -6,4 +9,4 @@
 *.idea
 *.swp
 *.css.map
-*.egg-info/
+*.sass-cache
