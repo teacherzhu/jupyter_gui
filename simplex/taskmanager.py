@@ -5,7 +5,7 @@ from json import dump, dumps, loads
 from IPython.display import clear_output
 
 from . import HOME_DIR, SIMPLEX_JSON_DIR, SIMPLEX_TASK_RECORD_FILEPATH
-from .support import get_name, merge_dicts, title_str, cast_string_to_int_float_bool_or_str, reset_encoding
+from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
 from .task import Task
 from .taskview import TaskView
 
@@ -150,7 +150,7 @@ class TaskManager:
 
             else:  # Process as float, int, bool, or string
                 # First assume a list of strings to be passed
-                processed_v = [cast_string_to_int_float_bool_or_str(s) for s in v.split(',') if s]
+                processed_v = [cast_str_to_int_float_bool_or_str(s) for s in v.split(',') if s]
 
                 # If there is only 1 item in the assumed list, use it directly
                 if len(processed_v) == 1:
