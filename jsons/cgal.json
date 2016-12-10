@@ -31,7 +31,36 @@
       "required_args": [
         {
           "arg_name": "dna_sequence",
-          "label": "DNA sequence",
+          "label": "DNA sequence"
+        }
+      ],
+      "returns": [
+        {
+          "label": "RNA Sequence"
+        }
+      ]
+    },
+    {
+      "label": "Transcription",
+      "function_name": "translate_nucleotides",
+      "required_args": [
+        {
+          "arg_name": "nucleotide_seq",
+          "label": "DNA sequence"
+        }
+      ],
+      "default_args": [
+        {
+          "arg_name": "nucleotide_type",
+          "value": "dna"
+        },
+        {
+          "arg_name": "reading_frame_offset",
+          "value": "0"
+        },
+        {
+          "arg_name": "reading_frame_direction",
+          "value": "1"
         }
       ],
       "returns": [

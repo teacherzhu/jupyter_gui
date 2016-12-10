@@ -47,6 +47,8 @@ const init = function() {
     $(".loading-screen")
       .hide("fade");
   }, 100);
+
+  console.log('SimpleX nbextension initialized.');
 };
 
 /**
@@ -148,7 +150,7 @@ const addMenuOptions = function() {
       var type = $(event.target).find(":selected").text();
       if (type === "SimpleX") {
         var former_type = Jupyter.notebook.get_selected_cell().cell_type;
-        toSimpleXCell(former_type);
+        showTasksPanel();
       }
     });
 
@@ -164,7 +166,7 @@ const addMenuOptions = function() {
     cellMenu.find("ul.dropdown-menu").append(
       $("<li id='to_simplex' title='Insert a SimpleX widget cell'><a href='#'>SimpleX</a></option>")
       .click(function() {
-        toSimpleXCell();
+        showTasksPanel();
       })
     );
   }
@@ -174,6 +176,8 @@ const addMenuOptions = function() {
     '<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa fa-th-large"></i></button></div>'
   );
   addButton.click(function() {
+    Jupyter.notebook.insert_cell_below();
+    Jupyter.notebook.select_next();
     showTasksPanel();
   });
   $("#insert_above_below").after(addButton); // add after insert cell button
@@ -192,7 +196,6 @@ const mapKeyboardShortcuts = function() {
   // Initialize the SimpleX cell type keyboard shortcut
   Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-x', {
     help: 'to SimpleX',
-    help_index: 'cc',
     handler: function() {
       showTasksPanel();
       return false;
@@ -202,10 +205,29 @@ const mapKeyboardShortcuts = function() {
   // Initialize the undo delete keyboard shortcut
   Jupyter.keyboard_manager.command_shortcuts.add_shortcut('z', {
     help: 'undo cell/widget deletion',
-    help_index: 'cc',
     handler: function() {
       undoDeleteCell();
       return false;
+    }
+  });
+
+  // Handle esc key
+  $('body').keydown(function(event) {
+
+    // Remove focus from active element
+    if (event.keyCode == 27) {
+      document.activeElement.blur();
+    }
+
+    // Close the library
+    if (event.keyCode == 27 && $('#library-cancel-btn').length) {
+      $('#library-cancel-btn').click();
+      return;
+    }
+
+    // Select current task
+    if (event.keyCode == 13 && $('#library-select-btn').length) {
+      $('#library-select-btn').click();
     }
   });
 }
@@ -238,7 +260,7 @@ const undoDeleteCell = function() {
  * Converts indicated cell to SimpleX widget and hiding code input.
  * @param  {String} formerType   type of cell to be converted
  * @param  {number} index        index of cell in notebook
- * @param  {String} simplex_data stringified task JSON
+ * @param  {Object} simplex_data task JSON object
  */
 const toSimpleXCell = function(formerType, index, taskDict) {
   // Use index if provided. Otherwise index of currently selected cell.
@@ -249,6 +271,7 @@ const toSimpleXCell = function(formerType, index, taskDict) {
   cell = Jupyter.notebook.get_cell(index);
 
   var cellChange = function(cell) {
+    taskDict = JSON.stringify(taskDict);
     // If taskDict is not passed, the cell is auto-executed.
     if (taskDict) {
       var code = AUTOEXEC_FLAG +
@@ -273,8 +296,10 @@ task_view.create()
       if (cell.element.find(".form-panel").length > 0 && cell.element.find(".form-panel").outerHeight() > 50) {
         clearInterval(id);
 
+
+        // Wait for widget to fully render before modifying it
         setTimeout(function() {
-          // Wait for widget to fully render before showing
+          // Show widget
           cell.element.find(".widget-area").height(cell.element.find(".panel-wrapper").outerHeight());
 
           // Enable javascript tooltips
@@ -292,20 +317,25 @@ task_view.create()
 
   // Forces cell type to change to code before executing
   var typeCheck = function(cell) {
-    var cell_type = cell.cell_type;
-    if (cell_type !== "code") {
-      Jupyter.notebook.to_code(index);
-    }
+    // Wait for kernel to not be busy
+    var interval = setInterval(function() {
+      if (!Jupyter.notebook.kernel_busy) {
+        clearInterval(interval);
+        var cell_type = cell.cell_type;
+        if (cell_type !== "code") {
+          Jupyter.notebook.to_code(index);
+        }
 
-    setTimeout(function() {
-      // Clear output of selected cell
-      cell.clear_output();
-      cellChange(cell);
+        setTimeout(function() {
+          // Clear output of selected cell
+          cell.clear_output();
+          cellChange(cell);
+        }, 10);
+      }
     }, 10);
   };
 
-  // Prompt for change if the cell has contents and
-  // doesnt start with autoexec flag
+  // Prompt for change if the cell has contents and doesnt start with autoexec flag
   var contents = cell.get_text().trim();
   if (contents !== "" && contents.indexOf(AUTOEXEC_FLAG) < 0) {
     // Use dialog modal Boostrap plugin
@@ -343,7 +373,6 @@ define([
     'base/js/namespace',
     'base/js/events',
     'jquery',
-    STATIC_PATH + 'tinysort.min.js',
     STATIC_PATH + 'tasksDialog.js'
 ], function(Jupyter, events) {
   function load_ipython_extension() {
