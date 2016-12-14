@@ -43,10 +43,10 @@ const init = function() {
 
   // FIXME: figure out what this actually hides
   // Hide the loading screen
-  setTimeout(function() {
-    $(".loading-screen")
-      .hide("fade");
-  }, 100);
+  // setTimeout(function() {
+  //   $(".loading-screen")
+  //     .hide("fade");
+  // }, 100);
 
   console.log('SimpleX nbextension initialized.');
 };
@@ -172,15 +172,22 @@ const addMenuOptions = function() {
   }
 
   // Add button for creating SimpleX cell to toolbar
-  const addButton = $(
-    '<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa fa-th-large"></i></button></div>'
-  );
-  addButton.click(function() {
-    Jupyter.notebook.insert_cell_below();
-    Jupyter.notebook.select_next();
-    showTasksPanel();
-  });
-  $("#insert_above_below").after(addButton); // add after insert cell button
+  Jupyter.toolbar.add_buttons_group([
+    {
+      'label': 'insert SimpleX cell',
+      'icon': 'fa-bolt', // select from http://fortawesome.github.io/Font-Awesome/icons/
+      'callback': function() {
+        Jupyter.notebook.insert_cell_below();
+        Jupyter.notebook.select_next();
+        showTasksPanel();
+      }
+    }
+  ]);
+
+  // var addButton = $('<div/>')
+  //   .attr('id', 'insert_simplex_below')
+  //   .attr('title', 'insert SimpleX cell');
+  // $('body').append(addButton);
 
   // Initialize the undo delete menu entry click function
   var undeleteCell = $('#undelete_cell a');
