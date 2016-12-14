@@ -1,7 +1,15 @@
 /******************** Notebook Controls ********************/
-#insert_simplex_below .btn {
+body {
+  position: relative; }
+
+#insert_simplex_below {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 50px;
+  width: 50px;
+  margin: 25px;
   background: #20D9BA;
-  border: 1px solid white !important;
   border-radius: 3px !important; }
 
 /******************** General Formatting ********************/
