@@ -87,13 +87,14 @@ def sync_namespaces():
     :return: None
     '''
 
+    # TaskManager namespace ==> Notebook namespace
+    for name, value in task_manager.simplex_namespace.items():
+        globals()[name] = value
+
     # Notebook namespace ==> TaskManager namespace
     global task_manager
     task_manager.update_simplex_namespace(globals())
 
-    # TaskManager namespace ==> Notebook namespace
-    for name, value in task_manager.simplex_namespace.items():
-        globals()[name] = value
 
 # Register post execute cell callback
 if sync_namespaces not in get_ipython().events.callbacks['post_execute']:
@@ -128,7 +129,7 @@ const autoRunWidgets = function() {
   console.log('Called autoRunWidgets()');
   $.each($(".cell"), function(index, value) {
     if ($(value).html().indexOf(AUTOEXEC_FLAG) > -1) {
-      toSimpleXCell(null, index);
+      toSimpleXCell(index);
     }
   });
 };
@@ -257,18 +258,17 @@ const undoDeleteCell = function() {
   for (var i in indices) {
     var cell = $(".cell")[i];
     if ($(cell).html().indexOf(AUTOEXEC_FLAG) > -1) {
-      toSimpleXCell(null, i);
+      toSimpleXCell(i);
     }
   }
 };
 
 /**
  * Converts indicated cell to SimpleX widget and hiding code input.
- * @param  {String} formerType   type of cell to be converted
  * @param  {number} index        index of cell in notebook
  * @param  {Object} simplex_data task JSON object
  */
-const toSimpleXCell = function(formerType, index, taskDict) {
+const toSimpleXCell = function(index, taskDict) {
   // Use index if provided. Otherwise index of currently selected cell.
   if (index === undefined) {
     index = Jupyter.notebook.get_selected_index();
@@ -353,13 +353,7 @@ task_view.create()
       body: "Are you sure you want to change this to a SimpleX cell? This will cause " +
         "you to lose any code or other information already entered into the cell.",
       buttons: {
-        "Cancel": {
-          "click": function() {
-            if (formerType) $("#cell_type")
-              .val(formerType)
-              .trigger("change");
-          }
-        },
+        "Cancel": {},
         "Change Cell Type": {
           "class": "btn-warning",
           "click": function() {

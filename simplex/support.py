@@ -82,7 +82,7 @@ def title_str(a_str):
     return a_str
 
 
-def cast_string_to_int_float_bool_or_str(a_str):
+def cast_str_to_int_float_bool_or_str(a_str):
     """
     Convert a_str into the following data types (return the first successful): int, float, bool, or str.
     :param a_str: str;
@@ -107,6 +107,16 @@ def cast_string_to_int_float_bool_or_str(a_str):
 
     # return as string last priority
     return str(value)
+
+
+def reset_encoding(a_str):
+    """
+
+    :param a_str: str;
+    :return: str;
+    """
+
+    return a_str.replace(u'\u201c', '"').replace(u'\u201d', '"')
 
 
 def merge_dicts(*dicts):

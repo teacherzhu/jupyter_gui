@@ -14,4 +14,4 @@ jupyter serverextension enable --py --sys-prefix simplex
 jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 cd $HOME
-jupyter notebook --no-browser
+jupyter notebook

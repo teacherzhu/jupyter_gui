@@ -1,7 +1,7 @@
-simplex.egg-info/
+jsons/COMPILED.json
+*.egg-info/
 build/*
 dist/*
-
 *Icon*
 *.DS_Store
 *_pycache_*

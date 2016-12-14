@@ -1,11 +1,11 @@
 import sys
 from os import listdir
 from os.path import isdir, isfile, join, split
-from json import dump, dumps, load
+from json import dump, dumps, loads
 from IPython.display import clear_output
 
 from . import HOME_DIR, SIMPLEX_JSON_DIR, SIMPLEX_TASK_RECORD_FILEPATH
-from .support import get_name, merge_dicts, list_only_dirs, title_str, cast_string_to_int_float_bool_or_str
+from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
 from .task import Task
 from .taskview import TaskView
 
@@ -83,6 +83,7 @@ class TaskManager:
 
         if len(returns) == 1:
             self.simplex_namespace[returns[0]] = returned
+            print(returned)
         elif len(returns) > 1:
             for name, value in zip(returns, returned):
                 self.simplex_namespace[name] = value
@@ -149,7 +150,7 @@ class TaskManager:
 
             else:  # Process as float, int, bool, or string
                 # First assume a list of strings to be passed
-                processed_v = [cast_string_to_int_float_bool_or_str(s) for s in v.split(',') if s]
+                processed_v = [cast_str_to_int_float_bool_or_str(s) for s in v.split(',') if s]
 
                 # If there is only 1 item in the assumed list, use it directly
                 if len(processed_v) == 1:
@@ -184,8 +185,8 @@ def compile_tasks(json_directory_path=SIMPLEX_JSON_DIR, record_filepath=SIMPLEX_
         try:
             tasks = load_task(fp_json)
             tasks_by_libraries.update(tasks)
-        except KeyError:
-            raise ValueError('Error loading {}.'.format(fp_json))
+        except:
+            pass
 
     if record_filepath:
         if not record_filepath.endswith('.json'):
@@ -214,7 +215,8 @@ def load_task(json_filepath):
 
     # Open .json
     with open(json_filepath) as f:
-        library = load(f)
+        read = f.read()
+        library = loads(reset_encoding(read))
 
     processed_tasks = dict()
 
@@ -341,7 +343,3 @@ def process_returns(dicts):
         processed_dicts.append(processed_d)
 
     return processed_dicts
-
-# ======================================================================================================================
-# General support functions
-# ======================================================================================================================
