@@ -1,0 +1,15 @@
+{
+  "library_path": "simplex_utilities",
+  "library_name": "simplex_utilities",
+  "tasks": [
+    {
+      "label": "YouTube",
+      "function_name": "youtube",
+      "required_args": [
+        {
+          "arg_name": "url"
+        }
+      ]
+    }
+  ]
+}

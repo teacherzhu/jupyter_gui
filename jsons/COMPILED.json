@@ -3,8 +3,8 @@
     "default_args": [],
     "description": "",
     "function_name": "dna_to_rna",
-    "library_name": "cgal",
-    "library_path": "/home/cyborg/cgal",
+    "library_name": "ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -33,7 +33,7 @@
     "description": "",
     "function_name": "define_components",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -65,7 +65,7 @@
     "description": "",
     "function_name": "define_states",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -108,7 +108,7 @@
     "description": "",
     "function_name": "get_w_or_h_matrix",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -143,7 +143,7 @@
     "description": "",
     "function_name": "get_w_or_h_matrix",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -170,8 +170,8 @@
     "default_args": [],
     "description": "",
     "function_name": "get_sequence",
-    "library_name": "cgal",
-    "library_path": "/home/cyborg/cgal",
+    "library_name": "ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -211,7 +211,7 @@
     "description": "",
     "function_name": "get_state_labels",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -239,7 +239,7 @@
     "description": "",
     "function_name": "make_oncogps",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -262,7 +262,7 @@
     "description": "",
     "function_name": "read_gct",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -302,8 +302,8 @@
     ],
     "description": "",
     "function_name": "translate_nucleotides",
-    "library_name": "cgal",
-    "library_path": "/home/cyborg/cgal",
+    "library_name": "ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -325,7 +325,7 @@
     "description": "",
     "function_name": "write_gct",
     "library_name": "ccal",
-    "library_path": "/home/cyborg/ccal",
+    "library_path": "ccal",
     "optional_args": [],
     "required_args": [
       {
@@ -338,6 +338,23 @@
         "arg_name": "filepath",
         "description": "No description :(",
         "label": ".GCT file",
+        "value": ""
+      }
+    ],
+    "returns": []
+  },
+  "YouTube": {
+    "default_args": [],
+    "description": "",
+    "function_name": "youtube",
+    "library_name": "simplex_utilities",
+    "library_path": "simplex_utilities",
+    "optional_args": [],
+    "required_args": [
+      {
+        "arg_name": "url",
+        "description": "No description :(",
+        "label": "Url",
         "value": ""
       }
     ],

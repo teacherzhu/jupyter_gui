@@ -101,27 +101,30 @@ class TaskManager:
         :param returns: list;
         :return: list; raw output of the function
         """
+        # print('Executing ...')
 
-        print('Executing ...')
+        import ipywidgets
+        return ipywidgets.HTML('hello')
 
-        # Append a library path
-        # TODO: what's the effect of the last '/' in the path?
-        print('\tsys.path.insert(0, \'{}\')'.format(library_path))
-        sys.path.insert(0, library_path)
-
-        # Import function
-        print('\tfrom {} import {} as function'.format(library_name, function_name))
-        exec('from {} import {} as function'.format(library_name, function_name))
-
-        # Process args
-        args = self.process_args(required_args, default_args, optional_args)
-
-        # Execute
-        print('\n\tExecuting {}:'.format(locals()['function']))
-        for a, v in sorted(args.items()):
-            print('\t\t{} = {} ({})'.format(a, get_name(v, self.simplex_namespace), type(v)))
-
-        return locals()['function'](**args)
+        #
+        # # Append a library path
+        # # TODO: what's the effect of the last '/' in the path?
+        # print('\tsys.path.insert(0, \'{}\')'.format(library_path))
+        # sys.path.insert(0, library_path)
+        #
+        # # Import function
+        # print('\tfrom {} import {} as function'.format(library_name, function_name))
+        # exec('from {} import {} as function'.format(library_name, function_name))
+        #
+        # # Process args
+        # args = self.process_args(required_args, default_args, optional_args)
+        #
+        # # Execute
+        # print('\n\tExecuting {}:'.format(locals()['function']))
+        # for a, v in sorted(args.items()):
+        #     print('\t\t{} = {} ({})'.format(a, get_name(v, self.simplex_namespace), type(v)))
+        #
+        # return locals()['function'](**args)
 
     def process_args(self, required_args, default_args, optional_args):
         """
