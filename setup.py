@@ -35,14 +35,19 @@ class InstallCommand(install):
                      "jupyter serverextension enable --py simplex\n")
 
 
-setup(name='simplex',
+setup(name='simplex-ext',
+      description='A simple execution interface for Jupyter Notebook.',
       packages=['simplex'],
-      version='0.9.0',
-      description='SimpleX Jupyter Notebook extension',
+      version='1.0.0.a1',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
-      classifiers=['Programming Language :: Python :: 3.5'],
-      keywords=['widget development bioinformatics'],
+      license='MIT',
+      url="https://github.com/KwatME/simplex",
+      classifiers=['Development Status :: 3 - Alpha',
+      'License :: OSI Approved :: MIT License',
+      'Programming Language :: Python :: 3.5'
+      ],
+      keywords=['bioinformatics biology development interface widget'],
       install_requires=['jupyter', 'notebook>=4.2.0',
                         'ipywidgets>=5.2.0', 'matplotlib', 'IPython'],
       cmdclass={'install': InstallCommand},

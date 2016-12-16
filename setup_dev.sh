@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
-# Clean dev install
-rm -rf *.egg-info*
-pip uninstall simplex -y
-
 # Install notebook extension
-pip install -e .
+pip install -e . --no-deps
 jupyter nbextension install --py --sys-prefix simplex
 jupyter nbextension enable --py --sys-prefix simplex
 jupyter serverextension enable --py --sys-prefix simplex

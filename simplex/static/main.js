@@ -43,10 +43,10 @@ const init = function() {
 
   // FIXME: figure out what this actually hides
   // Hide the loading screen
-  setTimeout(function() {
-    $(".loading-screen")
-      .hide("fade");
-  }, 100);
+  // setTimeout(function() {
+  //   $(".loading-screen")
+  //     .hide("fade");
+  // }, 100);
 
   console.log('SimpleX nbextension initialized.');
 };
@@ -129,7 +129,7 @@ const autoRunWidgets = function() {
   console.log('Called autoRunWidgets()');
   $.each($(".cell"), function(index, value) {
     if ($(value).html().indexOf(AUTOEXEC_FLAG) > -1) {
-      toSimpleXCell(null, index);
+      toSimpleXCell(index);
     }
   });
 };
@@ -172,15 +172,22 @@ const addMenuOptions = function() {
   }
 
   // Add button for creating SimpleX cell to toolbar
-  const addButton = $(
-    '<div class="btn-group" id="insert_simplex_below"><button class="btn btn-default" title="insert SimpleX cell below"><i class="fa fa-th-large"></i></button></div>'
-  );
-  addButton.click(function() {
-    Jupyter.notebook.insert_cell_below();
-    Jupyter.notebook.select_next();
-    showTasksPanel();
-  });
-  $("#insert_above_below").after(addButton); // add after insert cell button
+  Jupyter.toolbar.add_buttons_group([
+    {
+      'label': 'insert SimpleX cell',
+      'icon': 'fa-bolt', // select from http://fortawesome.github.io/Font-Awesome/icons/
+      'callback': function() {
+        Jupyter.notebook.insert_cell_below();
+        Jupyter.notebook.select_next();
+        showTasksPanel();
+      }
+    }
+  ]);
+
+  // var addButton = $('<div/>')
+  //   .attr('id', 'insert_simplex_below')
+  //   .attr('title', 'insert SimpleX cell');
+  // $('body').append(addButton);
 
   // Initialize the undo delete menu entry click function
   var undeleteCell = $('#undelete_cell a');
@@ -251,18 +258,17 @@ const undoDeleteCell = function() {
   for (var i in indices) {
     var cell = $(".cell")[i];
     if ($(cell).html().indexOf(AUTOEXEC_FLAG) > -1) {
-      toSimpleXCell(null, i);
+      toSimpleXCell(i);
     }
   }
 };
 
 /**
  * Converts indicated cell to SimpleX widget and hiding code input.
- * @param  {String} formerType   type of cell to be converted
  * @param  {number} index        index of cell in notebook
  * @param  {Object} simplex_data task JSON object
  */
-const toSimpleXCell = function(formerType, index, taskDict) {
+const toSimpleXCell = function(index, taskDict) {
   // Use index if provided. Otherwise index of currently selected cell.
   if (index === undefined) {
     index = Jupyter.notebook.get_selected_index();
@@ -347,13 +353,7 @@ task_view.create()
       body: "Are you sure you want to change this to a SimpleX cell? This will cause " +
         "you to lose any code or other information already entered into the cell.",
       buttons: {
-        "Cancel": {
-          "click": function() {
-            if (formerType) $("#cell_type")
-              .val(formerType)
-              .trigger("change");
-          }
-        },
+        "Cancel": {},
         "Change Cell Type": {
           "class": "btn-warning",
           "click": function() {

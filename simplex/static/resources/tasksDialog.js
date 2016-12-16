@@ -214,9 +214,7 @@ const renderRightPanel = function() {
       .html('Select')
       .on('click', function(event) {
         event.preventDefault();
-        toSimpleXCell(null,
-          Jupyter.notebook.get_selected_index(),
-          simplexTaskData[selectedIndex]);
+        toSimpleXCell(Jupyter.notebook.get_selected_index(), simplexTaskData[selectedIndex]);
       })
       .appendTo(modalButtons);
 

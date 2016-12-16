@@ -7,7 +7,7 @@ dist/*
 *_pycache_*
 *.py[cod]
 *.ipynb_checkpoints*
-*.idea
+*.idea/
 *.swp
 *.css.map
 *.sass-cache
