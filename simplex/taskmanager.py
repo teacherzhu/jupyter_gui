@@ -86,6 +86,8 @@ class TaskManager:
         elif len(returns) > 1:
             for name, value in zip(returns, returned):
                 self.simplex_namespace[name] = value
+        else:
+            returned
 
     def execute_task(self, library_path, library_name, function_name, required_args, default_args, optional_args,
                      returns):
