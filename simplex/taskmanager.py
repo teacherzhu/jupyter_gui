@@ -83,7 +83,6 @@ class TaskManager:
 
         if len(returns) == 1:
             self.simplex_namespace[returns[0]] = returned
-            print(returned)
         elif len(returns) > 1:
             for name, value in zip(returns, returned):
                 self.simplex_namespace[name] = value
@@ -101,30 +100,27 @@ class TaskManager:
         :param returns: list;
         :return: list; raw output of the function
         """
-        # print('Executing ...')
 
-        import ipywidgets
-        return ipywidgets.HTML('hello')
+        print('Executing ...')
 
-        #
-        # # Append a library path
-        # # TODO: what's the effect of the last '/' in the path?
-        # print('\tsys.path.insert(0, \'{}\')'.format(library_path))
-        # sys.path.insert(0, library_path)
-        #
-        # # Import function
-        # print('\tfrom {} import {} as function'.format(library_name, function_name))
-        # exec('from {} import {} as function'.format(library_name, function_name))
-        #
-        # # Process args
-        # args = self.process_args(required_args, default_args, optional_args)
-        #
-        # # Execute
-        # print('\n\tExecuting {}:'.format(locals()['function']))
-        # for a, v in sorted(args.items()):
-        #     print('\t\t{} = {} ({})'.format(a, get_name(v, self.simplex_namespace), type(v)))
-        #
-        # return locals()['function'](**args)
+        # Append a library path
+        # TODO: what's the effect of the last '/' in the path?
+        print('\tsys.path.insert(0, \'{}\')'.format(library_path))
+        sys.path.insert(0, library_path)
+
+        # Import function
+        print('\tfrom {} import {} as function'.format(library_name, function_name))
+        exec('from {} import {} as function'.format(library_name, function_name))
+
+        # Process args
+        args = self.process_args(required_args, default_args, optional_args)
+
+        # Execute
+        print('\n\tExecuting {}:'.format(locals()['function']))
+        for a, v in sorted(args.items()):
+            print('\t\t{} = {} ({})'.format(a, get_name(v, self.simplex_namespace), type(v)))
+
+        return locals()['function'](**args)
 
     def process_args(self, required_args, default_args, optional_args):
         """
@@ -138,7 +134,7 @@ class TaskManager:
         :return: dict; merged dict
         """
 
-        # print('Processing arguments ...')
+        print('Processing arguments ...')
 
         if any(set(required_args.keys() & default_args.keys() & optional_args.keys())):
             raise ValueError('Argument {} is duplicated.')
@@ -227,16 +223,15 @@ def load_task(json_filepath):
     if 'library_path' in library:  # Use specified library path
         library_path = library['library_path']
 
-        # Make sure the library path ends with '/'
-        if library_path.endswith('/'):
-            library_path = library_path[:-1]
-            # print('\tRemoved the last \'/\' from library_path, which is now: {}.'.format(library_path))
+        # Make sure the library path does not end with '/'
+        # if library_path.endswith('/'):
+        #     library_path = library_path[:-1]
+        #     # print('\tRemoved the last \'/\' from library_path, which is now: {}.'.format(library_path))
 
-        # # Make sure the library path does not end with '/'
-        # if not library_path.endswith('/'):
-        #     library_path += '/'
-        #     if verbose:
-        #         print('\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
+        # Make sure the library path ends with '/'
+        if not library_path.endswith('/'):
+            library_path += '/'
+            # print('\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
 
         if not isdir(library_path):  # Use absolute path
             library_path = join(HOME_DIR, library_path)
