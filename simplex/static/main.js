@@ -222,7 +222,7 @@ const mapKeyboardShortcuts = function() {
   $('body').keydown(function(event) {
 
     // Remove focus from active element
-    if (event.keyCode == 27) {
+    if (event.keyCode == 27 && event.shiftKey) {
       document.activeElement.blur();
     }
 
