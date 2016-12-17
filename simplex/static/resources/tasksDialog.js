@@ -69,8 +69,13 @@ const initTasksPanel = function() {
   leftPanel = $('<div/>')
     .addClass('library-left-panel')
     .addClass('pull-left')
-    .addClass('col-xs-8')
+    .addClass('col-xs-7')
     .appendTo(tasksPanelParent);
+
+  var leftPanelHeader = $('<h1/>')
+    .addClass('library-left-panel-header')
+    .html('SimpleX Library')
+    .appendTo(leftPanel);
 
   // Specifically to hold cards
   var leftPanelInner = $('<div/>')
@@ -81,7 +86,7 @@ const initTasksPanel = function() {
   rightPanel = $('<div/>')
     .attr('id', 'library-right-panel')
     .addClass('pull-right')
-    .addClass('col-xs-4')
+    .addClass('col-xs-5')
     .appendTo(tasksPanelParent);
 
   renderRightPanel();
@@ -119,13 +124,26 @@ print(compile_tasks())
       task.label = key;
       return task;
     });
+
+    // Sort tasks by package then function name alphabetically
     simplexTaskData.sort(function(a, b) {
-      if (a.label > b.label) {
+      var alib = a.library_name.toLowerCase();
+      var blib = b.library_name.toLowerCase();
+      var alab = a.label.toLowerCase();
+      var blab = b.label.toLowerCase();
+
+      if (alib > blib) {
         return 1;
-      } else if (a.label < b.label) {
-        return -1;
+      } else if (alib == blib) {
+        if (alab > blab) {
+          return 1;
+        } else if (alab < blab) {
+          return -1;
+        } else {
+          return 0;
+        }
       } else {
-        return 0;
+        return -1;
       }
     })
 
@@ -134,10 +152,21 @@ print(compile_tasks())
 
     // Render all tasks after loading text fades
     setTimeout(function() {
+      var packages = {};
       for (var task of simplexTaskData) {
+        var tasklib = task.library_name.toUpperCase();
+
+        // Section headers = package names
+        if (!(tasklib in packages)) {
+          console.log(packages);
+          packages[tasklib] = 0;
+          var packageHeader = $('<h3/>')
+            .addClass('library-package-header')
+            .html(tasklib);
+          $(leftPanel).find('.library-left-panel-inner').append(packageHeader);
+        }
         renderTask(task);
       }
-
       $(leftPanel).find('.library-card').first().click();
     }, 200);
 
@@ -255,7 +284,6 @@ const renderTask = function(task) {
   // Generate a card from given task_data
   var cardParent = $('<div/>')
     .addClass('library-card-wrapper')
-    .addClass('col-md-6')
     .addClass('col-xs-12')
     .on('click', function(event) {
       event.preventDefault();
@@ -283,19 +311,13 @@ const renderTask = function(task) {
     .html(task.label);
 
   // Function's parent package
-  var packageTitle = $('<h5/>')
-    .addClass('card-package-title')
-    .html(task.library_name);
-
-  // Function description
-  var description = $('<p/>')
-    .addClass('card-description')
-    .html(task.description);
+  // var packageTitle = $('<h5/>')
+  //   .addClass('card-package-title')
+  //   .html(task.library_name);
 
   // Structure elements appropriately
   label.appendTo(card);
-  packageTitle.appendTo(card);
-  description.appendTo(card);
+  // packageTitle.appendTo(card);
   card.appendTo(cardParent);
   cardParent.appendTo($('.library-left-panel-inner'));
 }
