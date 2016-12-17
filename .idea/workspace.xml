@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/notebooks/test.ipynb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jsons/COMPILED.json" afterPath="$PROJECT_DIR$/jsons/COMPILED.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/support.py" afterPath="$PROJECT_DIR$/simplex/support.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simplex/taskmanager.py" afterPath="$PROJECT_DIR$/simplex/taskmanager.py" />
     </list>
     <ignored path="simplex.iws" />
@@ -28,8 +27,8 @@
       <file leaf-file-name="taskmanager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/simplex/taskmanager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="185" column="15" lean-forward="false" selection-start-line="185" selection-start-column="15" selection-end-line="185" selection-end-column="15" />
+            <state relative-caret-position="1132">
+              <caret line="109" column="13" lean-forward="true" selection-start-line="109" selection-start-column="13" selection-end-line="109" selection-end-column="13" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -37,31 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="support.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/simplex/support.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ccal.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsons/ccal.json">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
-              <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cgal.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsons/cgal.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+              <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -70,8 +49,18 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/simplex/static/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1343">
-              <caret line="79" column="22" lean-forward="false" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
+            <state relative-caret-position="1324">
+              <caret line="129" column="22" lean-forward="false" selection-start-line="129" selection-start-column="22" selection-end-line="129" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/simplex/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="986">
+              <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -134,21 +123,22 @@
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/simplex/support.p9y.py" />
         <option value="$PROJECT_DIR$/simplex/configure.py" />
-        <option value="$PROJECT_DIR$/simplex/__init__.py" />
         <option value="$PROJECT_DIR$/jsons/sample_library.json" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/jsons/cgal.json" />
-        <option value="$PROJECT_DIR$/simplex/static/main.js" />
-        <option value="$PROJECT_DIR$/jsons/ccal.json" />
-        <option value="$PROJECT_DIR$/simplex/taskmanager.py" />
         <option value="$PROJECT_DIR$/simplex/support.py" />
+        <option value="$PROJECT_DIR$/jsons/cgal.json" />
+        <option value="$PROJECT_DIR$/jsons/ccal.json" />
+        <option value="$PROJECT_DIR$/simplex/__init__.py" />
+        <option value="$PROJECT_DIR$/simplex/static/main.js" />
+        <option value="$PROJECT_DIR$/simplex/taskmanager.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="52" />
-    <option name="width" value="1230" />
-    <option name="height" value="1388" />
+    <option name="x" value="440" />
+    <option name="y" value="1516" />
+    <option name="width" value="1190" />
+    <option name="height" value="1134" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -171,8 +161,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -209,16 +197,22 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jsons" />
+              <option name="myItemId" value="simplex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/simplex_utilities" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="SearchEverywhereHistoryKey" value="dialog&#9;FILE&#9;file:///home/cyborg/simplex/simplex/static/resources/tasksDialog.js" />
   </component>
@@ -552,13 +546,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="52" width="1230" height="1388" extended-state="4" />
+    <frame x="440" y="1516" width="1190" height="1134" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16422765" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16806723" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32520944" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15003808" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980755" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -570,6 +563,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32520944" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -621,8 +615,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/simplex/engine.py" />
-    <entry file="file://$PROJECT_DIR$/simplex/static/resources/librarymodal.js" />
     <entry file="file://$PROJECT_DIR$/simplex_data/__init__.py" />
     <entry file="file://$PROJECT_DIR$/simplex_data/task_dict.json" />
     <entry file="file://$PROJECT_DIR$/simplex/simplex_data/genome_explorer/genome_explorer/__init__.py" />
@@ -640,13 +632,7 @@
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/ccal/ccal/__init__.py" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/__init__.py" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/sample_library/sample_library.json" />
-    <entry file="file://$PROJECT_DIR$/setup.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.sh" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/ccal/ccal.json" />
     <entry file="file://$PROJECT_DIR$/simplex/static/resources/theme.css">
       <provider selected="true" editor-type-id="text-editor">
@@ -670,13 +656,7 @@
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.extract_chr.py" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.remap_37to38.py" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer/scripts/vcf.rename_chr_sort.py" />
-    <entry file="file://$PROJECT_DIR$/simplex/static/resources/tinysort.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="91" lean-forward="false" selection-start-line="9" selection-start-column="91" selection-end-line="9" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/simplex/static/resources/tinysort.min.js" />
     <entry file="file://$PROJECT_DIR$/simplex/default_libs/genome_explorer/genome_explorer.json" />
     <entry file="file://$PROJECT_DIR$/simplex/support.py" />
     <entry file="file://$PROJECT_DIR$/setup.py">
@@ -710,13 +690,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="6" column="3" lean-forward="false" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsons/sample_library.json" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider editor-type-id="text-editor">
@@ -740,51 +713,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/static/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="79" column="22" lean-forward="false" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsons/COMPILED.json">
+    <entry file="file://$PROJECT_DIR$/jsons/COMPILED.json" />
+    <entry file="file://$PROJECT_DIR$/simplex/support.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsons/cgal.json">
+    <entry file="file://$PROJECT_DIR$/jsons/cgal.json" />
+    <entry file="file://$PROJECT_DIR$/jsons/ccal.json" />
+    <entry file="file://$PROJECT_DIR$/jsons/simplex_utilities.json" />
+    <entry file="file://$PROJECT_DIR$/simplex/static/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+        <state relative-caret-position="1324">
+          <caret line="129" column="22" lean-forward="false" selection-start-line="129" selection-start-column="22" selection-end-line="129" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsons/ccal.json">
+    <entry file="file://$PROJECT_DIR$/simplex/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        <state relative-caret-position="986">
+          <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/simplex/taskmanager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="185" column="15" lean-forward="false" selection-start-line="185" selection-start-column="15" selection-end-line="185" selection-end-column="15" />
+        <state relative-caret-position="1132">
+          <caret line="109" column="13" lean-forward="true" selection-start-line="109" selection-start-column="13" selection-end-line="109" selection-end-column="13" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simplex/support.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="102">
+          <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
           <folding />
         </state>
       </provider>
