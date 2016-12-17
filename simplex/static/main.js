@@ -306,7 +306,7 @@ task_view.create()
         // Wait for widget to fully render before modifying it
         setTimeout(function() {
           // Show widget
-          cell.element.find(".widget-area").height(cell.element.find(".panel-wrapper").outerHeight() * 2);
+          cell.element.find(".widget-area").height(cell.element.find(".panel-wrapper").outerHeight());
 
           // Enable javascript tooltips
           $("[data-toggle='tooltip']").tooltip();
