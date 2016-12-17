@@ -174,7 +174,7 @@ const addMenuOptions = function() {
   // Add button for creating SimpleX cell to toolbar
   Jupyter.toolbar.add_buttons_group([
     {
-      'label': 'insert SimpleX cell',
+      'label': 'Insert SimpleX Cell',
       'icon': 'fa-bolt', // select from http://fortawesome.github.io/Font-Awesome/icons/
       'callback': function() {
         Jupyter.notebook.insert_cell_below();
