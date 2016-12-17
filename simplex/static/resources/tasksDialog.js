@@ -287,7 +287,7 @@ const renderTask = function(task) {
     .addClass('col-xs-12')
     .on('click', function(event) {
       event.preventDefault();
-      selectedIndex = $(this).index();
+      selectedIndex = $(this).index('.library-card-wrapper');
       renderRightPanel();
     })
     // Double click auto selects task
