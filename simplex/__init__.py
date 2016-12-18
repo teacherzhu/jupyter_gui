@@ -1,7 +1,11 @@
 from os import environ
 from os.path import join
 
-HOME_DIR = environ['HOME']
+try:
+    HOME_DIR = environ['HOME']
+
+except KeyError:  # For Windows
+    HOME_DIR = environ['HOMEPATH']
 
 # ======================================================================================================================
 # Set up SimpleX
