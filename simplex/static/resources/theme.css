@@ -292,7 +292,7 @@ button.close, .library-modal-header, .library-modal-footer {
 
 .library-card-selected, .library-card:hover {
   outline-offset: -2px;
-  outline: 2px solid lightblue !important;
+  outline: 3px solid #20D9BA !important;
   transition: all 0.05s ease-out; }
 
 .card-label {
