@@ -15,6 +15,26 @@
     {
       "label": "Reset Simplex .json",
       "function_name": "reset_simplex_json"
+    },
+    {
+      "label": "Link YouTube Video",
+      "function_name": "youtube",
+      "required_args": [
+        {
+          "arg_name": "url",
+          "label": "YouTube Video URL"
+        }
+      ]
+    },
+    {
+      "label": "Set Jupyter Notebook Theme",
+      "function_name": "set_theme",
+      "required_args": [
+        {
+          "arg_name": "filepath",
+          "label": ".CSS file"
+        }
+      ]
     }
   ]
 }
