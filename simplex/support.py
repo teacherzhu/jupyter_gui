@@ -1,5 +1,5 @@
-from os import listdir
-from os.path import join, isdir
+from os import listdir, mkdir
+from os.path import abspath, join, isdir, isfile, islink, split
 
 
 def get_name(obj, namesapce):
@@ -18,6 +18,31 @@ def get_name(obj, namesapce):
 
     # obj is a str
     return '\'{}\''.format(obj)
+
+
+def establish_filepath(filepath):
+    """
+    If the path up to the deepest directory in filepath doesn't exist, make the path up to the deepest directory.
+    :param filepath: str; filepath
+    :return: None
+    """
+
+    # prefix/suffix
+    prefix, suffix = split(filepath)
+    prefix = abspath(prefix)
+
+    # Get missing directories
+    missing_directories = []
+    while not (isdir(prefix) or isfile(prefix) or islink(prefix)):  # prefix isn't file, directory, or link
+        missing_directories.append(prefix)
+
+        # Check prefix's prefix next
+        prefix, suffix = split(prefix)
+
+    # Make missing directories
+    for d in reversed(missing_directories):
+        mkdir(d)
+        print('Created directory {}.'.format(d))
 
 
 def list_only_dirs(directory_path):

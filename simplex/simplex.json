@@ -1,0 +1,17 @@
+{
+  "library_path": "simplex",
+  "library_name": "simplex",
+  "tasks": [
+    {
+      "label": "Link SimpleX .json",
+      "function_name": "link_simplex_json",
+      "required_args": [
+        {
+          "arg_name": "filepath",
+          "label": "SimpleX .json to be linked"
+        }
+      ]
+    }
+  ]
+}
+
