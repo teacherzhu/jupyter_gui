@@ -1,5 +1,5 @@
 from os import remove, symlink
-from os.path import join, split
+from os.path import join, split, islink
 
 from . import SIMPLEX_JSON_DIR
 
@@ -12,5 +12,16 @@ def link_simplex_json(filepath):
     """
 
     dest = join(SIMPLEX_JSON_DIR, split(filepath)[1])
-    remove(dest)
+    if islink(dest):
+        remove(dest)
     symlink(filepath, dest)
+
+
+def reset_simplex_json():
+    """
+    Delete all files in $HOME/.SimpleX/json/ directory.
+    :param filepath: str;
+    :return: None
+    """
+
+    # TODO: implement

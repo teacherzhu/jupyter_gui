@@ -11,6 +11,10 @@
           "label": "SimpleX .json to be linked"
         }
       ]
+    },
+    {
+      "label": "Reset Simplex .json",
+      "function_name": "reset_simplex_json"
     }
   ]
 }
