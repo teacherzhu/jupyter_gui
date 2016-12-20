@@ -235,7 +235,7 @@ const renderRightPanel = function() {
       .html('Cancel')
       .appendTo(modalButtons);
     var selectButton = $('<button>')
-      .attr('id', 'library-select-btn')
+      .addClass('library-select-btn')
       .addClass('btn')
       .addClass('btn-default')
       .addClass('btn-primary')
@@ -293,16 +293,7 @@ const renderTask = function(task) {
     // Double click auto selects task
     .on('dblclick', function(event) {
       event.preventDefault();
-      $('#library-select-btn').click();
-    });
-
-  // Card style and click action
-  var card = $('<a/>')
-    .addClass('library-card')
-    .on('click', function(event) {
-      event.preventDefault();
-      $('.library-card-selected').removeClass('library-card-selected');
-      $(this).addClass('library-card-selected');
+      $('.library-select-btn').click();
     });
 
   // Label/title of method
