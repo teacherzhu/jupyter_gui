@@ -23,7 +23,7 @@ from .taskmanager import TaskManager, compile_tasks
 
 establish_filepath(SIMPLEX_DIR)
 establish_filepath(SIMPLEX_JSON_DIR)
-link_simplex_json(join(THIS_DIR, 'simplex.json'))
+link_simplex_json(join(THIS_DIR, 'test', 'simplex.json'))
 
 
 # ======================================================================================================================
