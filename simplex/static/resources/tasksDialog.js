@@ -167,7 +167,7 @@ print(compile_tasks())
         }
         renderTask(task);
       }
-      $(leftPanel).find('.library-card').first().click();
+      // $(leftPanel).find('.library-card').first().click();
     }, 200);
 
   }
