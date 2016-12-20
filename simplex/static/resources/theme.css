@@ -62,8 +62,33 @@ body {
   background: white;
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3)); }
 
-.form-panel-heading {
-  margin: 1em !important; }
+.group-highlight, .form-panel-body-wrapper > .panel > .panel-heading, .form-group > .panel {
+  box-shadow: none;
+  border: 1px solid rgba(127, 127, 127, 0);
+  transition: all 0.1s ease-out;
+  border-radius: 0; }
+  .group-highlight:hover, .form-panel-body-wrapper > .panel > .panel-heading:hover, .form-group > .panel:hover {
+    border: 1px solid lightgrey; }
+
+.form-panel-body-wrapper {
+  margin: 0 !important;
+  width: 100%; }
+  .form-panel-body-wrapper > .panel {
+    border: none; }
+  .form-panel-body-wrapper > .panel > .panel-heading {
+    text-align: center;
+    font-size: 24px;
+    background: white;
+    padding: 0; }
+    .form-panel-body-wrapper > .panel > .panel-heading .accordion-toggle, .form-panel-body-wrapper > .panel > .panel-heading .accordion-toggle:hover {
+      display: block;
+      padding: 0.5em;
+      width: 100%;
+      color: #444;
+      text-decoration: none; }
+  .form-panel-body-wrapper .panel-body {
+    border-top: none !important;
+    padding: 0; }
 
 .form-panel-body {
   display: flex;
@@ -80,14 +105,6 @@ body {
 
 .form-group {
   margin: 0 !important; }
-  .form-group > .panel {
-    border: none;
-    box-shadow: none;
-    border: 1px solid rgba(127, 127, 127, 0.05);
-    transition: all 0.1s ease-out;
-    border-radius: 0; }
-    .form-group > .panel:hover, .form-group > .panel:focus {
-      border: 1px solid lightgrey; }
   .form-group .panel-heading {
     box-sizing: content-box;
     background: none;
@@ -96,12 +113,9 @@ body {
     .form-group .panel-heading .accordion-toggle {
       display: block;
       padding: 0.5em 16px;
-      color: black;
-      font-size: 18px !important;
-      text-decoration: none; }
-      .form-group .panel-heading .accordion-toggle:hover {
+      font-size: 18px !important; }
+      .form-group .panel-heading .accordion-toggle, .form-group .panel-heading .accordion-toggle:hover {
         color: black;
-        font-weight: 500;
         text-decoration: none; }
   .form-group .panel-body {
     padding: 0;

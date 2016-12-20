@@ -35,23 +35,23 @@ class TaskView:
         """
 
         form_panel = w.Box().add_class('form-panel')
-        form_panel.children = tuple([self.heading(), self.body()])
+        form_panel.children = tuple([self.body()])
 
         # Outer div to contain both the js-widget element as well as js-generated elements
         wrapper = w.Box().add_class('panel-wrapper')
         wrapper.children = tuple([form_panel])
         return wrapper
 
-    def heading(self):
-        """
-        Make task heading.
-        :return: Box; parent container
-        """
-
-        heading = w.Box().add_class('form-panel-heading')
-        text = w.HTML('<h1>' + self.task.label + '</h1>')
-        heading.children = tuple([text])
-        return heading
+    # def heading(self):
+    #     """
+    #     Make task heading.
+    #     :return: Box; parent container
+    #     """
+    #
+    #     heading = w.Box().add_class('form-panel-heading')
+    #     text = w.HTML('<h1>' + self.task.label + '</h1>')
+    #     heading.children = tuple([text])
+    #     return heading
 
     def body(self):
         """
@@ -92,8 +92,11 @@ class TaskView:
         body_inner.children = tuple(field_groups)
 
         body.children = tuple([body_inner, run_button])
-
-        return body
+        body_wrapper = w.Accordion()
+        body_wrapper.add_class('form-panel-body-wrapper')
+        body_wrapper.children = [body]
+        body_wrapper.set_title(0, self.task.label)
+        return body_wrapper
 
     def field_group(self, label, args, field_type):
         """
@@ -116,14 +119,14 @@ class TaskView:
             raise ValueError('Unknown field type {}.'.format(field_type))
 
         # TODO: use class
-        innerParent = w.Box()
-        innerParent.children = tuple(input_elements)
-        outerParent = w.Accordion()
-        outerParent.add_class('form-{}-group'.format(field_type))
-        outerParent.add_class('form-group')
-        outerParent.children = [innerParent]
-        outerParent.set_title(0, label.upper())
-        return outerParent
+        inner_parent = w.Box()
+        inner_parent.children = tuple(input_elements)
+        outer_parent = w.Accordion()
+        outer_parent.add_class('form-{}-group'.format(field_type))
+        outer_parent.add_class('form-group')
+        outer_parent.children = [inner_parent]
+        outer_parent.set_title(0, label.upper())
+        return outer_parent
 
     def text_field(self, label, description, field_type, arg_name=None):
         """

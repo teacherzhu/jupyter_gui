@@ -91,8 +91,46 @@ $widget-width: 400px;
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
 }
 
-.form-panel-heading {
-  margin: 1em !important;
+.group-highlight {
+  box-shadow: none;
+  border: 1px solid rgba(127, 127, 127, 0);
+  transition: all 0.1s ease-out;
+  border-radius: 0;
+
+  &:hover {
+    border: 1px solid lightgrey;
+  }
+}
+
+.form-panel-body-wrapper {
+  margin: 0 !important;
+  width: 100%;
+
+  > .panel {
+    border: none;
+  }
+
+  > .panel > .panel-heading {
+    text-align: center;
+    font-size: 24px;
+    background: white;
+    padding: 0;
+
+    @extend .group-highlight;
+
+    .accordion-toggle, .accordion-toggle:hover {
+      display: block;
+      padding: 0.5em;
+      width: 100%;
+      color: #444;
+      text-decoration: none;
+    }
+  }
+
+  .panel-body {
+    border-top: none !important;
+    padding: 0;
+  }
 }
 
 .form-panel-body {
@@ -116,15 +154,7 @@ $widget-width: 400px;
   margin: 0 !important;
 
   > .panel {
-    border: none;
-    box-shadow: none;
-    border: 1px solid rgba(127, 127, 127, 0.05);
-    transition: all 0.1s ease-out;
-    border-radius: 0;
-
-    &:hover, &:focus {
-      border: 1px solid lightgrey;
-    }
+    @extend .group-highlight;
   }
 
   .panel-heading {
@@ -136,13 +166,10 @@ $widget-width: 400px;
     .accordion-toggle {
       display: block;
       padding: 0.5em $form-side-margin;
-      color: black;
       font-size: 18px !important;
-      text-decoration: none;
 
-      &:hover {
+      &, &:hover {
         color: black;
-        font-weight: 500;
         text-decoration: none;
       }
     }
