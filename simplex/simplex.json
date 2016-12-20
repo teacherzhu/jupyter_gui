@@ -1,9 +1,9 @@
 {
   "library_path": "simplex",
-  "library_name": "simplex",
   "tasks": [
     {
       "label": "Link SimpleX .json",
+      "library_name": "simplex",
       "function_name": "link_simplex_json",
       "required_args": [
         {
@@ -14,10 +14,12 @@
     },
     {
       "label": "Reset Simplex .json",
+      "library_name": "simplex",
       "function_name": "reset_simplex_json"
     },
     {
       "label": "Link YouTube Video",
+      "library_name": "simplex",
       "function_name": "youtube",
       "required_args": [
         {
@@ -28,6 +30,7 @@
     },
     {
       "label": "Set Jupyter Notebook Theme",
+      "library_name": "simplex",
       "function_name": "set_theme",
       "required_args": [
         {
@@ -38,4 +41,3 @@
     }
   ]
 }
-
