@@ -1,12 +1,14 @@
 class Task:
     def __init__(self, task_dict):
-
+        # Information to call the function
         # Usage:
         #   sys.path.insert(0, library_path)
         #   from library_name import function_name
         self.library_path = task_dict['library_path']  # str
         self.library_name = task_dict['library_name']  # str
         self.function_name = task_dict['function_name']  # str
+
+        # Function label and description
         self.label = task_dict['label']  # str
         self.description = task_dict['description']  # str
 

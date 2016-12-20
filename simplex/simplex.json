@@ -3,8 +3,7 @@
   "tasks": [
     {
       "label": "Link SimpleX .json",
-      "library_name": "simplex",
-      "function_name": "link_simplex_json",
+      "function_path": "simplex.link_simplex_json",
       "required_args": [
         {
           "arg_name": "filepath",
@@ -14,13 +13,11 @@
     },
     {
       "label": "Reset Simplex .json",
-      "library_name": "simplex",
-      "function_name": "reset_simplex_json"
+      "function_path": "simplex.reset_simplex_json"
     },
     {
       "label": "Link YouTube Video",
-      "library_name": "simplex",
-      "function_name": "youtube",
+      "function_path": "simplex.youtube",
       "required_args": [
         {
           "arg_name": "url",
@@ -30,8 +27,7 @@
     },
     {
       "label": "Set Jupyter Notebook Theme",
-      "library_name": "simplex",
-      "function_name": "set_theme",
+      "function_path": "simplex.set_theme",
       "required_args": [
         {
           "arg_name": "filepath",

@@ -112,8 +112,9 @@ class TaskManager:
         sys.path.insert(0, library_path)
 
         # Import function
-        print('\tfrom {} import {} as function'.format(library_name, function_name))
-        exec('from {} import {} as function'.format(library_name, function_name))
+        code = 'from {} import {} as function'.format(library_name, function_name)
+        print('\t{}'.format(code))
+        exec(code)
 
         # Process args
         args = self.process_args(required_args, default_args, optional_args)
@@ -226,6 +227,8 @@ def load_task(json_filepath):
     if 'library_path' in library:  # Use specified library path
         library_path = library['library_path']
 
+        # TODO: remove old code
+
         # Make sure the library path does not end with '/'
         # if library_path.endswith('/'):
         #     library_path = library_path[:-1]
@@ -247,7 +250,13 @@ def load_task(json_filepath):
     # Load library tasks
     for t in library['tasks']:
 
-        function_name = t['function_name']
+        function_path = t['function_path']
+        if '.' in function_path:
+            split = function_path.split('.')
+            library_name = '.'.join(split[:-1])
+            function_name = split[-1]
+        else:
+            raise ValueError('Function path must be like: \'path.to.file_containing_the_function.function_name\'.')
 
         # Task label is this task's UID; so no duplicates are allowed
         if 'label' in t:
@@ -268,7 +277,7 @@ def load_task(json_filepath):
         processed_tasks[label] = dict()
         processed_tasks[label]['library_path'] = library_path
         # Load task library name
-        processed_tasks[label]['library_name'] = t['library_name']
+        processed_tasks[label]['library_name'] = library_name
         # Load task function name
         processed_tasks[label]['function_name'] = function_name
         if 'description' in t:  # Load task description
