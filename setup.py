@@ -3,7 +3,6 @@ from setuptools.command.install import install
 
 
 class InstallCommand(install):
-
     def run(self):
 
         # Install Python package
@@ -14,7 +13,6 @@ class InstallCommand(install):
         log.set_verbosity(log.DEBUG)
 
         try:
-            å
             # Enable the required nbextension for ipywidgets
             subprocess.call(["jupyter", "nbextension",
                              "enable", "--py", "widgetsnbextension"])
@@ -44,13 +42,13 @@ setup(name='simplex-ext',
       license='MIT',
       url="https://github.com/KwatME/simplex",
       classifiers=['Development Status :: 3 - Alpha',
-      'License :: OSI Approved :: MIT License',
-      'Programming Language :: Python :: 3.5'
-      ],
+                   'License :: OSI Approved :: MIT License',
+                   'Programming Language :: Python :: 3.5'
+                   ],
       keywords=['bioinformatics biology development interface widget'],
       install_requires=['jupyter', 'notebook>=4.2.0',
                         'ipywidgets>=5.2.0', 'matplotlib', 'IPython'],
       cmdclass={'install': InstallCommand},
       package_data={'simplex': [
-          'static/main.js', 'static/resources/*']},
+          'simplex.json', 'static/main.js', 'static/resources/*']},
       )
