@@ -167,7 +167,7 @@ print(compile_tasks())
         }
         renderTask(task);
       }
-      $(leftPanel).find('.library-card').first().click();
+      // $(leftPanel).find('.library-card').first().click();
     }, 200);
 
   }
@@ -235,7 +235,7 @@ const renderRightPanel = function() {
       .html('Cancel')
       .appendTo(modalButtons);
     var selectButton = $('<button>')
-      .attr('id', 'library-select-btn')
+      .addClass('library-select-btn')
       .addClass('btn')
       .addClass('btn-default')
       .addClass('btn-primary')
@@ -282,27 +282,25 @@ const renderRightPanel = function() {
 const renderTask = function(task) {
 
   // Generate a card from given task_data
-  var cardParent = $('<div/>')
-    .addClass('library-card-wrapper')
-    .addClass('col-xs-12')
-    .on('click', function(event) {
-      event.preventDefault();
-      selectedIndex = $(this).index('.library-card-wrapper');
-      renderRightPanel();
-    })
-    // Double click auto selects task
-    .on('dblclick', function(event) {
-      event.preventDefault();
-      $('#library-select-btn').click();
-    });
-
-  // Card style and click action
   var card = $('<a/>')
     .addClass('library-card')
     .on('click', function(event) {
       event.preventDefault();
+
+      // click action
+      selectedIndex = $(this).index('.library-card');
+      renderRightPanel();
+
+      // card selected style
       $('.library-card-selected').removeClass('library-card-selected');
       $(this).addClass('library-card-selected');
+
+      $('.library-select-btn').addClass('library-select-btn-activated');
+    })
+    // Double click auto selects task
+    .on('dblclick', function(event) {
+      event.preventDefault();
+      $('.library-select-btn').click();
     });
 
   // Label/title of method
@@ -310,14 +308,7 @@ const renderTask = function(task) {
     .addClass('card-label')
     .html(task.label);
 
-  // Function's parent package
-  // var packageTitle = $('<h5/>')
-  //   .addClass('card-package-title')
-  //   .html(task.library_name);
-
   // Structure elements appropriately
   label.appendTo(card);
-  // packageTitle.appendTo(card);
-  card.appendTo(cardParent);
-  cardParent.appendTo($('.library-left-panel-inner'));
+  card.appendTo($('.library-left-panel-inner'));
 }

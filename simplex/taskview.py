@@ -79,13 +79,13 @@ class TaskView:
         # Add to body
         field_groups = []
 
-        if len(input_elements.children) > 1:
+        if len(input_elements.children[0].children) > 0:
             field_groups.append(input_elements)
 
-        if len(opt_input_elements.children) > 1:
+        if len(opt_input_elements.children[0].children) > 0:
             field_groups.append(opt_input_elements)
 
-        if len(output_elements.children) > 1:
+        if len(output_elements.children[0].children) > 0:
             field_groups.append(output_elements)
 
         body_inner = w.Box().add_class('form-panel-body-inner')
@@ -104,7 +104,7 @@ class TaskView:
         :return: Box; parent container
         """
 
-        input_elements = [w.HTML('<h3>{}<h3/>'.format(label))]
+        input_elements = []
 
         if field_type.endswith('args'):
             input_elements.extend(
@@ -116,9 +116,14 @@ class TaskView:
             raise ValueError('Unknown field type {}.'.format(field_type))
 
         # TODO: use class
-        parent = w.Box().add_class('form-{}-group'.format(field_type))
-        parent.children = tuple(input_elements)
-        return parent
+        innerParent = w.Box()
+        innerParent.children = tuple(input_elements)
+        outerParent = w.Accordion()
+        outerParent.add_class('form-{}-group'.format(field_type))
+        outerParent.add_class('form-group')
+        outerParent.children = [innerParent]
+        outerParent.set_title(0, label.upper())
+        return outerParent
 
     def text_field(self, label, description, field_type, arg_name=None):
         """
@@ -131,7 +136,7 @@ class TaskView:
         """
 
         # Make box
-        field = w.Text(placeholder=label).add_class('form-group')
+        field = w.Text(placeholder=label).add_class('form-panel-text-field-inner')
 
         # Hook the box with the callback
         field.on_submit(self.callback)

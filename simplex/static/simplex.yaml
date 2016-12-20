@@ -1,0 +1,6 @@
+
+Type: Jupyter Notebook Extension
+Compatibility: 4.x
+Main: main.js
+Name: SimpleX
+Description: "A simple execution interface for Jupyter Notebook."

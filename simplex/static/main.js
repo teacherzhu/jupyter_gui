@@ -291,6 +291,8 @@ task_view.create()
       cell.code_mirror.setValue(code);
     }
 
+    // Clear any existing widgets in cell
+    Jupyter.notebook.get_selected_cell().widgetarea._clear();
     cell.execute();
 
     function setupWidget(id) {
@@ -302,12 +304,8 @@ task_view.create()
       if (cell.element.find(".form-panel").length > 0 && cell.element.find(".form-panel").outerHeight() > 50) {
         clearInterval(id);
 
-
         // Wait for widget to fully render before modifying it
         setTimeout(function() {
-          // Show widget
-          cell.element.find(".widget-area").height(cell.element.find(".panel-wrapper").outerHeight());
-
           // Enable javascript tooltips
           $("[data-toggle='tooltip']").tooltip();
         }, 200);
