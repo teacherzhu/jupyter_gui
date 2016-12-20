@@ -282,13 +282,20 @@ const renderRightPanel = function() {
 const renderTask = function(task) {
 
   // Generate a card from given task_data
-  var cardParent = $('<div/>')
-    .addClass('library-card-wrapper')
-    .addClass('col-xs-12')
+  var card = $('<a/>')
+    .addClass('library-card')
     .on('click', function(event) {
       event.preventDefault();
-      selectedIndex = $(this).index('.library-card-wrapper');
+
+      // click action
+      selectedIndex = $(this).index('.library-card');
       renderRightPanel();
+
+      // card selected style
+      $('.library-card-selected').removeClass('library-card-selected');
+      $(this).addClass('library-card-selected');
+
+      $('.library-select-btn').addClass('library-select-btn-activated');
     })
     // Double click auto selects task
     .on('dblclick', function(event) {
@@ -301,14 +308,7 @@ const renderTask = function(task) {
     .addClass('card-label')
     .html(task.label);
 
-  // Function's parent package
-  // var packageTitle = $('<h5/>')
-  //   .addClass('card-package-title')
-  //   .html(task.library_name);
-
   // Structure elements appropriately
   label.appendTo(card);
-  // packageTitle.appendTo(card);
-  card.appendTo(cardParent);
-  cardParent.appendTo($('.library-left-panel-inner'));
+  card.appendTo($('.library-left-panel-inner'));
 }

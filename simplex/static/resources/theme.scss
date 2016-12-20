@@ -1,6 +1,7 @@
 $input-color: #20D9BA;
 $opt-input-color: #9017E6;
 $output-color: #4E41D9;
+$jupyter-color: #ff7e2e;
 $cubic: cubic-bezier(0.64, 0.09, 0.08, 1) !default;
 
 /******************** Notebook Controls ********************/
@@ -290,9 +291,7 @@ button.close, .library-modal-header, .library-modal-footer {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  z-index: 2;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.22));
-  -webkit-filter: drop-shadow(0 0px 5px rgba(0, 0, 0, 0.45));
+  border-left: 1px solid grey;
 }
 
 #library-task-info {
@@ -338,7 +337,17 @@ button.close, .library-modal-header, .library-modal-footer {
   }
 }
 
-#library-select-button {}
+.library-select-btn {
+  border: grey;
+  background: lighten($jupyter-color, 30%);
+  pointer-events: none;
+}
+
+.library-select-btn-activated {
+  border: darken($jupyter-color, 20%);
+  background: $jupyter-color;
+  pointer-events: auto;
+}
 
 /******************** Library Panel ********************/
 
@@ -363,6 +372,7 @@ $left-panel-left-padding: 16px;
 .library-left-panel-inner {
   width: 100%;
   display: flex;
+  background: lightgrey;
   flex-direction: column;
 }
 
@@ -379,42 +389,47 @@ $left-panel-left-padding: 16px;
 .library-package-header {
   width: 100%;
   padding-left: $left-panel-left-padding;
-  border-top: 1px solid grey;
+  background: white;
+
+  // border-top: 1px solid grey;
   margin: 0;
   padding: $left-panel-left-padding;
 }
 
 .library-card {
-  box-sizing: content-box;
+  box-sizing: border-box;
   display: block;
-  padding: 0.8em 1.5em;
+  padding: 1em 1.5em;
   padding-left: $left-panel-left-padding;
   background: white;
   color: #444;
   width: 100%;
   text-decoration: none;
-  margin: 0.5px;
+  overflow: visible;
+  vertical-align: middle;
+  margin: 0.5px 0;
+
+  // margin: 0.5px;
   cursor: pointer;
-  transition: all 0.05s linear;
-  border-top: 1px solid lightgrey;
+  transition: all 0.08s linear;
+  border: 2px solid rgba(0, 0, 0, 0);
 
   &:hover {
     color: #444;
     text-decoration: none;
-
-    @extend .library-card-selected;
+    background: lightgrey;
   }
 }
 
 .library-card-selected {
-  outline-offset: -2px;
-  outline: 2px solid lightblue !important;
-  transition: all 0.05s ease-out;
+  font-weight: bold;
+  background: $jupyter-color !important;
+  color: white !important;
 }
 
 .card-label {
   font-weight: normal;
-  margin-top: 0;
+  margin: 0;
 }
 
 .card-package-title {
