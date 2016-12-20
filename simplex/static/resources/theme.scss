@@ -41,7 +41,6 @@ body {
 }
 
 .widget-area {
-  height: 0;
   background: white;
   overflow: hidden;
   transition: all 0.5s ease-out;
@@ -60,7 +59,9 @@ $form-side-margin: 16px;
   padding: 1em;
 
   h1 {
+    font-size: 22px;
     font-weight: 400;
+    margin: 0;
   }
 
   h3 {
@@ -74,38 +75,92 @@ $form-side-margin: 16px;
 
 /******************** Form Panel ********************/
 
+$widget-width: 400px;
+
 .form-panel {
-  width: 50%;
-  max-width: 600px;
-  min-width: 450px;
+  // width: 50%;
+  // max-width: 550px;
+  // min-width: 400px;
+  width: $widget-width;
   margin: auto !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center !important;
   border-radius: 2px;
   background: white;
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
 }
 
 .form-panel-heading {
-  padding-top: 1em;
-  display: block;
-  text-align: center;
+  margin: 1em !important;
 }
 
 .form-panel-body {
   display: flex;
   flex-direction: column;
   align-items: center !important;
-  margin-top: 2em !important;
+  width: $widget-width;
 }
 
-.form-panel-body-inner {}
+.form-panel-body-inner {
+  width: $widget-width;
+  margin-bottom: 1em !important;
 
-.form-panel-Xtext-field {
+  h3 {
+    margin: .6em;
+    margin-left: $form-side-margin;
+  }
+}
+
+.form-group {
+  margin: 0 !important;
+
+  > .panel {
+    border: none;
+    box-shadow: none;
+    border: 1px solid rgba(127, 127, 127, 0.05);
+    transition: all 0.1s ease-out;
+    border-radius: 0;
+
+    &:hover, &:focus {
+      border: 1px solid lightgrey;
+    }
+  }
+
+  .panel-heading {
+    box-sizing: content-box;
+    background: none;
+    border: none !important;
+    padding: 0;
+
+    .accordion-toggle {
+      display: block;
+      padding: 0.5em $form-side-margin;
+      color: black;
+      font-size: 18px !important;
+      text-decoration: none;
+
+      &:hover {
+        color: black;
+        font-weight: 500;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .panel-body {
+    padding: 0;
+    border-top: none !important;
+  }
+}
+
+.form-panel-text-field {
   display: flex;
   align-items: flex-start;
 }
 
 // Input box width
-$input-width: 250px;
+$input-width: 300px;
 
 @mixin text-input-bg-mixin($color) {
   border-bottom: solid 1px $color;
@@ -120,12 +175,8 @@ $input-width: 250px;
   color: darken($color, 20%);
 }
 
-.form-group {
-  margin: 0 $form-side-margin 30px $form-side-margin !important;
-
-  h3 {
-    color: grey;
-  }
+.form-panel-text-field-inner {
+  margin: 0 $form-side-margin 20px $form-side-margin !important;
 }
 
 input.form-control[type="text"] {
@@ -155,10 +206,6 @@ input.form-control[type="text"] {
 }
 
 .form-required_args-group {
-  /*   h3 {
-      color: darken($input-color, 50%);
-    } */
-
   input[type="text"] {
     @include text-input-bg-mixin($input-color);
 
@@ -169,10 +216,6 @@ input.form-control[type="text"] {
 }
 
 .form-optional_args-group {
-  /*   h3 {
-      color: darken($opt-input-color, 20%);
-    } */
-
   input[type="text"] {
     @include text-input-bg-mixin($opt-input-color);
 
@@ -183,10 +226,6 @@ input.form-control[type="text"] {
 }
 
 .form-returns-group {
-  /*   h3 {
-      color: darken($output-color, 20%);
-    } */
-
   input[type="text"] {
     @include text-input-bg-mixin($output-color);
 
