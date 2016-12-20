@@ -14,19 +14,19 @@ class InstallCommand(install):
 
         try:
             # Enable the required nbextension for ipywidgets
-            subprocess.call(["jupyter", "nbextension", "enable", "--py", "widgetsnbextension"])
+            subprocess.call(['jupyter', 'nbextension', 'enable', '--py', 'widgetsnbextension'])
 
             # Enable the GenePattern Notebook extension
-            subprocess.call(["jupyter", "nbextension", "install", "--py", "simplex"])
-            subprocess.call(["jupyter", "nbextension", "enable", "--py", "simplex"])
-            subprocess.call(["jupyter", "serverextension", "enable", "--py", "simplex"])
+            subprocess.call(['jupyter', 'nbextension', 'install', '--py', 'simplex'])
+            subprocess.call(['jupyter', 'nbextension', 'enable', '--py', 'simplex'])
+            subprocess.call(['jupyter', 'serverextension', 'enable', '--py', 'simplex'])
         except:
-            log.warn("Unable to automatically enable SimpleX extension for Jupyter.\n" +
-                     "Please manually enable the extension by running the following commands:\n" +
-                     "jupyter nbextension enable --py widgetsnbextension\n" +
-                     "jupyter nbextension install --py simplex\n" +
-                     "jupyter nbextension enable --py simplex\n" +
-                     "jupyter serverextension enable --py simplex\n")
+            log.warn('Unable to automatically enable SimpleX extension for Jupyter.\n' +
+                     'Please manually enable the extension by running the following commands:\n' +
+                     '\tjupyter nbextension enable --py widgetsnbextension\n' +
+                     '\tjupyter nbextension install --py simplex\n' +
+                     '\tjupyter nbextension enable --py simplex\n' +
+                     '\tjupyter serverextension enable --py simplex\n')
 
 
 setup(name='simplex-ext',
@@ -36,12 +36,11 @@ setup(name='simplex-ext',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
       license='MIT',
-      url="https://github.com/KwatME/simplex",
+      url='https://github.com/KwatME/simplex',
       classifiers=['Development Status :: 3 - Alpha',
                    'License :: OSI Approved :: MIT License',
                    'Programming Language :: Python :: 3.5'],
       keywords=['bioinformatics biology development interface widget'],
       install_requires=['jupyter', 'notebook>=4.2.0', 'ipywidgets>=5.2.0', 'matplotlib', 'IPython'],
       cmdclass={'install': InstallCommand},
-      package_data={'simplex': ['simplex.json', 'static/main.js', 'static/resources/*']},
-      )
+      package_data={'simplex': ['simplex.json', 'static/main.js', 'static/resources/*']})

@@ -1,7 +1,8 @@
 import sys
-from os import listdir
-from os.path import isdir, isfile, join, split
 from json import dump, dumps, loads
+from os import listdir
+from os.path import isdir, isfile, join
+
 from IPython.display import clear_output
 
 from . import HOME_DIR, SIMPLEX_JSON_DIR, SIMPLEX_TASK_RECORD_FILEPATH
@@ -59,7 +60,6 @@ class TaskManager:
         default_args = {arg['arg_name']: arg['value'] for arg in task.default_args}
 
         # Retrieve required and/or optional arguments
-        # TODO: rename the keys
         required_args = {input_name: field.value for input_name, field in fields['required_args'].items()}
         optional_args = {input_name: field.value for input_name, field in fields['optional_args'].items()}
         returns = [field.value for field in fields['returns']]
@@ -87,7 +87,8 @@ class TaskManager:
             for name, value in zip(returns, returned):
                 self.simplex_namespace[name] = value
         else:
-            returned
+            # TODO: think about how to handle no-returns
+            pass
 
     def execute_task(self, library_path, library_name, function_name, required_args, default_args, optional_args,
                      returns):
@@ -240,42 +241,46 @@ def load_task(json_filepath):
             # print('\tConverted the library path to the absolute path relative to the $HOME directory: {}.'.format(
             #     library_path))
 
-    else:  # Guess library path to be found in the same direcotry as this .json
-        library_path = join(split(json_filepath)[0], '')
-        # print('\tNo library path is specified for {} library so guessed to be {}.'.format(library_name, library_path))
-
-    # Load library name
-    library_name = library['library_name']
+    else:  # Guess library path to be found in the same directory as this .json
+        raise ValueError('\'library_path\' is not specified in {}.'.format(json_filepath))
 
     # Load library tasks
-    tasks = library['tasks']
-    for t in tasks:
+    for t in library['tasks']:
+
+        function_name = t['function_name']
 
         # Task label is this task's UID; so no duplicates are allowed
-        label = t['label']
-        if label in processed_tasks:
-            raise ValueError('Multiple \'{}\' task labels found; use unique task label for each task.'.format(label))
+        if 'label' in t:
+            label = t['label']
         else:
-            processed_tasks[label] = dict()
+            label = '{} (no label)'.format(function_name)
 
+        if label in processed_tasks:  # Label is duplicated
+            print('\'{}\' task label is duplicated.; automatically making a new label ...'.format(label))
+
+            i = 2
+            new_label = '{} (v{})'.format(label, i)
+            while new_label in processed_tasks:
+                i += 1
+                new_label = '{} (v{})'.format(label, i)
+            label = new_label
+
+        processed_tasks[label] = dict()
         processed_tasks[label]['library_path'] = library_path
-        processed_tasks[label]['library_name'] = library_name
-
+        # Load task library name
+        processed_tasks[label]['library_name'] = t['library_name']
         # Load task function name
-        processed_tasks[label]['function_name'] = t['function_name']
-
-        if 'description' in t:  # Load task escription
+        processed_tasks[label]['function_name'] = function_name
+        if 'description' in t:  # Load task description
             processed_tasks[label]['description'] = t['description']
         else:
             processed_tasks[label]['description'] = ''
-
-        # Load task required, optional, and/or default arrguments
+        # Load task required, optional, and/or default arguments
         for arg_type in ['required_args', 'optional_args', 'default_args']:
             if arg_type in t:
                 processed_tasks[label][arg_type] = process_args(t[arg_type])
             else:
                 processed_tasks[label][arg_type] = []
-
         # Load task returns
         if 'returns' in t:
             processed_tasks[label]['returns'] = process_returns(t['returns'])
