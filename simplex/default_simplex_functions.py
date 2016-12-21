@@ -52,6 +52,14 @@ def set_theme(filepath):
     display_raw_html(html)
 
 
+def just_return(item):
+    """
+    :param item:
+    :return:
+    """
+    return item
+
+
 def display_raw_html(html):
     """
     Execute raw HTML.

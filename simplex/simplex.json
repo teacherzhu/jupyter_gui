@@ -2,6 +2,21 @@
   "library_path": "simplex",
   "tasks": [
     {
+      "label": "Assign",
+      "function_path": "simplex.just_return",
+      "required_args": [
+        {
+          "arg_name": "item",
+          "label": "item"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Value"
+        }
+      ]
+    },
+    {
       "label": "Link SimpleX .json",
       "function_path": "simplex.link_simplex_json",
       "required_args": [
