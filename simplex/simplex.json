@@ -49,6 +49,48 @@
           "label": ".CSS file"
         }
       ]
+    },
+    {
+      "label": "Slice DataFrame by Row",
+      "function_path": "simplex.slice_dataframe",
+      "required_args": [
+        {
+          "arg_name": "indices",
+          "label": "Row index(ices)"
+        }
+      ],
+      "default_args": [
+        {
+          "arg_name": "ax",
+          "value": "0"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Sliced DataFrame"
+        }
+      ]
+    },
+    {
+      "label": "Slice DataFrame by Column",
+      "function_path": "simplex.slice_dataframe",
+      "required_args": [
+        {
+          "arg_name": "indices",
+          "label": "Column index(ices)"
+        }
+      ],
+      "default_args": [
+        {
+          "arg_name": "ax",
+          "value": "1"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Sliced DataFrame"
+        }
+      ]
     }
   ]
 }
