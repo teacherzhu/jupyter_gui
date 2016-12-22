@@ -52,14 +52,6 @@ def set_theme(filepath):
     display_raw_html(html)
 
 
-def just_return(item):
-    """
-    :param item:
-    :return:
-    """
-    return item
-
-
 def display_raw_html(html):
     """
     Execute raw HTML.
@@ -69,3 +61,29 @@ def display_raw_html(html):
 
     # print('display_raw_html: {}'.format(html))
     display_html(html, raw=True)
+
+
+def just_return(item):
+    """
+    :param item:
+    :return:
+    """
+    return item
+
+
+def slice_dataframe(dataframe, indices=(), ax=0):
+    """
+
+    :param dataframe: dataframe;
+    :param indices: iterable;
+    :param ax: int;
+    :return: dataframe;
+    """
+
+    if isinstance(indices, str):
+        indices = [indices]
+
+    if ax == 0:
+        return dataframe.ix[indices, :]
+    elif ax == 1:
+        return dataframe.ix[:, indices]

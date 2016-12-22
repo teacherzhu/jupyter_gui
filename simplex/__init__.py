@@ -18,7 +18,7 @@ SIMPLEX_TASK_RECORD_FILEPATH = join(SIMPLEX_JSON_DIR, 'COMPILED.json')
 
 THIS_DIR = dirname(realpath(__file__))
 
-from .default_simplex_functions import *
+from .default_apps import *
 from .taskmanager import TaskManager, compile_tasks
 
 establish_filepath(SIMPLEX_DIR)
