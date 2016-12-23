@@ -66,11 +66,11 @@ def init_task_manager():
     global json
     import json
 
-    global Javascript
-    from IPython.display import Javascript
-
     global matplotlib
     import matplotlib
+
+    global dwidgets
+    import declarativewidgets as dwidgets
 
     global TaskManager
     from simplex import TaskManager
@@ -80,6 +80,9 @@ def init_task_manager():
     # Initialize a TaskManager
     global task_manager
     task_manager = TaskManager()
+
+    # Initialize declarative widgets
+    dwidgets.init()
 
 def sync_namespaces():
     '''
@@ -277,45 +280,58 @@ const toSimpleXCell = function(index, taskDict) {
   cell = Jupyter.notebook.get_cell(index);
 
   var cellChange = function(cell) {
-    taskDict = JSON.stringify(taskDict);
+    // OLD CODE -------------------------
+    // taskDict = JSON.stringify(taskDict);
+    // If taskDict is not passed, the cell is auto-executed.
+    // if (taskDict) {
+    //       var code = AUTOEXEC_FLAG +
+    //         `
+    // # Make and show widget
+    // task_view = task_manager.create_task_view(json.loads('''${taskDict}'''))
+    // task_view.create()
+    //       `;
+    //             // Put the code in the cell
+    // cell.code_mirror.setValue(code);
+    //       }
+    // ----------------------------------
+
     // If taskDict is not passed, the cell is auto-executed.
     if (taskDict) {
-      var code = AUTOEXEC_FLAG +
-        `
-# Make and show widget
-task_view = task_manager.create_task_view(json.loads('''${taskDict}'''))
-task_view.create()
-      `;
+      var code = createTaskWidget();
 
       // Put the code in the cell
       cell.code_mirror.setValue(code);
     }
 
     // Clear any existing widgets in cell
-    Jupyter.notebook.get_selected_cell().widgetarea._clear();
-    cell.execute();
-
-    function setupWidget(id) {
+    cell.widgetarea._clear();
+    cell.execute(function() {
       // Hide code immediately
       cell.input.addClass("simplex-hidden");
       cell.element.find(".widget-area .prompt").addClass("simplex-hidden");
+    });
 
-      // Show and manipulate widget upon finished execution
-      if (cell.element.find(".form-panel").length > 0 && cell.element.find(".form-panel").outerHeight() > 50) {
-        clearInterval(id);
-
-        // Wait for widget to fully render before modifying it
-        setTimeout(function() {
-          // Enable javascript tooltips
-          $("[data-toggle='tooltip']").tooltip();
-        }, 200);
-      }
-    };
-
-    // Wait for python execution
-    var setupWidgetInterval = setInterval(function() {
-      setupWidget(setupWidgetInterval);
-    }, 50);
+    // function setupWidget(id) {
+    //   // Hide code immediately
+    //   cell.input.addClass("simplex-hidden");
+    //   cell.element.find(".widget-area .prompt").addClass("simplex-hidden");
+    //
+    //   // Show and manipulate widget upon finished execution
+    //   if (cell.element.find(".form-panel").length > 0 && cell.element.find(".form-panel").outerHeight() > 50) {
+    //     clearInterval(id);
+    //
+    //     // Wait for widget to fully render before modifying it
+    //     setTimeout(function() {
+    //       // Enable javascript tooltips
+    //       $("[data-toggle='tooltip']").tooltip();
+    //     }, 200);
+    //   }
+    // };
+    //
+    // // Wait for python execution
+    // var setupWidgetInterval = setInterval(function() {
+    //   setupWidget(setupWidgetInterval);
+    // }, 50);
 
   };
 
