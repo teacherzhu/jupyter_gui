@@ -115,7 +115,6 @@ print(compile_tasks())
 
   // Callback from
   var callback = function(out) {
-    console.log(out);
 
     // Convert dictionary to stringified list
     var tasksDict = JSON.parse(out.content.text);
@@ -158,7 +157,6 @@ print(compile_tasks())
 
         // Section headers = package names
         if (!(tasklib in packages)) {
-          console.log(packages);
           packages[tasklib] = 0;
           var packageHeader = $('<h3/>')
             .addClass('library-package-header')

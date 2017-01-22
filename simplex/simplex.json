@@ -53,21 +53,29 @@
     {
       "label": "Slice DataFrame by Row",
       "function_path": "simplex.slice_dataframe",
+      "description": "Return a subset of rows of a given DataFrame object.",
       "required_args": [
         {
+          "arg_name": "dataframe",
+          "label": "DataFrame",
+          "description": "Target dataframe object."
+        },
+        {
           "arg_name": "indices",
-          "label": "Row index(ices)"
+          "label": "Row index/indices",
+          "description": "An integer or list of integers separated by commas of the rows to slice. Note that indices are 0 based."
         }
       ],
       "default_args": [
         {
           "arg_name": "ax",
-          "value": "0"
+          "value": "0",
         }
       ],
       "returns": [
         {
-          "label": "Sliced DataFrame"
+          "label": "Sliced DataFrame",
+          "description": "A slice of the DataFrame including the specified rows."
         }
       ]
     },
@@ -75,6 +83,10 @@
       "label": "Slice DataFrame by Column",
       "function_path": "simplex.slice_dataframe",
       "required_args": [
+        {
+          "arg_name": "dataframe",
+          "label": "DataFrame"
+        },
         {
           "arg_name": "indices",
           "label": "Column index(ices)"

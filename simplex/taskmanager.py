@@ -51,25 +51,27 @@ class TaskManager:
         # Return its TaskView
         return TaskView(self, task)
 
-    def submit(self, fields, task):
+    def submit(self, taskJSON):
         """
         Execute function for when the cell runs.
         """
-
-        # Retrieve default arguments
-        default_args = {arg['arg_name']: arg['value'] for arg in task.default_args}
+        # Retrieve all arguments
+        default_args = {arg['arg_name']: arg['value'] for arg in taskJSON['default_args']}
+        required_args = {arg['arg_name']: arg['value'] for arg in taskJSON['required_args']}
+        optional_args = {arg['arg_name']: arg['value'] for arg in taskJSON['optional_args']}
+        returns = [arg['value'] for arg in taskJSON['returns']]
 
         # Retrieve required and/or optional arguments
-        required_args = {input_name: field.value for input_name, field in fields['required_args'].items()}
-        optional_args = {input_name: field.value for input_name, field in fields['optional_args'].items()}
-        returns = [field.value for field in fields['returns']]
+        # required_args = {input_name: field.value for input_name, field in fields['required_args'].items()}
+        # optional_args = {input_name: field.value for input_name, field in fields['optional_args'].items()}
+        # returns = [field.value for field in fields['returns']]
 
-        # Verify all input parameters are present.
+        # Verify all input parameters are present
         if None in required_args or '' in required_args:
             print('Please provide all required arguments.')
             return
 
-        # Verify all output parameters are present.
+        # Verify all output parameters are present
         if None in returns or '' in returns:
             print('Please provide all return names.')
             return
@@ -78,7 +80,7 @@ class TaskManager:
         clear_output()
 
         # Call function
-        returned = self.execute_task(task.library_path, task.library_name, task.function_name,
+        returned = self.execute_task(taskJSON['library_path'], taskJSON['library_name'], taskJSON['function_name'],
                                      required_args, default_args, optional_args, returns)
 
         if len(returns) == 1:
@@ -283,7 +285,7 @@ def load_task(json_filepath):
         if 'description' in t:  # Load task description
             processed_tasks[label]['description'] = t['description']
         else:
-            processed_tasks[label]['description'] = ''
+            processed_tasks[label]['description'] = 'No info.'
         # Load task required, optional, and/or default arguments
         for arg_type in ['required_args', 'optional_args', 'default_args']:
             if arg_type in t:
@@ -327,7 +329,7 @@ def process_args(dicts):
         if 'description' in d:  # Load description
             processed_d['description'] = d['description']
         else:
-            processed_d['description'] = 'No description :('
+            processed_d['description'] = 'No info.'
 
         processed_dicts.append(processed_d)
 
@@ -352,7 +354,7 @@ def process_returns(dicts):
         if 'description' in d:  # Load description
             processed_d['description'] = d['description']
         else:
-            processed_d['description'] = 'No description :('
+            processed_d['description'] = 'No info.'
 
         processed_dicts.append(processed_d)
 
