@@ -27,7 +27,7 @@ const init = function() {
   addMenuOptions();
   mapKeyboardShortcuts();
 
-  console.log('SimpleX nbextension initialized.');
+  console.log('Simpli nbextension initialized.');
 };
 
 /**
@@ -38,7 +38,7 @@ const setupCallbacks = function() {
     `
 global task_manager
 
-def init_task_manager():
+def init_libs():
     global os
     import os
 
@@ -49,7 +49,7 @@ def init_task_manager():
     import matplotlib
 
     global TaskManager
-    from simplex import TaskManager
+    from simpli import TaskManager
 
     %matplotlib inline
 
@@ -57,26 +57,26 @@ def init_task_manager():
     global task_manager
     task_manager = TaskManager()
 
-def sync_namespaces():
-    '''
-    Sync namespaces of this Notebook and SimpleX TaskManager.
-    '''
-
-    # TaskManager namespace ==> Notebook namespace
-    for name, value in task_manager.simplex_namespace.items():
-        globals()[name] = value
-
-    # Notebook namespace ==> TaskManager namespace
-    global task_manager
-    task_manager.update_simplex_namespace(globals())
-
-def load_web_components():
     global dwidgets
     import declarativewidgets as dwidgets
 
     # Initialize declarative widgets
     dwidgets.init()
 
+def sync_namespaces():
+    '''
+    Sync namespaces of this Notebook and Simpli TaskManager.
+    '''
+
+    # TaskManager namespace ==> Notebook namespace
+    for name, value in task_manager.simpli_namespace.items():
+        globals()[name] = value
+
+    # Notebook namespace ==> TaskManager namespace
+    global task_manager
+    task_manager.update_simpli_namespace(globals())
+
+def load_web_components():
     imports = '''
     <link rel='import' href='urth_components/iron-form/iron-form.html'
           is='urth-core-import' package='PolymerElements/iron-form'>
@@ -105,14 +105,14 @@ if sync_namespaces not in get_ipython().events.callbacks['post_execute']:
     get_ipython().events.register('post_execute', sync_namespaces)
 
 # Register kernel initialization callback
-if (init_task_manager not in get_ipython().events.callbacks['shell_initialized']):
-    get_ipython().events.register('shell_initialized', init_task_manager)
+if (init_libs not in get_ipython().events.callbacks['shell_initialized']):
+    get_ipython().events.register('shell_initialized', init_libs)
 
 if (load_web_components not in get_ipython().events.callbacks['shell_initialized']):
    get_ipython().events.register('shell_initialized', load_web_components)
 
 # Initial namespace sync
-init_task_manager()
+init_libs()
 load_web_components()
 sync_namespaces()
 `;
@@ -130,7 +130,7 @@ sync_namespaces()
 
 
 /**
- * Automatically run all SimpleX widgets on initialization.
+ * Automatically run all Simpli widgets on initialization.
  * TODO: Forms should 'remember' their input
  */
 const autoRunWidgets = function() {
@@ -138,9 +138,9 @@ const autoRunWidgets = function() {
   $.each($(".cell"), function(index, value) {
     var cellCode = $(value).html();
     if (cellCode.indexOf(AUTO_EXEC_FLAG) > -1) {
-      toSimpleXCell(index);
+      toSimpliCell(index);
     } else if (cellCode.indexOf(AUTO_OUT_FLAG) > -1) {
-      hideSimpleXCell(index);
+      hideSimpliCell(index);
     }
   });
 };
@@ -150,18 +150,18 @@ const autoRunWidgets = function() {
  */
 const addMenuOptions = function() {
   const dropdown = $("#cell_type");
-  const gpInDropdown = dropdown.find("option:contains('SimpleX')").length > 0;
+  const gpInDropdown = dropdown.find("option:contains('Simpli')").length > 0;
 
   if (!gpInDropdown) {
-    // Add SimpleX "cell type" to toolbar cell type dropdown menu
-    dropdown.append($("<option value='code'>SimpleX</option>"));
+    // Add Simpli "cell type" to toolbar cell type dropdown menu
+    dropdown.append($("<option value='code'>Simpli</option>"));
 
-    // Change cell to SimpleX cell type
+    // Change cell to Simpli cell type
     dropdown.change(function(event) {
       var type = $(event.target).find(":selected").text();
-      if (type === "SimpleX") {
+      if (type === "Simpli") {
         var former_type = Jupyter.notebook.get_selected_cell().cell_type;
-        showTasksPanel();
+        showTaskList();
       }
     });
 
@@ -170,35 +170,30 @@ const addMenuOptions = function() {
   }
 
   // Add to notebook navbar dropdown menu.
-  // Menu path: Cell -> Cell Type -> SimpleX
+  // Menu path: Cell -> Cell Type -> Simpli
   const cellMenu = $("#change_cell_type");
-  const gpInMenu = cellMenu.find("#to_simplex").length > 0;
+  const gpInMenu = cellMenu.find("#to_simpli").length > 0;
   if (!gpInMenu) {
     cellMenu.find("ul.dropdown-menu").append(
-      $("<li id='to_simplex' title='Insert a SimpleX widget cell'><a href='#'>SimpleX</a></option>")
+      $("<li id='to_simpli' title='Insert a Simpli widget cell'><a href='#'>Simpli</a></option>")
       .click(function() {
-        showTasksPanel();
+        showTaskList();
       })
     );
   }
 
-  // Add button for creating SimpleX cell to toolbar
+  // Add button for creating Simpli cell to toolbar
   Jupyter.toolbar.add_buttons_group([
     {
-      'label': 'Insert SimpleX Cell',
+      'label': 'Insert Simpli Cell',
       'icon': 'fa-bolt', // select from http://fortawesome.github.io/Font-Awesome/icons/
       'callback': function() {
         Jupyter.notebook.insert_cell_below();
         Jupyter.notebook.select_next();
-        showTasksPanel();
+        showTaskList();
       }
     }
   ]);
-
-  // var addButton = $('<div/>')
-  //   .attr('id', 'insert_simplex_below')
-  //   .attr('title', 'insert SimpleX cell');
-  // $('body').append(addButton);
 
   // Initialize the undo delete menu entry click function
   var undeleteCell = $('#undelete_cell a');
@@ -208,14 +203,14 @@ const addMenuOptions = function() {
 };
 
 /**
- * Initialize custom keyboard shortcuts for SimpleX.
+ * Initialize custom keyboard shortcuts for Simpli.
  */
 const mapKeyboardShortcuts = function() {
-  // Initialize the SimpleX cell type keyboard shortcut
+  // Initialize the Simpli cell type keyboard shortcut
   Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-x', {
-    help: 'to SimpleX',
+    help: 'to Simpli',
     handler: function() {
-      showTasksPanel();
+      showTaskList();
       return false;
     }
   });
@@ -269,7 +264,7 @@ const undoDeleteCell = function() {
   for (var i in indices) {
     var cell = $(".cell")[i];
     if ($(cell).html().indexOf(AUTO_EXEC_FLAG) >= 0) {
-      toSimpleXCell(i);
+      toSimpliCell(i);
     }
   }
 };
@@ -282,18 +277,18 @@ var formGroupToggle = function(header) {
   $(header).next().toggle();
 }
 
-const hideSimpleXCell = function(index) {
+const hideSimpliCell = function(index) {
   var cell = Jupyter.notebook.get_cell(index);
-  cell.input.addClass("simplex-hidden");
-  cell.element.find(".widget-area .prompt").addClass("simplex-hidden");
+  cell.input.addClass("simpli-hidden");
+  cell.element.find(".widget-area .prompt").addClass("simpli-hidden");
 }
 
 /**
- * Converts indicated cell to SimpleX widget and hiding code input.
+ * Converts indicated cell to Simpli widget and hiding code input.
  * @param  {number} index    index of cell to convert
  * @param  {Object} taskJSON task JSON object
  */
-const toSimpleXCell = function(index, taskJSON) {
+const toSimpliCell = function(index, taskJSON) {
   // Use index if provided. Otherwise use index of currently selected cell.
   if (index === undefined) {
     index = Jupyter.notebook.get_selected_index();
@@ -316,7 +311,7 @@ const toSimpleXCell = function(index, taskJSON) {
           clearInterval(wait);
 
           // Hide code input
-          hideSimpleXCell(index);
+          hideSimpliCell(index);
         }
       },
       50);
@@ -353,8 +348,8 @@ const toSimpleXCell = function(index, taskJSON) {
     dialog.modal({
       notebook: Jupyter.notebook,
       keyboard_manager: Jupyter.notebook.keyboard_manager,
-      title: "Change to SimpleX Cell?",
-      body: "Are you sure you want to change this to a SimpleX cell? This will cause " +
+      title: "Change to Simpli Cell?",
+      body: "Are you sure you want to change this to a Simpli cell? This will cause " +
         "you to lose any code or other information already entered into the cell.",
       buttons: {
         "Cancel": {},
@@ -369,13 +364,13 @@ const toSimpleXCell = function(index, taskJSON) {
   }
 };
 
-var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/resources/";
+var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simpli/resources/";
 
 define([
     'base/js/namespace',
     'base/js/events',
     'jquery',
-    STATIC_PATH + 'tasksDialog.js',
+    STATIC_PATH + 'taskList.js',
     STATIC_PATH + 'taskWidget.js'
 ], function(Jupyter, events) {
   function load_ipython_extension() {

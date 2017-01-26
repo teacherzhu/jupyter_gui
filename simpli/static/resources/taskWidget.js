@@ -3,7 +3,7 @@ var Jupyter = Jupyter || IPython || {}
 Jupyter.notebook = Jupyter.notebook || {};
 // const AUTO_EXEC_FLAG = "!AUTO_EXEC";
 const AUTO_OUT_FLAG = "!AUTO_OUT";
-var groups = ['required_args', 'optional_args', 'returns'];
+var fieldGroups = ['required_args', 'optional_args', 'returns'];
 var groupLabels = ['Input', 'Optional Input', 'Output'];
 
 /**
@@ -22,6 +22,9 @@ const renderTaskWidget = function(cellIndex, taskJSON) {
   var renderWidgetId = setInterval(function() {
     if (!Jupyter.notebook.kernel_busy) {
       clearInterval(renderWidgetId);
+
+      // Load Polymer elements if not already imported
+      Jupyter.notebook.kernel.execute('load_web_components()');
 
       // Left panel sets max widget height
       $('.widget-panel-right').css('height', $('.widget-panel-left').css('height'));
@@ -44,7 +47,7 @@ const renderTaskWidget = function(cellIndex, taskJSON) {
             var userInput = this.serialize();
 
             // Map user input to task JSON
-            for (var group of groups) {
+            for (var group of fieldGroups) {
 
               // Convert single element to array, ignore if empty
               if (!(userInput[group] instanceof Array) && userInput[group] != undefined) {
@@ -79,7 +82,7 @@ const renderTaskWidget = function(cellIndex, taskJSON) {
             outputCell.execute();
 
 
-            hideSimpleXCell(cellIndex);
+            hideSimpliCell(cellIndex);
           }
         });
       }
@@ -94,12 +97,12 @@ const renderTaskWidget = function(cellIndex, taskJSON) {
  * @param  {object} taskJSON task JSON object
  */
 const updateTaskWidget = function(cell, taskJSON) {
-  var updatedHTML = generateTaskHTML(taskJSON);
+  var updatedHTML = generateTaskWidgetHTML(taskJSON);
   cell.set_text(updatedHTML);
 }
 
 /**
- * [generateTaskHTML description]
+ * [generateTaskWidgetHTML description]
  * @param  {[type]} taskJSON [description]
  * @return {[type]}          [description]
  */
@@ -109,7 +112,7 @@ const updateTaskWidget = function(cell, taskJSON) {
  * @param  {Object} taskJSON JSON object for task
  * @return {str}             String representation of widget HTML
  */
-const generateTaskHTML = function(taskJSON) {
+const generateTaskWidgetHTML = function(taskJSON) {
   // Outer container
   var widget = $('<paper-material>')
     .attr({
@@ -139,10 +142,10 @@ const generateTaskHTML = function(taskJSON) {
     })
     .appendTo(leftPanel);
 
-  // Generate groups of arguments
-  for (var groupIndex in groups) {
+  // Generate fieldGroups of arguments
+  for (var groupIndex in fieldGroups) {
     // Generate group only if listed in config
-    var g = taskJSON[groups[groupIndex]];
+    var g = taskJSON[fieldGroups[groupIndex]];
     if (g.length > 0) {
       var groupWrapper = $('<div>')
         .addClass('form-group-wrapper')
@@ -150,13 +153,13 @@ const generateTaskHTML = function(taskJSON) {
 
       // Input container
       var fieldGroup = $('<paper-collapse-item>')
-        .addClass('form-group')
-        .addClass('form-' + groups[groupIndex] + '-group')
+        .addClass('field-group')
+        .addClass('field-' + fieldGroups[groupIndex] + '-group')
         .attr('header', groupLabels[groupIndex])
         .appendTo(groupWrapper);
 
       // Default show/hide setting
-      if (groups[groupIndex] != 'optional_args') {
+      if (fieldGroups[groupIndex] != 'optional_args') {
         fieldGroup.attr('opened', 'True');
       }
 
@@ -166,12 +169,12 @@ const generateTaskHTML = function(taskJSON) {
         var field = $('<paper-input>')
           .attr({
             label: arg.label,
-            name: groups[groupIndex],
+            name: fieldGroups[groupIndex],
             required: '',
             'auto-validate': ''
           });
 
-        if (groups[groupIndex] != 'optional_args') {
+        if (fieldGroups[groupIndex] != 'optional_args') {
           field.attr('error-message', 'Required!');
         }
         field.appendTo(fieldGroup);
@@ -185,7 +188,7 @@ const generateTaskHTML = function(taskJSON) {
   var submitButton = $('<paper-button>')
     .addClass('form-submit-button')
     .attr('raised', '')
-    .html('submit')
+    .html('run')
     .appendTo(submitButtonWrapper);
 
   // Create icon for submit button
@@ -205,9 +208,9 @@ const generateTaskHTML = function(taskJSON) {
     .html(taskJSON.description)
     .appendTo(rightPanel);
 
-  for (var groupIndex in groups) {
+  for (var groupIndex in fieldGroups) {
     // Generate group only if listed in config
-    var g = taskJSON[groups[groupIndex]];
+    var g = taskJSON[fieldGroups[groupIndex]];
     if (g.length > 0) {
       // Extract description for each parameter
       for (var arg of g) {

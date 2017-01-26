@@ -1,9 +1,9 @@
 {
-  "library_path": "simplex",
+  "library_path": "simpli",
   "tasks": [
     {
       "label": "Assign",
-      "function_path": "simplex.just_return",
+      "function_path": "simpli.just_return",
       "required_args": [
         {
           "arg_name": "item",
@@ -17,22 +17,22 @@
       ]
     },
     {
-      "label": "Link SimpleX .json",
-      "function_path": "simplex.link_simplex_json",
+      "label": "Link Simpli .json",
+      "function_path": "simpli.link_simpli_json",
       "required_args": [
         {
           "arg_name": "filepath",
-          "label": "SimpleX .json to be linked"
+          "label": "Simpli .json to be linked"
         }
       ]
     },
     {
-      "label": "Reset Simplex .json",
-      "function_path": "simplex.reset_simplex_json"
+      "label": "Reset Simpli .json",
+      "function_path": "simpli.reset_simpli_json"
     },
     {
       "label": "Link YouTube Video",
-      "function_path": "simplex.youtube",
+      "function_path": "simpli.youtube",
       "required_args": [
         {
           "arg_name": "url",
@@ -42,7 +42,7 @@
     },
     {
       "label": "Set Jupyter Notebook Theme",
-      "function_path": "simplex.set_theme",
+      "function_path": "simpli.set_theme",
       "required_args": [
         {
           "arg_name": "filepath",
@@ -52,7 +52,7 @@
     },
     {
       "label": "Slice DataFrame by Row",
-      "function_path": "simplex.slice_dataframe",
+      "function_path": "simpli.slice_dataframe",
       "description": "Return a subset of rows of a given DataFrame object.",
       "required_args": [
         {
@@ -69,7 +69,7 @@
       "default_args": [
         {
           "arg_name": "ax",
-          "value": "0",
+          "value": "0"
         }
       ],
       "returns": [
@@ -81,7 +81,7 @@
     },
     {
       "label": "Slice DataFrame by Column",
-      "function_path": "simplex.slice_dataframe",
+      "function_path": "simpli.slice_dataframe",
       "required_args": [
         {
           "arg_name": "dataframe",

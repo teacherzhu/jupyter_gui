@@ -30,7 +30,7 @@ body {
   position: relative;
 }
 
-#insert_simplex_below {
+#insert_simpli_below {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -43,7 +43,7 @@ body {
 
 /******************** General Formatting ********************/
 
-.simplex-hidden {
+.simpli-hidden {
   overflow: hidden;
   height: 0;
   min-width: 0;
@@ -135,13 +135,13 @@ body {
   }
 }
 
-.form-group-wrapper {
+.field-group-wrapper {
   outline-offset: -1px;
   outline: 1px solid #EEE;
   margin-bottom: $widget-spacing;
 }
 
-.form-group {}
+.field-group {}
 
 @mixin text-input-bg-mixin($color) {
   background: $color !important;

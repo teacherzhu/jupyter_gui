@@ -1,16 +1,16 @@
 // Add shim to support Jupyter 3.x and 4.x
 var Jupyter = Jupyter || IPython || {}
 Jupyter.notebook = Jupyter.notebook || {};
-const STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simplex/resources/";
+const STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simpli/resources/";
 
 /**
  * Holds all JSON for tasks.
  * @type {Array}
  */
-var simplexTaskData = [];
+var simpliTaskData = [];
 
 /**
- * Index of selected task in reference to simplexTaskData.
+ * Index of selected task in reference to simpliTaskData.
  * @type {Number}
  */
 var selectedIndex;
@@ -18,7 +18,7 @@ var selectedIndex;
 /**
  * Inner container of dialog for task selection.
  */
-var tasksPanelParent;
+var taskListParent;
 
 /**
  * Panel that displays selected task information.
@@ -26,22 +26,22 @@ var tasksPanelParent;
 var rightPanel;
 
 /**
- * Panel that lists all tasks detailed in simplexTaskData.
+ * Panel that lists all tasks detailed in simpliTaskData.
  */
 var leftPanel;
 
 /******************** MAIN FUNCTIONS ********************/
-/**
+/** TODO: rename to task list
  * Creates dialog modal that user can select a task from.
  */
-const showTasksPanel = function() {
-  initTasksPanel();
+const showTaskList = function() {
+  initTaskList();
 
   var dialog = require('base/js/dialog');
   dialog.modal({
     notebook: Jupyter.notebook,
     keyboard_manager: Jupyter.notebook.keyboard_manager,
-    body: tasksPanelParent
+    body: taskListParent
   });
 
   // Style parent after it renders
@@ -60,21 +60,21 @@ const showTasksPanel = function() {
 }
 
 /**
- * Initialize panels inside task dialog and saves to tasksPanelParent object.
+ * Initialize panels inside task dialog and saves to taskListParent object.
  */
-const initTasksPanel = function() {
-  tasksPanelParent = $('<div/>').attr('id', 'library-parent');
+const initTaskList = function() {
+  taskListParent = $('<div/>').attr('id', 'library-parent');
 
   // Display tasks elements
   leftPanel = $('<div/>')
     .addClass('library-left-panel')
     .addClass('pull-left')
     .addClass('col-xs-7')
-    .appendTo(tasksPanelParent);
+    .appendTo(taskListParent);
 
   var leftPanelHeader = $('<h1/>')
     .addClass('library-left-panel-header')
-    .html('SimpleX Library')
+    .html('Simpli Library')
     .appendTo(leftPanel);
 
   // Specifically to hold cards
@@ -87,7 +87,7 @@ const initTasksPanel = function() {
     .attr('id', 'library-right-panel')
     .addClass('pull-right')
     .addClass('col-xs-5')
-    .appendTo(tasksPanelParent);
+    .appendTo(taskListParent);
 
   renderRightPanel();
   renderTasks();
@@ -109,7 +109,7 @@ var renderTasks = function() {
   // code to read library JSON files
   var code =
     `
-from simplex import compile_tasks
+from simpli import compile_tasks
 print(compile_tasks())
   `;
 
@@ -118,14 +118,14 @@ print(compile_tasks())
 
     // Convert dictionary to stringified list
     var tasksDict = JSON.parse(out.content.text);
-    simplexTaskData = Object.keys(tasksDict).map(function(key) {
+    simpliTaskData = Object.keys(tasksDict).map(function(key) {
       var task = tasksDict[key];
       task.label = key;
       return task;
     });
 
     // Sort tasks by package then function name alphabetically
-    simplexTaskData.sort(function(a, b) {
+    simpliTaskData.sort(function(a, b) {
       var alib = a.library_name.toLowerCase();
       var blib = b.library_name.toLowerCase();
       var alab = a.label.toLowerCase();
@@ -152,7 +152,7 @@ print(compile_tasks())
     // Render all tasks after loading text fades
     setTimeout(function() {
       var packages = {};
-      for (var task of simplexTaskData) {
+      for (var task of simpliTaskData) {
         var tasklib = task.library_name.toUpperCase();
 
         // Section headers = package names
@@ -186,7 +186,7 @@ print(compile_tasks())
 }
 
 /**
-.appendTo(tasksPanelParent);
+.appendTo(taskListParent);
  * Render right panel and only updates inner content when necessary.
  */
 const renderRightPanel = function() {
@@ -241,7 +241,7 @@ const renderRightPanel = function() {
       .html('Select')
       .on('click', function(event) {
         event.preventDefault();
-        toSimpleXCell(Jupyter.notebook.get_selected_index(), simplexTaskData[selectedIndex]);
+        toSimpliCell(Jupyter.notebook.get_selected_index(), simpliTaskData[selectedIndex]);
       })
       .appendTo(modalButtons);
 
@@ -254,7 +254,7 @@ const renderRightPanel = function() {
    */
   var update = function() {
     // Parse and display task information
-    var task = simplexTaskData[selectedIndex];
+    var task = simpliTaskData[selectedIndex];
 
     $(rightPanel).find('#library-task-heading').html(task.label);
     $(rightPanel).find('#library-task-package').html(task.library_name);

@@ -1,7 +1,7 @@
-# SimpleX
+# Simpli
 A simple execution interface for Jupyter Notebook.
 
-The SimpleX package is a Jupyter Notebook extension that aims to provide a friendly user interface for non-programmatic users to computational tasks, especially in bioinformatics.
+The Simpli package is a Jupyter Notebook extension that aims to provide a friendly user interface for non-programmatic users to computational tasks, especially in bioinformatics.
 
 ---
 ## Installation
@@ -13,17 +13,17 @@ Our package is installable using `pip` or the `setup.py` script.
 
 Install through `pip`:
 
-`pip install simplex-ext`
+`pip install simpli`
 
 You may also install from the repository directly:
 
-`pip install https://github.com/KwatME/simplex/tarball/master`
+`pip install https://github.com/KwatME/simpli/tarball/master`
 
 Alternatively, clone the repo and install locally:
 
 ```bash
-git clone https://github.com/KwatME/simplex.git
-pip install ./path/to/simplex/
+git clone https://github.com/KwatME/simpli.git
+pip install ./path/to/simpli/
 ```
 
 ### Enable/Disable the extension
@@ -31,12 +31,12 @@ pip install ./path/to/simplex/
 Enable the extension and `ipywidgets` with the Jupyter subcommands:
 
 ```bash
-jupyter nbextension install simplex
-jupyter nbextension enable simplex
-jupyter serverextension enable simplex
+jupyter nbextension install simpli
+jupyter nbextension enable simpli
+jupyter serverextension enable simpli
 jupyter nbextension enable widgetsnbextension
 ```
 
 To disable the extension:
 
-`jupyter nbextension disable simplex`
+`jupyter nbextension disable simpli`
