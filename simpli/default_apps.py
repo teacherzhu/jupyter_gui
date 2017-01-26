@@ -3,25 +3,25 @@ from os.path import join, split, islink
 
 from IPython.core.display import display_html
 
-from . import SIMPLEX_JSON_DIR
+from . import SIMPLI_JSON_DIR
 
 
-def link_simplex_json(filepath):
+def link_simpli_json(filepath):
     """
-    Soft link filepath to $HOME/.SimpleX/json/ directory.
+    Soft link filepath to $HOME/.Simpli/json/ directory.
     :param filepath: str;
     :return: None
     """
 
-    dest = join(SIMPLEX_JSON_DIR, split(filepath)[1])
+    dest = join(SIMPLI_JSON_DIR, split(filepath)[1])
     if islink(dest):
         remove(dest)
     symlink(filepath, dest)
 
 
-def reset_simplex_json():
+def reset_simpli_json():
     """
-    Delete all files in $HOME/.SimpleX/json/ directory.
+    Delete all files in $HOME/.Simpli/json/ directory.
     :param filepath: str;
     :return: None
     """
