@@ -2,12 +2,19 @@
 
 # Install notebook extension
 pip install -e . --no-deps
-jupyter nbextension install --py --sys-prefix simpli
+
+# Simpli
+jupyter nbextension install --py --sys-prefix simpli --symlink
 jupyter nbextension enable --py --sys-prefix simpli
 jupyter serverextension enable --py --sys-prefix simpli
 
-# Enable ipywidgets and declarativewidgets
-# jupyter nbextension enable --py --sys-prefix widgetsnbextension
-# jupyter nbextension enable --py --sys-prefix declarativewidgets
-cd $HOME
-jupyter notebook
+# ipywidgets
+jupyter nbextension install --py --sys-prefix widgetsnbextension
+jupyter nbextension enable --py --sys-prefix widgetsnbextension
+
+# Declarative widgets
+jupyter nbextension install --py --sys-prefix declarativewidgets
+jupyter nbextension enable --py --sys-prefix declarativewidgets
+jupyter serverextension enable --py --sys-prefix declarativewidgets
+
+jupyter notebook ~

@@ -18,9 +18,9 @@ class InstallCommand(install):
             subprocess.call(['jupyter', 'nbextension', 'enable', 'widgetsnbextension', '--py', '--sys-prefix'])
 
             # Enable the required nbextension for declarativewidgets
-            subprocess.call(['jupyter', 'install', 'declarativewidgets', '--py', '--sys-prefix'])
-            subprocess.call(['jupyter', 'serverextension', 'enable', 'declarativewidgets', '--py', '--sys-prefix'])
+            subprocess.call(['jupyter', 'nbextension', 'install', 'declarativewidgets', '--py', '--sys-prefix'])
             subprocess.call(['jupyter', 'nbextension', 'enable', 'declarativewidgets', '--py', '--sys-prefix'])
+            subprocess.call(['jupyter', 'serverextension', 'enable', 'declarativewidgets', '--py', '--sys-prefix'])
 
             # Enable the Simpli Notebook extension
             subprocess.call(['jupyter', 'nbextension', 'install', 'simpli', '--py', '--sys-prefix'])
@@ -29,8 +29,11 @@ class InstallCommand(install):
         except:
             log.warn('Unable to automatically enable Simpli extension for Jupyter.\n' +
                      'Please manually enable the extension by running the following commands:\n' +
+                     '\tjupyter nbextension install widgetsnbextension --py --sys-prefix\n' +
                      '\tjupyter nbextension enable widgetsnbextension --py --sys-prefix\n' +
-                     '\tjupyter declarativewidgets quick-setup --py --sys-prefix\n'
+                     '\tjupyter nbextension install declarativewidgets --py --sys-prefix\n' +
+                     '\tjupyter nbextension enable declarativewidgets --py --sys-prefix\n' +
+                     '\tjupyter serverextension enable declarativewidgets --py --sys-prefix\n' +
                      '\tjupyter nbextension install simpli --py --sys-prefix\n' +
                      '\tjupyter nbextension enable simpli --py --sys-prefix\n' +
                      '\tjupyter serverextension enable simpli --py --sys-prefix\n')
@@ -39,7 +42,7 @@ class InstallCommand(install):
 setup(name='simpli',
       description='A simple execution interface for Jupyter Notebook.',
       packages=['simpli'],
-      version='1.0.0.a1',
+      version='1.0.0a2',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
       license='MIT',
