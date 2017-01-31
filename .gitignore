@@ -11,3 +11,4 @@ dist/*
 *.swp
 *.css.map
 *.sass-cache
+build/

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # NOTE: DO NOT RUN. ONLY USE AS REFERENCE.
 # Anaconda Deploy
 conda install conda-build

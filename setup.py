@@ -1,56 +1,63 @@
+from sys import platform
+from subprocess import run
 from setuptools import setup
 from setuptools.command.install import install
 
 
 class InstallCommand(install):
     def run(self):
-
-        # Install Python package
         install.run(self)
 
-        import subprocess
-        from distutils import log
-        log.set_verbosity(log.DEBUG)
+        cmd = """
+        jupyter nbextensions_configurator enable --user
+        jupyter nbextension install --py --user simpli --symlink
+        jupyter nbextension enable --py --user simpli
+        jupyter serverextension enable --py --user simpli
+        jupyter nbextension install --py --user widgetsnbextension
+        jupyter nbextension enable --py --user widgetsnbextension
+        jupyter nbextension install --py --user declarativewidgets
+        jupyter nbextension enable --py --user declarativewidgets
+        jupyter serverextension enable --py --user declarativewidgets
+        """
 
+        if 'linux' in platform:
+            cmd += """
+            sudo apt install npm
+            sudo ln -s /usr/bin/nodejs /usr/bin/node
+            """
+        elif 'darwin' in platform:
+            cmd += """
+            """
+        elif 'win' in platform:
+            cmd += """
+            """
+
+        print('Running installation commands ...\n{}'.format(cmd))
         try:
-            # Enable the required nbextension for ipywidgets
-            subprocess.call(['jupyter', 'nbextension', 'install', 'widgetsnbextension', '--py', '--sys-prefix'])
-            subprocess.call(['jupyter', 'nbextension', 'enable', 'widgetsnbextension', '--py', '--sys-prefix'])
-
-            # Enable the required nbextension for declarativewidgets
-            subprocess.call(['jupyter', 'nbextension', 'install', 'declarativewidgets', '--py', '--sys-prefix'])
-            subprocess.call(['jupyter', 'nbextension', 'enable', 'declarativewidgets', '--py', '--sys-prefix'])
-            subprocess.call(['jupyter', 'serverextension', 'enable', 'declarativewidgets', '--py', '--sys-prefix'])
-
-            # Enable the Simpli Notebook extension
-            subprocess.call(['jupyter', 'nbextension', 'install', 'simpli', '--py', '--sys-prefix'])
-            subprocess.call(['jupyter', 'nbextension', 'enable', 'simpli', '--py', '--sys-prefix'])
-            subprocess.call(['jupyter', 'serverextension', 'enable', 'simpli', '--py', '--sys-prefix'])
+            run(cmd, shell=True)
         except:
-            log.warn('Unable to automatically enable Simpli extension for Jupyter.\n' +
-                     'Please manually enable the extension by running the following commands:\n' +
-                     '\tjupyter nbextension install widgetsnbextension --py --sys-prefix\n' +
-                     '\tjupyter nbextension enable widgetsnbextension --py --sys-prefix\n' +
-                     '\tjupyter nbextension install declarativewidgets --py --sys-prefix\n' +
-                     '\tjupyter nbextension enable declarativewidgets --py --sys-prefix\n' +
-                     '\tjupyter serverextension enable declarativewidgets --py --sys-prefix\n' +
-                     '\tjupyter nbextension install simpli --py --sys-prefix\n' +
-                     '\tjupyter nbextension enable simpli --py --sys-prefix\n' +
-                     '\tjupyter serverextension enable simpli --py --sys-prefix\n')
+            print(cmd)
 
 
 setup(name='simpli',
-      description='A simple execution interface for Jupyter Notebook.',
+      description='TODO: description',
       packages=['simpli'],
       version='1.0.0a2',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
       license='MIT',
-      url='https://github.com/KwatME/simplex',
+      url='https://github.com/ucsd-ccal/simpli',
       classifiers=['Development Status :: 3 - Alpha',
                    'License :: OSI Approved :: MIT License',
                    'Programming Language :: Python :: 3.5'],
       keywords=['bioinformatics biology development interface widget'],
-      install_requires=['jupyter', 'notebook>=4.2.0', 'ipywidgets>=5.2.0', 'jupyter_declarativewidgets', 'matplotlib', 'IPython'],
+      install_requires=['jupyter',
+                        'notebook>=4.2.0',
+                        'ipywidgets>=5.2.0',
+                        'jupyter_declarativewidgets',
+                        'matplotlib',
+                        'IPython'],
       cmdclass={'install': InstallCommand},
-      package_data={'simpli': ['simpli.json', 'static/main.js', 'static/resources/*']})
+      package_data={'simpli': ['simpli.json',
+                               'static/main.js',
+                               'static/resources/*']})

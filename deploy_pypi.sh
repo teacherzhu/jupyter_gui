@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # NOTE: DO NOT RUN. ONLY USE AS REFERENCE.
 # Deploys to PyPI and Anaconda.
 

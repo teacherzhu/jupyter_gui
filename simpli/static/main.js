@@ -57,11 +57,6 @@ def init_libs():
     global task_manager
     task_manager = TaskManager()
 
-    global dwidgets
-    import declarativewidgets as dwidgets
-
-    # Initialize declarative widgets
-    dwidgets.init()
 
 def sync_namespaces():
     '''
@@ -77,6 +72,12 @@ def sync_namespaces():
     task_manager.update_simpli_namespace(globals())
 
 def load_web_components():
+    global dwidgets
+    import declarativewidgets as dwidgets
+
+    # Initialize declarative widgets
+    dwidgets.init()
+
     imports = '''
     <link rel='import' href='urth_components/iron-form/iron-form.html'
           is='urth-core-import' package='PolymerElements/iron-form'>
@@ -96,8 +97,8 @@ def load_web_components():
           is='urth-core-import' package='PolymerElements/iron-collapse'>
     <link rel='import' href='urth_components/paper-collapse-item/paper-collapse-item.html'
           is='urth-core-import' package='Collaborne/paper-collapse-item'>
-
     '''
+
     get_ipython().run_cell_magic('HTML', '', imports)
 
 # Register post execute cell callback
