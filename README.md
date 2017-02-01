@@ -5,7 +5,7 @@ The Simpli package is a Jupyter Notebook extension that makes computational biol
 
 ---
 ## Simpli Install
-__You will need to restart your Jupyter Notebook server__ after installation if you have one running.
+__You will need to restart your Jupyter Notebook server after installation__ if you have one running.
 
 ### 1. Install NPM and (using NPM install) bower
 There are two dependencies:
