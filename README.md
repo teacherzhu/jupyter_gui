@@ -21,4 +21,3 @@ python setup.py install
 ```
 
 ### 3. Start (or restart) Jupyter Notebook and - enjoy __:)__
-
