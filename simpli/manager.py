@@ -1,5 +1,5 @@
 import sys
-from json import loads
+from json import loads, dumps
 from os import listdir
 from os.path import isdir, isfile, join
 
@@ -36,8 +36,11 @@ class Manager:
 
     # tasks
     @property
-    def tasks(self):
-        return self._tasks
+    def tasks(self, type='dict'):
+        if type == 'dict':
+            return self._tasks
+        elif type == 'str':
+            return dumps(self._tasks)
 
     @tasks.setter
     def tasks(self, tasks):

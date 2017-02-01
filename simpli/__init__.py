@@ -8,10 +8,10 @@ from .support import establish_filepath
 # Set up Simpli
 # ======================================================================================================================
 # Store user-home directory in a variable
-if 'win' in platform:
-    HOME_DIR = environ['HOMEPATH']
-elif 'linux' in platform or 'darwin' in platform:
+if 'linux' in platform or 'darwin' in platform:
     HOME_DIR = environ['HOME']
+elif 'win' in platform:
+    HOME_DIR = environ['HOMEPATH']
 else:
     raise ValueError('Unknown platform {}.'.format(platform))
 
