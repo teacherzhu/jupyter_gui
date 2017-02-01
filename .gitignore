@@ -1,6 +1,4 @@
-jsons/COMPILED.json
 *.egg-info/
-build/*
 dist/*
 *Icon*
 *.DS_Store

@@ -1,5 +1,6 @@
 from os import remove, symlink
 from os.path import join, split, islink
+from shutil import rmtree
 
 from IPython.core.display import display_html
 
@@ -26,7 +27,7 @@ def reset_simpli_json():
     :return: None
     """
 
-    # TODO: implement
+    rmtree(SIMPLI_JSON_DIR)
 
 
 def youtube(url):

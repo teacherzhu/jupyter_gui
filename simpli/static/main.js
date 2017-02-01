@@ -39,6 +39,9 @@ const setupCallbacks = function() {
 global task_manager
 
 def init_libs():
+    '''
+    '''
+
     global os
     import os
 
@@ -58,20 +61,10 @@ def init_libs():
     task_manager = TaskManager()
 
 
-def sync_namespaces():
-    '''
-    Sync namespaces of this Notebook and Simpli TaskManager.
-    '''
-
-    # TaskManager namespace ==> Notebook namespace
-    for name, value in task_manager.simpli_namespace.items():
-        globals()[name] = value
-
-    # Notebook namespace ==> TaskManager namespace
-    global task_manager
-    task_manager.update_simpli_namespace(globals())
-
 def load_web_components():
+    '''
+    '''
+
     global dwidgets
     import declarativewidgets as dwidgets
 
@@ -101,9 +94,20 @@ def load_web_components():
 
     get_ipython().run_cell_magic('HTML', '', imports)
 
-# Register post execute cell callback
-if sync_namespaces not in get_ipython().events.callbacks['post_execute']:
-    get_ipython().events.register('post_execute', sync_namespaces)
+
+def sync_namespaces():
+    '''
+    Sync namespaces of this Notebook and Simpli TaskManager.
+    '''
+
+    # TaskManager namespace ==> Notebook namespace
+    for name, value in task_manager.simpli_namespace.items():
+        globals()[name] = value
+
+    # Notebook namespace ==> TaskManager namespace
+    global task_manager
+    task_manager.update_simpli_namespace(globals())
+
 
 # Register kernel initialization callback
 if (init_libs not in get_ipython().events.callbacks['shell_initialized']):
@@ -112,10 +116,16 @@ if (init_libs not in get_ipython().events.callbacks['shell_initialized']):
 if (load_web_components not in get_ipython().events.callbacks['shell_initialized']):
    get_ipython().events.register('shell_initialized', load_web_components)
 
+# Register post execute cell callback
+if sync_namespaces not in get_ipython().events.callbacks['post_execute']:
+    get_ipython().events.register('post_execute', sync_namespaces)
+
+
 # Initial namespace sync
 init_libs()
 load_web_components()
 sync_namespaces()
+
 `;
 
   // Kernel executes python code in background

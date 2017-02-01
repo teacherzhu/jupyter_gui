@@ -1,3 +1,4 @@
+from sys import platform
 from os import environ
 from os.path import join, dirname, realpath
 
@@ -6,32 +7,28 @@ from .support import establish_filepath
 # ======================================================================================================================
 # Set up Simpli
 # ======================================================================================================================
-try:
-    HOME_DIR = environ['HOME']
-
-except KeyError:  # For Windows
+# Store user-home directory in a variable
+if 'win' in platform:
     HOME_DIR = environ['HOMEPATH']
+elif 'linux' in platform or 'darwin' in platform:
+    HOME_DIR = environ['HOME']
+else:
+    raise ValueError('Unknown platform {}.'.format(platform))
 
+# Make a hidden directory in the user-home directory
 SIMPLI_DIR = join(HOME_DIR, '.Simpli')
 SIMPLI_JSON_DIR = join(SIMPLI_DIR, 'json', '')
-SIMPLI_TASK_RECORD_FILEPATH = join(SIMPLI_JSON_DIR, 'COMPILED.json')
-
-THIS_DIR = dirname(realpath(__file__))
-
-from .default_apps import *
-from .taskmanager import TaskManager, compile_tasks
-
-establish_filepath(SIMPLI_DIR)
 establish_filepath(SIMPLI_JSON_DIR)
-link_simpli_json(join(THIS_DIR, 'simpli.json'))
+
+from .default_functions import *
+
+# Link .json for the default functions
+link_simpli_json(join(dirname(realpath(__file__)), 'default_functions.json'))
 
 
 # ======================================================================================================================
 # Set up Jupyter widget
 # ======================================================================================================================
-# TODO: understand better
-
-
 def _jupyter_nbextension_paths():
     """
     Required function to add things to the nbextension path.
@@ -43,7 +40,10 @@ def _jupyter_nbextension_paths():
     # src: Jupyter sees this directory (not all files however) when it looks at dest (server/nbextensions/dest/)
     # require: Jupyter loads this file; things in this javascript will be seen
     # in the javascript namespace
-    to_return = {'section': 'notebook', 'src': 'static', 'dest': 'simpli', 'require': 'simpli/main'}
+    to_return = {'section': 'notebook',
+                 'src': 'static',
+                 'dest': 'simpli',
+                 'require': 'simpli/main'}
 
     return [to_return]
 
@@ -54,7 +54,6 @@ def _jupyter_server_extension_paths():
     :return: list; List of 1 dictionary
     """
 
-    # module:
     to_return = {'module': 'simpli'}
     return [to_return]
 
@@ -68,4 +67,4 @@ def load_jupyter_server_extension(nbapp):
     """
 
     # Print statement to show extension is loaded
-    nbapp.log.info('----- Simpli On -----')
+    nbapp.log.info('********* Simpli On *********')
