@@ -22,7 +22,7 @@ class InstallCommand(install):
 
         if 'linux' in platform:
             cmd += """
-            sudo apt install npm
+            sudo apt install -y npm
             sudo ln -s /usr/bin/nodejs /usr/bin/node
             """
         elif 'darwin' in platform:

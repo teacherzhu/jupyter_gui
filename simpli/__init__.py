@@ -21,9 +21,9 @@ SIMPLI_JSON_DIR = join(SIMPLI_DIR, 'json', '')
 establish_filepath(SIMPLI_JSON_DIR)
 
 # Link .json for the default functions
-from .default_tasks import link_simpli_json
+from .default_tasks import link_json
 
-link_simpli_json(join(dirname(realpath(__file__)), 'default_tasks.json'))
+link_json(join(dirname(realpath(__file__)), 'default_tasks.json'))
 
 from .manager import Manager
 
