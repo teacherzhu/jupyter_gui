@@ -20,5 +20,5 @@ cd simpli
 python setup.py install
 ```
 
-### 3. Start (or restart) Jupyter Notebook server and - enjoy __:)__
+### 3. Start (or restart) Jupyter Notebook and - enjoy __:)__
 
