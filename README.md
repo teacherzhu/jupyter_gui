@@ -6,8 +6,7 @@ The Simpli package is a Jupyter Notebook extension that makes computational biol
 ---
 ## Simpli Install
 
-### 1. Install NPM and (using NPM install) bower
-There are two dependencies:
+### 1. Install NPM and bower
 1. Install NPM: https://nodejs.org/en/download/
 2. Install bower using NPM:
 ```bash
