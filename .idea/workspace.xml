@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/simpli/manager.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simpli/task.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simpli/taskmanager.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simpli/taskview.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/deploy_anaconda.sh" afterPath="$PROJECT_DIR$/dev/deploy_anaconda.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/deploy_pypi.sh" afterPath="$PROJECT_DIR$/dev/deploy_pypi.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/reset_dev.sh" afterPath="$PROJECT_DIR$/dev/uninstall.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/simpli/default_apps.py" afterPath="$PROJECT_DIR$/simpli/default_functions.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/simpli/simpli.json" afterPath="$PROJECT_DIR$/simpli/default_functions.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/__init__.py" afterPath="$PROJECT_DIR$/simpli/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/static/main.js" afterPath="$PROJECT_DIR$/simpli/static/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/static/simpli.yaml" afterPath="$PROJECT_DIR$/simpli/static/simpli.yaml" />
     </list>
     <ignored path="simplex.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -769,8 +754,8 @@
       </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="51">
-            <caret line="3" column="55" lean-forward="false" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
+          <first_editor relative-caret-position="119">
+            <caret line="7" column="2" lean-forward="false" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
             <folding />
           </first_editor>
           <second_editor />
