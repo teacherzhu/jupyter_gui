@@ -107,11 +107,7 @@ var renderTasks = function() {
     .appendTo(leftPanel);
 
   // code to read library JSON files
-  var code =
-    `
-from simpli import compile_tasks
-print(compile_tasks())
-  `;
+  var code = 'print(json.dumps(mgr.tasks))';
 
   // Callback from
   var callback = function(out) {

@@ -66,7 +66,7 @@ const renderTaskWidget = function(cellIndex, taskJSON) {
 
             // Compile task JSON
             var pythonTask = JSON.stringify(taskJSON);
-            var taskCode = `# ${AUTO_OUT_FLAG}\ntask_manager.submit(json.loads('''${pythonTask}'''))`;
+            var taskCode = `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))`;
 
             // Create output cell if not created already
             Jupyter.notebook.select_next();

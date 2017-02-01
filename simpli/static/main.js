@@ -36,29 +36,20 @@ const init = function() {
 const setupCallbacks = function() {
   var initCode =
     `
-global task_manager
+global mgr
 
 def init_libs():
     '''
     '''
-
-    global os
-    import os
-
     global json
     import json
 
-    global matplotlib
-    import matplotlib
+    from simpli import Manager
 
-    global TaskManager
-    from simpli import TaskManager
-
-    %matplotlib inline
-
-    # Initialize a TaskManager
-    global task_manager
-    task_manager = TaskManager()
+    # Initialize a Manager
+    global mgr
+    mgr = Manager()
+    mgr.load_tasks_from_jsons()
 
 
 def load_web_components():
@@ -99,14 +90,12 @@ def sync_namespaces():
     '''
     Sync namespaces of this Notebook and Simpli TaskManager.
     '''
+    # Manager namespace ==> Notebook namespace
+    for n, v in mgr.manager_namespace.items():
+        globals()[n] = v
 
-    # TaskManager namespace ==> Notebook namespace
-    for name, value in task_manager.simpli_namespace.items():
-        globals()[name] = value
-
-    # Notebook namespace ==> TaskManager namespace
-    global task_manager
-    task_manager.update_simpli_namespace(globals())
+    # Notebook namespace ==> Manager namespace
+    mgr.update_manager_namespace(globals())
 
 
 # Register kernel initialization callback
@@ -120,12 +109,10 @@ if (load_web_components not in get_ipython().events.callbacks['shell_initialized
 if sync_namespaces not in get_ipython().events.callbacks['post_execute']:
     get_ipython().events.register('post_execute', sync_namespaces)
 
-
 # Initial namespace sync
 init_libs()
 load_web_components()
 sync_namespaces()
-
 `;
 
   // Kernel executes python code in background
