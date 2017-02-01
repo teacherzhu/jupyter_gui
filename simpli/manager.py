@@ -15,6 +15,9 @@ class Manager:
     Manager for a Jupyter Notebook.
     """
 
+    def x(self):
+        exec('print(In)')
+
     def __init__(self):
         """
         Constructor.
