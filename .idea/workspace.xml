@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/simpli/default_functions.json" afterPath="$PROJECT_DIR$/simpli/default_tasks.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/simpli/default_functions.py" afterPath="$PROJECT_DIR$/simpli/default_tasks.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/lib/simpli/__init__.py" afterPath="$PROJECT_DIR$/build/lib/simpli/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/__init__.py" afterPath="$PROJECT_DIR$/simpli/__init__.py" />
     </list>
     <ignored path="simplex.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -97,12 +94,12 @@
         <option value="$PROJECT_DIR$/simpli/static/simpli.yaml" />
         <option value="$PROJECT_DIR$/simpli/default_functions.py" />
         <option value="$PROJECT_DIR$/simpli/taskmanager.py" />
-        <option value="$PROJECT_DIR$/simpli/__init__.py" />
         <option value="$PROJECT_DIR$/simpli/manager.py" />
         <option value="$PROJECT_DIR$/simpli/support.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/LICENSE.txt" />
         <option value="$PROJECT_DIR$/simpli/default_functions.json" />
+        <option value="$PROJECT_DIR$/simpli/__init__.py" />
       </list>
     </option>
   </component>
@@ -500,9 +497,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="52" width="1302" height="1388" extended-state="4" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21274962" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21274962" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294964" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3236862" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -750,31 +747,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding>
-            <marker date="1485930114321" expanded="true" signature="0:132" ph="import ..." />
-            <marker date="1485930114321" expanded="true" signature="134:433" ph="..." />
-            <marker date="1485930114321" expanded="true" signature="962:1227" ph="..." />
-            <marker date="1485930114321" expanded="true" signature="1261:1975" ph="..." />
-            <marker date="1485930114321" expanded="true" signature="1266:1378" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485930114321" expanded="true" signature="1384:1799" ph="..." />
-            <marker date="1485930114321" expanded="true" signature="1817:1950" ph="..." />
-            <marker date="1485930114321" expanded="true" signature="2016:2199" ph="..." />
-            <marker date="1485930114321" expanded="true" signature="2021:2138" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485930114321" expanded="true" signature="2269:2550" ph="..." />
-            <marker date="1485930114321" expanded="true" signature="2274:2447" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simpli/default_tasks.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1258">
           <caret line="83" column="6" lean-forward="false" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
-          <folding />
+          <folding>
+            <marker date="1485930114305" expanded="true" signature="0:2537" ph="{&quot;library_path&quot;: &quot;simpli.default_tasks.,...}" />
+            <marker date="1485930114305" expanded="true" signature="55:2535" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="61:332" ph="{&quot;label&quot;: &quot;Assign&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="170:251" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="180:243" ph="{&quot;name&quot;: &quot;item&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="270:326" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="280:318" ph="{&quot;label&quot;: &quot;Value&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="338:589" ph="{&quot;label&quot;: &quot;Link Simpli .json&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="477:583" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="487:575" ph="{&quot;name&quot;: &quot;filepath&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="595:717" ph="{&quot;label&quot;: &quot;Reset Simpli .json&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="723:939" ph="{&quot;label&quot;: &quot;Link YouTube Video&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="840:933" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="850:925" ph="{&quot;name&quot;: &quot;url&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="945:1168" ph="{&quot;label&quot;: &quot;Set Jupyter Notebook Theme&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="1072:1162" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="1082:1154" ph="{&quot;name&quot;: &quot;filepath&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="1174:2020" ph="{&quot;label&quot;: &quot;Slice DataFrame by Row&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="1380:1745" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="1390:1516" ph="{&quot;name&quot;: &quot;dataframe&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="1526:1737" ph="{&quot;name&quot;: &quot;indices&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="1769:1845" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="1779:1837" ph="{&quot;name&quot;: &quot;ax&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="1864:2014" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="1874:2006" ph="{&quot;label&quot;: &quot;Sliced DataFrame&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="2026:2531" ph="{&quot;label&quot;: &quot;Slice DataFrame by Column&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="2158:2339" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="2168:2241" ph="{&quot;name&quot;: &quot;dataframe&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="2251:2331" ph="{&quot;name&quot;: &quot;indices&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="2363:2439" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="2373:2431" ph="{&quot;name&quot;: &quot;ax&quot;...}" />
+            <marker date="1485930114305" expanded="true" signature="2458:2525" ph="[...]" />
+            <marker date="1485930114305" expanded="true" signature="2468:2517" ph="{&quot;label&quot;: &quot;Sliced DataFrame&quot;...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
