@@ -7,7 +7,7 @@ from IPython.core.display import display_html
 from . import SIMPLI_JSON_DIR
 
 
-def link_simpli_json(filepath):
+def link_json(filepath):
     """
     Soft link filepath to $HOME/.Simpli/json/ directory.
     :param filepath: str;
@@ -20,7 +20,7 @@ def link_simpli_json(filepath):
     symlink(filepath, dest)
 
 
-def reset_simpli_json():
+def reset_jsons():
     """
     Delete all files in $HOME/.Simpli/json/ directory.
     :param filepath: str;

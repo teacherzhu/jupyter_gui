@@ -1,5 +1,5 @@
 {
-  "library_path": "simpli.default_tasks.,
+  "library_path": "simpli",
   "tasks": [
     {
       "label": "Assign",
@@ -17,8 +17,8 @@
       ]
     },
     {
-      "label": "Link Simpli .json",
-      "function_path": "simpli.default_tasks.link_simpli.default_tasks.json",
+      "label": "Link JSON",
+      "function_path": "simpli.default_tasks.link_simpli_json",
       "required_args": [
         {
           "name": "filepath",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "label": "Reset Simpli .json",
+      "label": "Reset JSONs",
       "function_path": "simpli.default_tasks.reset_simpli.default_tasks.json"
     },
     {

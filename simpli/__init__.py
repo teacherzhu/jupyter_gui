@@ -25,6 +25,8 @@ from .default_tasks import link_simpli_json
 
 link_simpli_json(join(dirname(realpath(__file__)), 'default_tasks.json'))
 
+from .manager import Manager
+
 
 # ======================================================================================================================
 # Set up Jupyter widget

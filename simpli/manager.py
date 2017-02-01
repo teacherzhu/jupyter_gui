@@ -195,10 +195,10 @@ class Manager:
         if 'library_path' in library:  # Use specified library path
             library_path = library['library_path']
 
-            # Make sure the library path ends with '/'
-            if not library_path.endswith('/'):
-                library_path += '/'
-                print('\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
+            # # Make sure the library path ends with '/'
+            # if not library_path.endswith('/'):
+            #     library_path += '/'
+            #     print('\tAppended \'/\' to library_path, which is now: {}.'.format(library_path))
 
             if not isdir(library_path):  # Use absolute path
                 library_path = join(HOME_DIR, library_path)
