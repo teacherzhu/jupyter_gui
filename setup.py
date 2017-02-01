@@ -58,6 +58,6 @@ setup(name='simpli',
                         'matplotlib',
                         'IPython'],
       cmdclass={'install': InstallCommand},
-      package_data={'simpli': ['default_functions.json',
+      package_data={'simpli': ['default_tasks.json',
                                'static/main.js',
                                'static/resources/*']})

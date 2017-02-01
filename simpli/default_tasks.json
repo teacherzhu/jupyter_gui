@@ -1,9 +1,9 @@
 {
-  "library_path": "simpli",
+  "library_path": "simpli.default_tasks.,
   "tasks": [
     {
       "label": "Assign",
-      "function_path": "simpli.just_return",
+      "function_path": "simpli.default_tasks.just_return",
       "required_args": [
         {
           "name": "item",
@@ -18,7 +18,7 @@
     },
     {
       "label": "Link Simpli .json",
-      "function_path": "simpli.link_simpli_json",
+      "function_path": "simpli.default_tasks.link_simpli.default_tasks.json",
       "required_args": [
         {
           "name": "filepath",
@@ -28,11 +28,11 @@
     },
     {
       "label": "Reset Simpli .json",
-      "function_path": "simpli.reset_simpli_json"
+      "function_path": "simpli.default_tasks.reset_simpli.default_tasks.json"
     },
     {
       "label": "Link YouTube Video",
-      "function_path": "simpli.youtube",
+      "function_path": "simpli.default_tasks.youtube",
       "required_args": [
         {
           "name": "url",
@@ -42,7 +42,7 @@
     },
     {
       "label": "Set Jupyter Notebook Theme",
-      "function_path": "simpli.set_theme",
+      "function_path": "simpli.default_tasks.set_theme",
       "required_args": [
         {
           "name": "filepath",
@@ -52,7 +52,7 @@
     },
     {
       "label": "Slice DataFrame by Row",
-      "function_path": "simpli.slice_dataframe",
+      "function_path": "simpli.default_tasks.slice_dataframe",
       "description": "Return a subset of rows of a given DataFrame object.",
       "required_args": [
         {
@@ -81,7 +81,7 @@
     },
     {
       "label": "Slice DataFrame by Column",
-      "function_path": "simpli.slice_dataframe",
+      "function_path": "simpli.default_tasks.slice_dataframe",
       "required_args": [
         {
           "name": "dataframe",
