@@ -206,6 +206,18 @@ const addMenuOptions = function() {
     }
   ]);
 
+  // Add button for creating Simpli cell to toolbar
+  Jupyter.toolbar.add_buttons_group([
+    {
+      'label': 'Code to Simpli Widget',
+      'icon': 'fa-exchange', // select from http://fortawesome.github.io/Font-Awesome/icons/
+      'callback': function() {
+        var cell = Jupyter.notebook.get_selected_cell();
+        cell.get_text();
+      }
+    }
+  ]);
+
   // Initialize the undo delete menu entry click function
   var undeleteCell = $('#undelete_cell a');
   undeleteCell.on("click", function(event) {
