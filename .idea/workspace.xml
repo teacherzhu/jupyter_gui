@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LICENSE.txt" afterPath="$PROJECT_DIR$/LICENSE.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/default_functions.json" afterPath="$PROJECT_DIR$/simpli/default_functions.json" />
     </list>
     <ignored path="simplex.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -22,7 +21,20 @@
     <favorites_list name="simplex" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -37,7 +49,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/config.txt" />
         <option value="$PROJECT_DIR$/simplex/default_libs/ccal/ccal/support.py" />
         <option value="$PROJECT_DIR$/simplex/static/resources/tasks.json" />
         <option value="$PROJECT_DIR$/simplex/default_libs/ccal/ccal/__init__.py" />
@@ -88,13 +99,13 @@
         <option value="$PROJECT_DIR$/simpli/support.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/LICENSE.txt" />
+        <option value="$PROJECT_DIR$/simpli/default_functions.json" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="175" />
     <option name="y" value="52" />
-    <option name="width" value="2434" />
+    <option name="width" value="1302" />
     <option name="height" value="1388" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -126,6 +137,20 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="simpli" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simpli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simpli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simpli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="simpli" />
@@ -471,10 +496,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="175" y="52" width="2434" height="1388" extended-state="4" />
-    <editor active="false" />
+    <frame x="0" y="52" width="1302" height="1388" extended-state="4" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11380444" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21274962" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294964" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32374102" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -647,40 +672,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/default_functions.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="40" column="6" lean-forward="false" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simpli/support.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <marker date="1485928570585" expanded="true" signature="0:132" ph="import ..." />
-            <marker date="1485928570585" expanded="true" signature="134:433" ph="..." />
-            <marker date="1485928570585" expanded="true" signature="970:1235" ph="..." />
-            <marker date="1485928570585" expanded="true" signature="1269:1983" ph="..." />
-            <marker date="1485928570585" expanded="true" signature="1274:1386" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485928570585" expanded="true" signature="1392:1807" ph="..." />
-            <marker date="1485928570585" expanded="true" signature="1825:1958" ph="..." />
-            <marker date="1485928570585" expanded="true" signature="2024:2207" ph="..." />
-            <marker date="1485928570585" expanded="true" signature="2029:2146" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485928570585" expanded="true" signature="2277:2558" ph="..." />
-            <marker date="1485928570585" expanded="true" signature="2282:2455" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
           </folding>
         </state>
       </provider>
@@ -746,6 +743,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <marker date="1485928570585" expanded="true" signature="0:132" ph="import ..." />
+            <marker date="1485928570585" expanded="true" signature="134:433" ph="..." />
+            <marker date="1485928570585" expanded="true" signature="970:1235" ph="..." />
+            <marker date="1485928570585" expanded="true" signature="1269:1983" ph="..." />
+            <marker date="1485928570585" expanded="true" signature="1274:1386" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1485928570585" expanded="true" signature="1392:1807" ph="..." />
+            <marker date="1485928570585" expanded="true" signature="1825:1958" ph="..." />
+            <marker date="1485928570585" expanded="true" signature="2024:2207" ph="..." />
+            <marker date="1485928570585" expanded="true" signature="2029:2146" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1485928570585" expanded="true" signature="2277:2558" ph="..." />
+            <marker date="1485928570585" expanded="true" signature="2282:2455" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/default_functions.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="12" lean-forward="false" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
           <folding />
         </state>
       </provider>

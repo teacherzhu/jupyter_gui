@@ -6,7 +6,7 @@
       "function_path": "simpli.just_return",
       "required_args": [
         {
-          "arg_name": "item",
+          "name": "item",
           "label": "item"
         }
       ],
@@ -21,7 +21,7 @@
       "function_path": "simpli.link_simpli_json",
       "required_args": [
         {
-          "arg_name": "filepath",
+          "name": "filepath",
           "label": "Simpli .json to be linked"
         }
       ]
@@ -35,7 +35,7 @@
       "function_path": "simpli.youtube",
       "required_args": [
         {
-          "arg_name": "url",
+          "name": "url",
           "label": "YouTube Video URL"
         }
       ]
@@ -45,7 +45,7 @@
       "function_path": "simpli.set_theme",
       "required_args": [
         {
-          "arg_name": "filepath",
+          "name": "filepath",
           "label": ".CSS file"
         }
       ]
@@ -56,19 +56,19 @@
       "description": "Return a subset of rows of a given DataFrame object.",
       "required_args": [
         {
-          "arg_name": "dataframe",
+          "name": "dataframe",
           "label": "DataFrame",
           "description": "Target dataframe object."
         },
         {
-          "arg_name": "indices",
+          "name": "indices",
           "label": "Row index/indices",
           "description": "An integer or list of integers separated by commas of the rows to slice. Note that indices are 0 based."
         }
       ],
       "default_args": [
         {
-          "arg_name": "ax",
+          "name": "ax",
           "value": "0"
         }
       ],
@@ -84,17 +84,17 @@
       "function_path": "simpli.slice_dataframe",
       "required_args": [
         {
-          "arg_name": "dataframe",
+          "name": "dataframe",
           "label": "DataFrame"
         },
         {
-          "arg_name": "indices",
+          "name": "indices",
           "label": "Column index(ices)"
         }
       ],
       "default_args": [
         {
-          "arg_name": "ax",
+          "name": "ax",
           "value": "1"
         }
       ],
