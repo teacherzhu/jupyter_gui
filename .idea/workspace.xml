@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lab.ipynb" afterPath="$PROJECT_DIR$/lab.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/manager.py" afterPath="$PROJECT_DIR$/simpli/manager.py" />
     </list>
     <ignored path="simplex.iws" />
@@ -25,8 +27,8 @@
       <file leaf-file-name="manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/simpli/manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state relative-caret-position="782">
+              <caret line="47" column="16" lean-forward="false" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -87,7 +89,6 @@
         <option value="$PROJECT_DIR$/deploy_pypi.sh" />
         <option value="$PROJECT_DIR$/deploy_anaconda.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/simpli/static/main.js" />
         <option value="$PROJECT_DIR$/simpli/static/simpli.yaml" />
         <option value="$PROJECT_DIR$/simpli/default_functions.py" />
         <option value="$PROJECT_DIR$/simpli/taskmanager.py" />
@@ -99,13 +100,15 @@
         <option value="$PROJECT_DIR$/simpli/default_tasks.json" />
         <option value="$PROJECT_DIR$/simpli/__init__.py" />
         <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/simpli/static/main.js" />
         <option value="$PROJECT_DIR$/simpli/manager.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="424" />
     <option name="y" value="52" />
-    <option name="width" value="1292" />
+    <option name="width" value="1502" />
     <option name="height" value="1388" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -155,10 +158,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simpli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simpli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="simpli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -496,10 +517,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="52" width="1292" height="1388" extended-state="4" />
+    <frame x="424" y="52" width="1502" height="1388" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21207431" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18109187" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294964" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33206397" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -622,13 +643,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/static/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5916">
-          <caret line="348" column="10" lean-forward="false" selection-start-line="348" selection-start-column="10" selection-end-line="348" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/lib/simpli/static/resources/taskList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -683,23 +697,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1513">
           <caret line="89" column="14" lean-forward="false" selection-start-line="89" selection-start-column="14" selection-end-line="89" selection-end-column="14" />
-          <folding>
-            <marker date="1485931008037" expanded="true" signature="0:174" ph="import ..." />
-            <marker date="1485931008037" expanded="true" signature="201:442" ph="..." />
-            <marker date="1485931008037" expanded="true" signature="206:318" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485931008037" expanded="true" signature="463:607" ph="..." />
-            <marker date="1485931008037" expanded="true" signature="468:578" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485931008037" expanded="true" signature="627:856" ph="..." />
-            <marker date="1485931008037" expanded="true" signature="632:673" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485931008037" expanded="true" signature="883:1045" ph="..." />
-            <marker date="1485931008037" expanded="true" signature="888:949" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485931008037" expanded="true" signature="1075:1241" ph="..." />
-            <marker date="1485931008037" expanded="true" signature="1080:1158" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485931008037" expanded="true" signature="1266:1328" ph="..." />
-            <marker date="1485931008037" expanded="true" signature="1271:1312" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485931008037" expanded="true" signature="1380:1681" ph="..." />
-            <marker date="1485931008037" expanded="true" signature="1385:1504" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -707,48 +704,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
           <caret line="49" column="8" lean-forward="false" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="30" lean-forward="false" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
           <folding>
-            <marker date="1485931132871" expanded="true" signature="0:2494" ph="{&quot;library_path&quot;: &quot;simpli&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="41:2492" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="47:318" ph="{&quot;label&quot;: &quot;Assign&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="156:237" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="166:229" ph="{&quot;name&quot;: &quot;item&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="256:312" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="266:304" ph="{&quot;label&quot;: &quot;Value&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="324:553" ph="{&quot;label&quot;: &quot;Link JSON&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="441:547" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="451:539" ph="{&quot;name&quot;: &quot;filepath&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="559:674" ph="{&quot;label&quot;: &quot;Reset JSONs&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="680:896" ph="{&quot;label&quot;: &quot;Link YouTube Video&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="797:890" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="807:882" ph="{&quot;name&quot;: &quot;url&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="902:1125" ph="{&quot;label&quot;: &quot;Set Jupyter Notebook Theme&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="1029:1119" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="1039:1111" ph="{&quot;name&quot;: &quot;filepath&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="1131:1977" ph="{&quot;label&quot;: &quot;Slice DataFrame by Row&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="1337:1702" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="1347:1473" ph="{&quot;name&quot;: &quot;dataframe&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="1483:1694" ph="{&quot;name&quot;: &quot;indices&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="1726:1802" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="1736:1794" ph="{&quot;name&quot;: &quot;ax&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="1821:1971" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="1831:1963" ph="{&quot;label&quot;: &quot;Sliced DataFrame&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="1983:2488" ph="{&quot;label&quot;: &quot;Slice DataFrame by Column&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="2115:2296" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="2125:2198" ph="{&quot;name&quot;: &quot;dataframe&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="2208:2288" ph="{&quot;name&quot;: &quot;indices&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="2320:2396" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="2330:2388" ph="{&quot;name&quot;: &quot;ax&quot;...}" />
-            <marker date="1485931132871" expanded="true" signature="2415:2482" ph="[...]" />
-            <marker date="1485931132871" expanded="true" signature="2425:2474" ph="{&quot;label&quot;: &quot;Sliced DataFrame&quot;...}" />
+            <element signature="e#0#24#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        <state relative-caret-position="340">
+          <caret line="20" column="34" lean-forward="false" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
           <folding>
             <marker date="1485931322455" expanded="true" signature="0:132" ph="import ..." />
             <marker date="1485931322455" expanded="true" signature="134:433" ph="..." />
@@ -765,20 +737,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
+    <entry file="file://$PROJECT_DIR$/simpli/static/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="30" lean-forward="false" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+        <state relative-caret-position="68">
+          <caret line="4" column="28" lean-forward="true" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
           <folding>
-            <element signature="e#0#24#0" expanded="false" />
+            <marker date="1485987882037" expanded="true" signature="394:610" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="424:607" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="436:602" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="546:598" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="675:815" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="918:4137" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="4286:4585" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="4338:4582" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="4374:4581" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="4682:6710" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="4820:5362" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="5010:5231" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="5027:5230" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="5117:5224" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="5570:5785" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="5616:5780" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="5874:6168" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="5875:6167" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="5881:6163" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="6038:6157" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="6813:7772" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="6927:7042" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="6939:7041" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="6988:7037" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="7152:7279" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="7158:7278" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="7223:7274" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="7321:7769" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="7338:7768" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="7563:7624" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="7896:8427" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="8306:8425" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="8686:8847" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9071:11070" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9350:9714" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9528:9709" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9540:9698" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9585:9690" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9844:10215" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9914:10210" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9926:10205" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="9969:10199" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="10450:11068" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="10552:11063" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="10553:11062" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="10874:11056" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="10926:11048" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="11178:11746" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="11179:11310" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="11338:11745" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="11376:11675" ph="{...}" />
+            <marker date="1485987882037" expanded="true" signature="11430:11579" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/simpli/manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+        <state relative-caret-position="782">
+          <caret line="47" column="16" lean-forward="false" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

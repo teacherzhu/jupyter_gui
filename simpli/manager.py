@@ -20,12 +20,35 @@ class Manager:
         """
 
         # Manager namespace, which updates after running each cell
-        self.manager_namespace = {}
+        self._manager_namespace = {}
 
         # Tasks (and their specifications) keyed by the label, which is the UID
-        self.tasks = {}
+        self._tasks = {}
 
-    # TODO: tasks getter and setter
+    # manager_namespace
+    @property
+    def manager_namespace(self):
+        return self._manager_namespace
+
+    @manager_namespace.setter
+    def manager_namespace(self, namespace):
+        self._manager_namespace = namespace
+
+    # tasks
+    @property
+    def tasks(self):
+        return self._tasks
+
+    @tasks.setter
+    def tasks(self, tasks):
+        self._tasks = tasks
+
+    # Accessor
+    def get_task(self, task_label):
+        return self.tasks[task_label]
+
+    def update_task(self, task):
+        self.tasks.update(task)
 
     def update_manager_namespace(self, namespace):
         """
