@@ -1,5 +1,5 @@
 import sys
-from json import dump, dumps, loads
+from json import loads
 from os import listdir
 from os.path import isdir, isfile, join
 
@@ -9,14 +9,10 @@ from . import HOME_DIR, SIMPLI_JSON_DIR
 from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
 
 
-# TODO: use '_' prefix for local variables
 class Manager:
     """
     Manager for a Jupyter Notebook.
     """
-
-    def x(self):
-        exec('print(In)')
 
     def __init__(self):
         """
@@ -28,6 +24,8 @@ class Manager:
 
         # Tasks (and their specifications) keyed by the label, which is the UID
         self.tasks = {}
+
+    # TODO: tasks getter and setter
 
     def update_manager_namespace(self, namespace):
         """
