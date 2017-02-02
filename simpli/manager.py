@@ -1,4 +1,4 @@
-import sys  # sys IS used
+import sys  # Don't remove this import - sys IS used!
 from os import listdir
 from os.path import isdir, join
 from json import loads
@@ -170,7 +170,7 @@ class Manager:
     def load_task_from_notebook_cell(self, cell_text):
         """
         Load task from a notebook cell.
-        :param json_filepath: str;
+        :param cell_text: str;
         :return: dict;
         """
         print('Loading a task from a notebook cell ...')
@@ -266,9 +266,7 @@ class Manager:
         :param library_name: str;
         :param function_name: str;
 
-        :param required_args: dict;
-        :param default_args: dict;
-        :param optional_args: dict;
+        :param args: dict;
 
         :return: list; raw output of the function
         """
