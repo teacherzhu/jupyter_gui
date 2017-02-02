@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/simpli/manager.py" line="98" mnemonic="0" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lab.ipynb" afterPath="$PROJECT_DIR$/lab.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/__init__.py" afterPath="$PROJECT_DIR$/simpli/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/default_tasks.py" afterPath="$PROJECT_DIR$/simpli/default_tasks.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/manager.py" afterPath="$PROJECT_DIR$/simpli/manager.py" />
     </list>
     <ignored path="simplex.iws" />
@@ -24,14 +29,60 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="manager.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/simpli/manager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="875">
+              <caret line="293" column="59" lean-forward="false" selection-start-line="293" selection-start-column="59" selection-end-line="293" selection-end-column="59" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="support.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/simpli/support.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="default_tasks.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1258">
+              <caret line="90" column="19" lean-forward="false" selection-start-line="90" selection-start-column="19" selection-end-line="90" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="1" lean-forward="false" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+            <state relative-caret-position="1207">
+              <caret line="71" column="36" lean-forward="false" selection-start-line="71" selection-start-column="36" selection-end-line="71" selection-end-column="36" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/simpli/static/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="38" column="10" lean-forward="true" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -92,23 +143,23 @@
         <option value="$PROJECT_DIR$/simpli/static/simpli.yaml" />
         <option value="$PROJECT_DIR$/simpli/default_functions.py" />
         <option value="$PROJECT_DIR$/simpli/taskmanager.py" />
-        <option value="$PROJECT_DIR$/simpli/support.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/LICENSE.txt" />
         <option value="$PROJECT_DIR$/simpli/default_functions.json" />
-        <option value="$PROJECT_DIR$/simpli/default_tasks.py" />
         <option value="$PROJECT_DIR$/simpli/default_tasks.json" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/simpli/static/main.js" />
         <option value="$PROJECT_DIR$/simpli/manager.py" />
+        <option value="$PROJECT_DIR$/simpli/support.py" />
+        <option value="$PROJECT_DIR$/simpli/default_tasks.py" />
         <option value="$PROJECT_DIR$/simpli/__init__.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="165" />
+    <option name="x" value="113" />
     <option name="y" value="52" />
-    <option name="width" value="1502" />
+    <option name="width" value="1260" />
     <option name="height" value="1388" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -517,30 +568,48 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="165" y="52" width="1502" height="1388" extended-state="4" />
+    <frame x="113" y="52" width="1260" height="1388" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18109187" sideWeight="0.49733436" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17777778" sideWeight="0.492865" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294964" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33206397" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3236862" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3316214" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980755" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24970761" sideWeight="0.49615806" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24479541" sideWeight="0.50266564" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24970761" sideWeight="0.50384194" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3236862" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -657,21 +726,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/support.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dev/uninstall.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="374">
@@ -680,30 +740,11 @@
           <second_editor />
         </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1513">
-          <caret line="89" column="14" lean-forward="false" selection-start-line="89" selection-start-column="14" selection-end-line="89" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/default_tasks.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="49" column="8" lean-forward="false" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -717,131 +758,63 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dev/uninstall.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/simpli/static/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="53" column="15" lean-forward="false" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
-          <folding>
-            <marker date="1485987882037" expanded="true" signature="394:610" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="424:607" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="436:602" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="546:598" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="675:815" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="918:4137" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="4286:4585" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="4338:4582" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="4374:4581" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="4682:6710" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="4820:5362" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="5010:5231" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="5027:5230" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="5117:5224" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="5570:5785" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="5616:5780" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="5874:6168" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="5875:6167" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="5881:6163" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6038:6157" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6258:6531" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6259:6530" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6265:6526" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6429:6520" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6813:7772" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6927:7042" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6939:7041" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="6988:7037" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="7152:7279" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="7158:7278" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="7223:7274" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="7321:7769" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="7338:7768" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="7563:7624" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="7896:8427" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="8306:8425" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="8686:8847" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9071:11070" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9350:9714" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9528:9709" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9540:9698" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9585:9690" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9844:10215" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9914:10210" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9926:10205" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="9969:10199" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="10450:11068" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="10552:11063" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="10553:11062" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="10874:11056" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="10926:11048" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="11178:11746" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="11179:11310" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="11338:11745" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="11376:11675" ph="{...}" />
-            <marker date="1485987882037" expanded="true" signature="11430:11579" ph="{...}" />
-          </folding>
+        <state relative-caret-position="34">
+          <caret line="38" column="10" lean-forward="true" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/simpli/manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="48" column="13" lean-forward="false" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+        <state relative-caret-position="875">
+          <caret line="293" column="59" lean-forward="false" selection-start-line="293" selection-start-column="59" selection-end-line="293" selection-end-column="59" />
           <folding>
-            <marker date="1485989293384" expanded="true" signature="0:291" ph="import ..." />
-            <marker date="1485989293384" expanded="true" signature="308:11647" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="313:360" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="385:641" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="394:430" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="713:752" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="827:871" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="932:1056" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="1103:1131" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="1183:1221" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="1255:1287" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="1339:1549" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="1348:1468" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="1589:3022" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="1598:1689" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="2167:2230" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="2275:2332" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="2833:2927" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="2941:3022" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="3225:4346" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="3234:3567" ph="&quot;&quot;&quot;Execute a task....&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="4430:6113" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="4439:4954" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="5365:6082" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="5554:5918" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="6188:6701" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="6197:6473" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="6521:6701" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="6754:10013" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="6763:6871" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="7151:7229" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="7316:7883" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="7411:7642" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="7683:7883" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="8058:9991" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="8143:8286" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="8651:9026" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="8905:8992" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="9611:9792" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="10066:10164" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="10075:10149" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="10201:11082" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="10210:10290" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="10345:11050" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="11122:11647" ph="..." />
-            <marker date="1485989293384" expanded="true" signature="11131:11211" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1485989293384" expanded="true" signature="11266:11615" ph="..." />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/support.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1258">
+          <caret line="90" column="19" lean-forward="false" selection-start-line="90" selection-start-column="19" selection-end-line="90" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/default_tasks.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="50" column="6" lean-forward="false" selection-start-line="50" selection-start-column="6" selection-end-line="50" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="1" lean-forward="false" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+        <state relative-caret-position="1207">
+          <caret line="71" column="36" lean-forward="false" selection-start-line="71" selection-start-column="36" selection-end-line="71" selection-end-column="36" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>

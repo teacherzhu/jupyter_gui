@@ -32,7 +32,7 @@ def reset_jsons():
 
 def youtube(url):
     """
-
+    Embed a YouTube video.
     :param url:
     :return:
     """
@@ -44,7 +44,7 @@ def youtube(url):
 
 def set_theme(filepath):
     """
-
+    Set notebook theme.
     :param filepath: str; .css
     :return: None
     """
@@ -66,6 +66,7 @@ def display_raw_html(html):
 
 def just_return(item):
     """
+    Just return.
     :param item:
     :return:
     """
@@ -74,7 +75,7 @@ def just_return(item):
 
 def slice_dataframe(dataframe, indices=(), ax=0):
     """
-
+    Slice dataframe.
     :param dataframe: dataframe;
     :param indices: iterable;
     :param ax: int;
