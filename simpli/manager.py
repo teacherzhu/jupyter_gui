@@ -1,6 +1,7 @@
-from json import loads
+import sys  # sys IS used
 from os import listdir
 from os.path import isdir, join
+from json import loads
 
 from IPython.display import clear_output
 
@@ -29,7 +30,7 @@ class Manager:
         :return: dict;
         """
 
-        print('Getting namespace ...')
+        print('(Getting namespace ...)')
         return self._namespace
 
     def set_namespace(self, namespace):
@@ -39,7 +40,7 @@ class Manager:
         :return: None
         """
 
-        print('Setting namespace ...')
+        print('(Setting namespace ...)')
         self._namespace = namespace
 
     namespace = property(get_namespace, set_namespace)
@@ -60,7 +61,7 @@ class Manager:
         :return: list; list of dict
         """
 
-        print('Getting tasks ...')
+        print('(Getting tasks ...)')
         return self._tasks
 
     def set_tasks(self, tasks):
@@ -70,7 +71,7 @@ class Manager:
         :return:  None
         """
 
-        print('Setting tasks ...')
+        print('(Setting tasks ...)')
         self._tasks = tasks
 
     tasks = property(get_tasks, set_tasks)
@@ -227,6 +228,9 @@ class Manager:
         # Clear any existing output
         clear_output()
 
+        if len(task) == 1:
+            label, task = task.popitem()
+
         # Process and merge args
         required_args = {a['name']: a['value'] for a in task['required_args']}
         default_args = {a['name']: a['value'] for a in task['default_args']}
@@ -237,10 +241,11 @@ class Manager:
         returns = [a['value'] for a in task['returns']]
         if None in returns or '' in returns:
             raise ValueError('Missing returns.')
+        else:
+            print('returns: {}'.format(returns))
 
         # Call function
-        returned = self._path_import_execute(task['library_path'], task['library_name'], task['function_name'],
-                                             args, returns)
+        returned = self._path_import_execute(task['library_path'], task['library_name'], task['function_name'], args)
 
         # Handle returns
         if len(returns) == 1:
@@ -251,8 +256,9 @@ class Manager:
         else:
             # TODO: think about how to better handle no-returns
             pass
+        print('self.namespace (after execution): {}'.format(self.namespace))
 
-    def _path_import_execute(self, library_path, library_name, function_name, args, returns):
+    def _path_import_execute(self, library_path, library_name, function_name, args):
         """
         Prepend path, import library, and execute task.
 
@@ -263,8 +269,6 @@ class Manager:
         :param required_args: dict;
         :param default_args: dict;
         :param optional_args: dict;
-
-        :param returns: list;
 
         :return: list; raw output of the function
         """
