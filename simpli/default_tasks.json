@@ -6,13 +6,13 @@
       "function_path": "simpli.default_tasks.just_return",
       "required_args": [
         {
-          "name": "item",
-          "label": "item"
+          "name": "value",
+          "label": "value"
         }
       ],
       "returns": [
         {
-          "label": "Value"
+          "label": "item"
         }
       ]
     },

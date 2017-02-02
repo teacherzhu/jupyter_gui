@@ -30,7 +30,7 @@ class Manager:
         :return: dict;
         """
 
-        print('(Getting namespace ...)')
+        # print('(Getting namespace ...)')
         return self._namespace
 
     def set_namespace(self, namespace):
@@ -40,7 +40,7 @@ class Manager:
         :return: None
         """
 
-        print('(Setting namespace ...)')
+        # print('(Setting namespace ...)')
         self._namespace = namespace
 
     namespace = property(get_namespace, set_namespace)
@@ -52,29 +52,29 @@ class Manager:
         :return: None
         """
 
-        print('Updating namespace with {} ...'.format(namespace))
+        # print('Updating namespace with {} ...'.format(namespace))
         self.namespace = merge_dicts(self.namespace, namespace)
 
-    def get_tasks(self):
+    def _get_tasks(self):
         """
         Get tasks.
         :return: list; list of dict
         """
 
-        print('(Getting tasks ...)')
+        # print('(Getting tasks ...)')
         return self._tasks
 
-    def set_tasks(self, tasks):
+    def _set_tasks(self, tasks):
         """
         Set tasks.
         :param tasks: list; list of dict
         :return:  None
         """
 
-        print('(Setting tasks ...)')
+        # print('(Setting tasks ...)')
         self._tasks = tasks
 
-    tasks = property(get_tasks, set_tasks)
+    tasks = property(_get_tasks, _set_tasks)
 
     def get_task(self, task_label):
         """
@@ -82,8 +82,7 @@ class Manager:
         :param task_label: str;
         :return: dict;
         """
-
-        print('Getting task {} ...'.format(task_label))
+        # print('Getting task {} ...'.format(task_label))
         return {task_label: self.tasks[task_label]}
 
     def set_task(self, task_label, task):
@@ -94,7 +93,7 @@ class Manager:
         :return: None
         """
 
-        print('Setting/updating task {} to be {} ...'.format(task_label, task))
+        # print('Setting/updating task {} to be {} ...'.format(task_label, task))
         self.tasks.update({task_label: task})
 
     def load_tasks_from_json_dir(self, json_directory_path=SIMPLI_JSON_DIR):
@@ -104,7 +103,7 @@ class Manager:
         :return: None
         """
 
-        print('Loading task-specifying JSONs in directory {} ...'.format(json_directory_path))
+        # print('Loading task-specifying JSONs in directory {} ...'.format(json_directory_path))
         for f in listdir(json_directory_path):
             fp_json = join(json_directory_path, f)
             try:
@@ -119,7 +118,7 @@ class Manager:
         :return: dict;
         """
 
-        print('Loading a task-specifying JSON {} ...'.format(json_filepath))
+        # print('Loading a task-specifying JSON {} ...'.format(json_filepath))
 
         with open(json_filepath) as f:
             tasks_json = loads(reset_encoding(f.read()))
@@ -130,7 +129,7 @@ class Manager:
         library_path = tasks_json['library_path']
         if not isdir(library_path):  # Use absolute path
             library_path = join(HOME_DIR, library_path)
-            print('\tAssumed that library_path ({}) is relative to the user-home directory.'.format(library_path))
+            # print('\tAssumed that library_path ({}) is relative to the user-home directory.'.format(library_path))
 
         # Load each task
         for t in tasks_json['tasks']:
@@ -146,7 +145,7 @@ class Manager:
             # Task label is this task's UID; so no duplicates are allowed
             label = t.get('label', '{} (no task label)'.format(function_name))
             if label in tasks:  # Label is duplicated
-                print('Task label \'{}\' is duplicated; automatically making a new task label ...'.format(label))
+                # print('Task label \'{}\' is duplicated; automatically making a new task label ...'.format(label))
 
                 i = 2
                 new_label = '{} (v{})'.format(label, i)
@@ -173,7 +172,7 @@ class Manager:
         :param cell_text: str;
         :return: dict;
         """
-        print('Loading a task from a notebook cell ...')
+        # print('Loading a task from a notebook cell ...')
 
         return {label: {
             'library_path': library_path,
@@ -256,7 +255,7 @@ class Manager:
         else:
             # TODO: think about how to better handle no-returns
             pass
-        print('self.namespace (after execution): {}'.format(self.namespace))
+        # print('self.namespace (after execution): {}'.format(self.namespace))
 
     def _path_import_execute(self, library_path, library_name, function_name, args):
         """
@@ -302,7 +301,7 @@ class Manager:
         :return: dict; merged and processed args
         """
 
-        print('\tMerging and processing arguments ...')
+        # print('\tMerging and processing arguments ...')
 
         if None in required_args or '' in required_args:
             raise ValueError('Missing required_args.')
@@ -328,6 +327,6 @@ class Manager:
                     processed_v = processed_v[0]
 
             processed_args[n] = processed_v
-            print('\t\t{}: {} > {} ({})'.format(n, v, get_name(processed_v, self.namespace), type(processed_v)))
+            # print('\t\t{}: {} > {} ({})'.format(n, v, get_name(processed_v, self.namespace), type(processed_v)))
 
         return processed_args

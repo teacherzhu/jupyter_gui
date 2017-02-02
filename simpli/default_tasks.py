@@ -64,13 +64,13 @@ def display_raw_html(html):
     display_html(html, raw=True)
 
 
-def just_return(item):
+def just_return(value):
     """
     Just return.
-    :param item:
+    :param value:
     :return:
     """
-    return item
+    return value
 
 
 def slice_dataframe(dataframe, indices=(), ax=0):

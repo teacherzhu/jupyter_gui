@@ -49,7 +49,7 @@ def init_libs():
     # Initialize a Manager
     global mgr
     mgr = Manager()
-    mgr.load_tasks_from_jsons()
+    mgr.load_tasks_from_json_dir()
 
 
 def load_web_components():
@@ -91,11 +91,11 @@ def sync_namespaces():
     Sync namespaces of this Notebook and Simpli TaskManager.
     '''
     # Manager namespace ==> Notebook namespace
-    for n, v in mgr.manager_namespace.items():
+    for n, v in mgr.namespace.items():
         globals()[n] = v
 
     # Notebook namespace ==> Manager namespace
-    mgr.update_manager_namespace(globals())
+    mgr.update_namespace(globals())
 
 
 # Register kernel initialization callback
@@ -288,7 +288,11 @@ var formGroupToggle = function(header) {
   $(header).next().toggle();
 }
 
-const hideSimpliCell = function(index) {
+/**
+ * Hide the input and prompt for the specified notebook cell.
+ * @param  {Number} index Index of the notebook cell to be hidden
+ */
+var hideSimpliCell = function(index) {
   var cell = Jupyter.notebook.get_cell(index);
   cell.input.addClass("simpli-hidden");
   cell.element.find(".widget-area .prompt").addClass("simpli-hidden");
@@ -299,7 +303,7 @@ const hideSimpliCell = function(index) {
  * @param  {number} index    index of cell to convert
  * @param  {Object} taskJSON task JSON object
  */
-const toSimpliCell = function(index, taskJSON) {
+var toSimpliCell = function(index, taskJSON) {
   // Use index if provided. Otherwise use index of currently selected cell.
   if (index === undefined) {
     index = Jupyter.notebook.get_selected_index();
