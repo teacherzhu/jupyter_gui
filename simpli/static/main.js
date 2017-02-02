@@ -200,7 +200,8 @@ const addMenuOptions = function() {
       'icon': 'fa-exchange', // select from http://fortawesome.github.io/Font-Awesome/icons/
       'callback': function() {
         var cell = Jupyter.notebook.get_selected_cell();
-        cell.get_text();
+        var text = cell.get_text();
+        Jupyter.notebook.execute(`mgr.load_task_from_cell(${text})`);
       }
     }
   ]);

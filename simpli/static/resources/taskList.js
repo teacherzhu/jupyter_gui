@@ -4,7 +4,7 @@ Jupyter.notebook = Jupyter.notebook || {};
 const STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simpli/resources/";
 
 /**
- * Holds all JSON for tasks.
+ * Holds all JSON for tasks. Mirror of simpli.Manager().tasks.
  * @type {Array}
  */
 var simpliTaskData = [];
@@ -95,6 +95,41 @@ const initTaskList = function() {
 
 /******************** HELPER FUNCTIONS ********************/
 
+var getTasks = function(callback) {
+  // code to read library JSON files
+  var code = 'print(json.dumps(mgr.tasks))';
+
+  // Convert tasks JSON to stringified list
+  var my_callback = function(out) {
+
+    var tasksDict = JSON.parse(out.content.text);
+    tasks = Object.keys(tasksDict).map(function(key) {
+      var task = tasksDict[key];
+      task.label = key;
+      return task;
+    });
+    return tasks;
+  }
+
+  var allCallbacks = function(out) {
+    simpliTaskData = my_callback(out);
+    callback();
+  }
+
+  // Wait for kernel to not be busy
+  var interval = setInterval(function() {
+    // Use kernel to read library JSONs
+    if (!Jupyter.notebook.kernel_busy) {
+      clearInterval(interval);
+      Jupyter.notebook.kernel.execute(code, {
+        'iopub': {
+          'output': allCallbacks
+        }
+      });
+    }
+  }, 10);
+}
+
 /**
  * Create left panel showing list of tasks.
  */
@@ -106,20 +141,7 @@ var renderTasks = function() {
     .html('Loading...')
     .appendTo(leftPanel);
 
-  // code to read library JSON files
-  var code = 'print(json.dumps(mgr.tasks))';
-
-  // Callback from
-  var callback = function(out) {
-
-    // Convert dictionary to stringified list
-    var tasksDict = JSON.parse(out.content.text);
-    simpliTaskData = Object.keys(tasksDict).map(function(key) {
-      var task = tasksDict[key];
-      task.label = key;
-      return task;
-    });
-
+  var callback = function() {
     // Sort tasks by package then function name alphabetically
     simpliTaskData.sort(function(a, b) {
       var alib = a.library_name.toLowerCase();
@@ -163,22 +185,9 @@ var renderTasks = function() {
       }
       // $(leftPanel).find('.library-card').first().click();
     }, 200);
-
   }
 
-  // Wait for kernel to not be busy
-  var interval = setInterval(function() {
-    // Use kernel to read library JSONs
-    if (!Jupyter.notebook.kernel_busy) {
-      clearInterval(interval);
-      Jupyter.notebook.kernel.execute(code, {
-        'iopub': {
-          'output': callback
-        }
-      });
-    }
-  }, 10);
-
+  simpliTaskData = getTasks(callback);
 }
 
 /**

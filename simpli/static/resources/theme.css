@@ -99,7 +99,7 @@
 body {
   position: relative; }
 
-#insert_simplex_below {
+#insert_simpli_below {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -110,7 +110,7 @@ body {
   border-radius: 3px !important; }
 
 /******************** General Formatting ********************/
-.simplex-hidden {
+.simpli-hidden {
   overflow: hidden;
   height: 0;
   min-width: 0;
@@ -167,7 +167,7 @@ body {
     .widget-panel-right .item-info p {
       white-space: normal; }
 
-.form-group-wrapper {
+.field-group-wrapper {
   outline-offset: -1px;
   outline: 1px solid #EEE;
   margin-bottom: 16px; }
