@@ -1,4 +1,3 @@
-import sys
 from json import loads
 from os import listdir
 from os.path import isdir, join

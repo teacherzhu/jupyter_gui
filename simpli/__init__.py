@@ -2,18 +2,13 @@ from sys import platform
 from os import environ
 from os.path import join, dirname, realpath
 
-from .support import establish_filepath
+from .support import establish_filepath, get_home_dir
 
 # ======================================================================================================================
 # Set up Simpli
 # ======================================================================================================================
 # Store user-home directory in a variable
-if 'linux' in platform or 'darwin' in platform:
-    HOME_DIR = environ['HOME']
-elif 'win' in platform:
-    HOME_DIR = environ['HOMEPATH']
-else:
-    raise ValueError('Unknown platform {}.'.format(platform))
+HOME_DIR = get_home_dir()
 
 # Make a hidden directory in the user-home directory
 SIMPLI_DIR = join(HOME_DIR, '.Simpli')

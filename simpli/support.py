@@ -1,4 +1,5 @@
-from os import listdir, mkdir
+from sys import platform
+from os import listdir, mkdir, environ
 from os.path import abspath, join, isdir, isfile, islink, split
 
 
@@ -60,6 +61,22 @@ def list_only_dirs(directory_path):
     dirs = sorted(dirs)
 
     return dirs
+
+
+def get_home_dir():
+    """
+
+    :return: str; user-home directory
+    """
+
+    if 'linux' in platform or 'darwin' in platform:
+        home_dir = environ['HOME']
+    elif 'win' in platform:
+        home_dir = environ['HOMEPATH']
+    else:
+        raise ValueError('Unknown platform {}.'.format(platform))
+
+    return home_dir
 
 
 def title_str(a_str):
