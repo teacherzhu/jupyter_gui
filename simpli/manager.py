@@ -73,9 +73,9 @@ class Manager:
         clear_output()
 
         # Get args
-        required_args = {n: v for n, v in task_json['required_args'].items()}
-        default_args = {n: v for n, v in task_json['default_args'].items()}
-        optional_args = {n: v for n, v in task_json['optional_args'].items()}
+        required_args = {a['name']: a['value'] for a in task_json['required_args']}
+        default_args = {a['name']: a['value'] for a in task_json['default_args']}
+        optional_args = {a['name']: a['value'] for a in task_json['optional_args']}
 
         # Get returns
         returns = [a['value'] for a in task_json['returns']]
