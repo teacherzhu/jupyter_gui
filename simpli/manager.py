@@ -101,6 +101,7 @@ class Manager:
 
     tasks = property(_get_tasks, _set_tasks)
 
+    # Get tasks, dict keyed by task label
     def get_tasks(self, print_return=True):
         """
         Get tasks.
