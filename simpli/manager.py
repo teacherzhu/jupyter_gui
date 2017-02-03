@@ -1,7 +1,7 @@
 import sys  # Don't remove this import - sys IS used!
 from os import listdir
 from os.path import isdir, join
-import inspect  # Don't remove this import - sys IS used!
+import inspect  # Don't remove this import - inspect IS used!
 from json import loads
 
 from IPython.display import clear_output
