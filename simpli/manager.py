@@ -37,6 +37,53 @@ class Manager:
         if self._verbose:
             print(str_)
 
+    def task_to_code(self, task, print_return=True):
+        """
+        Represent task as code.
+        :param task:  dict;
+        :return: str;
+        """
+
+        if isinstance(task, str):
+            task = loads(task)
+
+        print('Representing task ({}) as code ...'.format(task))
+
+        label, info = task.popitem()
+        print(info)
+
+        returns = ', '.join([d.get('value') for d in info.get('returns')])
+        print('returns: {}'.format(returns))
+
+        function_name = info.get('function_name')
+        print('function_name: {}'.format(function_name))
+
+        required_args = ',\n'.join([d.get('value') for d in info.get('required_args')])
+        print('required_args: {}'.format(required_args))
+
+        optional_args = ',\n'.join(['{}={}'.format(d.get('name'), d.get('value')) for d in info.get('optional_args')])
+        print('optional_args: {}'.format(optional_args))
+
+        if returns:
+            code = '''
+            # {}
+            {} = {}({}, {})'''.format(label,
+                                      returns,
+                                      function_name,
+                                      required_args,
+                                      optional_args)
+        else:
+            code = '''
+            # {}
+            {}({}, {})'''.format(label,
+                                 function_name,
+                                 required_args,
+                                 optional_args)
+
+        if print_return:
+            print(code)
+        return code
+
     def _get_namespace(self):
         """
         Get namespace.
