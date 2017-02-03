@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/manager.py" afterPath="$PROJECT_DIR$/simpli/manager.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.ipynb" afterPath="$PROJECT_DIR$/test.ipynb" />
     </list>
@@ -26,70 +27,9 @@
       <file leaf-file-name="manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/simpli/manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="123" column="49" lean-forward="false" selection-start-line="123" selection-start-column="49" selection-end-line="123" selection-end-column="49" />
-              <folding>
-                <element signature="e#487#520#1" expanded="false" />
-                <element signature="e#554#735#0" expanded="false" />
-                <element signature="e#554#608#1" expanded="false" />
-                <element signature="e#775#911#0" expanded="false" />
-                <element signature="e#775#836#1" expanded="false" />
-                <element signature="e#962#1133#0" expanded="false" />
-                <element signature="e#962#1053#1" expanded="false" />
-                <element signature="e#1277#1505#0" expanded="false" />
-                <element signature="e#1277#1372#1" expanded="false" />
-                <element signature="e#1560#1754#0" expanded="false" />
-                <element signature="e#1560#1630#1" expanded="false" />
-                <element signature="e#1797#1963#0" expanded="false" />
-                <element signature="e#1797#1895#1" expanded="false" />
-                <element signature="e#2147#2673#0" expanded="false" />
-                <element signature="e#2147#2264#1" expanded="false" />
-                <element signature="e#2714#2994#0" expanded="false" />
-                <element signature="e#2714#2879#1" expanded="false" />
-                <element signature="e#3132#3645#0" expanded="false" />
-                <element signature="e#3132#3323#1" expanded="false" />
-                <element signature="e#3481#3645#0" expanded="false" />
-                <element signature="e#3707#5964#0" expanded="false" />
-                <element signature="e#3707#3878#1" expanded="false" />
-                <element signature="e#4255#4415#0" expanded="false" />
-                <element signature="e#4493#5942#0" expanded="false" />
-                <element signature="e#4581#4707#0" expanded="false" />
-                <element signature="e#5046#5387#0" expanded="false" />
-                <element signature="e#5287#5353#0" expanded="false" />
-                <element signature="e#5416#5942#0" expanded="false" />
-                <element signature="e#6025#9186#0" expanded="false" />
-                <element signature="e#6025#6134#1" expanded="false" />
-                <element signature="e#6144#6194#0" expanded="false" />
-                <element signature="e#6295#6333#0" expanded="false" />
-                <element signature="e#6520#6558#0" expanded="false" />
-                <element signature="e#7838#8131#0" expanded="false" />
-                <element signature="e#7839#8059#0" expanded="false" />
-                <element signature="e#8220#8494#0" expanded="false" />
-                <element signature="e#8221#8440#0" expanded="false" />
-                <element signature="e#8577#8717#0" expanded="false" />
-                <element signature="e#8578#8699#0" expanded="false" />
-                <element signature="e#8733#9136#0" expanded="false" />
-                <element signature="e#8754#9126#0" expanded="false" />
-                <element signature="e#9231#9690#0" expanded="false" />
-                <element signature="e#9231#9335#1" expanded="false" />
-                <element signature="e#9402#9658#0" expanded="false" />
-                <element signature="e#9425#9657#0" expanded="false" />
-                <element signature="e#9741#10106#0" expanded="false" />
-                <element signature="e#9741#9854#1" expanded="false" />
-                <element signature="e#9924#10074#0" expanded="false" />
-                <element signature="e#9947#10073#0" expanded="false" />
-                <element signature="e#10171#11545#0" expanded="false" />
-                <element signature="e#10171#10257#1" expanded="false" />
-                <element signature="e#10267#10315#0" expanded="false" />
-                <element signature="e#11294#11367#0" expanded="false" />
-                <element signature="e#11394#11545#0" expanded="false" />
-                <element signature="e#11640#12544#0" expanded="false" />
-                <element signature="e#11640#11894#1" expanded="false" />
-                <element signature="e#12633#14409#0" expanded="false" />
-                <element signature="e#12633#13148#1" expanded="false" />
-                <element signature="e#13695#14378#0" expanded="false" />
-                <element signature="e#13910#14218#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="1003">
+              <caret line="125" column="16" lean-forward="false" selection-start-line="125" selection-start-column="16" selection-end-line="125" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -155,15 +95,16 @@
         <option value="$PROJECT_DIR$/simpli/default_tasks.json" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/simpli/static/main.js" />
-        <option value="$PROJECT_DIR$/simpli/support.py" />
         <option value="$PROJECT_DIR$/simpli/__init__.py" />
         <option value="$PROJECT_DIR$/simpli/default_tasks.py" />
         <option value="$PROJECT_DIR$/initialize.py" />
+        <option value="$PROJECT_DIR$/simpli/support.py" />
         <option value="$PROJECT_DIR$/simpli/manager.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="221" />
     <option name="y" value="52" />
     <option name="width" value="1327" />
     <option name="height" value="1388" />
@@ -596,7 +537,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="52" width="1327" height="1388" extended-state="4" />
+    <frame x="221" y="52" width="1327" height="1388" extended-state="4" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18839487" sideWeight="0.492865" order="0" side_tool="false" content_ui="combo" />
@@ -777,16 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/support.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="51" column="59" lean-forward="false" selection-start-line="51" selection-start-column="59" selection-end-line="51" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#24#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1275">
@@ -815,16 +746,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="35" lean-forward="false" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#24#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simpli/static/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
@@ -833,71 +754,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <marker date="1486009837886" expanded="false" signature="0:146" ph="import ..." />
+            <marker date="1486009837886" expanded="true" signature="148:447" ph="..." />
+            <marker date="1486009837886" expanded="true" signature="827:1092" ph="..." />
+            <marker date="1486009837886" expanded="true" signature="1126:1840" ph="..." />
+            <marker date="1486009837886" expanded="true" signature="1131:1243" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486009837886" expanded="true" signature="1249:1664" ph="..." />
+            <marker date="1486009837886" expanded="true" signature="1682:1815" ph="..." />
+            <marker date="1486009837886" expanded="true" signature="1881:2064" ph="..." />
+            <marker date="1486009837886" expanded="true" signature="1886:2003" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486009837886" expanded="true" signature="2134:2412" ph="..." />
+            <marker date="1486009837886" expanded="true" signature="2139:2312" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/support.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <marker date="1486154004765" expanded="true" signature="0:127" ph="import ..." />
+            <marker date="1486154004765" expanded="true" signature="159:517" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="164:246" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486154004765" expanded="true" signature="363:465" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="553:1253" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="558:736" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486154004765" expanded="true" signature="950:1111" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="1187:1253" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="1291:1614" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="1296:1433" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486154004765" expanded="true" signature="1486:1573" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="1636:1943" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="1641:1691" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486154004765" expanded="true" signature="1967:3158" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="1972:2043" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486154004765" expanded="true" signature="2191:2642" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="2215:2469" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="2329:2469" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="2483:2642" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="2508:2642" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="2652:2710" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="3206:3801" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="3211:3389" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486154004765" expanded="true" signature="3485:3619" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="3498:3575" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="3830:3954" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="3835:3888" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1486154004765" expanded="true" signature="3981:4242" ph="..." />
+            <marker date="1486154004765" expanded="true" signature="3986:4157" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/simpli/manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="123" column="49" lean-forward="false" selection-start-line="123" selection-start-column="49" selection-end-line="123" selection-end-column="49" />
+        <state relative-caret-position="782">
+          <caret line="269" column="109" lean-forward="false" selection-start-line="269" selection-start-column="109" selection-end-line="269" selection-end-column="109" />
           <folding>
-            <element signature="e#487#520#1" expanded="false" />
-            <element signature="e#554#735#0" expanded="false" />
-            <element signature="e#554#608#1" expanded="false" />
-            <element signature="e#775#911#0" expanded="false" />
-            <element signature="e#775#836#1" expanded="false" />
-            <element signature="e#962#1133#0" expanded="false" />
-            <element signature="e#962#1053#1" expanded="false" />
-            <element signature="e#1277#1505#0" expanded="false" />
-            <element signature="e#1277#1372#1" expanded="false" />
-            <element signature="e#1560#1754#0" expanded="false" />
-            <element signature="e#1560#1630#1" expanded="false" />
-            <element signature="e#1797#1963#0" expanded="false" />
-            <element signature="e#1797#1895#1" expanded="false" />
-            <element signature="e#2147#2673#0" expanded="false" />
-            <element signature="e#2147#2264#1" expanded="false" />
-            <element signature="e#2714#2994#0" expanded="false" />
-            <element signature="e#2714#2879#1" expanded="false" />
-            <element signature="e#3132#3645#0" expanded="false" />
-            <element signature="e#3132#3323#1" expanded="false" />
-            <element signature="e#3481#3645#0" expanded="false" />
-            <element signature="e#3707#5964#0" expanded="false" />
-            <element signature="e#3707#3878#1" expanded="false" />
-            <element signature="e#4255#4415#0" expanded="false" />
-            <element signature="e#4493#5942#0" expanded="false" />
-            <element signature="e#4581#4707#0" expanded="false" />
-            <element signature="e#5046#5387#0" expanded="false" />
-            <element signature="e#5287#5353#0" expanded="false" />
-            <element signature="e#5416#5942#0" expanded="false" />
-            <element signature="e#6025#9186#0" expanded="false" />
-            <element signature="e#6025#6134#1" expanded="false" />
-            <element signature="e#6144#6194#0" expanded="false" />
-            <element signature="e#6295#6333#0" expanded="false" />
-            <element signature="e#6520#6558#0" expanded="false" />
-            <element signature="e#7838#8131#0" expanded="false" />
-            <element signature="e#7839#8059#0" expanded="false" />
-            <element signature="e#8220#8494#0" expanded="false" />
-            <element signature="e#8221#8440#0" expanded="false" />
-            <element signature="e#8577#8717#0" expanded="false" />
-            <element signature="e#8578#8699#0" expanded="false" />
-            <element signature="e#8733#9136#0" expanded="false" />
-            <element signature="e#8754#9126#0" expanded="false" />
-            <element signature="e#9231#9690#0" expanded="false" />
-            <element signature="e#9231#9335#1" expanded="false" />
-            <element signature="e#9402#9658#0" expanded="false" />
-            <element signature="e#9425#9657#0" expanded="false" />
-            <element signature="e#9741#10106#0" expanded="false" />
-            <element signature="e#9741#9854#1" expanded="false" />
-            <element signature="e#9924#10074#0" expanded="false" />
-            <element signature="e#9947#10073#0" expanded="false" />
-            <element signature="e#10171#11545#0" expanded="false" />
-            <element signature="e#10171#10257#1" expanded="false" />
-            <element signature="e#10267#10315#0" expanded="false" />
-            <element signature="e#11294#11367#0" expanded="false" />
-            <element signature="e#11394#11545#0" expanded="false" />
-            <element signature="e#11640#12544#0" expanded="false" />
-            <element signature="e#11640#11894#1" expanded="false" />
-            <element signature="e#12633#14409#0" expanded="false" />
-            <element signature="e#12633#13148#1" expanded="false" />
-            <element signature="e#13695#14378#0" expanded="false" />
-            <element signature="e#13910#14218#0" expanded="false" />
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
