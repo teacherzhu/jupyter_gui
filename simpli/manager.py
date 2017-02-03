@@ -282,7 +282,7 @@ class Manager:
         self.print('*** args: {}'.format(args))
 
         required_args = [{
-                             'label': n.upper(),
+                             'label': 'From doc',
                              'description': 'No description.',
                              'name': n,
                              'value': v
@@ -290,7 +290,7 @@ class Manager:
         self.print('*** required_args: {}'.format(required_args))
 
         optional_args = [{
-                             'label': n.upper(),
+                             'label': 'From doc',
                              'description': 'No description',
                              'name': n,
                              'value': v
@@ -299,9 +299,11 @@ class Manager:
 
         returns = [x for x in returns if x != '']
         returns = [{
-                       'label': l.upper(),
-                       'description': 'No description.'
-                   } for l in returns]
+
+                       'label': 'From doc',
+                       'description': 'No description.',
+                       'value': v
+                   } for v in returns]
         task = {
             label: {
                 'description': 'No description.',
