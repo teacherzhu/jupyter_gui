@@ -1,25 +1,34 @@
 // Add shim to support Jupyter 3.x and 4.x
 var Jupyter = Jupyter || IPython || {}
 Jupyter.notebook = Jupyter.notebook || {};
-// const AUTO_EXEC_FLAG = "!AUTO_EXEC";
-const AUTO_OUT_FLAG = "!AUTO_OUT";
 var fieldGroups = ['required_args', 'optional_args', 'returns'];
 var groupLabels = ['Input', 'Optional Input', 'Output'];
 
 /**
+ * Gets the taskJSON from the given cell following the Simpli Widget format.
+ * @param  {Object} cell Simpli cell
+ * @return {Object}      Returns the widget's associated JSON object
+ */
+var getWidgetData = function(cell) {
+  // Scrape JSON from cell
+  var taskJSON = cell.get_text().split('\n').slice(-1)[0];
+  taskJSON = taskJSON.slice(4, taskJSON.length - 3);
+  taskJSON = JSON.parse(taskJSON);
+  return taskJSON;
+}
+
+/**
  * Generates HTML for a task widget that is executed via HTML magic with the python kernel.
- * @param  {object} cellIndex     Index of the cell that the task widget will be attached to
+ * @param  {number} cellIndex     Index of the cell that the task widget will be attached to
  * @param  {Object} taskJSON JSON object for task
  * @return {str}             String representation of widget HTML
  */
-const renderTaskWidget = function(cellIndex, taskJSON) {
+var renderTaskWidget = function(cellIndex, taskJSON) {
   var cell = Jupyter.notebook.get_cell(cellIndex);
 
   // Scrape JSON from cell
   if (taskJSON == undefined) {
-    taskJSON = cell.get_text().split('\n').slice(-1)[0];
-    taskJSON = taskJSON.slice(4, taskJSON.length - 3);
-    taskJSON = JSON.parse(taskJSON);
+    taskJSON = getWidgetData(cell);
   }
 
   // Flatten label
@@ -114,23 +123,17 @@ const renderTaskWidget = function(cellIndex, taskJSON) {
  * @param  {object} cell     The cell that the task widget is attached to
  * @param  {object} taskJSON task JSON object
  */
-const updateTaskWidget = function(cell, taskJSON) {
+var updateTaskWidget = function(cell, taskJSON) {
   var updatedHTML = generateTaskWidgetHTML(taskJSON);
   cell.set_text(updatedHTML + `\n<!--${JSON.stringify(taskJSON)}-->`);
 }
-
-/**
- * [generateTaskWidgetHTML description]
- * @param  {[type]} taskJSON [description]
- * @return {[type]}          [description]
- */
 
 /**
  * Generates HTML for a task widget that is executed via HTML magic with the python kernel.
  * @param  {Object} taskJSON JSON object for task
  * @return {str}             String representation of widget HTML
  */
-const generateTaskWidgetHTML = function(taskJSON) {
+var generateTaskWidgetHTML = function(taskJSON) {
   // Outer container
   var widget = $('<paper-material>')
     .attr({

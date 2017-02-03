@@ -3,13 +3,14 @@ var Jupyter = Jupyter || IPython || {};
 Jupyter.notebook = Jupyter.notebook || {};
 var isInitDone = false;
 const AUTO_EXEC_FLAG = "!AUTO_EXEC";
+const AUTO_OUT_FLAG = "!AUTO_OUT";
 var groups = ['required_args', 'optional_args', 'returns'];
 var groupLabels = ['Input', 'Optional Input', 'Output'];
 
 /**
  * Wait for kernel before initializing extension.
  */
-const initWrapper = function() {
+var initWrapper = function() {
   var interval = setInterval(function() {
     if (Jupyter.notebook.kernel && Jupyter.notebook.kernel.is_connected() && !Jupyter.notebook.kernel_busy) {
       init();
@@ -21,7 +22,7 @@ const initWrapper = function() {
 /**
  * Initializes the extension.
  */
-const init = function() {
+var init = function() {
   setupCallbacks();
   autoRunWidgets();
   addMenuOptions();
@@ -33,7 +34,7 @@ const init = function() {
 /**
  * Setup cell execution callbacks to the notebook kernel.
  */
-const setupCallbacks = function() {
+var setupCallbacks = function() {
   var initCode =
     `
 global mgr
@@ -131,14 +132,14 @@ sync_namespaces()
  * Automatically run all Simpli widgets on initialization.
  * TODO: Forms should 'remember' their input
  */
-const autoRunWidgets = function() {
+var autoRunWidgets = function() {
   console.log('Called autoRunWidgets()');
   $.each($(".cell"), function(index, value) {
     var cellCode = $(value).html();
     if (cellCode.indexOf(AUTO_EXEC_FLAG) > -1) {
       toSimpliCell(index);
     } else if (cellCode.indexOf(AUTO_OUT_FLAG) > -1) {
-      hideSimpliCell(index);
+      hideCellInput(index);
     }
   });
 };
@@ -146,9 +147,9 @@ const autoRunWidgets = function() {
 /**
  * Add menu options to notebook navbar and toolbar.
  */
-const addMenuOptions = function() {
-  const dropdown = $("#cell_type");
-  const gpInDropdown = dropdown.find("option:contains('Simpli')").length > 0;
+var addMenuOptions = function() {
+  var dropdown = $("#cell_type");
+  var gpInDropdown = dropdown.find("option:contains('Simpli')").length > 0;
 
   if (!gpInDropdown) {
     // Add Simpli "cell type" to toolbar cell type dropdown menu
@@ -169,8 +170,8 @@ const addMenuOptions = function() {
 
   // Add to notebook navbar dropdown menu.
   // Menu path: Cell -> Cell Type -> Simpli
-  const cellMenu = $("#change_cell_type");
-  const gpInMenu = cellMenu.find("#to_simpli").length > 0;
+  var cellMenu = $("#change_cell_type");
+  var gpInMenu = cellMenu.find("#to_simpli").length > 0;
   if (!gpInMenu) {
     cellMenu.find("ul.dropdown-menu").append(
       $("<li id='to_simpli' title='Insert a Simpli widget cell'><a href='#'>Simpli</a></option>")
@@ -193,7 +194,7 @@ const addMenuOptions = function() {
     }
   ]);
 
-  // Add button for creating Simpli cell to toolbar
+  // Add button for converting code to Simpli Widget
   Jupyter.toolbar.add_buttons_group([
     {
       'label': 'Code to Simpli Widget',
@@ -212,6 +213,38 @@ const addMenuOptions = function() {
     }
   ]);
 
+  // Add button for converting Simpli Widget to code
+  Jupyter.toolbar.add_buttons_group([
+    {
+      'label': 'Simpli to Code Widget',
+      'icon': 'fa-fire', // select from http://fortawesome.github.io/Font-Awesome/icons/
+      'callback': function() {
+        var cellIndex = Jupyter.notebook.get_selected_index();
+        var cell = Jupyter.notebook.get_selected_cell();
+        var taskJSON = getWidgetData(cell);
+        var code = `mgr.task_to_code('''${taskJSON}''')`;
+
+        // temporary
+        // cell.set_text('# REPLACE TEXT');
+        // cell.clear_output();
+        // showCellInput(cellIndex);
+
+        // TODO: hookup
+        var setCode = function(out) {
+          cell.set_text(out);
+          cell.clear_output();
+          showCellInput(cellIndex);
+        }
+
+        Jupyter.notebook.kernel.execute(code, {
+          'iopub': {
+            'output': setCode
+          }
+        });
+      }
+    }
+  ]);
+
   // Initialize the undo delete menu entry click function
   var undeleteCell = $('#undelete_cell a');
   undeleteCell.on("click", function(event) {
@@ -222,7 +255,7 @@ const addMenuOptions = function() {
 /**
  * Initialize custom keyboard shortcuts for Simpli.
  */
-const mapKeyboardShortcuts = function() {
+var mapKeyboardShortcuts = function() {
   // Initialize the Simpli cell type keyboard shortcut
   Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-x', {
     help: 'to Simpli',
@@ -266,7 +299,7 @@ const mapKeyboardShortcuts = function() {
  * Undo deleting last set of cells/widgets.
  * FIXME: test if it actually works
  */
-const undoDeleteCell = function() {
+var undoDeleteCell = function() {
   // Make sure there are deleted cells to restore
   if (Jupyter.notebook.undelete_backup == null)
     return;
@@ -298,10 +331,16 @@ var formGroupToggle = function(header) {
  * Hide the input and prompt for the specified notebook cell.
  * @param  {Number} index Index of the notebook cell to be hidden
  */
-var hideSimpliCell = function(index) {
+var hideCellInput = function(index) {
   var cell = Jupyter.notebook.get_cell(index);
   cell.input.addClass("simpli-hidden");
   cell.element.find(".widget-area .prompt").addClass("simpli-hidden");
+}
+
+var showCellInput = function(index) {
+  var cell = Jupyter.notebook.get_cell(index);
+  cell.input.removeClass("simpli-hidden");
+  cell.element.find(".widget_area .prompt").addClass("simpli-hiden");
 }
 
 /**
@@ -332,7 +371,7 @@ var toSimpliCell = function(index, taskJSON) {
           clearInterval(wait);
 
           // Hide code input
-          hideSimpliCell(index);
+          hideCellInput(index);
         }
       },
       50);

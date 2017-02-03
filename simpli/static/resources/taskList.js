@@ -279,7 +279,7 @@ const renderInfoPanel = function(task) {
       .html('Select')
       .on('click', function(event) {
         event.preventDefault();
-        getTask(selectedLabel, function(selectedTask) {
+        getTask(selectedLabel, null, function(selectedTask) {
           toSimpliCell(Jupyter.notebook.get_selected_index(), selectedTask);
         });
       })
@@ -301,7 +301,7 @@ const renderInfoPanel = function(task) {
    */
   var update = function() {
     // Parse and display task information
-    getTask(selectedLabel, function(task) {
+    getTask(selectedLabel, null, function(task) {
       $(rightPanel).find('#library-task-heading').html(task.label);
       $(rightPanel).find('#library-task-package').html(task.library_name);
       $(rightPanel).find('#library-task-author').html(task.author);
@@ -333,7 +333,7 @@ var renderTask = function(task) {
 
       // click action
       selectedLabel = $(this).find('h4').html();
-      getTask(selectedLabel, function(selectedTask) {
+      getTask(selectedLabel, null, function(selectedTask) {
         renderInfoPanel(task);
       });
 
