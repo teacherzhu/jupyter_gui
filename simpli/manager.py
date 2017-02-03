@@ -62,13 +62,16 @@ class Manager:
         # print('Updating namespace with {} ...'.format(namespace))
         self.namespace = merge_dicts(self.namespace, namespace)
 
-    def _get_tasks(self):
+    def _get_tasks(self, print_return=True):
         """
         Get tasks.
         :return: list; list of dict
         """
 
         # print('(Getting tasks ...)')
+
+        if print_return:
+            print(self._tasks)
         return self._tasks
 
     def _set_tasks(self, tasks):
@@ -83,16 +86,28 @@ class Manager:
 
     tasks = property(_get_tasks, _set_tasks)
 
-    def get_task(self, task_label):
+    def get_task(self, task_label=None, notebook_cell_text=None, print_return=True):
         """
         Get a task, whose label is task_label.
         :param task_label: str;
         :return: dict;
         """
         # print('Getting task {} ...'.format(task_label))
-        return {task_label: self.tasks[task_label]}
 
-    def set_task(self, task):
+        if task_label:
+            task = {task_label: self.tasks[task_label]}
+
+        elif notebook_cell_text:
+            task = self._load_task_from_notebook_cell(notebook_cell_text)
+
+        else:
+            raise ValueError('Need either task_label or notebook_cell_text.')
+
+        if print_return:
+            print(task)
+        return task
+
+    def _set_task(self, task):
         """
         Set or update a task, whose label is task_label, to be task.
         :param task_label: str;
@@ -114,7 +129,7 @@ class Manager:
         for f in listdir(json_directory_path):
             fp_json = join(json_directory_path, f)
             try:
-                self.tasks.update(self.load_tasks_from_json(fp_json))
+                self._set_task(self.load_tasks_from_json(fp_json))
             except:
                 pass
 
@@ -173,12 +188,13 @@ class Manager:
 
         return tasks
 
-    def load_task_from_notebook_cell(self, text):
+    def _load_task_from_notebook_cell(self, text):
         """
         Load task from a notebook cell.
         :param cell_text: str;
         :return: dict;
         """
+
         # print('Loading a task from a notebook cell ...')
 
         # print('*********\n{}\n*********'.format(text))
@@ -247,8 +263,7 @@ class Manager:
                        'label': l.upper(),
                        'description': 'No description.'
                    } for l in returns]
-
-        self.tasks.update({
+        task = {
             label: {
                 'description': 'No description.',
                 'library_path': library_path,
@@ -259,9 +274,10 @@ class Manager:
                 'optional_args': optional_args,
                 'returns': returns
             }
-        })
+        }
 
-        return self.get_task(label)
+        self._set_task(task)
+        return task
 
     def _process_args(self, args):
         """
