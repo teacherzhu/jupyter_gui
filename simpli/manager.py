@@ -205,6 +205,7 @@ class Manager:
             i += 1
         function_name = before[i:]
         s = None
+        print('s = inspect.signature({})'.format(function_name))
         exec('s = inspect.signature({})'.format(function_name))
 
         library_name = None
