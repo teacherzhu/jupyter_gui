@@ -180,6 +180,9 @@ class Manager:
         lines = text.split('\n')
         print('\nlines: {}'.format(lines))
 
+        with open('~/load_task_from_notebook_cell.txt', 'w') as f:
+            f.write(text)
+
         # Comment
         comment = [l for l in lines if l.startswith('#')]
         print('\ncomment: {}'.format(comment))
