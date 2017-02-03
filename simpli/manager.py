@@ -297,6 +297,7 @@ class Manager:
                          } for n, v in [x.split('=') for x in args if '=' in x]]
         self.print('*** optional_args: {}'.format(optional_args))
 
+        returns = [x for x in returns if x != '']
         returns = [{
                        'label': l.upper(),
                        'description': 'No description.'
