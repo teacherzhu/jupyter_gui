@@ -282,16 +282,16 @@ class Manager:
         self.print('*** args: {}'.format(args))
 
         required_args = [{
-                             'label': 'From doc',
-                             'description': 'No description.',
+                             'label': 'TODO: get from docstring',
+                             'description': 'TODO: get from docstring',
                              'name': n,
                              'value': v
                          } for n, v in zip(list(signature.parameters), [x for x in args if '=' not in x])]
         self.print('*** required_args: {}'.format(required_args))
 
         optional_args = [{
-                             'label': 'From doc',
-                             'description': 'No description',
+                             'label': 'TODO: get from docstring',
+                             'description': 'TODO: get from docstring',
                              'name': n,
                              'value': v
                          } for n, v in [x.split('=') for x in args if '=' in x]]
@@ -300,13 +300,13 @@ class Manager:
         returns = [x for x in returns if x != '']
         returns = [{
 
-                       'label': 'From doc',
-                       'description': 'No description.',
+                       'label': 'TODO: get from docstring',
+                       'description': 'TODO: get from docstring',
                        'value': v
                    } for v in returns]
         task = {
             label: {
-                'description': 'No description.',
+                'description': 'TODO: get from docstring',
                 'library_path': library_path,
                 'library_name': library_name,
                 'function_name': function_name,
@@ -357,7 +357,7 @@ class Manager:
         return processed_dicts
 
     # Execute a task
-    def execute_task(self, info):
+    def execute_task(self, task):
         """
         Execute task.
         :param info: dict;
@@ -368,7 +368,8 @@ class Manager:
         # Clear any existing output
         clear_output()
 
-        label, info = info.popitem()
+        self.print('Executing task: {} ...'.format(task))
+        label, info = task.popitem()
 
         # Process and merge args
         required_args = {a['name']: a['value'] for a in info['required_args']}
