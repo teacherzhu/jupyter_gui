@@ -4,15 +4,16 @@ from os.path import isdir, join
 import inspect  # Don't remove this import - inspect IS used!
 from json import loads
 
-
 from IPython.display import clear_output
 
 from . import HOME_DIR, SIMPLI_JSON_DIR
 from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
 
 import sys
+
 sys.path.insert(0, '/home/cyborg/simpli')
 import simpli
+
 
 class Manager:
     """
@@ -208,17 +209,15 @@ class Manager:
         if i != 0:
             i += 1
         function_name = before[i:]
-        s = None
-        print('s = inspect.signature({})'.format(function_name))
-        exec('s = inspect.signature({})'.format(function_name))
+        s = eval('inspect.signature({})'.format(function_name))
+        print('s: {}'.format(s))
 
-        library_name = None
-        exec('library_name = {}.__module__'.format(function_name))
+        # library_name = None
+        library_name = eval('{}.__module__'.format(function_name))
         print('library_name: {}'.format(library_name))
 
-        library_path = None
-        exec('library_path = {}.__globals__.get(\'__file__\')'.format(function_name))
-        library_path = library_path.split(library_name.replace('.', '/'))[0]
+        library_path = \
+        eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.', '/'))[0]
         print('library_path: {}'.format(library_path))
 
         function_name = function_name.split('.')[-1]
