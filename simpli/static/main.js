@@ -201,7 +201,13 @@ const addMenuOptions = function() {
       'callback': function() {
         var cell = Jupyter.notebook.get_selected_cell();
         var text = cell.get_text();
-        Jupyter.notebook.execute(`mgr.load_task_from_cell(${text})`);
+        var code = `mgr.get_task(notebook_cell_text='''${text}''')`;
+
+        var toSimpliCellWrap = function(out) {
+          toSimpliCell(null, out);
+        }
+
+        getTask(null, text, toSimpliCellWrap);
       }
     }
   ]);
@@ -305,7 +311,7 @@ var hideSimpliCell = function(index) {
  */
 var toSimpliCell = function(index, taskJSON) {
   // Use index if provided. Otherwise use index of currently selected cell.
-  if (index === undefined) {
+  if (index == null) {
     index = Jupyter.notebook.get_selected_index();
   }
 

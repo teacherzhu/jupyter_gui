@@ -28,7 +28,7 @@ var leftPanel;
 
 var getTasks = function(callback) {
   // code to read library JSON files
-  var code = `print(json.dumps(mgr.tasks))`;
+  var code = `mgr.get_tasks()`;
 
   // Convert tasks JSON to stringified list
   var my_callback = function(out) {
@@ -64,15 +64,25 @@ var getTasks = function(callback) {
 /**
  * Request a task from the Simpli manager.
  * @param  {String}   taskLabel UID label for the task.
+ * @param  {String}   notebook_cell_text UID label for the task.
  * @param  {Function} callback  Function performed after request finishes.
  */
-var getTask = function(taskLabel, callback) {
+var getTask = function(taskLabel, notebook_cell_text, callback) {
   // code to retrieve json from Simpli manager
-  var code = `print(json.dumps(mgr.get_task('${taskLabel}')))`;
+  console.log(notebook_cell_text);
+
+  var code;
+  if (taskLabel != null) {
+    code = `mgr.get_task(task_label='''${taskLabel}''')`;
+  } else if (notebook_cell_text != null) {
+    code = `mgr.get_task(notebook_cell_text='''${notebook_cell_text}''')`;
+  } else {
+    throw "Need either task_label or notebook_cell_text.";
+  }
 
   // Convert stringified task JSON to JSON object
   var my_callback = function(out) {
-    console.log(out);
+    console.log(out.content.text);
     var task = JSON.parse(out.content.text);
     return task;
   }
@@ -270,9 +280,6 @@ const renderInfoPanel = function(task) {
       .on('click', function(event) {
         event.preventDefault();
         getTask(selectedLabel, function(selectedTask) {
-          var label = Object.keys(selectedTask)[0];
-          selectedTask = selectedTask[label];
-          selectedTask['label'] = label;
           toSimpliCell(Jupyter.notebook.get_selected_index(), selectedTask);
         });
       })

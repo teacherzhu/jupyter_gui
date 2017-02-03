@@ -368,7 +368,6 @@ class Manager:
         # Clear any existing output
         clear_output()
 
-        self.print('Executing task: {} ...'.format(task))
         label, info = task.popitem()
 
         # Process and merge args
