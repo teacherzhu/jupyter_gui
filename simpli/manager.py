@@ -9,6 +9,7 @@ from IPython.display import clear_output
 from . import HOME_DIR, SIMPLI_JSON_DIR
 from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
 
+# TODO: remove
 import sys
 
 sys.path.insert(0, '/home/cyborg/simpli')
@@ -91,7 +92,7 @@ class Manager:
         # print('Getting task {} ...'.format(task_label))
         return {task_label: self.tasks[task_label]}
 
-    def set_task(self, task_label, task):
+    def set_task(self, task):
         """
         Set or update a task, whose label is task_label, to be task.
         :param task_label: str;
@@ -100,7 +101,7 @@ class Manager:
         """
 
         # print('Setting/updating task {} to be {} ...'.format(task_label, task))
-        self.tasks.update({task_label: task})
+        self.tasks.update(task)
 
     def load_tasks_from_json_dir(self, json_directory_path=SIMPLI_JSON_DIR):
         """
@@ -217,7 +218,7 @@ class Manager:
         # print('library_name: {}'.format(library_name))
 
         library_path = \
-        eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.', '/'))[0]
+            eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.', '/'))[0]
         # print('library_path: {}'.format(library_path))
 
         function_name = function_name.split('.')[-1]
