@@ -14,6 +14,11 @@ var groupLabels = ['Input', 'Optional Input', 'Output'];
  */
 const renderTaskWidget = function(cellIndex, taskJSON) {
   var cell = Jupyter.notebook.get_cell(cellIndex);
+  if (taskJSON == undefined) {
+    taskJSON = cell.get_text().split('\n').slice(-1)[0];
+    taskJSON = taskJSON.slice(4, taskJSON.length - 3);
+    taskJSON = JSON.parse(taskJSON);
+  }
   updateTaskWidget(cell, taskJSON);
   cell.widgetarea._clear();
   cell.execute();
@@ -66,6 +71,7 @@ const renderTaskWidget = function(cellIndex, taskJSON) {
 
             // Compile task JSON
             var pythonTask = JSON.stringify(taskJSON);
+            console.log(pythonTask);
             var taskCode = `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))`;
 
             // Create output cell if not created already
@@ -98,7 +104,7 @@ const renderTaskWidget = function(cellIndex, taskJSON) {
  */
 const updateTaskWidget = function(cell, taskJSON) {
   var updatedHTML = generateTaskWidgetHTML(taskJSON);
-  cell.set_text(updatedHTML);
+  cell.set_text(updatedHTML + `\n<!--${JSON.stringify(taskJSON)}-->`);
 }
 
 /**
@@ -171,6 +177,7 @@ const generateTaskWidgetHTML = function(taskJSON) {
             label: arg.label,
             name: fieldGroups[groupIndex],
             required: '',
+            value: arg.value,
             'auto-validate': ''
           });
 

@@ -316,7 +316,7 @@ var toSimpliCell = function(index, taskJSON) {
    */
   var cellChange = function() {
     if (taskJSON == undefined) {
-      cell.execute();
+      renderTaskWidget(index);
     } else {
       renderTaskWidget(index, taskJSON);
     }
