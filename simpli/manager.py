@@ -166,7 +166,7 @@ class Manager:
 
         return tasks
 
-    def load_task_from_notebook_cell(self, cell_text):
+    def load_task_from_notebook_cell(self, text):
         """
         Load task from a notebook cell.
         :param cell_text: str;
@@ -174,15 +174,82 @@ class Manager:
         """
         # print('Loading a task from a notebook cell ...')
 
-        return {label: {
+        print('*********\n{}\n*********'.format(text))
+
+        lines = text.split('\n')
+        print('\nlines: {}'.format(lines))
+
+        # Comment
+        comment = [l for l in lines if l.startswith('#')]
+        print('\ncomment: {}'.format(comment))
+
+        label = comment[0].split('#')[1].strip()
+        print('\nlabel: {}'.format(label))
+
+        # Code
+        code = ''.join([l for l in lines if not l.startswith('#')]).replace(' ', '')
+        print('\ncode: {}'.format(code))
+
+        i = code.find('(')
+        before, args = code[:i], code[i + 1:-1]
+        print('\nbefore: {}'.format(before))
+
+        i = before.find('=')
+        if i == -1:  # No returns
+            i = 0
+        returns = before[:i]
+        print('\nreturns: {}'.format(returns))
+
+        if i != 0:
+            i += 1
+        function_name = before[i:]
+        s = None
+        exec('s = inspect.signature({})'.format(function_name))
+
+        library_name = None
+        exec('library_name = {}.__module__'.format(function_name))
+        print('library_name: {}'.format(library_name))
+
+        library_path = None
+        exec('library_path = {}.__globals__.get(\'__file__\')'.format(function_name))
+        library_path = library_path.split(library_name.replace('.', '/'))[0]
+        print('library_path: {}'.format(library_path))
+
+        function_name = function_name.split('.')[-1]
+        print('\nfunction_name: {}'.format(function_name))
+
+        args = args[:-1].split(',')
+        print('\nargs: {}'.format(args))
+
+        required_args = [{'label': n.upper(),
+                          'description': 'No description.',
+                          'name': n,
+                          'value': v} for n, v in zip(list(s.parameters), [x for x in args if '=' not in x])]
+        print('\nrequired_args: {}'.format(required_args))
+
+        optional_args = [{'label': n.upper(),
+                          'description': 'No description',
+                          'name': n,
+                          'value': v} for n, v in [x.split('=') for x in args if '=' in x]]
+        print('\noptional_args: {}'.format(optional_args))
+
+        returns = [{'label': l.upper(),
+                    'description': 'No description.'} for l in returns]
+
+        self.tasks.update({label: {
+            'description': 'No description.',
             'library_path': library_path,
             'library_name': library_name,
             'function_name': function_name,
-            'description': description,
             'required_args': required_args,
-            'default_args': default_args,
+            'default_args': [],
             'optional_args': optional_args,
-            'returns': returns}}
+            'returns': returns
+        }
+        }
+        )
+
+        return self.get_task(label)
 
     def _process_args(self, dicts):
         """
@@ -255,7 +322,7 @@ class Manager:
         else:
             # TODO: think about how to better handle no-returns
             pass
-        # print('self.namespace (after execution): {}'.format(self.namespace))
+            # print('self.namespace (after execution): {}'.format(self.namespace))
 
     def _path_import_execute(self, library_path, library_name, function_name, args):
         """
