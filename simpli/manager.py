@@ -2,7 +2,7 @@ import sys  # Don't remove this import - sys IS used!
 from os import listdir
 from os.path import isdir, join
 import inspect  # Don't remove this import - inspect IS used!
-from json import loads
+from json import loads, dumps
 
 from IPython.display import clear_output
 
@@ -102,7 +102,7 @@ class Manager:
     tasks = property(_get_tasks, _set_tasks)
 
     # Get tasks, dict keyed by task label
-    def get_tasks(self, print_return=True):
+    def get_tasks(self, print_json=True):
         """
         Get tasks.
         :return: list; list of dict
@@ -110,17 +110,17 @@ class Manager:
 
         self.print('Getting tasks ...')
 
-        if print_return:
-            print(self._tasks)
+        if print_json:
+            print(dumps(self._tasks))
         return self._tasks
 
     # Get a task, dict keyed by task label
-    def get_task(self, task_label=None, notebook_cell_text=None, print_return=True):
+    def get_task(self, task_label=None, notebook_cell_text=None, print_json=True):
         """
         Get a task, whose label is task_label.
         :param task_label: str;
         :param notebook_cell_text: str;
-        :param print_return: bool;
+        :param print_json: bool;
         :return: dict;
         """
 
@@ -130,13 +130,17 @@ class Manager:
             task = {task_label: self.tasks[task_label]}
 
         elif notebook_cell_text:
+            # TODO: remove
+            # with open('/Users/ckmah/Desktop/cell_text.txt', 'w') as f:
+            #     f.write(notebook_cell_text)
+
             task = self._load_task_from_notebook_cell(notebook_cell_text)
 
         else:
             raise ValueError('Need either task_label or notebook_cell_text.')
 
-        if print_return:
-            print(task)
+        if print_json:
+            print(dumps(task))
         return task
 
     def _update_tasks(self, tasks):
