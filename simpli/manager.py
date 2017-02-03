@@ -162,7 +162,7 @@ class Manager:
             fp_json = join(json_directory_path, f)
             try:
                 self._load_tasks_from_json(fp_json)
-            except:
+            except KeyError:
                 pass
 
     def _load_tasks_from_json(self, json_filepath):
@@ -172,7 +172,7 @@ class Manager:
         :return: None
         """
 
-        self.print('Loading a task-specifying JSON {} ...'.format(json_filepath))
+        self.print('Loading task-specifying JSON {} ...'.format(json_filepath))
 
         with open(json_filepath) as f:
             tasks_json = loads(reset_encoding(f.read()))
@@ -354,7 +354,7 @@ class Manager:
     def execute_task(self, task):
         """
         Execute task.
-        :param info: dict;
+        :param task: dict;
         :return: None
         """
 
