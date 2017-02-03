@@ -47,22 +47,21 @@ class Manager:
         if isinstance(task, str):
             task = loads(task)
 
-        print('Representing task ({}) as code ...'.format(task))
+        self.print('Representing task ({}) as code ...'.format(task))
 
         label, info = task.popitem()
-        print(info)
 
         returns = ', '.join([d.get('value') for d in info.get('returns')])
-        print('returns: {}'.format(returns))
+        self.print('returns: {}'.format(returns))
 
         function_name = info.get('function_name')
-        print('function_name: {}'.format(function_name))
+        self.print('function_name: {}'.format(function_name))
 
         required_args = ',\n'.join([d.get('value') for d in info.get('required_args')])
-        print('required_args: {}'.format(required_args))
+        self.print('required_args: {}'.format(required_args))
 
         optional_args = ',\n'.join(['{}={}'.format(d.get('name'), d.get('value')) for d in info.get('optional_args')])
-        print('optional_args: {}'.format(optional_args))
+        self.print('optional_args: {}'.format(optional_args))
 
         if returns:
             code = '''
