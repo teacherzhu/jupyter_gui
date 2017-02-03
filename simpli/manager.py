@@ -4,11 +4,15 @@ from os.path import isdir, join
 import inspect  # Don't remove this import - inspect IS used!
 from json import loads
 
+
 from IPython.display import clear_output
 
 from . import HOME_DIR, SIMPLI_JSON_DIR
 from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
 
+import sys
+sys.path.insert(0, '/home/cyborg/simpli')
+import simpli
 
 class Manager:
     """
@@ -179,9 +183,6 @@ class Manager:
 
         lines = text.split('\n')
         print('\nlines: {}'.format(lines))
-
-        with open('~/load_task_from_notebook_cell.txt', 'w') as f:
-            f.write(text)
 
         # Comment
         comment = [l for l in lines if l.startswith('#')]
