@@ -9,12 +9,6 @@ from IPython.display import clear_output
 from . import HOME_DIR, SIMPLI_JSON_DIR
 from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
 
-# TODO: remove
-import sys
-
-sys.path.insert(0, '/home/cyborg/simpli')
-import simpli
-
 
 class Manager:
     """
