@@ -9,12 +9,6 @@ from IPython.display import clear_output
 from . import HOME_DIR, SIMPLI_JSON_DIR
 from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
 
-# TODO: remove
-import sys
-
-sys.path.insert(0, '/home/cyborg/simpli')
-import simpli
-
 
 class Manager:
     """
@@ -42,6 +36,52 @@ class Manager:
 
         if self._verbose:
             print(str_)
+
+    def task_to_code(self, task, print_return=True):
+        """
+        Represent task as code.
+        :param task:  dict;
+        :return: str;
+        """
+
+        if isinstance(task, str):
+            task = loads(task)
+
+        self.print('Representing task ({}) as code ...'.format(task))
+
+        label, info = task.popitem()
+
+        returns = ', '.join([d.get('value') for d in info.get('returns')])
+        self.print('returns: {}'.format(returns))
+
+        function_name = info.get('function_name')
+        self.print('function_name: {}'.format(function_name))
+
+        required_args = ',\n'.join([d.get('value') for d in info.get('required_args')])
+        self.print('required_args: {}'.format(required_args))
+
+        optional_args = ',\n'.join(['{}={}'.format(d.get('name'), d.get('value')) for d in info.get('optional_args')])
+        self.print('optional_args: {}'.format(optional_args))
+
+        if returns:
+            code = '''
+            # {}
+            {} = {}({}, {})'''.format(label,
+                                      returns,
+                                      function_name,
+                                      required_args,
+                                      optional_args)
+        else:
+            code = '''
+            # {}
+            {}({}, {})'''.format(label,
+                                 function_name,
+                                 required_args,
+                                 optional_args)
+
+        if print_return:
+            print(code)
+        return code
 
     def _get_namespace(self):
         """
@@ -168,7 +208,7 @@ class Manager:
             fp_json = join(json_directory_path, f)
             try:
                 self._load_tasks_from_json(fp_json)
-            except:
+            except KeyError:
                 pass
 
     def _load_tasks_from_json(self, json_filepath):
@@ -178,7 +218,7 @@ class Manager:
         :return: None
         """
 
-        self.print('Loading a task-specifying JSON {} ...'.format(json_filepath))
+        self.print('Loading task-specifying JSON {} ...'.format(json_filepath))
 
         with open(json_filepath) as f:
             tasks_json = loads(reset_encoding(f.read()))
@@ -360,7 +400,7 @@ class Manager:
     def execute_task(self, task):
         """
         Execute task.
-        :param info: dict;
+        :param task: dict;
         :return: None
         """
 
