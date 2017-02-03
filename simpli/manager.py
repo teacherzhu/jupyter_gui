@@ -184,140 +184,150 @@ class Manager:
         # print('*********\n{}\n*********'.format(text))
 
         lines = text.split('\n')
-        # print('\nlines: {}'.format(lines))
+        # print('*** lines: {}'.format(lines))
 
         # Comment
         comment = [l for l in lines if l.startswith('#')]
-        # print('\ncomment: {}'.format(comment))
+        # print('*** comment: {}'.format(comment))
 
         label = comment[0].split('#')[1].strip()
-        # print('\nlabel: {}'.format(label))
+        # print('*** label: {}'.format(label))
 
         # Code
         code = ''.join([l for l in lines if not l.startswith('#')]).replace(' ', '')
-        # print('\ncode: {}'.format(code))
+        # print('*** code: {}'.format(code))
 
         i = code.find('(')
         before, args = code[:i], code[i + 1:-1]
-        # print('\nbefore: {}'.format(before))
+        # print('*** before: {}'.format(before))
 
         i = before.find('=')
         if i == -1:  # No returns
             i = 0
-        returns = before[:i]
-        # print('\nreturns: {}'.format(returns))
+        returns = before[:i].split(',')
+        # print('*** returns: {}'.format(returns))
 
         if i != 0:
             i += 1
         function_name = before[i:]
         s = eval('inspect.signature({})'.format(function_name))
-        # print('s: {}'.format(s))
+        # print('*** s: {}'.format(s))
 
-        # library_name = None
         library_name = eval('{}.__module__'.format(function_name))
-        # print('library_name: {}'.format(library_name))
+        # print('*** library_name: {}'.format(library_name))
 
         library_path = \
-            eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.', '/'))[0]
-        # print('library_path: {}'.format(library_path))
+            eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.',
+                                                                                                      '/'))[0]
+        # print('*** library_path: {}'.format(library_path))
 
         function_name = function_name.split('.')[-1]
-        # print('\nfunction_name: {}'.format(function_name))
+        # print('*** function_name: {}'.format(function_name))
 
         args = args[:-1].split(',')
-        # print('\nargs: {}'.format(args))
+        # print('*** args: {}'.format(args))
 
-        required_args = [{'label': n.upper(),
-                          'description': 'No description.',
-                          'name': n,
-                          'value': v} for n, v in zip(list(s.parameters), [x for x in args if '=' not in x])]
-        # print('\nrequired_args: {}'.format(required_args))
+        required_args = [{
+                             'label': n.upper(),
+                             'description': 'No description.',
+                             'name': n,
+                             'value': v
+                         } for n, v in zip(list(s.parameters), [x for x in args if '=' not in x])]
+        # print('*** required_args: {}'.format(required_args))
 
-        optional_args = [{'label': n.upper(),
-                          'description': 'No description',
-                          'name': n,
-                          'value': v} for n, v in [x.split('=') for x in args if '=' in x]]
-        # print('\noptional_args: {}'.format(optional_args))
+        optional_args = [{
+                             'label': n.upper(),
+                             'description': 'No description',
+                             'name': n,
+                             'value': v
+                         } for n, v in [x.split('=') for x in args if '=' in x]]
+        # print('*** optional_args: {}'.format(optional_args))
 
-        returns = [{'label': l.upper(),
-                    'description': 'No description.'} for l in returns]
+        returns = [{
+                       'label': l.upper(),
+                       'description': 'No description.'
+                   } for l in returns]
 
-        self.tasks.update({label: {
-            'description': 'No description.',
-            'library_path': library_path,
-            'library_name': library_name,
-            'function_name': function_name,
-            'required_args': required_args,
-            'default_args': [],
-            'optional_args': optional_args,
-            'returns': returns
-        }
-        }
-        )
+        self.tasks.update({
+            label: {
+                'description': 'No description.',
+                'library_path': library_path,
+                'library_name': library_name,
+                'function_name': function_name,
+                'required_args': required_args,
+                'default_args': [],
+                'optional_args': optional_args,
+                'returns': returns
+            }
+        })
 
         return self.get_task(label)
 
-    def _process_args(self, dicts):
+    def _process_args(self, args):
         """
         Process args.
-        :param dicts: list; list of dict
+        :param args: list; list of arg dict
         :return: dict;
         """
 
         processed_dicts = []
 
-        for d in dicts:
-            processed_dicts.append({'name': d.get('name'),
-                                    'value': d.get('value', ''),
-                                    'label': d.get('label', title_str(d['name'])),
-                                    'description': d.get('description', 'No description')})
+        for d in args:
+            processed_dicts.append({
+                'name': d.get('name'),
+                'value': d.get('value', ''),
+                'label': d.get('label', title_str(d['name'])),
+                'description': d.get('description', 'No description')
+            })
 
         return processed_dicts
 
-    def _process_returns(self, dicts):
+    def _process_returns(self, returns):
         """
         Process returns.
-        :param dicts: list; list of dict
+        :param returns: list; list of return dict
         :return: dict;
         """
 
         processed_dicts = []
 
-        for d in dicts:
-            processed_dicts.append({'label': d.get('label'),
-                                    'description': d.get('description', 'No description')})
+        for d in returns:
+            processed_dicts.append({
+                'label': d.get('label'),
+                'description': d.get('description', 'No description')
+            })
 
         return processed_dicts
 
     # Execute a task
-    def execute_task(self, task):
+    def execute_task(self, info):
         """
         Execute task.
-        :param task: dict;
+        :param info: dict;
         :return: None
         """
 
+        # TODO: clear the previous output somewhere else
         # Clear any existing output
         clear_output()
 
-        if len(task) == 1:
-            label, task = task.popitem()
+        label, info = info.popitem()
 
         # Process and merge args
-        required_args = {a['name']: a['value'] for a in task['required_args']}
-        default_args = {a['name']: a['value'] for a in task['default_args']}
-        optional_args = {a['name']: a['value'] for a in task['optional_args']}
+        required_args = {a['name']: a['value'] for a in info['required_args']}
+        default_args = {a['name']: a['value'] for a in info['default_args']}
+        optional_args = {a['name']: a['value'] for a in info['optional_args']}
         args = self._merge_process_args(required_args, default_args, optional_args)
 
         # Get returns
-        returns = [a['value'] for a in task['returns']]
+        returns = [a['value'] for a in info['returns']]
         if None in returns or '' in returns:
             raise ValueError('Missing returns.')
         else:
             print('returns: {}'.format(returns))
 
         # Call function
-        returned = self._path_import_execute(task['library_path'], task['library_name'], task['function_name'], args)
+        returned = self._path_import_execute(info['library_path'], info['library_name'], info['function_name'], args)
 
         # Handle returns
         if len(returns) == 1:
