@@ -31,7 +31,7 @@ class Manager:
         # Tasks (and their specifications) keyed by their unique label
         self._tasks = {}
 
-    def get_namespace(self):
+    def _get_namespace(self):
         """
         Get namespace.
         :return: dict;
@@ -40,7 +40,7 @@ class Manager:
         # print('(Getting namespace ...)')
         return self._namespace
 
-    def set_namespace(self, namespace):
+    def _set_namespace(self, namespace):
         """
         Set namespace
         :param namespace: dict;
@@ -50,8 +50,9 @@ class Manager:
         # print('(Setting namespace ...)')
         self._namespace = namespace
 
-    namespace = property(get_namespace, set_namespace)
+    namespace = property(_get_namespace, _set_namespace)
 
+    # Update Manager's namespace
     def update_namespace(self, namespace):
         """
         Update namespace.
@@ -86,6 +87,7 @@ class Manager:
 
     tasks = property(_get_tasks, _set_tasks)
 
+    # Get a task, dict keyed by task label
     def get_task(self, task_label=None, notebook_cell_text=None, print_return=True):
         """
         Get a task, whose label is task_label.
@@ -118,6 +120,7 @@ class Manager:
         # print('Setting/updating task {} to be {} ...'.format(task_label, task))
         self.tasks.update(task)
 
+    # Laod tasks specified by JSONs in a directory
     def load_tasks_from_json_dir(self, json_directory_path=SIMPLI_JSON_DIR):
         """
         Load tasks from task-specifying JSONs in json_directory_path.
@@ -129,11 +132,11 @@ class Manager:
         for f in listdir(json_directory_path):
             fp_json = join(json_directory_path, f)
             try:
-                self._set_task(self.load_tasks_from_json(fp_json))
+                self._set_task(self._load_tasks_from_json(fp_json))
             except:
                 pass
 
-    def load_tasks_from_json(self, json_filepath):
+    def _load_tasks_from_json(self, json_filepath):
         """
         Load a task from a task-specifying JSON, json_filepath
         :param json_filepath: str; filepath to a task-specifying JSON
