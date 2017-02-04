@@ -221,9 +221,9 @@ var addMenuOptions = function() {
       'callback': function() {
         var cellIndex = Jupyter.notebook.get_selected_index();
         var cell = Jupyter.notebook.get_selected_cell();
-        var taskJSON = getWidgetData(cell);
-        var code = `mgr.task_to_code('''${taskJSON}''')`;
-
+        var pythonTask = JSON.stringify(getWidgetData(cell));
+        var code = `mgr.task_to_code('''${pythonTask}''')`;
+        console.log(pythonTask);
         // temporary
         // cell.set_text('# REPLACE TEXT');
         // cell.clear_output();
@@ -231,7 +231,8 @@ var addMenuOptions = function() {
 
         // TODO: hookup
         var setCode = function(out) {
-          cell.set_text(out);
+          console.log(out);
+          cell.set_text(out.content.text);
           cell.clear_output();
           showCellInput(cellIndex);
         }

@@ -69,7 +69,6 @@ var getTasks = function(callback) {
  */
 var getTask = function(taskLabel, notebook_cell_text, callback) {
   // code to retrieve json from Simpli manager
-  console.log(notebook_cell_text);
 
   var code;
   if (taskLabel != null) {
@@ -82,7 +81,6 @@ var getTask = function(taskLabel, notebook_cell_text, callback) {
 
   // Convert stringified task JSON to JSON object
   var my_callback = function(out) {
-    console.log(out.content.text);
     var task = JSON.parse(out.content.text);
     return task;
   }
@@ -97,6 +95,7 @@ var getTask = function(taskLabel, notebook_cell_text, callback) {
     // Use kernel to read library JSONs
     if (!Jupyter.notebook.kernel_busy) {
       clearInterval(interval);
+      console.log(code);
       Jupyter.notebook.kernel.execute(code, {
         'iopub': {
           'output': allCallbacks
@@ -296,7 +295,7 @@ const renderInfoPanel = function(task) {
     modalButtons.appendTo(rightPanel);
   };
 
-  /**
+  /** TODO: fix right panel stuff
    * Update existing rightPanel with currently selected task
    */
   var update = function() {

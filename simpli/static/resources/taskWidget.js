@@ -31,10 +31,6 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
     taskJSON = getWidgetData(cell);
   }
 
-  // Flatten label
-  var lab = Object.keys(taskJSON)[0];
-  taskJSON = taskJSON[lab];
-  taskJSON['label'] = lab;
   updateTaskWidget(cell, taskJSON);
   cell.widgetarea._clear();
   cell.execute();
@@ -60,60 +56,52 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
       });
 
       // Link submitting form to executing function
-      if (taskJSON != undefined) {
-        cell.element.find('form').on('iron-form-submit', function(event) {
-          if (this.validate()) {
+      cell.element.find('form').on('iron-form-submit', function(event) {
+        if (this.validate()) {
 
-            // Retrieve user input
-            var userInput = this.serialize();
+          // Retrieve user input
+          var userInput = this.serialize();
 
-            // Map user input to task JSON
-            for (var group of fieldGroups) {
+          // Map user input to task JSON
+          for (var group of fieldGroups) {
 
-              // Convert single element to array, ignore if empty
-              if (!(userInput[group] instanceof Array) && userInput[group] != undefined) {
-                userInput[group] = [userInput[group]];
-              }
-
-              // Map user input values to argument JSON
-              for (var inputIndex in userInput[group]) {
-                var inputValue = userInput[group][inputIndex];
-                taskJSON[group][inputIndex].value = inputValue;
-              }
+            // Convert single element to array, ignore if empty
+            if (!(userInput[group] instanceof Array) && userInput[group] != undefined) {
+              userInput[group] = [userInput[group]];
             }
 
-            // Save user input to widget HTML
-            updateTaskWidget(cell, taskJSON);
+            // Map user input values to argument JSON
+            for (var inputIndex in userInput[group]) {
+              var inputValue = userInput[group][inputIndex];
 
-            // Compile task JSON
-            var lab = taskJSON['label'];
-            delete taskJSON['label'];
-            taskJSON = {
-              lab: taskJSON
-            };
-            var pythonTask = JSON.stringify(taskJSON);
-            console.log(pythonTask);
-            var taskCode = `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))`;
-
-            // Create output cell if not created already
-            Jupyter.notebook.select_next();
-            var outputCell = Jupyter.notebook.get_selected_cell();
-            var cellContent = outputCell.get_text().trim();
-            if (cellContent !== "" && cellContent.indexOf(AUTO_OUT_FLAG) < 0) {
-              Jupyter.notebook.insert_cell_below();
-              Jupyter.notebook.select_next();
-              outputCell = Jupyter.notebook.get_selected_cell();
+              taskJSON[Object.keys(taskJSON)[0]][group][inputIndex].value = inputValue;
             }
-            // Execute task
-            outputCell.set_text(taskCode);
-            outputCell.execute();
-
-
-            hideSimpliCell(cellIndex);
           }
-        });
-      }
 
+          // Save user input to widget HTML
+          updateTaskWidget(cell, taskJSON);
+
+          // Compile task JSON
+          var pythonTask = JSON.stringify(taskJSON);
+          var taskCode = `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))`;
+
+          // Create output cell if not created already
+          Jupyter.notebook.select_next();
+          var outputCell = Jupyter.notebook.get_selected_cell();
+          var cellContent = outputCell.get_text().trim();
+          if (cellContent !== "" && cellContent.indexOf(AUTO_OUT_FLAG) < 0) {
+            Jupyter.notebook.insert_cell_below();
+            Jupyter.notebook.select_next();
+            outputCell = Jupyter.notebook.get_selected_cell();
+          }
+          // Execute task
+          outputCell.set_text(taskCode);
+          outputCell.execute();
+
+
+          hideCellInput(cellIndex);
+        }
+      });
     }
   }, 50);
 }
@@ -134,6 +122,8 @@ var updateTaskWidget = function(cell, taskJSON) {
  * @return {str}             String representation of widget HTML
  */
 var generateTaskWidgetHTML = function(taskJSON) {
+  var label = Object.keys(taskJSON)[0];
+  var taskData = taskJSON[label];
   // Outer container
   var widget = $('<paper-material>')
     .attr({
@@ -145,7 +135,7 @@ var generateTaskWidgetHTML = function(taskJSON) {
   var widgetInner = $('<paper-collapse-item>')
     .addClass('task-widget-inner')
     .attr({
-      header: `<h1>${taskJSON.label}</h1>`,
+      header: `<h1>${label}</h1>`,
       opened: 'True'
     })
     .appendTo(widget);
@@ -166,7 +156,7 @@ var generateTaskWidgetHTML = function(taskJSON) {
   // Generate fieldGroups of arguments
   for (var groupIndex in fieldGroups) {
     // Generate group only if listed in config
-    var g = taskJSON[fieldGroups[groupIndex]];
+    var g = taskData[fieldGroups[groupIndex]];
     if (g.length > 0) {
       var groupWrapper = $('<div>')
         .addClass('form-group-wrapper')
@@ -227,12 +217,12 @@ var generateTaskWidgetHTML = function(taskJSON) {
   // Shown
   var taskInfo = $('<div>')
     .addClass('task-info')
-    .html(taskJSON.description)
+    .html(taskData.description)
     .appendTo(rightPanel);
 
   for (var groupIndex in fieldGroups) {
     // Generate group only if listed in config
-    var g = taskJSON[fieldGroups[groupIndex]];
+    var g = taskData[fieldGroups[groupIndex]];
     if (g.length > 0) {
       // Extract description for each parameter
       for (var arg of g) {
