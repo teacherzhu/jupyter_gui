@@ -57,6 +57,7 @@ class Manager:
         self._print('(Setting namespace ...)')
 
         self._namespace = namespace
+        globals()
 
     namespace = property(_get_namespace, _set_namespace)
 
@@ -71,6 +72,9 @@ class Manager:
         self._print('Updating namespace with {} ...'.format(namespace))
 
         self.namespace = merge_dicts(self.namespace, namespace)
+
+        for n, v in self.namespace.items():
+            globals()[n] = v
 
     def _get_tasks(self):
         """

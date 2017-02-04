@@ -27,9 +27,11 @@
       <file leaf-file-name="manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/simpli/manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="350" column="29" lean-forward="false" selection-start-line="350" selection-start-column="29" selection-end-line="350" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="1249">
+              <caret line="76" column="27" lean-forward="false" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -540,7 +542,7 @@
     <frame x="435" y="52" width="1327" height="1388" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18839487" sideWeight="0.492865" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18839487" sideWeight="0.492865" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901752" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3236862" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -806,81 +808,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/simpli/static/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="60" column="40" lean-forward="false" selection-start-line="60" selection-start-column="40" selection-end-line="60" selection-end-column="40" />
-          <folding>
-            <marker date="1486167403553" expanded="true" signature="427:643" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="457:640" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="469:635" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="579:631" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="706:846" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="947:3959" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="4106:4404" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="4158:4401" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="4194:4400" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="4499:7670" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="4633:5175" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="4823:5044" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="4840:5043" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="4930:5037" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="5379:5594" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="5425:5589" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="5683:5977" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="5684:5976" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="5690:5972" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="5847:5966" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="6068:6562" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="6069:6561" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="6075:6557" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="6239:6551" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="6653:7491" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="6654:7490" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="6660:7486" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="6820:7480" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="7240:7348" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="7389:7471" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="7396:7470" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="7771:8730" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="7885:8000" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="7897:7999" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="7946:7995" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="8110:8237" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="8116:8236" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="8181:8232" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="8279:8727" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="8296:8726" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="8521:8582" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="8852:9383" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="9262:9381" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="9775:9936" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="9974:10137" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="10359:12360" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="10632:11004" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="10819:10999" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="10831:10988" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="10876:10980" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="11134:11505" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="11204:11500" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="11216:11495" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="11259:11489" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="11740:12358" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="11842:12353" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="11843:12352" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="12164:12346" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="12216:12338" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="12468:13036" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="12469:12600" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="12628:13035" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="12666:12965" ph="{...}" />
-            <marker date="1486167403553" expanded="true" signature="12720:12869" ph="{...}" />
-          </folding>
+        <state relative-caret-position="476">
+          <caret line="73" column="44" lean-forward="true" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/simpli/manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state relative-caret-position="1249">
+          <caret line="76" column="27" lean-forward="false" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
           </folding>
