@@ -231,7 +231,7 @@ class Manager:
 
         self._print('*********\n{}\n*********'.format(text))
 
-        lines = text.split('\n')
+        lines = [s.strip() for s in text.split('\n') if s != '']
         self._print('*** lines: {}'.format(lines))
 
         # Comment
@@ -484,6 +484,8 @@ class Manager:
         returns = ', '.join([d.get('value') for d in info.get('returns')])
         self._print('returns: {}'.format(returns))
 
+        library_path = info.get('library_path')
+        library_name = info.get('library_name')
         function_name = info.get('function_name')
         self._print('function_name: {}'.format(function_name))
 
@@ -496,18 +498,20 @@ class Manager:
         if returns:
             code = '''
             # {}
-            {} = {}({}, {})'''.format(label,
-                                      returns,
-                                      function_name,
-                                      required_args,
-                                      optional_args)
+            {} = {}.{}({}, {})'''.format(label,
+                                         returns,
+                                         library_name,
+                                         function_name,
+                                         required_args,
+                                         optional_args)
         else:
             code = '''
             # {}
-            {}({}, {})'''.format(label,
-                                 function_name,
-                                 required_args,
-                                 optional_args)
+            {}.{}({}, {})'''.format(label,
+                                    library_name,
+                                    function_name,
+                                    required_args,
+                                    optional_args)
 
         if print_return:
             print(code)
