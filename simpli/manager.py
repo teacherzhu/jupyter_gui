@@ -473,10 +473,11 @@ class Manager:
         :return: str;
         """
 
+        self._print('Representing task ({}, {}) as code ...'.format(task, type(task)))
+
         if isinstance(task, str):
             task = loads(task)
-
-        self._print('Representing task ({}, {}) as code ...'.format(task, type(task)))
+            self._print('Representing task ({}, {}) as code ...'.format(task, type(task)))
 
         label, info = task.popitem()
 
