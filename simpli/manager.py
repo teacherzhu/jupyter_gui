@@ -27,7 +27,7 @@ class Manager:
 
         self._verbose = verbose
 
-    def print(self, str_):
+    def _print(self, str_):
         """
         Print str_.
         :param str_: str; message to printed
@@ -37,59 +37,13 @@ class Manager:
         if self._verbose:
             print(str_)
 
-    def task_to_code(self, task, print_return=True):
-        """
-        Represent task as code.
-        :param task:  dict;
-        :return: str;
-        """
-
-        if isinstance(task, str):
-            task = loads(task)
-
-        self.print('Representing task ({}) as code ...'.format(task))
-
-        label, info = task.popitem()
-
-        returns = ', '.join([d.get('value') for d in info.get('returns')])
-        self.print('returns: {}'.format(returns))
-
-        function_name = info.get('function_name')
-        self.print('function_name: {}'.format(function_name))
-
-        required_args = ',\n'.join([d.get('value') for d in info.get('required_args')])
-        self.print('required_args: {}'.format(required_args))
-
-        optional_args = ',\n'.join(['{}={}'.format(d.get('name'), d.get('value')) for d in info.get('optional_args')])
-        self.print('optional_args: {}'.format(optional_args))
-
-        if returns:
-            code = '''
-            # {}
-            {} = {}({}, {})'''.format(label,
-                                      returns,
-                                      function_name,
-                                      required_args,
-                                      optional_args)
-        else:
-            code = '''
-            # {}
-            {}({}, {})'''.format(label,
-                                 function_name,
-                                 required_args,
-                                 optional_args)
-
-        if print_return:
-            print(code)
-        return code
-
     def _get_namespace(self):
         """
         Get namespace.
         :return: dict;
         """
 
-        self.print('(Getting namespace ...)')
+        self._print('(Getting namespace ...)')
 
         return self._namespace
 
@@ -100,7 +54,7 @@ class Manager:
         :return: None
         """
 
-        self.print('(Setting namespace ...)')
+        self._print('(Setting namespace ...)')
 
         self._namespace = namespace
 
@@ -114,7 +68,7 @@ class Manager:
         :return: None
         """
 
-        self.print('Updating namespace with {} ...'.format(namespace))
+        self._print('Updating namespace with {} ...'.format(namespace))
 
         self.namespace = merge_dicts(self.namespace, namespace)
 
@@ -124,7 +78,7 @@ class Manager:
         :return: list; list of dict
         """
 
-        self.print('(Getting tasks ...)')
+        self._print('(Getting tasks ...)')
 
         return self._tasks
 
@@ -135,7 +89,7 @@ class Manager:
         :return:  None
         """
 
-        self.print('(Setting tasks ...)')
+        self._print('(Setting tasks ...)')
 
         self._tasks = tasks
 
@@ -148,7 +102,7 @@ class Manager:
         :return: list; list of dict
         """
 
-        self.print('Getting tasks ...')
+        self._print('Getting tasks ...')
 
         if print_json:
             print(dumps(self._tasks))
@@ -164,7 +118,7 @@ class Manager:
         :return: dict;
         """
 
-        self.print('Getting task {} ...'.format(task_label))
+        self._print('Getting task {} ...'.format(task_label))
 
         if task_label:
             task = {task_label: self.tasks[task_label]}
@@ -190,7 +144,7 @@ class Manager:
         :return: None
         """
 
-        self.print('Setting/updating task {} to be {} ...'.format(self.tasks, tasks))
+        self._print('Setting/updating task {} to be {} ...'.format(self.tasks, tasks))
 
         self.tasks = merge_dicts(self.tasks, tasks)
 
@@ -202,7 +156,7 @@ class Manager:
         :return: None
         """
 
-        self.print('Loading task-specifying JSONs in directory {} ...'.format(json_directory_path))
+        self._print('Loading task-specifying JSONs in directory {} ...'.format(json_directory_path))
 
         for f in listdir(json_directory_path):
             fp_json = join(json_directory_path, f)
@@ -218,7 +172,7 @@ class Manager:
         :return: None
         """
 
-        self.print('Loading task-specifying JSON {} ...'.format(json_filepath))
+        self._print('Loading task-specifying JSON {} ...'.format(json_filepath))
 
         with open(json_filepath) as f:
             tasks_json = loads(reset_encoding(f.read()))
@@ -229,7 +183,7 @@ class Manager:
         library_path = tasks_json['library_path']
         if not isdir(library_path):  # Use absolute path
             library_path = join(HOME_DIR, library_path)
-            self.print('\tAssumed that library_path ({}) is relative to the user-home directory.'.format(library_path))
+            self._print('\tAssumed that library_path ({}) is relative to the user-home directory.'.format(library_path))
 
         # Load each task
         for t in tasks_json['tasks']:
@@ -245,7 +199,7 @@ class Manager:
             # Task label is this task's UID; so no duplicates are allowed
             label = t.get('label', '{} (no task label)'.format(function_name))
             if label in tasks:  # Label is duplicated
-                self.print('Task label \'{}\' is duplicated; automatically making a new task label ...'.format(label))
+                self._print('Task label \'{}\' is duplicated; automatically making a new task label ...'.format(label))
 
                 i = 2
                 new_label = '{} (v{})'.format(label, i)
@@ -273,53 +227,53 @@ class Manager:
         :return: dict;
         """
 
-        self.print('Loading a task from a notebook cell ...')
+        self._print('Loading a task from a notebook cell ...')
 
-        self.print('*********\n{}\n*********'.format(text))
+        self._print('*********\n{}\n*********'.format(text))
 
         lines = text.split('\n')
-        self.print('*** lines: {}'.format(lines))
+        self._print('*** lines: {}'.format(lines))
 
         # Comment
         comment = [l for l in lines if l.startswith('#')]
-        self.print('*** comment: {}'.format(comment))
+        self._print('*** comment: {}'.format(comment))
 
         label = comment[0].split('#')[1].strip()
-        self.print('*** label: {}'.format(label))
+        self._print('*** label: {}'.format(label))
 
         # Code
         code = ''.join([l for l in lines if not l.startswith('#')]).replace(' ', '')
-        self.print('*** code: {}'.format(code))
+        self._print('*** code: {}'.format(code))
 
         i = code.find('(')
         before, args = code[:i], code[i + 1:-1]
-        self.print('*** before: {}'.format(before))
+        self._print('*** before: {}'.format(before))
 
         i = before.find('=')
         if i == -1:  # No returns
             i = 0
         returns = before[:i].split(',')
-        self.print('*** returns: {}'.format(returns))
+        self._print('*** returns: {}'.format(returns))
 
         if i != 0:
             i += 1
         function_name = before[i:]
         signature = eval('inspect.signature({})'.format(function_name))
-        self.print('*** signature.parameters: {}'.format(signature.parameters))
+        self._print('*** signature.parameters: {}'.format(signature.parameters))
 
         library_name = eval('{}.__module__'.format(function_name))
-        self.print('*** library_name: {}'.format(library_name))
+        self._print('*** library_name: {}'.format(library_name))
 
         library_path = \
             eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.',
                                                                                                       '/'))[0]
-        self.print('*** library_path: {}'.format(library_path))
+        self._print('*** library_path: {}'.format(library_path))
 
         function_name = function_name.split('.')[-1]
-        self.print('*** function_name: {}'.format(function_name))
+        self._print('*** function_name: {}'.format(function_name))
 
         args = args[:-1].split(',')
-        self.print('*** args: {}'.format(args))
+        self._print('*** args: {}'.format(args))
 
         required_args = [{
                              'label': 'TODO: get from docstring',
@@ -327,7 +281,7 @@ class Manager:
                              'name': n,
                              'value': v
                          } for n, v in zip(list(signature.parameters), [x for x in args if '=' not in x])]
-        self.print('*** required_args: {}'.format(required_args))
+        self._print('*** required_args: {}'.format(required_args))
 
         optional_args = [{
                              'label': 'TODO: get from docstring',
@@ -335,7 +289,7 @@ class Manager:
                              'name': n,
                              'value': v
                          } for n, v in [x.split('=') for x in args if '=' in x]]
-        self.print('*** optional_args: {}'.format(optional_args))
+        self._print('*** optional_args: {}'.format(optional_args))
 
         returns = [x for x in returns if x != '']
         returns = [{
@@ -421,7 +375,7 @@ class Manager:
         if None in returns or '' in returns:
             raise ValueError('Missing returns.')
         else:
-            self.print('returns: {}'.format(returns))
+            self._print('returns: {}'.format(returns))
 
         # Call function
         returned = self._path_import_execute(info['library_path'], info['library_name'], info['function_name'], args)
@@ -436,7 +390,7 @@ class Manager:
             # TODO: think about how to better handle no-returns
             pass
 
-        self.print('self.namespace after execution: {}'.format(self.namespace))
+        self._print('self.namespace after execution: {}'.format(self.namespace))
 
     def _path_import_execute(self, library_path, library_name, function_name, args):
         """
@@ -451,22 +405,22 @@ class Manager:
         :return: list; raw output of the function
         """
 
-        self.print('Updating path, importing function, and executing task ...')
+        self._print('Updating path, importing function, and executing task ...')
 
         # Prepend library path
         code = 'sys.path.insert(0, \'{}\')'.format(library_path)
-        self.print('\t{}'.format(code))
+        self._print('\t{}'.format(code))
         exec(code)
 
         # Import function
         code = 'from {} import {} as function'.format(library_name, function_name)
-        self.print('\t{}'.format(code))
+        self._print('\t{}'.format(code))
         exec(code)
 
         # Execute
-        self.print('\tExecuting {} with:'.format(locals()['function']))
+        self._print('\tExecuting {} with:'.format(locals()['function']))
         for n, v in sorted(args.items()):
-            self.print('\t\t{} = {} ({})'.format(n, get_name(v, self.namespace), type(v)))
+            self._print('\t\t{} = {} ({})'.format(n, get_name(v, self.namespace), type(v)))
 
         return locals()['function'](**args)
 
@@ -482,7 +436,7 @@ class Manager:
         :return: dict; merged and processed args
         """
 
-        self.print('\tMerging and processing arguments ...')
+        self._print('\tMerging and processing arguments ...')
 
         if None in required_args or '' in required_args:
             raise ValueError('Missing required_args.')
@@ -508,6 +462,52 @@ class Manager:
                     processed_v = processed_v[0]
 
             processed_args[n] = processed_v
-            self.print('\t\t{}: {} > {} ({})'.format(n, v, get_name(processed_v, self.namespace), type(processed_v)))
+            self._print('\t\t{}: {} > {} ({})'.format(n, v, get_name(processed_v, self.namespace), type(processed_v)))
 
         return processed_args
+
+    def task_to_code(self, task, print_return=True):
+        """
+        Represent task as code.
+        :param task:  dict;
+        :return: str;
+        """
+
+        if isinstance(task, str):
+            task = loads(task)
+
+        self._print('Representing task ({}, {}) as code ...'.format(task, type(task)))
+
+        label, info = task.popitem()
+
+        returns = ', '.join([d.get('value') for d in info.get('returns')])
+        self._print('returns: {}'.format(returns))
+
+        function_name = info.get('function_name')
+        self._print('function_name: {}'.format(function_name))
+
+        required_args = ',\n'.join([d.get('value') for d in info.get('required_args')])
+        self._print('required_args: {}'.format(required_args))
+
+        optional_args = ',\n'.join(['{}={}'.format(d.get('name'), d.get('value')) for d in info.get('optional_args')])
+        self._print('optional_args: {}'.format(optional_args))
+
+        if returns:
+            code = '''
+            # {}
+            {} = {}({}, {})'''.format(label,
+                                      returns,
+                                      function_name,
+                                      required_args,
+                                      optional_args)
+        else:
+            code = '''
+            # {}
+            {}({}, {})'''.format(label,
+                                 function_name,
+                                 required_args,
+                                 optional_args)
+
+        if print_return:
+            print(code)
+        return code
