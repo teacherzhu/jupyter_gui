@@ -129,10 +129,8 @@ sync_namespaces()
   });
 
   // TODO: Initialize extension on kernel restart
-
   console.log('Called setupCallbacks()');
 }
-
 
 /**
  * Automatically run all Simpli widgets on initialization.
@@ -151,38 +149,6 @@ var autoRunWidgets = function() {
  * Add menu options to notebook navbar and toolbar.
  */
 var addMenuOptions = function() {
-  // var dropdown = $("#cell_type");
-  // var gpInDropdown = dropdown.find("option:contains('Simpli')").length > 0;
-  //
-  // if (!gpInDropdown) {
-  //   // Add Simpli "cell type" to toolbar cell type dropdown menu
-  //   dropdown.append($("<option value='code'>Simpli</option>"));
-  //
-  //   // Change cell to Simpli cell type
-  //   dropdown.change(function(event) {
-  //     var type = $(event.target).find(":selected").text();
-  //     if (type === "Simpli") {
-  //       var former_type = Jupyter.notebook.get_selected_cell().cell_type;
-  //       showTaskList();
-  //     }
-  //   });
-  //
-  //   // Reverse the ordering of events so we check for ours first
-  //   $._data($("#cell_type")[0], "events").change.reverse();
-  // }
-  //
-  // // Add to notebook navbar dropdown menu.
-  // // Menu path: Cell -> Cell Type -> Simpli
-  // var cellMenu = $("#change_cell_type");
-  // var gpInMenu = cellMenu.find("#to_simpli").length > 0;
-  // if (!gpInMenu) {
-  //   cellMenu.find("ul.dropdown-menu").append(
-  //     $("<li id='to_simpli' title='Insert a Simpli widget cell'><a href='#'>Simpli</a></option>")
-  //     .click(function() {
-  //       showTaskList();
-  //     })
-  //   );
-  // }
 
   // Add button for creating Simpli cell to toolbar
   Jupyter.toolbar.add_buttons_group([
@@ -232,7 +198,7 @@ var addMenuOptions = function() {
           var toSimpliCellWrap = function(out) {
             toSimpliCell(null, out);
           }
-          getTask(null, text, toSimpliCellWrap);
+          getTask(null, cell_text, toSimpliCellWrap);
         }
       }
     }
