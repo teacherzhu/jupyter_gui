@@ -116,13 +116,19 @@ load_web_components()
 sync_namespaces()
 `;
 
+  var initCallback = function(out) {
+    console.log('SETUPCALLBACKS() FEEDBACK:');
+    console.log(out);
+  }
+
   // Kernel executes python code in background
-  Jupyter.notebook.kernel.execute(initCode);
+  Jupyter.notebook.kernel.execute(initCode, {
+    'iopub': {
+      'output': initCallback
+    }
+  });
 
   // TODO: Initialize extension on kernel restart
-  // Jupyter.notebook.kernel.restart(function() {
-  //   waitForKernel();
-  // });
 
   console.log('Called setupCallbacks()');
 }
@@ -130,7 +136,6 @@ sync_namespaces()
 
 /**
  * Automatically run all Simpli widgets on initialization.
- * TODO: Forms should 'remember' their input
  */
 var autoRunWidgets = function() {
   console.log('Called autoRunWidgets()');
@@ -224,12 +229,7 @@ var addMenuOptions = function() {
         var pythonTask = JSON.stringify(getWidgetData(cell));
         var code = `mgr.task_to_code('''${pythonTask}''')`;
         console.log(pythonTask);
-        // temporary
-        // cell.set_text('# REPLACE TEXT');
-        // cell.clear_output();
-        // showCellInput(cellIndex);
 
-        // TODO: hookup
         var setCode = function(out) {
           console.log(out);
           cell.set_text(out.content.text);
@@ -334,14 +334,12 @@ var formGroupToggle = function(header) {
  */
 var hideCellInput = function(index) {
   var cell = Jupyter.notebook.get_cell(index);
-  cell.input.addClass("simpli-hidden");
-  cell.element.find(".widget-area .prompt").addClass("simpli-hidden");
+  cell.element.addClass("simpli-cell");
 }
 
 var showCellInput = function(index) {
   var cell = Jupyter.notebook.get_cell(index);
-  cell.input.removeClass("simpli-hidden");
-  cell.element.find(".widget_area .prompt").addClass("simpli-hiden");
+  cell.element.removeClass("simpli-cell");
 }
 
 /**
@@ -361,22 +359,17 @@ var toSimpliCell = function(index, taskJSON) {
    * [cellChange description]
    */
   var cellChange = function() {
-    if (taskJSON == undefined) {
-      renderTaskWidget(index);
-    } else {
-      renderTaskWidget(index, taskJSON);
-    }
-    // Setup cell after it renders
-    var wait = setInterval(function() {
-        if (!Jupyter.notebook.kernel_busy) {
-          clearInterval(wait);
+    Urth.whenReady(function() {
+      if (taskJSON == undefined) {
+        renderTaskWidget(index);
+      } else {
+        renderTaskWidget(index, taskJSON);
+      }
+    });
 
-          // Hide code input
-          hideCellInput(index);
-        }
-      },
-      50);
-  };
+    // Hide code input
+    hideCellInput(index);
+  }
 
   /**
    * [cellChangeWrapper description]

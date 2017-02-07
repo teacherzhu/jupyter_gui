@@ -40,8 +40,17 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
     if (!Jupyter.notebook.kernel_busy) {
       clearInterval(renderWidgetId);
 
+      var initCallback = function(out) {
+        console.log('RENDERTASKWIDGET() FEEDBACK:');
+        console.log(out);
+      }
+
       // Load Polymer elements if not already imported
-      Jupyter.notebook.kernel.execute('load_web_components()');
+      Jupyter.notebook.kernel.execute('load_web_components()', {
+        'iopub': {
+          'output': initCallback
+        }
+      });
 
       // Left panel sets max widget height
       $('.widget-panel-right').css('height', $('.widget-panel-left').css('height'));
