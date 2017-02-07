@@ -10,7 +10,7 @@ const STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensi
 var selectedLabel;
 
 /**
- * Inner container of dialog for task selection.
+ * Inner container o formatf dialog for task selection.
  */
 var taskListParent;
 
@@ -28,7 +28,7 @@ var leftPanel;
 
 var getTasks = function(callback) {
   // code to read library JSON files
-  var code = `mgr.get_tasks()`;
+  var code = `mgr.print_tasks_as_json()`;
 
   // Convert tasks JSON to stringified list
   var my_callback = function(out) {

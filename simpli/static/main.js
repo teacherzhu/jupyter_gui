@@ -89,13 +89,14 @@ def load_web_components():
 
 def sync_namespaces():
     '''
-    Sync namespaces of this Notebook and Simpli TaskManager.
+    Sync namespaces of this Notebook and Manager.
     '''
-    # Manager namespace ==> Notebook namespace
+
+    # Manager ==> Notebook
     for n, v in mgr.namespace.items():
         globals()[n] = v
 
-    # Notebook namespace ==> Manager namespace
+    # Notebook ==> Manager
     mgr.update_namespace(globals())
 
 

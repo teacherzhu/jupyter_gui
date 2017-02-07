@@ -100,25 +100,23 @@ class Manager:
     tasks = property(_get_tasks, _set_tasks)
 
     # Get tasks, dict keyed by task label
-    def get_tasks(self, print_json=True):
+    def print_tasks_as_json(self):
         """
-        Get tasks.
-        :return: list; list of dict
+        Print tasks in JSON format.
+        :return: None
         """
 
-        self._print('Getting tasks ...')
+        self._print('Printing tasks in JSON format...')
 
-        if print_json:
-            print(dumps(self._tasks))
-        return self._tasks
+        print(dumps(self._tasks))
 
     # Get a task, dict keyed by task label
-    def get_task(self, task_label=None, notebook_cell_text=None, print_json=True):
+    def get_task(self, task_label=None, notebook_cell_text=None, print_as_json=True):
         """
         Get a task, whose label is task_label.
         :param task_label: str;
         :param notebook_cell_text: str;
-        :param print_json: bool;
+        :param print_as_json: bool;
         :return: dict;
         """
 
@@ -137,7 +135,7 @@ class Manager:
         else:
             raise ValueError('Need either task_label or notebook_cell_text.')
 
-        if print_json:
+        if print_as_json:
             print(dumps(task))
         return task
 
@@ -325,6 +323,8 @@ class Manager:
         :return: dict;
         """
 
+        self._print('Processing args ...')
+
         processed_dicts = []
 
         for d in args:
@@ -343,6 +343,8 @@ class Manager:
         :param returns: list; list of return dict
         :return: dict;
         """
+
+        self._print('Processing returns ...')
 
         processed_dicts = []
 
@@ -366,7 +368,7 @@ class Manager:
         # Clear any existing output
         clear_output()
 
-        label, info = task.popitem()
+        label, info = list(task.items())[0]
 
         # Process and merge args
         required_args = {a['name']: a['value'] for a in info['required_args']}
@@ -474,6 +476,7 @@ class Manager:
         """
         Represent task as code.
         :param task:  dict;
+        :param print_return: bool;
         :return: str;
         """
 
@@ -483,9 +486,11 @@ class Manager:
             task = loads(task)
             self._print('Representing task ({}, {}) as code ...'.format(task, type(task)))
 
-        label, info = task.popitem()
+        label, info = list(task.items())[0]
 
         returns = ', '.join([d.get('value') for d in info.get('returns')])
+        if returns:
+            returns += ' = '
         self._print('returns: {}'.format(returns))
 
         library_path = info.get('library_path')
@@ -499,23 +504,16 @@ class Manager:
         optional_args = ',\n'.join(['{}={}'.format(d.get('name'), d.get('value')) for d in info.get('optional_args')])
         self._print('optional_args: {}'.format(optional_args))
 
-        if returns:
-            code = '''
-            # {}
-            {} = {}.{}({}, {})'''.format(label,
-                                         returns,
-                                         library_name,
-                                         function_name,
-                                         required_args,
-                                         optional_args)
-        else:
-            code = '''
-            # {}
-            {}.{}({}, {})'''.format(label,
-                                    library_name,
-                                    function_name,
-                                    required_args,
-                                    optional_args)
+        code = '''# {}
+import sys
+sys.path.insert(0, \'{}\')
+{}{}.{}({}, {})'''.format(label,
+                          library_path,
+                          returns,
+                          library_name,
+                          function_name,
+                          required_args,
+                          optional_args)
 
         if print_return:
             print(code)
