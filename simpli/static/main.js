@@ -117,21 +117,24 @@ load_web_components()
 sync_namespaces()
 `;
 
+  var initCallback = function(out) {
+    console.log('SETUPCALLBACKS() FEEDBACK:');
+    console.log(out);
+  }
+
   // Kernel executes python code in background
-  Jupyter.notebook.kernel.execute(initCode);
+  Jupyter.notebook.kernel.execute(initCode, {
+    'iopub': {
+      'output': initCallback
+    }
+  });
 
   // TODO: Initialize extension on kernel restart
-  // Jupyter.notebook.kernel.restart(function() {
-  //   waitForKernel();
-  // });
-
   console.log('Called setupCallbacks()');
 }
 
-
 /**
  * Automatically run all Simpli widgets on initialization.
- * TODO: Forms should 'remember' their input
  */
 var autoRunWidgets = function() {
   console.log('Called autoRunWidgets()');
@@ -139,8 +142,6 @@ var autoRunWidgets = function() {
     var cellCode = $(value).html();
     if (cellCode.indexOf(AUTO_EXEC_FLAG) > -1) {
       toSimpliCell(index);
-    } else if (cellCode.indexOf(AUTO_OUT_FLAG) > -1) {
-      hideCellInput(index);
     }
   });
 };
@@ -149,38 +150,6 @@ var autoRunWidgets = function() {
  * Add menu options to notebook navbar and toolbar.
  */
 var addMenuOptions = function() {
-  var dropdown = $("#cell_type");
-  var gpInDropdown = dropdown.find("option:contains('Simpli')").length > 0;
-
-  if (!gpInDropdown) {
-    // Add Simpli "cell type" to toolbar cell type dropdown menu
-    dropdown.append($("<option value='code'>Simpli</option>"));
-
-    // Change cell to Simpli cell type
-    dropdown.change(function(event) {
-      var type = $(event.target).find(":selected").text();
-      if (type === "Simpli") {
-        var former_type = Jupyter.notebook.get_selected_cell().cell_type;
-        showTaskList();
-      }
-    });
-
-    // Reverse the ordering of events so we check for ours first
-    $._data($("#cell_type")[0], "events").change.reverse();
-  }
-
-  // Add to notebook navbar dropdown menu.
-  // Menu path: Cell -> Cell Type -> Simpli
-  var cellMenu = $("#change_cell_type");
-  var gpInMenu = cellMenu.find("#to_simpli").length > 0;
-  if (!gpInMenu) {
-    cellMenu.find("ul.dropdown-menu").append(
-      $("<li id='to_simpli' title='Insert a Simpli widget cell'><a href='#'>Simpli</a></option>")
-      .click(function() {
-        showTaskList();
-      })
-    );
-  }
 
   // Add button for creating Simpli cell to toolbar
   Jupyter.toolbar.add_buttons_group([
@@ -198,51 +167,40 @@ var addMenuOptions = function() {
   // Add button for converting code to Simpli Widget
   Jupyter.toolbar.add_buttons_group([
     {
-      'label': 'Code to Simpli Widget',
+      'label': 'Simpli Widget <-> Code',
       'icon': 'fa-exchange', // select from http://fortawesome.github.io/Font-Awesome/icons/
-      'callback': function() {
-        var cell = Jupyter.notebook.get_selected_cell();
-        var text = cell.get_text();
-        var code = `mgr.get_task(notebook_cell_text='''${text}''')`;
-
-        var toSimpliCellWrap = function(out) {
-          toSimpliCell(null, out);
-        }
-
-        getTask(null, text, toSimpliCellWrap);
-      }
-    }
-  ]);
-
-  // Add button for converting Simpli Widget to code
-  Jupyter.toolbar.add_buttons_group([
-    {
-      'label': 'Simpli to Code Widget',
-      'icon': 'fa-fire', // select from http://fortawesome.github.io/Font-Awesome/icons/
       'callback': function() {
         var cellIndex = Jupyter.notebook.get_selected_index();
         var cell = Jupyter.notebook.get_selected_cell();
-        var pythonTask = JSON.stringify(getWidgetData(cell));
-        var code = `mgr.task_to_code('''${pythonTask}''')`;
-        console.log(pythonTask);
-        // temporary
-        // cell.set_text('# REPLACE TEXT');
-        // cell.clear_output();
-        // showCellInput(cellIndex);
+        var cell_text = cell.get_text();
 
-        // TODO: hookup
-        var setCode = function(out) {
-          console.log(out);
-          cell.set_text(out.content.text);
-          cell.clear_output();
-          showCellInput(cellIndex);
-        }
+        // Found widget HTML; convert to code
+        if (cell_text.indexOf(AUTO_EXEC_FLAG) > -1) {
+          var pythonTask = JSON.stringify(getWidgetData(cell));
+          var code = `mgr.task_to_code('''${pythonTask}''')`;
+          console.log(pythonTask);
 
-        Jupyter.notebook.kernel.execute(code, {
-          'iopub': {
-            'output': setCode
+          var setCode = function(out) {
+            console.log(out);
+            cell.set_text(out.content.text);
+            cell.clear_output();
+            showCellInput(cellIndex);
           }
-        });
+
+          Jupyter.notebook.kernel.execute(code, {
+            'iopub': {
+              'output': setCode
+            }
+          });
+        } else {
+          // Try to convert to TaskWidget
+          var code = `mgr.get_task(notebook_cell_text='''${cell_text}''')`;
+
+          var toSimpliCellWrap = function(out) {
+            toSimpliCell(null, out);
+          }
+          getTask(null, cell_text, toSimpliCellWrap);
+        }
       }
     }
   ]);
@@ -335,14 +293,12 @@ var formGroupToggle = function(header) {
  */
 var hideCellInput = function(index) {
   var cell = Jupyter.notebook.get_cell(index);
-  cell.input.addClass("simpli-hidden");
-  cell.element.find(".widget-area .prompt").addClass("simpli-hidden");
+  cell.element.addClass("simpli-cell");
 }
 
 var showCellInput = function(index) {
   var cell = Jupyter.notebook.get_cell(index);
-  cell.input.removeClass("simpli-hidden");
-  cell.element.find(".widget_area .prompt").addClass("simpli-hiden");
+  cell.element.removeClass("simpli-cell");
 }
 
 /**
@@ -362,22 +318,17 @@ var toSimpliCell = function(index, taskJSON) {
    * [cellChange description]
    */
   var cellChange = function() {
-    if (taskJSON == undefined) {
-      renderTaskWidget(index);
-    } else {
-      renderTaskWidget(index, taskJSON);
-    }
-    // Setup cell after it renders
-    var wait = setInterval(function() {
-        if (!Jupyter.notebook.kernel_busy) {
-          clearInterval(wait);
+    Urth.whenReady(function() {
+      if (taskJSON == undefined) {
+        renderTaskWidget(index);
+      } else {
+        renderTaskWidget(index, taskJSON);
+      }
+    });
 
-          // Hide code input
-          hideCellInput(index);
-        }
-      },
-      50);
-  };
+    // Hide code input
+    hideCellInput(index);
+  }
 
   /**
    * [cellChangeWrapper description]
