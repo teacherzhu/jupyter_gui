@@ -43,7 +43,7 @@ class Manager:
         :return: dict;
         """
 
-        self._print('(Getting namespace ...)')
+        # self._print('(Getting namespace ...)')
 
         return self._namespace
 
@@ -54,7 +54,7 @@ class Manager:
         :return: None
         """
 
-        self._print('(Setting namespace ...)')
+        # self._print('(Setting namespace ...)')
 
         self._namespace = namespace
         globals()
@@ -69,7 +69,7 @@ class Manager:
         :return: None
         """
 
-        self._print('Updating namespace with {} ...'.format(namespace))
+        # self._print('Updating namespace with {} ...'.format(namespace))
 
         self.namespace = merge_dicts(self.namespace, namespace)
 
@@ -82,7 +82,7 @@ class Manager:
         :return: list; list of dict
         """
 
-        self._print('(Getting tasks ...)')
+        # self._print('(Getting tasks ...)')
 
         return self._tasks
 
@@ -93,7 +93,7 @@ class Manager:
         :return:  None
         """
 
-        self._print('(Setting tasks ...)')
+        # self._print('(Setting tasks ...)')
 
         self._tasks = tasks
 
@@ -106,7 +106,7 @@ class Manager:
         :return: None
         """
 
-        self._print('Printing tasks in JSON format...')
+        self._print('Printing tasks in JSON format ...')
 
         print(dumps(self._tasks))
 
@@ -234,48 +234,48 @@ class Manager:
         self._print('*********\n{}\n*********'.format(text))
 
         lines = [s.strip() for s in text.split('\n') if s != '']
-        self._print('*** lines: {}'.format(lines))
+        self._print('\n*** lines: {}'.format(lines))
 
         # Comment
         comment = [l for l in lines if l.startswith('#')]
-        self._print('*** comment: {}'.format(comment))
+        self._print('\n*** comment: {}'.format(comment))
 
         label = comment[0].split('#')[1].strip()
-        self._print('*** label: {}'.format(label))
+        self._print('\n*** label: {}'.format(label))
 
         # Code
         code = ''.join([l for l in lines if not l.startswith('#')]).replace(' ', '')
-        self._print('*** code: {}'.format(code))
+        self._print('\n*** code: {}'.format(code))
 
         i = code.find('(')
         before, args = code[:i], code[i + 1:-1]
-        self._print('*** before: {}'.format(before))
+        self._print('\n*** before: {}'.format(before))
 
         i = before.find('=')
         if i == -1:  # No returns
             i = 0
         returns = before[:i].split(',')
-        self._print('*** returns: {}'.format(returns))
+        self._print('\n*** returns: {}'.format(returns))
 
         if i != 0:
             i += 1
         function_name = before[i:]
         signature = eval('inspect.signature({})'.format(function_name))
-        self._print('*** signature.parameters: {}'.format(signature.parameters))
+        self._print('\n*** signature.parameters: {}'.format(signature.parameters))
 
         library_name = eval('{}.__module__'.format(function_name))
-        self._print('*** library_name: {}'.format(library_name))
+        self._print('\n*** library_name: {}'.format(library_name))
 
         library_path = \
             eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.',
                                                                                                       '/'))[0]
-        self._print('*** library_path: {}'.format(library_path))
+        self._print('\n*** library_path: {}'.format(library_path))
 
         function_name = function_name.split('.')[-1]
-        self._print('*** function_name: {}'.format(function_name))
+        self._print('\n*** function_name: {}'.format(function_name))
 
         args = args[:-1].split(',')
-        self._print('*** args: {}'.format(args))
+        self._print('\n*** args: {}'.format(args))
 
         required_args = [{
                              'label': 'TODO: get from docstring',
@@ -283,7 +283,7 @@ class Manager:
                              'name': n,
                              'value': v
                          } for n, v in zip(list(signature.parameters), [x for x in args if '=' not in x])]
-        self._print('*** required_args: {}'.format(required_args))
+        self._print('\n*** required_args: {}'.format(required_args))
 
         optional_args = [{
                              'label': 'TODO: get from docstring',
@@ -291,7 +291,7 @@ class Manager:
                              'name': n,
                              'value': v
                          } for n, v in [x.split('=') for x in args if '=' in x]]
-        self._print('*** optional_args: {}'.format(optional_args))
+        self._print('\n*** optional_args: {}'.format(optional_args))
 
         returns = [x for x in returns if x != '']
         returns = [{
