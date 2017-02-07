@@ -40,18 +40,6 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
     if (!Jupyter.notebook.kernel_busy) {
       clearInterval(renderWidgetId);
 
-      var initCallback = function(out) {
-        console.log('RENDERTASKWIDGET() FEEDBACK:');
-        console.log(out);
-      }
-
-      // Load Polymer elements if not already imported
-      Jupyter.notebook.kernel.execute('load_web_components()', {
-        'iopub': {
-          'output': initCallback
-        }
-      });
-
       // Left panel sets max widget height
       $('.widget-panel-right').css('height', $('.widget-panel-left').css('height'));
       $('.widget-panel-right').css('max-height', $('.widget-panel-left').css('height'));
@@ -94,21 +82,29 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
           var pythonTask = JSON.stringify(taskJSON);
           var taskCode = `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))`;
 
+          var outputCell;
           // Create output cell if not created already
+          if (!Jupyter.notebook.get_cell(cellIndex + 1)) {
+            Jupyter.notebook.insert_cell_below();
+          }
+
           Jupyter.notebook.select_next();
-          var outputCell = Jupyter.notebook.get_selected_cell();
+          outputCell = Jupyter.notebook.get_selected_cell();
+
+          // Don't touch cell if not output cell and make cell directly below widget cell
           var cellContent = outputCell.get_text().trim();
           if (cellContent !== "" && cellContent.indexOf(AUTO_OUT_FLAG) < 0) {
-            Jupyter.notebook.insert_cell_below();
-            Jupyter.notebook.select_next();
+            Jupyter.notebook.insert_cell_above();
+            Jupyter.notebook.select_prev();
             outputCell = Jupyter.notebook.get_selected_cell();
           }
+
           // Execute task
           outputCell.set_text(taskCode);
           outputCell.execute();
 
-
-          hideCellInput(cellIndex);
+          hideCellInput(Jupyter.notebook.get_selected_index() - 1);
+          // hideCellInput(Jupyter.notebook.get_selected_index());
         }
       });
     }
