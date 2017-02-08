@@ -1,6 +1,7 @@
 from sys import platform
 from os import listdir, mkdir, environ
 from os.path import abspath, join, isdir, isfile, islink, split
+import re
 
 
 def get_name(obj, namesapce):
@@ -79,10 +80,14 @@ def get_home_dir():
     return home_dir
 
 
-def title_str(a_str):
+def remove_nested_quotes(str_):
+    return re.sub(r'^"|"$|^\'|\'$', '', str_)
+
+
+def title_str(str_):
     """
-    Title a a_str.
-    :param a_str: str;
+    Title a str_.
+    :param str_: str;
     :return: str;
     """
 
@@ -90,7 +95,7 @@ def title_str(a_str):
     uppers = []
     start = end = None
     is_upper = False
-    for i, c in enumerate(a_str):
+    for i, c in enumerate(str_):
         if c.isupper():
             # print('{} is UPPER.'.format(c))
             if is_upper:
@@ -111,27 +116,27 @@ def title_str(a_str):
             uppers.append((start, end))
 
     # Title
-    a_str = a_str.title().replace('_', ' ')
+    str_ = str_.title().replace('_', ' ')
 
     # Upper all original uppercase letters
     for start, end in uppers:
-        a_str = a_str[:start] + a_str[start: end].upper() + a_str[end:]
+        str_ = str_[:start] + str_[start: end].upper() + str_[end:]
 
     # Lower some words
     for lowercase in ['a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at', 'to', 'from', 'of', 'vs', 'vs']:
-        a_str = a_str.replace(' ' + lowercase.title() + ' ', ' ' + lowercase + ' ')
+        str_ = str_.replace(' ' + lowercase.title() + ' ', ' ' + lowercase + ' ')
 
-    return a_str
+    return str_
 
 
-def cast_str_to_int_float_bool_or_str(a_str):
+def cast_str_to_int_float_bool_or_str(str_):
     """
-    Convert a_str into the following data types (return the first successful): int, float, bool, or str.
-    :param a_str: str;
+    Convert str_ into the following data types (return the first successful): int, float, bool, or str.
+    :param str_: str;
     :return: int, float, bool, or str;
     """
 
-    value = a_str.strip()
+    value = str_.strip()
 
     # try to cast to int or float
     for var_type in [int, float]:
@@ -151,14 +156,14 @@ def cast_str_to_int_float_bool_or_str(a_str):
     return str(value)
 
 
-def reset_encoding(a_str):
+def reset_encoding(str_):
     """
 
-    :param a_str: str;
+    :param str_: str;
     :return: str;
     """
 
-    return a_str.replace(u'\u201c', '"').replace(u'\u201d', '"')
+    return str_.replace(u'\u201c', '"').replace(u'\u201d', '"')
 
 
 def merge_dicts(*dicts):

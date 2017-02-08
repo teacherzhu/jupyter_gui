@@ -1,5 +1,5 @@
 {
-  "library_path": "simpli",
+  "library_path": "CompBio/simpli",
   "tasks": [
     {
       "label": "Assign",
@@ -7,18 +7,18 @@
       "required_args": [
         {
           "name": "value",
-          "label": "value"
+          "label": "Value to assign"
         }
       ],
       "returns": [
         {
-          "label": "item"
+          "label": "Variable name to assign to"
         }
       ]
     },
     {
       "label": "Link JSON",
-      "function_path": "simpli.default_tasks.link_simpli_json",
+      "function_path": "simpli.default_tasks.link_json",
       "required_args": [
         {
           "name": "filepath",

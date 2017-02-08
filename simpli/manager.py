@@ -7,7 +7,8 @@ from json import loads, dumps
 from IPython.display import clear_output
 
 from . import HOME_DIR, SIMPLI_JSON_DIR
-from .support import get_name, merge_dicts, title_str, cast_str_to_int_float_bool_or_str, reset_encoding
+from .support import get_name, merge_dicts, remove_nested_quotes, title_str, cast_str_to_int_float_bool_or_str, \
+    reset_encoding
 
 
 class Manager:
@@ -61,7 +62,6 @@ class Manager:
 
     namespace = property(_get_namespace, _set_namespace)
 
-    # Update Manager's namespace
     def update_namespace(self, namespace):
         """
         Update namespace.
@@ -99,18 +99,18 @@ class Manager:
 
     tasks = property(_get_tasks, _set_tasks)
 
-    # Get tasks, dict keyed by task label
-    def print_tasks_as_json(self):
+    def print_tasks_as_json(self, json_directory_path=SIMPLI_JSON_DIR):
         """
-        Print tasks in JSON format.
+        Load tasks from task-specifying JSONs in json_directory_path and print all tasks in JSON format.
         :return: None
         """
 
         self._print('Printing tasks in JSON format ...')
 
+        self._load_tasks_from_json_dir(json_directory_path=json_directory_path)
+
         print(dumps(self._tasks))
 
-    # Get a task, dict keyed by task label
     def get_task(self, task_label=None, notebook_cell_text=None, print_as_json=True):
         """
         Get a task, whose label is task_label.
@@ -126,10 +126,6 @@ class Manager:
             task = {task_label: self.tasks[task_label]}
 
         elif notebook_cell_text:
-            # TODO: remove
-            # with open('/Users/ckmah/Desktop/cell_text.txt', 'w') as f:
-            #     f.write(notebook_cell_text)
-
             task = self._load_task_from_notebook_cell(notebook_cell_text)
 
         else:
@@ -150,8 +146,7 @@ class Manager:
 
         self.tasks = merge_dicts(self.tasks, tasks)
 
-    # Laod tasks specified by JSONs in a directory
-    def load_tasks_from_json_dir(self, json_directory_path=SIMPLI_JSON_DIR):
+    def _load_tasks_from_json_dir(self, json_directory_path):
         """
         Load tasks from task-specifying JSONs in json_directory_path.
         :param json_directory_path: str; directory containing task-specifying JSONs
@@ -236,16 +231,17 @@ class Manager:
         lines = [s.strip() for s in text.split('\n') if s != '']
         self._print('\n*** lines: {}'.format(lines))
 
-        # Comment
-        comment = [l for l in lines if l.startswith('#')]
-        self._print('\n*** comment: {}'.format(comment))
+        # Comment lines
+        comment_lines = [l for l in lines if l.startswith('#')]
+        self._print('\n*** comment lines: {}'.format(comment_lines))
 
-        label = comment[0].split('#')[1].strip()
+        label = comment_lines[0].split('#')[1].strip()
         self._print('\n*** label: {}'.format(label))
 
-        # Code
-        code = ''.join([l for l in lines if not l.startswith('#')]).replace(' ', '')
-        self._print('\n*** code: {}'.format(code))
+        # Code lines
+        code_lines = [l for l in lines if not l.startswith('#') and 'path.insert' not in l and 'import ' not in l]
+        self._print('\n*** code lines: {}'.format(code_lines))
+        code = ''.join(code_lines).replace(' ', '')
 
         i = code.find('(')
         before, args = code[:i], code[i + 1:-1]
@@ -274,23 +270,23 @@ class Manager:
         function_name = function_name.split('.')[-1]
         self._print('\n*** function_name: {}'.format(function_name))
 
-        args = args[:-1].split(',')
+        args = args.split(',')
         self._print('\n*** args: {}'.format(args))
 
         required_args = [{
-                             'label': 'TODO: get from docstring',
+                             'label': n,
                              'description': 'TODO: get from docstring',
                              'name': n,
-                             'value': v
-                         } for n, v in zip(list(signature.parameters), [x for x in args if '=' not in x])]
+                             'value': v}
+                         for n, v in zip(list(signature.parameters), [x for x in args if '=' not in x])]
         self._print('\n*** required_args: {}'.format(required_args))
 
         optional_args = [{
-                             'label': 'TODO: get from docstring',
+                             'label': n,
                              'description': 'TODO: get from docstring',
                              'name': n,
-                             'value': v
-                         } for n, v in [x.split('=') for x in args if '=' in x]]
+                             'value': v}
+                         for n, v in [x.split('=') for x in args if '=' in x]]
         self._print('\n*** optional_args: {}'.format(optional_args))
 
         returns = [x for x in returns if x != '']
@@ -298,8 +294,8 @@ class Manager:
 
                        'label': 'TODO: get from docstring',
                        'description': 'TODO: get from docstring',
-                       'value': v
-                   } for v in returns]
+                       'value': v}
+                   for v in returns]
         task = {
             label: {
                 'description': 'TODO: get from docstring',
@@ -309,11 +305,10 @@ class Manager:
                 'required_args': required_args,
                 'default_args': [],
                 'optional_args': optional_args,
-                'returns': returns
-            }
+                'returns': returns}
         }
 
-        self._update_tasks(task)
+        # self._update_tasks(task)
         return task
 
     def _process_args(self, args):
@@ -332,8 +327,8 @@ class Manager:
                 'name': d.get('name'),
                 'value': d.get('value', ''),
                 'label': d.get('label', title_str(d['name'])),
-                'description': d.get('description', 'No description')
-            })
+                'description': d.get('description', 'No description')}
+            )
 
         return processed_dicts
 
@@ -351,12 +346,11 @@ class Manager:
         for d in returns:
             processed_dicts.append({
                 'label': d.get('label'),
-                'description': d.get('description', 'No description')
-            })
+                'description': d.get('description', 'No description')}
+            )
 
         return processed_dicts
 
-    # Execute a task
     def execute_task(self, task):
         """
         Execute task.
@@ -388,10 +382,10 @@ class Manager:
 
         # Handle returns
         if len(returns) == 1:
-            self.namespace[returns[0]] = returned
+            self.namespace[returns[0]] = remove_nested_quotes(returned)
         elif len(returns) > 1:
             for n, v in zip(returns, returned):
-                self.namespace[n] = v
+                self.namespace[n] = remove_nested_quotes(v)
         else:
             # TODO: think about how to better handle no-returns
             pass
@@ -463,8 +457,7 @@ class Manager:
                 # First assume a list of str to be passed
                 processed_v = [cast_str_to_int_float_bool_or_str(s) for s in v.split(',') if s]
 
-                # If there is only 1 item in the assumed list, use it directly
-                if len(processed_v) == 1:
+                if len(processed_v) == 1:  # If there is only 1 item in the assumed list, use it directly
                     processed_v = processed_v[0]
 
             processed_args[n] = processed_v
@@ -498,23 +491,42 @@ class Manager:
         function_name = info.get('function_name')
         self._print('function_name: {}'.format(function_name))
 
-        required_args = ',\n'.join([d.get('value') for d in info.get('required_args')])
+        # Required args
+        required_args = ',\n'.join([self._str_or_name(d.get('value')) for d in info.get('required_args')])
         self._print('required_args: {}'.format(required_args))
 
+        # Optional args
         optional_args = ',\n'.join(['{}={}'.format(d.get('name'), d.get('value')) for d in info.get('optional_args')])
+        if optional_args:
+            optional_args = ', ' + optional_args
         self._print('optional_args: {}'.format(optional_args))
 
         code = '''# {}
+
 import sys
 sys.path.insert(0, \'{}\')
-{}{}.{}({}, {})'''.format(label,
-                          library_path,
-                          returns,
-                          library_name,
-                          function_name,
-                          required_args,
-                          optional_args)
+import {}
+
+{}{}.{}({}{})'''.format(label,
+                        library_path,
+                        library_name.split('.')[0],
+                        returns,
+                        library_name,
+                        function_name,
+                        required_args,
+                        optional_args)
 
         if print_return:
             print(code)
         return code
+
+    def _str_or_name(self, str_):
+        """
+
+        :param str_:
+        :return:
+        """
+
+        if str_ not in self.namespace:
+            str_ = '\'{}\''.format(str_)
+        return str_
