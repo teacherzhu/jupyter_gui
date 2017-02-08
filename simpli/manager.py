@@ -240,15 +240,15 @@ class Manager:
 
         # Code lines
 
-        path_line = [l for l in lines if 'path.insert' in l]
-        if path_line:
-            exec(path_line[0])
+        code_lines = []
+        for l in lines:
+            if not l.startswith('#'):
+                if 'path.insert' in l or 'import ' in l:
+                    print(l)
+                    exec(l)
+                else:
+                    code_lines.append(l)
 
-        import_line = [l for l in lines if 'import ' in l]
-        if import_line:
-            exec(import_line[0])
-
-        code_lines = [l for l in lines if not l.startswith('#') and 'path.insert' not in l and 'import ' not in l]
         self._print('\n*** code lines: {}'.format(code_lines))
         code = ''.join(code_lines).replace(' ', '')
 
