@@ -70,6 +70,8 @@ def just_return(value):
     :param value:
     :return:
     """
+
+    print('Returning {} ...'.format(value))
     return value
 
 
