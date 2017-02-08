@@ -37,75 +37,96 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
 
   // Setup widget after it renders
   var renderWidgetId = setInterval(function() {
-    if (!Jupyter.notebook.kernel_busy) {
-      clearInterval(renderWidgetId);
+      if (!Jupyter.notebook.kernel_busy) {
+        clearInterval(renderWidgetId);
 
-      // Left panel sets max widget height
-      $('.widget-panel-right').css('height', $('.widget-panel-left').css('height'));
-      $('.widget-panel-right').css('max-height', $('.widget-panel-left').css('height'));
+        // Left panel sets max widget height
+        $('.widget-panel-right').css('height', $('.widget-panel-left').css('height'));
+        $('.widget-panel-right').css('max-height', $('.widget-panel-left').css('height'));
 
-      // Bind and show corresponding description on focus
-      var itemInputs = cell.element.find("paper-input");
-      itemInputs.each(function(index) {
-        $(this).on('focus', function() {
-          setItemInfo(index, cell);
+        // Bind and show corresponding description on focus
+        var itemInputs = cell.element.find("paper-input");
+        itemInputs.each(function(index) {
+          $(this).on('focus', function() {
+            setItemInfo(index, cell);
+          });
         });
-      });
 
-      // Link submitting form to executing function
-      cell.element.find('form').on('iron-form-submit', function(event) {
-        if (this.validate()) {
+        // Link submitting form to executing function
+        cell.element.find('form').on('iron-form-submit', function(event) {
+          if (this.validate()) {
 
-          // Retrieve user input
-          var userInput = this.serialize();
+            // Retrieve user input
+            var userInput = this.serialize();
 
-          // Map user input to task JSON
-          for (var group of fieldGroups) {
+            // Map user input to task JSON
+            for (var group of fieldGroups) {
 
-            // Convert single element to array, ignore if empty
-            if (!(userInput[group] instanceof Array) && userInput[group] != undefined) {
-              userInput[group] = [userInput[group]];
+              // Convert single element to array, ignore if empty
+              if (!(userInput[group] instanceof Array) && userInput[group] != undefined) {
+                userInput[group] = [userInput[group]];
+              }
+
+              // Map user input values to argument JSON
+              for (var inputIndex in userInput[group]) {
+                var inputValue = userInput[group][inputIndex];
+                inputValue = inputValue.split('"').join('').split("'").join('');
+                taskJSON[Object.keys(taskJSON)[0]][group][inputIndex].value = inputValue;
+              }
             }
 
-            // Map user input values to argument JSON
-            for (var inputIndex in userInput[group]) {
-              var inputValue = userInput[group][inputIndex];
+            // Save user input to widget HTML
+            updateTaskWidget(cell, taskJSON);
 
-              taskJSON[Object.keys(taskJSON)[0]][group][inputIndex].value = inputValue;
+            // Compile task JSON
+            var pythonTask = JSON.stringify(taskJSON);
+            var taskCode =
+              `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))\nsync_manager_to_notebook()`;
+
+            var outputCell;
+            // Create output cell if not created already
+            if (!Jupyter.notebook.get_cell(cellIndex + 1)) {
+              Jupyter.notebook.insert_cell_below();
             }
-          }
 
-          // Save user input to widget HTML
-          updateTaskWidget(cell, taskJSON);
-
-          // Compile task JSON
-          var pythonTask = JSON.stringify(taskJSON);
-          var taskCode = `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))`;
-
-          var outputCell;
-          // Create output cell if not created already
-          if (!Jupyter.notebook.get_cell(cellIndex + 1)) {
-            Jupyter.notebook.insert_cell_below();
-          }
-
-          Jupyter.notebook.select_next();
-          outputCell = Jupyter.notebook.get_selected_cell();
-
-          // Don't touch cell if not output cell and make cell directly below widget cell
-          var cellContent = outputCell.get_text().trim();
-          if (cellContent !== "" && cellContent.indexOf(AUTO_OUT_FLAG) < 0) {
-            Jupyter.notebook.insert_cell_above();
-            Jupyter.notebook.select_prev();
+            Jupyter.notebook.select_next();
             outputCell = Jupyter.notebook.get_selected_cell();
-          }
 
-          // Execute task
-          outputCell.set_text(taskCode);
-          outputCell.execute();
-        }
-      });
-    }
-  }, 50);
+            // Don't touch cell if not output cell and make cell directly below widget cell
+            var cellContent = outputCell.get_text().trim();
+            if (cellContent !== "" && cellContent.indexOf(AUTO_OUT_FLAG) < 0) {
+              Jupyter.notebook.insert_cell_above();
+              Jupyter.notebook.select_prev();
+              outputCell = Jupyter.notebook.get_selected_cell();
+            }
+
+            // Execute task
+            outputCell.set_text(taskCode);
+            outputCell.execute();
+
+            // EXPERIMENTAL
+            // var outputCallback = function(out) {
+            //   console.log("APPEND OUTPUT HERE");
+            //   console.log(out);
+            //   cell.output_area.append_output(out);
+            // }
+            //
+            // var interval = setInterval(function() {
+            //   // Use kernel to read library JSONs
+            //   if (!Jupyter.notebook.kernel_busy) {
+            //     clearInterval(interval);
+            //     Jupyter.notebook.kernel.execute(taskCode, {
+            //       'iopub': {
+            //         'output': outputCallback
+            //       }
+            //     });
+            //   }
+            // }, 10);
+          }
+        });
+      }
+    },
+    50);
 }
 
 /**
@@ -184,12 +205,14 @@ var generateTaskWidgetHTML = function(taskJSON) {
             label: arg.label,
             name: fieldGroups[groupIndex],
             required: '',
-            value: arg.value,
-            'auto-validate': ''
+            value: arg.value
           });
 
         if (fieldGroups[groupIndex] != 'optional_args') {
-          field.attr('error-message', 'Required!');
+          field.attr({
+            'auto-validate': '',
+            'error-message': 'Required!'
+          });
         }
         field.appendTo(fieldGroup);
       }

@@ -50,8 +50,6 @@ def init_libs():
     # Initialize a Manager
     global mgr
     mgr = Manager()
-    mgr.load_tasks_from_json_dir()
-
 
 def load_web_components():
     '''
@@ -87,18 +85,14 @@ def load_web_components():
     get_ipython().run_cell_magic('HTML', '', imports)
 
 
-def sync_namespaces():
-    '''
-    Sync namespaces of this Notebook and Manager.
-    '''
-
+def sync_manager_to_notebook():
     # Manager ==> Notebook
     for n, v in mgr.namespace.items():
         globals()[n] = v
 
+def sync_notebook_to_manager():
     # Notebook ==> Manager
     mgr.update_namespace(globals())
-
 
 # Register kernel initialization callback
 if (init_libs not in get_ipython().events.callbacks['shell_initialized']):
@@ -108,13 +102,13 @@ if (load_web_components not in get_ipython().events.callbacks['shell_initialized
    get_ipython().events.register('shell_initialized', load_web_components)
 
 # Register post execute cell callback
-if sync_namespaces not in get_ipython().events.callbacks['post_execute']:
-    get_ipython().events.register('post_execute', sync_namespaces)
+if sync_notebook_to_manager not in get_ipython().events.callbacks['post_execute']:
+    get_ipython().events.register('post_execute', sync_notebook_to_manager)
 
 # Initial namespace sync
 init_libs()
 load_web_components()
-sync_namespaces()
+sync_notebook_to_manager()
 `;
 
   Jupyter.notebook.insert_cell_at_index('code', 0);
@@ -176,7 +170,7 @@ var addMenuOptions = function() {
 
           var setCode = function(out) {
             console.log(out);
-            cell.set_text(out.content.text);
+            cell.set_text(out.content.text.trim());
             cell.clear_output();
             showCellInput(cell);
           }

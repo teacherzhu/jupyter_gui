@@ -51,6 +51,36 @@
       ]
     },
     {
+      "label": "Slice DataFrame by Row (Optional)",
+      "function_path": "simpli.default_tasks.slice_dataframe",
+      "description": "Return a subset of rows of a given DataFrame object.",
+      "required_args": [
+        {
+          "name": "dataframe",
+          "label": "DataFrame",
+          "description": "Target dataframe object."
+        }],
+        "optional_args": [
+        {
+          "name": "indices",
+          "label": "Row index/indices",
+          "description": "An integer or list of integers separated by commas of the rows to slice. Note that indices are 0 based."
+        }
+      ],
+      "default_args": [
+        {
+          "name": "ax",
+          "value": "0"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Sliced DataFrame",
+          "description": "A slice of the DataFrame including the specified rows."
+        }
+      ]
+    },
+    {
       "label": "Slice DataFrame by Row",
       "function_path": "simpli.default_tasks.slice_dataframe",
       "description": "Return a subset of rows of a given DataFrame object.",
