@@ -392,6 +392,7 @@ class Manager:
         # Handle returns
         if len(returns) == 1:
             self.namespace[returns[0]] = remove_nested_quotes(returned)
+
         elif len(returns) > 1:
             for n, v in zip(returns, returned):
                 self.namespace[n] = remove_nested_quotes(v)

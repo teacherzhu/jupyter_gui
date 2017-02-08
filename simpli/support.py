@@ -81,7 +81,9 @@ def get_home_dir():
 
 
 def remove_nested_quotes(str_):
-    return re.sub(r'^"|"$|^\'|\'$', '', str_)
+    if isinstance(str_, str):
+        str_ = re.sub(r'^"|"$|^\'|\'$', '', str_)
+    return str_
 
 
 def title_str(str_):
