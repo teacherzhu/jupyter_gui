@@ -239,6 +239,15 @@ class Manager:
         self._print('\n*** label: {}'.format(label))
 
         # Code lines
+
+        path_line = [l for l in lines if 'path.insert' in l]
+        if path_line:
+            exec(path_line[0])
+
+        import_line = [l for l in lines if 'import ' in l]
+        if import_line:
+            exec(import_line[0])
+
         code_lines = [l for l in lines if not l.startswith('#') and 'path.insert' not in l and 'import ' not in l]
         self._print('\n*** code lines: {}'.format(code_lines))
         code = ''.join(code_lines).replace(' ', '')
@@ -527,6 +536,6 @@ import {}
         :return:
         """
 
-        if str_ not in self.namespace:
-            str_ = '\'{}\''.format(str_)
+        # if str_ not in self.namespace:
+        #     str_ = '\'{}\''.format(str_)
         return str_
