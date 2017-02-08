@@ -117,17 +117,11 @@ load_web_components()
 sync_namespaces()
 `;
 
-  var initCallback = function(out) {
-    console.log('SETUPCALLBACKS() FEEDBACK:');
-    console.log(out);
-  }
-
-  // Kernel executes python code in background
-  Jupyter.notebook.kernel.execute(initCode, {
-    'iopub': {
-      'output': initCallback
-    }
-  });
+  Jupyter.notebook.insert_cell_at_index('code', 0);
+  var cell = Jupyter.notebook.get_cell(0);
+  cell.set_text(initCode);
+  cell.execute();
+  Jupyter.notebook.delete_cell(0);
 
   // TODO: Initialize extension on kernel restart
   console.log('Called setupCallbacks()');
@@ -174,7 +168,7 @@ var addMenuOptions = function() {
         var cell = Jupyter.notebook.get_selected_cell();
         var cell_text = cell.get_text();
 
-        // Found widget HTML; convert to code
+        // Convert widget to code
         if (cell_text.indexOf(AUTO_EXEC_FLAG) > -1) {
           var pythonTask = JSON.stringify(getWidgetData(cell));
           var code = `mgr.task_to_code('''${pythonTask}''')`;
@@ -184,7 +178,7 @@ var addMenuOptions = function() {
             console.log(out);
             cell.set_text(out.content.text);
             cell.clear_output();
-            showCellInput(cellIndex);
+            showCellInput(cell);
           }
 
           Jupyter.notebook.kernel.execute(code, {
@@ -193,7 +187,7 @@ var addMenuOptions = function() {
             }
           });
         } else {
-          // Try to convert to TaskWidget
+          // Convert code to widget
           var code = `mgr.get_task(notebook_cell_text='''${cell_text}''')`;
 
           var toSimpliCellWrap = function(out) {
@@ -280,24 +274,18 @@ var undoDeleteCell = function() {
 };
 
 /**
- * Given group header, toggle adjacent iron-collapse element.
- * @param  {object} header corresponding header element for iron-collapse
- */
-var formGroupToggle = function(header) {
-  $(header).next().toggle();
-}
-
-/**
  * Hide the input and prompt for the specified notebook cell.
- * @param  {Number} index Index of the notebook cell to be hidden
+ * @param  {Number} cell Notebook cell to be hidden
  */
-var hideCellInput = function(index) {
-  var cell = Jupyter.notebook.get_cell(index);
+var hideCellInput = function(cell) {
   cell.element.addClass("simpli-cell");
 }
 
-var showCellInput = function(index) {
-  var cell = Jupyter.notebook.get_cell(index);
+/**
+ * Show the input and prompt for the specified notebook cell.
+ * @param  {Number} cell Notebook cell to be hidden
+ */
+var showCellInput = function(cell) {
   cell.element.removeClass("simpli-cell");
 }
 
@@ -314,67 +302,28 @@ var toSimpliCell = function(index, taskJSON) {
 
   cell = Jupyter.notebook.get_cell(index);
 
-  /**
-   * [cellChange description]
-   */
-  var cellChange = function() {
-    Urth.whenReady(function() {
+  // Wait for kernel to not be busy
+  var interval = setInterval(function() {
+    if (!Jupyter.notebook.kernel_busy) {
+      clearInterval(interval);
+
+      // Force cell type to code
+      var cell_type = cell.cell_type;
+      if (cell_type !== "code") {
+        Jupyter.notebook.to_code(index);
+      }
+
       if (taskJSON == undefined) {
         renderTaskWidget(index);
       } else {
         renderTaskWidget(index, taskJSON);
       }
-    });
 
-    // Hide code input
-    hideCellInput(index);
-  }
+      // Hide code input
+      hideCellInput(cell);
+    }
+  }, 10);
 
-  /**
-   * [cellChangeWrapper description]
-   * @return {[type]}      [description]
-   */
-  var cellChangeWrapper = function() {
-    // Wait for kernel to not be busy
-    var interval = setInterval(function() {
-      if (!Jupyter.notebook.kernel_busy) {
-        clearInterval(interval);
-
-        // Force cell type to code
-        var cell_type = cell.cell_type;
-        if (cell_type !== "code") {
-          Jupyter.notebook.to_code(index);
-        }
-
-        cellChange();
-      }
-    }, 10);
-  };
-
-  // Display a dialog if rendering the cell will override user generated content.
-  var cellContent = cell.get_text().trim();
-  if (cellContent === "" || cellContent.indexOf(AUTO_EXEC_FLAG) >= 0) {
-    cellChangeWrapper();
-  } else {
-    // Use dialog modal Boostrap plugin
-    var dialog = require('base/js/dialog');
-    dialog.modal({
-      notebook: Jupyter.notebook,
-      keyboard_manager: Jupyter.notebook.keyboard_manager,
-      title: "Change to Simpli Cell?",
-      body: "Are you sure you want to change this to a Simpli cell? This will cause " +
-        "you to lose any code or other information already entered into the cell.",
-      buttons: {
-        "Cancel": {},
-        "Change Cell Type": {
-          "class": "btn-warning",
-          "click": function() {
-            cellChangeWrapper();
-          }
-        }
-      }
-    });
-  }
 };
 
 var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simpli/resources/";

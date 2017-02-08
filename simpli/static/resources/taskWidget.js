@@ -102,9 +102,6 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
           // Execute task
           outputCell.set_text(taskCode);
           outputCell.execute();
-
-          hideCellInput(Jupyter.notebook.get_selected_index() - 1);
-          // hideCellInput(Jupyter.notebook.get_selected_index());
         }
       });
     }
