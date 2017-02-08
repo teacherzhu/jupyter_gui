@@ -4,6 +4,12 @@ Jupyter.notebook = Jupyter.notebook || {};
 var fieldGroups = ['required_args', 'optional_args', 'returns'];
 var groupLabels = ['Input', 'Optional Input', 'Output'];
 
+// TODO WIDGET STYLING VARIABLES
+var widgetFont;
+var inputColor;
+var optInputColor;
+var outputColor;
+
 /**
  * Gets the taskJSON from the given cell following the Simpli Widget format.
  * @param  {Object} cell Simpli cell
