@@ -244,7 +244,6 @@ class Manager:
         for l in lines:
             if not l.startswith('#'):
                 if 'path.insert' in l or 'import ' in l:
-                    print(l)
                     exec(l)
                 else:
                     code_lines.append(l)
