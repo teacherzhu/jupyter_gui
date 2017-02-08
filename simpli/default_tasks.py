@@ -60,7 +60,6 @@ def display_raw_html(html):
     :return: None
     """
 
-    # print('display_raw_html: {}'.format(html))
     display_html(html, raw=True)
 
 
