@@ -40,8 +40,7 @@ var setupCallbacks = function() {
 global mgr
 
 def init_libs():
-    '''
-    '''
+
     global json
     import json
 
@@ -52,8 +51,6 @@ def init_libs():
     mgr = Manager()
 
 def load_web_components():
-    '''
-    '''
 
     global dwidgets
     import declarativewidgets as dwidgets
