@@ -66,11 +66,8 @@ if sync_notebook_to_manager not in get_ipython().events.callbacks['post_execute'
     get_ipython().events.register('post_execute', sync_notebook_to_manager)
 
 # ======================================================================================================================
-# Start up
+# Start up Manager
 # ======================================================================================================================
-# TODO: remove?
-global json
-import json
 
 # Initialize a Manager.
 from simpli import Manager
@@ -81,4 +78,46 @@ mgr = Manager()
 # TODO: remove (nothing to sync in the beginning)?
 sync_notebook_to_manager()
 
+# ======================================================================================================================
+# Start up Notebook Package
+# ======================================================================================================================
+try:
+    print('Launching NB Package...')
+
+    import sys
+    from os.path import join, realpath
+
+    DIR_PROJECT = realpath('..')
+    print('\tExported variable DIR_PROJECT ({}).'.format(DIR_PROJECT))
+
+    DIR_TOOLS = join(DIR_PROJECT, 'tools/')
+    sys.path.insert(0, DIR_TOOLS)
+    print('\tExported variable DIR_TOOLS ({}), and added it to the path.'.format(DIR_TOOLS))
+
+    DIR_DATA = join(DIR_PROJECT, 'data/')
+    print('\tExported variable DIR_DATA ({}).'.format(DIR_DATA))
+
+    DIR_RESULT = join(DIR_PROJECT, 'results/')
+    print('\tExported variable DIR_RESULT ({}).'.format(DIR_RESULT))
+
+    DIR_MEDIA = join(DIR_PROJECT, 'media/')
+    print('\tExported variable DIR_MEDIA ({}).'.format(DIR_MEDIA))
+
+    from environment import *
+    # exec('from environment import *')
+
+except:
+    pass
+
+get_ipython().magic('matplotlib inline')
+get_ipython().magic('load_ext autoreload')
+get_ipython().magic('autoreload 2')
+
+# ======================================================================================================================
+# Load GUI
+# ======================================================================================================================
 load_gui()
+
+# TODO: remove?
+global json
+import json

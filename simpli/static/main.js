@@ -39,6 +39,10 @@ var setupCallbacks = function() {
 from inspect import getsource
 from simpli import startup
 exec(getsource(startup))
+
+%matplotlib inline
+%load_ext autoreload
+%autoreload 2
   `;
 
   Jupyter.notebook.insert_cell_at_index('code', 0);
