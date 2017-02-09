@@ -1,4 +1,5 @@
 from IPython import get_ipython  # For syntax (re-imported by default when a Notebook starts)
+import declarativewidgets as dwidgets
 
 
 # ======================================================================================================================
@@ -28,9 +29,6 @@ def load_gui():
     Load GUI components.
     :return: None
     """
-
-    global dwidgets
-    import declarativewidgets as dwidgets
 
     dwidgets.init()
 
