@@ -69,25 +69,28 @@ if sync_notebook_to_manager not in get_ipython().events.callbacks['post_execute'
 # ======================================================================================================================
 
 # Initialize a Manager.
-from simpli import Manager
+import simpli
 
 # TODO: rename to 'manager'
 global mgr
-mgr = Manager()
+mgr = simpli.Manager()
 # TODO: remove (nothing to sync in the beginning)?
 sync_notebook_to_manager()
-
-# ======================================================================================================================
-# Start up Notebook Package
-# ======================================================================================================================
-get_ipython().magic('load_ext autoreload')
-get_ipython().magic('autoreload 2')
 
 # ======================================================================================================================
 # Load GUI
 # ======================================================================================================================
 load_gui()
 
-# TODO: remove?
-global json
-import json
+# ======================================================================================================================
+# Start up Notebook Package
+# ======================================================================================================================
+get_ipython().magic('load_ext autoreload')
+get_ipython().magic('autoreload 2')
+try:
+    from environment import *
+except:
+    pass
+
+simpli.default_tasks.center_align_output_cells()
+simpli.default_tasks.display_banner()

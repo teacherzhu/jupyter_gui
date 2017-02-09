@@ -370,6 +370,9 @@ class Manager:
         # Clear any existing output
         clear_output()
 
+        if isinstance(task, str):
+            task = loads(task)
+
         label, info = list(task.items())[0]
 
         # Process and merge args

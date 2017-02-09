@@ -79,7 +79,7 @@ def center_align_output_cells():
     :return: None
     """
 
-    html = ''''<style>.output {align-items: center; }</style>'''
+    html = '''<style>.output {align-items: center; }</style>'''
     display_raw_html(html)
 
 
