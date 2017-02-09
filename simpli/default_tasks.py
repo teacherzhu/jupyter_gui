@@ -1,5 +1,5 @@
-from os import remove, symlink
-from os.path import join, split, islink
+from os import listdir, remove, symlink
+from os.path import join, split, islink, relpath
 from shutil import rmtree
 
 from IPython.core.display import display_html
@@ -83,14 +83,52 @@ def center_align_output_cells():
     display_raw_html(html)
 
 
-def display_banner():
+def display_banner_and_logos(media_directory):
     """
 
     :return: None
     """
 
-    html = '''<img src="../media/start_banner.jpg" width=600 height=337>'''
+    dir_media = relpath(media_directory)
+
+    html = ''
+
+    # Load files
+    logo_filenames = []
+    for f in listdir(dir_media):
+        if 'start_banner' in f:
+            html_banner = '''<img src="{}" width=600 height=337>'''.format(join(dir_media, f))
+            html += html_banner
+        elif 'logo' in f:
+            logo_filenames.append(f)
+
+    # Make logo HTML
+    logo_filenames = sorted(logo_filenames)
+    if any(logo_filenames):
+        html_logos = ''
+        for l_fn in logo_filenames:
+            html_logos += '''<th style="background-color:white"> <img src="{}" width=200 height=200></th>'''.format(
+                join(dir_media, l_fn))
+
+        html_logos = '''<table style="border:solid white;" cellspacing="0" cellpadding="0" border-collapse: collapse; border-spacing: 0;><tr>{}</tr></table>'''.format(
+            ''.join(html_logos))
+        html += html_logos
+
     display_raw_html(html)
+
+
+def display_end_banner(media_directory):
+    """
+
+    :return: None
+    """
+
+    dir_media = relpath(media_directory)
+
+    for f in listdir(dir_media):
+        if 'end_banner' in f:
+            html = '''<img src="{}" width=600 height=337>'''.format(join(dir_media, f))
+            display_raw_html(html)
 
 
 def youtube(url):

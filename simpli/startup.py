@@ -87,10 +87,3 @@ load_gui()
 # ======================================================================================================================
 get_ipython().magic('load_ext autoreload')
 get_ipython().magic('autoreload 2')
-try:
-    from environment import *
-except:
-    pass
-
-simpli.default_tasks.center_align_output_cells()
-simpli.default_tasks.display_banner()
