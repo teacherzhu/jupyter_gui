@@ -4,6 +4,15 @@ from IPython import get_ipython  # For syntax (re-imported by default when a Not
 # ======================================================================================================================
 # Define functions
 # ======================================================================================================================
+def sync_notebook_to_manager():
+    """
+    Sync namespace: Notebook ==> Manager
+    :return:
+    """
+
+    mgr.update_namespace(globals())
+
+
 def sync_manager_to_notebook():
     """
     Sync namespace: Manager ==> Notebook
@@ -12,15 +21,6 @@ def sync_manager_to_notebook():
 
     for n, v in mgr.namespace.items():
         globals()[n] = v
-
-
-def sync_notebook_to_manager():
-    """
-    Sync namespace: Notebook ==> Manager
-    :return:
-    """
-
-    mgr.update_namespace(globals())
 
 
 def load_gui():
