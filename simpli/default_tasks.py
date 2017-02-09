@@ -83,7 +83,7 @@ def center_align_output_cells():
     display_raw_html(html)
 
 
-def display_banner_and_logos(media_directory):
+def display_banner_and_logos(media_directory='../media'):
     """
 
     :return: None
@@ -117,7 +117,7 @@ def display_banner_and_logos(media_directory):
     display_raw_html(html)
 
 
-def display_end_banner(media_directory):
+def display_end_banner(media_directory='../media'):
     """
 
     :return: None
@@ -127,7 +127,7 @@ def display_end_banner(media_directory):
 
     for f in listdir(dir_media):
         if 'end_banner' in f:
-            html = '''<img src="{}" width=600 height=337>'''.format(join(dir_media, f))
+            html = '''<img src="{}" width=400 height=225>'''.format(join(dir_media, f))
             display_raw_html(html)
 
 
