@@ -30,44 +30,11 @@ def reset_jsons():
     rmtree(SIMPLI_JSON_DIR)
 
 
-def youtube(url):
-    """
-    Embed a YouTube video.
-    :param url:
-    :return:
-    """
-
-    url = url.replace('/watch?v=', '/embed/')
-    html = '<iframe width="560" height="315" src="{}" frameborder="0" allowfullscreen></iframe>'.format(url)
-    display_raw_html(html)
-
-
-def set_theme(filepath):
-    """
-    Set notebook theme.
-    :param filepath: str; .css
-    :return: None
-    """
-
-    html = '<style> {} </style>'.format(open(filepath, 'r').read())
-    display_raw_html(html)
-
-
-def display_raw_html(html):
-    """
-    Execute raw HTML.
-    :param html: str; HTML
-    :return: None
-    """
-
-    display_html(html, raw=True)
-
-
 def just_return(value):
     """
     Just return.
     :param value:
-    :return:
+    :return: obj
     """
 
     print('Returning {} ...'.format(value))
@@ -90,3 +57,88 @@ def slice_dataframe(dataframe, indices=(), ax=0):
         return dataframe.ix[indices, :]
     elif ax == 1:
         return dataframe.ix[:, indices]
+
+
+# ======================================================================================================================
+# HTML
+# ======================================================================================================================
+def set_theme(filepath):
+    """
+    Set notebook theme.
+    :param filepath: str; .css
+    :return: None
+    """
+
+    html = '''<style> {} </style>'''.format(open(filepath, 'r').read())
+    display_raw_html(html)
+
+
+def center_align_output_cells():
+    """
+
+    :return: None
+    """
+
+    html = ''''<style>.output {align-items: center; }</style>'''
+    display_raw_html(html)
+
+
+def display_banner():
+    """
+
+    :return: None
+    """
+
+    html = '''<img src="../media/start_banner.jpg" width=600 height=337>'''
+    display_raw_html(html)
+
+
+def youtube(url):
+    """
+    Embed a YouTube video.
+    :param url:
+    :return: None
+    """
+
+    url = url.replace('/watch?v=', '/embed/')
+    html = '''<iframe width="560" height="315" src="{}" frameborder="0" allowfullscreen></iframe>'''.format(url)
+    display_raw_html(html)
+
+
+def toggle_input_cells():
+    """
+    Toggle all existing input cells.
+    :return: None
+    """
+
+    html = '''
+    <script>
+        code_show=true;
+        function toggle_input_cells() {
+            if (code_show){
+                $('div.input').hide();
+            }
+            else {
+                $('div.input').show();
+            }
+            code_show = !code_show
+        }
+        $(document).ready(toggle_input_cells);
+    </script>
+
+    <form action="javascript:toggle_input_cells()"><input type="submit" value="Toggle input cells"></form>
+    '''
+    display_raw_html(html)
+
+
+def display_raw_html(html, hide_input_cell=True):
+    """
+    Execute raw HTML.
+    :param html: str; HTML
+    :param hide_input_cell: bool;
+    :return: None
+    """
+
+    if hide_input_cell:
+        html += '''<script> $('div .input').hide()'''
+    display_html(html, raw=True)
