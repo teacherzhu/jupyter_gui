@@ -2,81 +2,31 @@
   "library_path": "CompBio/simpli",
   "tasks": [
     {
-      "label": "Assign",
-      "function_path": "simpli.default_tasks.just_return",
-      "required_args": [
-        {
-          "name": "value",
-          "label": "Value to assign"
-        }
-      ],
-      "returns": [
-        {
-          "label": "Variable name to assign to"
-        }
-      ]
-    },
-    {
-      "label": "Link JSON",
+      "label": "Load JSON",
       "function_path": "simpli.default_tasks.link_json",
       "required_args": [
         {
           "name": "filepath",
-          "label": "Simpli .json to be linked"
+          "label": "Simpli JSON to be Loaded"
         }
       ]
     },
     {
       "label": "Reset JSONs",
-      "function_path": "simpli.default_tasks.reset_simpli.default_tasks.json"
+      "function_path": "simpli.default_tasks.reset_jsons"
     },
     {
-      "label": "Link YouTube Video",
-      "function_path": "simpli.default_tasks.youtube",
+      "label": "Assign",
+      "function_path": "simpli.default_tasks.just_return",
       "required_args": [
         {
-          "name": "url",
-          "label": "YouTube Video URL"
-        }
-      ]
-    },
-    {
-      "label": "Set Jupyter Notebook Theme",
-      "function_path": "simpli.default_tasks.set_theme",
-      "required_args": [
-        {
-          "name": "filepath",
-          "label": ".CSS file"
-        }
-      ]
-    },
-    {
-      "label": "Slice DataFrame by Row (Optional)",
-      "function_path": "simpli.default_tasks.slice_dataframe",
-      "description": "Return a subset of rows of a given DataFrame object.",
-      "required_args": [
-        {
-          "name": "dataframe",
-          "label": "DataFrame",
-          "description": "Target dataframe object."
-        }],
-        "optional_args": [
-        {
-          "name": "indices",
-          "label": "Row index/indices",
-          "description": "An integer or list of integers separated by commas of the rows to slice. Note that indices are 0 based."
-        }
-      ],
-      "default_args": [
-        {
-          "name": "ax",
-          "value": "0"
+          "name": "value",
+          "label": "Value to Assign"
         }
       ],
       "returns": [
         {
-          "label": "Sliced DataFrame",
-          "description": "A slice of the DataFrame including the specified rows."
+          "label": "Variable Name to Assign to"
         }
       ]
     },
@@ -92,7 +42,7 @@
         },
         {
           "name": "indices",
-          "label": "Row index/indices",
+          "label": "Row Index(ices)",
           "description": "An integer or list of integers separated by commas of the rows to slice. Note that indices are 0 based."
         }
       ],
@@ -119,7 +69,7 @@
         },
         {
           "name": "indices",
-          "label": "Column index(ices)"
+          "label": "Column Index(ices)"
         }
       ],
       "default_args": [
@@ -133,6 +83,46 @@
           "label": "Sliced DataFrame"
         }
       ]
+    },
+    {
+      "label": "Set Notebook Theme",
+      "function_path": "simpli.default_tasks.set_notebook_theme",
+      "required_args": [
+        {
+          "name": "filepath",
+          "label": "CSS File"
+        }
+      ]
+    },
+    {
+      "label": "Center Align Outputs",
+      "function_path": "simpli.default_tasks.center_align_output_cells"
+    },
+    {
+      "label": "Display Banner and Logos",
+      "function_path": "simpli.default_tasks.display_start_banner_and_logos"
+    },
+    {
+      "label": "Display Banner",
+      "function_path": "simpli.default_tasks.display_end_banner"
+    },
+    {
+      "label": "Link YouTube Video",
+      "function_path": "simpli.default_tasks.youtube",
+      "required_args": [
+        {
+          "name": "url",
+          "label": "YouTube Video URL"
+        }
+      ]
+    },
+    {
+      "label": "Toggle Input Cells",
+      "function_path": "simpli.default_tasks.toggle_input_cells"
+    },
+    {
+      "label": "Execute HTML",
+      "function_path": "simpli.default_tasks.display_raw_html"
     }
   ]
 }

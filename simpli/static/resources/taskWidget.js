@@ -98,7 +98,7 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
             // Compile task JSON
             var pythonTask = JSON.stringify(taskJSON);
             var taskCode =
-              `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))\nsync_manager_to_notebook()`;
+              `# ${AUTO_OUT_FLAG}\nmgr.execute_task('''${pythonTask}''')\nsync_manager_to_notebook()`;
 
             // Append output to Widget cell
             var outputCallback = function(msg) {

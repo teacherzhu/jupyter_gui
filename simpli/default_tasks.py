@@ -61,7 +61,7 @@ def slice_dataframe(dataframe, indices=(), ax=0):
 # ======================================================================================================================
 # HTML
 # ======================================================================================================================
-def set_theme(filepath):
+def set_notebook_theme(filepath):
     """
     Set notebook theme.
     :param filepath: str; .css
@@ -82,7 +82,7 @@ def center_align_output_cells():
     display_raw_html(html)
 
 
-def display_banner_and_logos(directory='../media'):
+def display_start_banner_and_logos(directory='../media'):
     """
 
     :return: None
