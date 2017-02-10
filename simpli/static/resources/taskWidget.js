@@ -24,10 +24,10 @@ var getWidgetData = function(cell) {
 }
 
 /**
- * Generates HTML for a task widget that is executed via HTML magic with the python kernel.
- * @param  {number} cellIndex     Index of the cell that the task widget will be attached to
- * @param  {Object} taskJSON JSON object for task
- * @return {str}             String representation of widget HTML
+ * Renders Task Widget and attaches interactive capabilities.
+ * @param  {number} cellIndex  Index of the cell that the task widget will be attached to
+ * @param  {Object} taskJSON   JSON object for task
+ * @return {str}               String representation of widget HTML
  */
 var renderTaskWidget = function(cellIndex, taskJSON) {
   var cell = Jupyter.notebook.get_cell(cellIndex);
@@ -37,14 +37,15 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
     taskJSON = getWidgetData(cell);
   }
 
+  // Generate Widget HTML and display by executing %%HTML cell.
   updateTaskWidget(cell, taskJSON);
   cell.widgetarea._clear();
   cell.execute();
 
-  // Setup widget after it renders
-  var renderWidgetId = setInterval(function() {
+  // Setup widget interactions after it renders
+  var setupInteractions = setInterval(function() {
       if (!Jupyter.notebook.kernel_busy) {
-        clearInterval(renderWidgetId);
+        clearInterval(setupInteractions);
 
         // Left panel sets max widget height
         $('.widget-panel-right').css('height', $('.widget-panel-left').css('height'));
@@ -58,76 +59,97 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
           });
         });
 
+        // Save user input from form in %%HTML
+        var saveUserInput = function() {
+          var form = cell.element.find('form')[0];
+          var userInput = form.serialize();
+
+          for (var group of fieldGroups) {
+
+            // Convert single element to array, ignore if empty
+            if (!(userInput[group] instanceof Array) && userInput[group] != undefined) {
+              userInput[group] = [userInput[group]];
+            }
+
+            // Map user input values to argument JSON
+            for (var inputIndex in userInput[group]) {
+              var inputValue = userInput[group][inputIndex];
+              inputValue = inputValue.split('"').join('').split("'").join('');
+              taskJSON[Object.keys(taskJSON)[0]][group][inputIndex].value = inputValue;
+            }
+          }
+
+          // Save user input to widget HTML
+          updateTaskWidget(cell, taskJSON);
+        };
+
+        // Update widget code whenever user types
+        $('paper-input').keyup(function(e) {
+          setTimeout(function() {
+            saveUserInput();
+          }, 50);
+
+        });
+
         // Link submitting form to executing function
         cell.element.find('form').on('iron-form-submit', function(event) {
           if (this.validate()) {
-
-            // Retrieve user input
-            var userInput = this.serialize();
-
-            // Map user input to task JSON
-            for (var group of fieldGroups) {
-
-              // Convert single element to array, ignore if empty
-              if (!(userInput[group] instanceof Array) && userInput[group] != undefined) {
-                userInput[group] = [userInput[group]];
-              }
-
-              // Map user input values to argument JSON
-              for (var inputIndex in userInput[group]) {
-                var inputValue = userInput[group][inputIndex];
-                inputValue = inputValue.split('"').join('').split("'").join('');
-                taskJSON[Object.keys(taskJSON)[0]][group][inputIndex].value = inputValue;
-              }
-            }
-
-            // Save user input to widget HTML
-            updateTaskWidget(cell, taskJSON);
 
             // Compile task JSON
             var pythonTask = JSON.stringify(taskJSON);
             var taskCode =
               `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))\nsync_manager_to_notebook()`;
 
-            var outputCell;
-            // Create output cell if not created already
-            if (!Jupyter.notebook.get_cell(cellIndex + 1)) {
-              Jupyter.notebook.insert_cell_below();
-            }
-
-            Jupyter.notebook.select_next();
-            outputCell = Jupyter.notebook.get_selected_cell();
-
-            // Don't touch cell if not output cell and make cell directly below widget cell
-            var cellContent = outputCell.get_text().trim();
-            if (cellContent !== "" && cellContent.indexOf(AUTO_OUT_FLAG) < 0) {
-              Jupyter.notebook.insert_cell_above();
-              Jupyter.notebook.select_prev();
-              outputCell = Jupyter.notebook.get_selected_cell();
-            }
-
-            // Execute task
-            outputCell.set_text(taskCode);
-            outputCell.execute();
-
-            // EXPERIMENTAL
-            // var outputCallback = function(out) {
-            //   console.log("APPEND OUTPUT HERE");
-            //   console.log(out);
-            //   cell.output_area.append_output(out);
+            // var outputCell;
+            // // Create output cell if not created already
+            // if (!Jupyter.notebook.get_cell(cellIndex + 1)) {
+            //   Jupyter.notebook.insert_cell_below();
             // }
             //
-            // var interval = setInterval(function() {
-            //   // Use kernel to read library JSONs
-            //   if (!Jupyter.notebook.kernel_busy) {
-            //     clearInterval(interval);
-            //     Jupyter.notebook.kernel.execute(taskCode, {
-            //       'iopub': {
-            //         'output': outputCallback
-            //       }
-            //     });
-            //   }
-            // }, 10);
+            // Jupyter.notebook.select_next();
+            // outputCell = Jupyter.notebook.get_selected_cell();
+            //
+            // // Don't touch cell if not output cell and make cell directly below widget cell
+            // var cellContent = outputCell.get_text().trim();
+            // if (cellContent !== "" && cellContent.indexOf(AUTO_OUT_FLAG) < 0) {
+            //   Jupyter.notebook.insert_cell_above();
+            //   Jupyter.notebook.select_prev();
+            //   outputCell = Jupyter.notebook.get_selected_cell();
+            // }
+            //
+            // // Execute task
+            // outputCell.set_text(taskCode);
+            // outputCell.execute();
+
+            // Append output to Widget cell
+            var outputCallback = function(msg) {
+              // Clear output except for widget
+              // var output = cell.output_area.outputs[0];
+              // cell.output_area.handle_output(output);
+              // console.log('POST-EXECUTE');
+              console.log(msg);
+              // var outputJSON = out.content;
+              // outputJSON.output_type = out.msg_type;
+              cell.output_area.handle_output(msg);
+            }
+
+            var interval = setInterval(function() {
+              // Use kernel to read library JSONs
+              if (!Jupyter.notebook.kernel_busy) {
+                clearInterval(interval);
+                var output_area = cell.output_area;
+                // TODO fix me
+                if (output_area.element && output_area.element[0].children.length > 1) {
+                  output_area.element[0].removeChild(output_area.element[0].children[1]);
+                  output_area.outputs.pop();
+                }
+                Jupyter.notebook.kernel.execute(taskCode, {
+                  'iopub': {
+                    'output': outputCallback
+                  }
+                });
+              }
+            }, 10);
           }
         });
       }

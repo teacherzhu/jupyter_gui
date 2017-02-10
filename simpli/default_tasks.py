@@ -71,6 +71,7 @@ def just_return(value):
     """
 
     print('Returning {} ...'.format(value))
+    print('Returning {} ...2'.format(value))
     return value
 
 
