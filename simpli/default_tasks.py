@@ -14,16 +14,15 @@ def link_json(filepath):
     :return: None
     """
 
-    dest = join(SIMPLI_JSON_DIR, split(filepath)[1])
-    if islink(dest):
-        remove(dest)
-    symlink(filepath, dest)
+    destination = join(SIMPLI_JSON_DIR, split(filepath)[1])
+    if islink(destination):
+        remove(destination)
+    symlink(filepath, destination)
 
 
 def reset_jsons():
     """
     Delete all files in $HOME/.Simpli/json/ directory.
-    :param filepath: str;
     :return: None
     """
 
@@ -83,22 +82,19 @@ def center_align_output_cells():
     display_raw_html(html)
 
 
-def display_banner_and_logos(media_directory='../media'):
+def display_banner_and_logos(directory='../media'):
     """
 
     :return: None
     """
 
-    print('Returning {} ...'.format(value))
-    return value
-
     html = ''
 
     # Load files
     logo_filenames = []
-    for f in listdir(dir_media):
+    for f in listdir(directory):
         if 'start_banner' in f:
-            html_banner = '''<img src="{}" width=600 height=337>'''.format(join(dir_media, f))
+            html_banner = '''<img src="{}" width=600 height=337>'''.format(join(directory, f))
             html += html_banner
         elif 'logo' in f:
             logo_filenames.append(f)
@@ -109,7 +105,7 @@ def display_banner_and_logos(media_directory='../media'):
         html_logos = ''
         for l_fn in logo_filenames:
             html_logos += '''<th style="background-color:white"> <img src="{}" width=200 height=200></th>'''.format(
-                join(dir_media, l_fn))
+                join(directory, l_fn))
 
         html_logos = '''<table style="border:solid white;" cellspacing="0" cellpadding="0" border-collapse: collapse; border-spacing: 0;><tr>{}</tr></table>'''.format(
             ''.join(html_logos))
@@ -118,13 +114,13 @@ def display_banner_and_logos(media_directory='../media'):
     display_raw_html(html)
 
 
-def display_end_banner(media_directory='../media'):
+def display_end_banner(directory='../media'):
     """
 
     :return: None
     """
 
-    dir_media = relpath(media_directory)
+    dir_media = relpath(directory)
 
     for f in listdir(dir_media):
         if 'end_banner' in f:
