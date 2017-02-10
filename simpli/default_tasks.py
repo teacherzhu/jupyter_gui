@@ -89,7 +89,8 @@ def display_banner_and_logos(media_directory='../media'):
     :return: None
     """
 
-    dir_media = relpath(media_directory)
+    print('Returning {} ...'.format(value))
+    return value
 
     html = ''
 
