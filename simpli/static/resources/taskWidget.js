@@ -100,36 +100,9 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
             var taskCode =
               `# ${AUTO_OUT_FLAG}\nmgr.execute_task(json.loads('''${pythonTask}'''))\nsync_manager_to_notebook()`;
 
-            // var outputCell;
-            // // Create output cell if not created already
-            // if (!Jupyter.notebook.get_cell(cellIndex + 1)) {
-            //   Jupyter.notebook.insert_cell_below();
-            // }
-            //
-            // Jupyter.notebook.select_next();
-            // outputCell = Jupyter.notebook.get_selected_cell();
-            //
-            // // Don't touch cell if not output cell and make cell directly below widget cell
-            // var cellContent = outputCell.get_text().trim();
-            // if (cellContent !== "" && cellContent.indexOf(AUTO_OUT_FLAG) < 0) {
-            //   Jupyter.notebook.insert_cell_above();
-            //   Jupyter.notebook.select_prev();
-            //   outputCell = Jupyter.notebook.get_selected_cell();
-            // }
-            //
-            // // Execute task
-            // outputCell.set_text(taskCode);
-            // outputCell.execute();
-
             // Append output to Widget cell
             var outputCallback = function(msg) {
               // Clear output except for widget
-              // var output = cell.output_area.outputs[0];
-              // cell.output_area.handle_output(output);
-              // console.log('POST-EXECUTE');
-              console.log(msg);
-              // var outputJSON = out.content;
-              // outputJSON.output_type = out.msg_type;
               cell.output_area.handle_output(msg);
             }
 
@@ -138,7 +111,7 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
               if (!Jupyter.notebook.kernel_busy) {
                 clearInterval(interval);
                 var output_area = cell.output_area;
-                // Delete output displayed after Widget 
+                // Delete output displayed after Widget
                 if (output_area.element && output_area.element[0].children.length > 1) {
                   output_area.element[0].removeChild(output_area.element[0].children[1]);
                   output_area.outputs.pop();
