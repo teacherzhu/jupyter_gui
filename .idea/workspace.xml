@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/default_tasks.py" afterPath="$PROJECT_DIR$/simpli/default_tasks.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/startup.py" afterPath="$PROJECT_DIR$/simpli/startup.py" />
     </list>
     <ignored path="simplex.iws" />
@@ -24,7 +22,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="default_tasks.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="default_tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="825">
@@ -36,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="startup.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="startup.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/simpli/startup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="27" column="6" lean-forward="false" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
+            <state relative-caret-position="743">
+              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
               <folding>
                 <element signature="e#0#93#0" expanded="true" />
               </folding>
@@ -157,8 +155,8 @@
         <option value="$PROJECT_DIR$/simpli/static/main.js" />
         <option value="$PROJECT_DIR$/simpli/static/resources/taskWidget.js" />
         <option value="$PROJECT_DIR$/simpli/manager.py" />
-        <option value="$PROJECT_DIR$/simpli/startup.py" />
         <option value="$PROJECT_DIR$/simpli/default_tasks.py" />
+        <option value="$PROJECT_DIR$/simpli/startup.py" />
       </list>
     </option>
   </component>
@@ -817,22 +815,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/startup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="27" column="6" lean-forward="false" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#93#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="825">
           <caret line="122" column="4" lean-forward="false" selection-start-line="122" selection-start-column="4" selection-end-line="122" selection-end-column="4" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/startup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="743">
+          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#93#0" expanded="true" />
           </folding>
         </state>
       </provider>
