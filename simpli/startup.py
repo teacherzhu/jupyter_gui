@@ -35,6 +35,8 @@ def load_gui():
     imports = '''
         <link rel='import' href='urth_components/iron-form/iron-form.html'
               is='urth-core-import' package='PolymerElements/iron-form'>
+        <link rel='import' href='urth_components/iron-collapse/iron-collapse.html'
+              is='urth-core-import' package='PolymerElements/iron-collapse'>
         <link rel='import' href='urth_components/paper-input/paper-input.html'
               is='urth-core-import' package='PolymerElements/paper-input'>
         <link rel='import' href='urth_components/iron-label/iron-label.html'

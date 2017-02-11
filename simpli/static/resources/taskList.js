@@ -17,7 +17,7 @@ var taskListParent;
 /**
  * Panel that displays selected task information.
  */
-var rightPanel;
+var infoPanel;
 
 /**
  * Panel that lists all tasks detailed in simpliTaskData.
@@ -158,7 +158,7 @@ var initTaskList = function() {
     .appendTo(leftPanel);
 
   // Define right panel
-  rightPanel = $('<div/>')
+  infoPanel = $('<div/>')
     .attr('id', 'library-right-panel')
     .addClass('pull-right')
     .addClass('col-xs-5')
@@ -233,7 +233,7 @@ var renderTasks = function(tasks) {
  * Render info panel and only updates inner content when necessary.
  * @param  {Object} task JSON object representing task.
  */
-const renderInfoPanel = function(task) {
+var renderInfoPanel = function(task) {
   // Render right panel
   var render = function() {
 
@@ -254,11 +254,6 @@ const renderInfoPanel = function(task) {
     // Package author
     var taskAuthor = $('<div/>')
       .attr('id', 'library-task-author')
-      .appendTo(taskInfo);
-
-    // Task affiliation
-    var taskAffiliation = $('<div/>')
-      .attr('id', 'library-task-affiliation')
       .appendTo(taskInfo);
 
     // Task description
@@ -291,27 +286,28 @@ const renderInfoPanel = function(task) {
       .html('Cancel')
       .appendTo(modalButtons);
 
-    taskInfo.appendTo(rightPanel);
-    modalButtons.appendTo(rightPanel);
+    taskInfo.appendTo(infoPanel);
+    modalButtons.appendTo(infoPanel);
   };
 
-  /** TODO: fix right panel stuff
-   * Update existing rightPanel with currently selected task
+  /**
+   * Update existing infoPanel with currently selected task
    */
   var update = function() {
     // Parse and display task information
     getTask(selectedLabel, null, function(task) {
-      $(rightPanel).find('#library-task-heading').html(task.label);
-      $(rightPanel).find('#library-task-package').html(task.library_name);
-      $(rightPanel).find('#library-task-author').html(task.author);
-      $(rightPanel).find('#library-task-affiliation').html(task.affiliation);
-      $(rightPanel).find('#library-task-description').html(task.description);
+      var label = Object.keys(task)[0];
+      task = task[label];
+      $(infoPanel).find('#library-task-heading').html(label);
+      $(infoPanel).find('#library-task-package').html(task.library_name);
+      $(infoPanel).find('#library-task-author').html(task.author);
+      $(infoPanel).find('#library-task-description').html(task.description);
     });
 
   }
 
   // Render if first call. Otherwise update with selected task data
-  if (rightPanel.children().length == 0) {
+  if (infoPanel.children().length == 0) {
     render();
   } else {
     update();

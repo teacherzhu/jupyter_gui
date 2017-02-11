@@ -1,5 +1,5 @@
 /* Shared Styles */
-.paper-font-common-base, .paper-font-display4, .paper-font-display3, .paper-font-display2, .paper-font-display1, .paper-font-headline, .task-widget-inner h1, .paper-font-title, .task-widget-inner h2, .paper-font-subhead, .paper-font-body2, .paper-font-body1, .task-widget-inner paper-input, .paper-font-caption, .paper-font-menu, .paper-font-button {
+.paper-font-common-base, .paper-font-display4, .paper-font-display3, .paper-font-display2, .paper-font-display1, .paper-font-headline, .paper-font-title, .paper-font-subhead, .paper-font-body2, .paper-font-body1, .paper-font-caption, .paper-font-menu, .paper-font-button {
   font-family: 'Roboto', 'Noto', sans-serif;
   -webkit-font-smoothing: antialiased; }
 
@@ -10,7 +10,7 @@
 .paper-font-common-expensive-kerning {
   text-rendering: optimizeLegibility; }
 
-.paper-font-common-nowrap, .paper-font-display4, .paper-font-display3, .paper-font-title, .task-widget-inner h2, .paper-font-caption, .paper-font-menu, .paper-font-button {
+.paper-font-common-nowrap, .paper-font-display4, .paper-font-display3, .paper-font-title, .paper-font-caption, .paper-font-menu, .paper-font-button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
@@ -40,13 +40,13 @@
   letter-spacing: -.01em;
   line-height: 40px; }
 
-.paper-font-headline, .task-widget-inner h1 {
+.paper-font-headline {
   font-size: 24px;
   font-weight: 400;
   letter-spacing: -.012em;
   line-height: 32px; }
 
-.paper-font-title, .task-widget-inner h2 {
+.paper-font-title {
   font-size: 20px;
   font-weight: 500;
   line-height: 28px; }
@@ -61,7 +61,7 @@
   font-weight: 500;
   line-height: 24px; }
 
-.paper-font-body1, .task-widget-inner paper-input {
+.paper-font-body1 {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px; }
@@ -99,6 +99,9 @@
 body {
   position: relative; }
 
+h3 {
+  font-size: 16px; }
+
 #insert_simpli_below {
   position: absolute;
   bottom: 0;
@@ -112,7 +115,6 @@ body {
 /******************** General Formatting ********************/
 .simpli-cell {
   padding: 0 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
   .simpli-cell .input {
     overflow: hidden;
@@ -124,57 +126,72 @@ body {
     min-width: 0;
     padding: 0; }
   .simpli-cell .output_subarea {
+    overflow: visible;
     width: 100%;
     max-width: 100% !important;
     padding: 0; }
 
 /******************** Widget ********************/
 .task-widget {
-  height: auto;
-  position: relative; }
+  margin: 6px;
+  padding: 16px; }
 
-.task-widget-inner paper-input {
-  padding-bottom: 16px; }
-.task-widget-inner hr {
-  margin: 0; }
+.widget-info {
+  padding-top: 16px;
+  padding-left: 16px; }
 
-.widget-panel {
-  width: 50%; }
+.widget-form-panel {
+  margin: 4px;
+  transition: 0.2s all cubic-bezier(0.64, 0.09, 0.08, 1); }
+  .widget-form-panel .item-header paper-icon-button {
+    color: grey; }
+  .widget-form-panel .field-group {
+    border-radius: 3px;
+    margin: 16px 0; }
+    .widget-form-panel .field-group > .item-header {
+      padding: 16px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between; }
+    .widget-form-panel .field-group > .item-content {
+      display: flex;
+      flex-direction: column;
+      transition: 0.2s all cubic; }
+  .widget-form-panel .field-group-content > .item-header {
+    padding: 16px;
+    padding-top: 0; }
+  .widget-form-panel .field-group-content .item-content {
+    padding: 16px;
+    background: #ededed;
+    max-height: 150px;
+    overflow: auto; }
+  .widget-form-panel .field-required_args-group {
+    border-radius: 3px;
+    border-left: 2px solid #20D9BA;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  .widget-form-panel .field-optional_args-group {
+    border-radius: 3px;
+    border-left: 2px solid #9017E6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  .widget-form-panel .field-returns-group {
+    border-radius: 3px;
+    border-left: 2px solid #4E41D9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
-.widget-panel-left {
-  float: left;
-  padding-right: 16px;
-  padding-bottom: 16px; }
-  .widget-panel-left .form-submit-button-wrapper {
-    padding: 0;
-    border: none;
-    background: none;
+.form-submit-button-wrapper {
+  padding: 0;
+  border: none;
+  background: none;
+  width: 100%; }
+  .form-submit-button-wrapper paper-button {
+    width: 100%;
+    padding: 16px 0;
+    color: white;
+    background: #ff7e2e;
     margin: 0;
-    overflow: visible; }
-
-.widget-panel-right {
-  float: right;
-  margin-bottom: 16px;
-  overflow: auto; }
-  .widget-panel-right .item-info {
-    list-style: none;
-    width: 100%; }
-    .widget-panel-right .item-info p {
-      white-space: normal; }
-
-.field-group-wrapper {
-  outline-offset: -1px;
-  outline: 1px solid #EEE;
-  margin-bottom: 16px; }
-
-.form-required_args-group .focused-line {
-  background: #20D9BA !important; }
-
-.form-optional_args-group paper-input .focused-line {
-  background: #9017E6 !important; }
-
-.form-returns-group .focused-line {
-  background: #4E41D9 !important; }
+    font-size: 18px; }
+    .form-submit-button-wrapper paper-button * {
+      margin-left: 16px; }
 
 /******************** Widget Tooltip Buttons ********************/
 .btn[data-toggle="popover"] {
@@ -206,7 +223,8 @@ button.close, .library-modal-header, .library-modal-footer {
 
 #library-parent {
   min-height: 600px;
-  height: 90vh;
+  min-width: 600px;
+  height: 80vh;
   overflow: hidden; }
 
 /******************** Information Panel ********************/
@@ -216,11 +234,22 @@ button.close, .library-modal-header, .library-modal-footer {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  border-left: 1px solid grey; }
+  border-left: 1px solid rgba(0, 0, 0, 0.2); }
 
 #library-task-info {
   flex-grow: 1;
   margin: 0.5em 2em; }
+
+#library-task-heading {
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+#library-task-package {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: grey;
+  text-transform: uppercase;
+  font-size: 16px; }
 
 #library-task-info > div * {
   display: inline-block; }
@@ -229,10 +258,14 @@ button.close, .library-modal-header, .library-modal-footer {
 #library-task-info > div p {
   margin-left: 1em; }
 
-#library-task-author, #library-task-affiliation {
+#library-task-author {
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 2; }
 
 #library-task-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0.5em 0;
   line-height: 1.5; }
 
@@ -262,6 +295,8 @@ button.close, .library-modal-header, .library-modal-footer {
   overflow-y: auto; }
 
 .library-left-panel-header {
+  overflow: hidden;
+  text-overflow: ellipsis;
   padding-left: 16px;
   padding-bottom: 18px;
   padding-top: 18px;
@@ -270,11 +305,11 @@ button.close, .library-modal-header, .library-modal-footer {
 .library-left-panel-inner {
   width: 100%;
   display: flex;
-  background: lightgrey;
+  background: #bababa;
   flex-direction: column; }
 
 .library-load-text {
-  margin: 0;
+  margin: 50px;
   width: 100px;
   left: calc(50% - 50px); }
 
@@ -282,17 +317,21 @@ button.close, .library-modal-header, .library-modal-footer {
   display: none; }
 
 .library-package-header {
+  overflow: hidden;
+  text-overflow: ellipsis;
   width: 100%;
+  padding: 10.66667px;
   padding-left: 16px;
-  background: white;
-  margin: 0;
-  padding: 16px; }
+  background: #ff7e2e;
+  color: white;
+  margin: 0; }
 
 .library-card {
+  overflow: hidden;
+  text-overflow: ellipsis;
   box-sizing: border-box;
   display: block;
-  padding: 1em 1.5em;
-  padding-left: 16px;
+  padding: 18px 16px;
   background: white;
   color: #444;
   width: 100%;
@@ -306,24 +345,18 @@ button.close, .library-modal-header, .library-modal-footer {
   .library-card:hover {
     color: #444;
     text-decoration: none;
-    background: lightgrey; }
+    background: #ededed; }
 
 .library-card-selected {
   font-weight: bold;
-  background: #ff7e2e !important;
+  background: lightgrey !important;
   color: white !important; }
 
 .card-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: normal;
   margin: 0; }
-
-.card-package-title {
-  font-weight: normal;
-  margin-bottom: 0; }
-
-#library-task-package, .card-package-title {
-  color: grey;
-  text-transform: uppercase; }
 
 .card-description {
   line-height: 1.5; }

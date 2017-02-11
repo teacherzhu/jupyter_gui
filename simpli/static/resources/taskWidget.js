@@ -41,22 +41,24 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
   updateTaskWidget(cell, taskJSON);
   cell.widgetarea._clear();
   cell.execute();
+  cell.expand_output();
 
   // Setup widget interactions after it renders
   var setupInteractions = setInterval(function() {
       if (!Jupyter.notebook.kernel_busy) {
         clearInterval(setupInteractions);
 
-        // Left panel sets max widget height
-        $('.widget-panel-right').css('height', $('.widget-panel-left').css('height'));
-        $('.widget-panel-right').css('max-height', $('.widget-panel-left').css('height'));
+        $('.item-header').each(function(index, element) {
 
-        // Bind and show corresponding description on focus
-        var itemInputs = cell.element.find("paper-input");
-        itemInputs.each(function(index) {
-          $(this).on('focus', function() {
-            setItemInfo(index, cell);
-          });
+          // Show all panels except optional args
+          if (!$(element).parent().hasClass('field-optional_args-group') &&
+            !$(element).parent().hasClass('field-group-content')) {
+            $(element).next().show();
+          }
+
+          $(element).click(function() {
+            $(element).next().toggle();
+          })
         });
 
         // Save user input from form in %%HTML
@@ -148,74 +150,108 @@ var updateTaskWidget = function(cell, taskJSON) {
 var generateTaskWidgetHTML = function(taskJSON) {
   var label = Object.keys(taskJSON)[0];
   var taskData = taskJSON[label];
-  // Outer container
-  var widget = $('<paper-material>')
-    .attr({
-      elevation: '2',
-      class: 'task-widget'
-    });
 
-  // Inner content
-  var widgetInner = $('<paper-collapse-item>')
-    .addClass('task-widget-inner')
-    .attr({
-      header: `<h1>${label}</h1>`,
-      opened: 'True'
-    })
+  var widget = $('<paper-material>')
+    .addClass('task-widget')
+    .attr('elevation', '1');
+
+  var widgetHeader = $('<div>')
+    .addClass('task-widget-header')
+    .addClass('item-header')
+    .html(`<h2>${label}</h2>`)
     .appendTo(widget);
 
-  // Left side panel for form
-  var leftPanel = $('<div>')
-    .addClass('widget-panel')
-    .addClass('widget-panel-left')
-    .appendTo(widgetInner);
+  // Outer container
+  var widgetContentOuter = $('<iron-collapse>')
+    .addClass('task-widget-inner')
+    .appendTo(widget);
+
+  // Inner content
+  var widgetContent = $('<div>')
+    .addClass('task-widget-content')
+    .addClass('item-content')
+    .appendTo(widgetContentOuter);
+
+  var taskInfo = $('<div>')
+    .addClass('widget-info')
+    .html(taskData.description)
+    .appendTo(widgetContent);
 
   var widgetForm = $('<form>')
     .attr({
       is: 'iron-form',
       class: 'task-widget-form'
     })
-    .appendTo(leftPanel);
+    .appendTo(widgetContent);
+
+  // Form panel for user entry
+  var formPanel = $('<div>')
+    .addClass('widget-form-panel')
+    .appendTo(widgetForm);
 
   // Generate fieldGroups of arguments
   for (var groupIndex in fieldGroups) {
     // Generate group only if listed in config
     var g = taskData[fieldGroups[groupIndex]];
     if (g.length > 0) {
-      var groupWrapper = $('<div>')
-        .addClass('form-group-wrapper')
-        .appendTo(widgetForm);
 
-      // Input container
-      var fieldGroup = $('<paper-collapse-item>')
+      // Input group container
+      var fieldGroup = $('<div>')
         .addClass('field-group')
         .addClass('field-' + fieldGroups[groupIndex] + '-group')
-        .attr('header', groupLabels[groupIndex])
-        .appendTo(groupWrapper);
+        .appendTo(formPanel);
 
-      // Default show/hide setting
-      if (fieldGroups[groupIndex] != 'optional_args') {
-        fieldGroup.attr('opened', 'True');
-      }
+      var fieldGroupHeader = $('<div>')
+        .addClass('item-header')
+        .html(
+          `<h3>${groupLabels[groupIndex]}</h3>
+               <paper-icon-button icon="info"></paper-icon-button`)
+        .appendTo(fieldGroup);
 
-      // Generate a field for each argument
+
+      // Contents = many fields
+      var fieldGroupContent = $('<iron-collapse>')
+        .appendTo(fieldGroup);
+
+      var fieldGroupContentInner = $('<div>')
+        .addClass('field-group-content')
+        .addClass('item-content')
+        .appendTo(fieldGroupContent);
+
       for (var argIndex in g) {
         var arg = g[argIndex];
+
+        // TODO toggle itemContent on click
+        var itemHeader = $('<div>')
+          .addClass('item-header')
+          .appendTo(fieldGroupContentInner);
+
+        // Generate a field for each argument
         var field = $('<paper-input>')
           .attr({
             label: arg.label,
             name: fieldGroups[groupIndex],
-            required: '',
             value: arg.value
-          });
+          })
+          .appendTo(itemHeader);
 
         if (fieldGroups[groupIndex] != 'optional_args') {
           field.attr({
             'auto-validate': '',
-            'error-message': 'Required!'
+            'error-message': 'Required!',
+            required: ''
           });
         }
-        field.appendTo(fieldGroup);
+
+        // Generate info text for each argument field
+        var itemContentCollapse = $('<iron-collapse>')
+          .appendTo(fieldGroupContentInner);
+
+        var itemContent = $('<div>')
+          .addClass('item-content')
+          .html(`${arg.description}`)
+          .appendTo(itemContentCollapse);
+
       }
     }
   }
@@ -226,41 +262,13 @@ var generateTaskWidgetHTML = function(taskJSON) {
   var submitButton = $('<paper-button>')
     .addClass('form-submit-button')
     .attr('raised', '')
-    .html('run')
+    .html('submit')
     .appendTo(submitButtonWrapper);
 
   // Create icon for submit button
   var submitIcon = $('<iron-icon>')
-    .attr('icon', 'done')
+    .attr('icon', 'assessment')
     .appendTo(submitButton);
-
-  // Right side panel for description
-  var rightPanel = $('<div>')
-    .addClass('widget-panel')
-    .addClass('widget-panel-right')
-    .appendTo(widgetInner);
-
-  // Shown
-  var taskInfo = $('<div>')
-    .addClass('task-info')
-    .html(taskData.description)
-    .appendTo(rightPanel);
-
-  for (var groupIndex in fieldGroups) {
-    // Generate group only if listed in config
-    var g = taskData[fieldGroups[groupIndex]];
-    if (g.length > 0) {
-      // Extract description for each parameter
-      for (var arg of g) {
-        var itemInfo = $('<li>')
-          .addClass('item-info')
-          .html(`<h3>${arg.label}</h3><p>${arg.description}</p>`)
-          .hide()
-          .appendTo(rightPanel);
-      }
-    }
-  }
-
 
   // Return raw html for widget
   return `%%HTML\n<!--${AUTO_EXEC_FLAG}-->\n` + widget.prop('outerHTML');
@@ -271,8 +279,8 @@ var generateTaskWidgetHTML = function(taskJSON) {
  * @param {[type]} index [description]
  * @param {[type]} cell  [description]
  */
-var setItemInfo = function(index, cell) {
-  var items = cell.element.find('.item-info');
-  items.hide(0);
-  $(items[index]).fadeIn('fast');
-}
+// var setItemInfo = function(index, cell) {
+//   var items = cell.element.find('.item-info');
+//   items.hide(0);
+//   $(items[index]).fadeIn('fast');
+// }

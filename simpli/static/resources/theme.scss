@@ -1,16 +1,33 @@
 @import "material";
 
-// TODO WIDGET STYLING VARIABLES
+$jupyter-color: #ff7e2e;
+
 $input-color: #20D9BA;
 $opt-input-color: #9017E6;
 $output-color: #4E41D9;
-$run-color: #000;
+$run-color: $jupyter-color;
 
-$jupyter-color: #ff7e2e;
 $cubic: cubic-bezier(0.64, 0.09, 0.08, 1) !default;
 
-$h3-font-size: 18px;
+$h3-font-size: 16px;
 $widget-spacing: 16px;
+
+@mixin ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin shadow($color: black, $elevation: 1) {
+  @if $elevation == 1 {
+    box-shadow: 0 1px 3px rgba($color, 0.12), 0 1px 2px rgba($color, 0.24);
+  }
+  @else if $elevation == 2 {
+    box-shadow: 0 3px 6px rgba($color, 0.16), 0 3px 6px rgba($color, 0.23);
+  }
+  @else if $elevation == 3 {
+    box-shadow: 0 10px 20px rgba($color, 0.19), 0 6px 6px rgba($color, 0.23);
+  }
+}
 
 /******************** Breakpoints ********************/
 $breakpoints: ("small": (min-width: 767px), "medium": (min-width: 992px), "large": (min-width: 1200px));
@@ -33,6 +50,10 @@ body {
   position: relative;
 }
 
+h3 {
+  font-size: $h3-font-size;
+}
+
 #insert_simpli_below {
   position: absolute;
   bottom: 0;
@@ -48,7 +69,8 @@ body {
 
 .simpli-cell {
   padding: 0 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  // box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   .input {
@@ -65,6 +87,7 @@ body {
   }
 
   .output_subarea {
+    overflow: visible;
     width: 100%;
     max-width: 100% !important;
     padding: 0;
@@ -74,94 +97,98 @@ body {
 /******************** Widget ********************/
 
 .task-widget {
-  height: auto;
-
-  // margin: 8px;
-  position: relative;
+  margin: 6px;
+  padding: $widget-spacing;
 }
 
-.task-widget-inner {
-  h1 {
-    @extend .paper-font-headline;
-  }
+.task-widget-header {}
 
-  h2 {
-    @extend .paper-font-title;
-  }
+.task-widget-inner {}
 
-  paper-input {
-    @extend .paper-font-body1;
-
-    padding-bottom: $widget-spacing;
-  }
-
-  hr {
-    margin: 0;
-  }
+.widget-info {
+  padding-top: $widget-spacing;
+  padding-left: $widget-spacing;
 }
 
-.widget-panel {
-  width: 50%;
-}
+.widget-form-panel {
+  margin: 4px;
+  transition: 0.2s all $cubic;
 
-.widget-panel-left {
-  float: left;
-  padding-right: $widget-spacing;
-  padding-bottom: $widget-spacing;
-
-  .task-widget-form {}
-
-  .form-submit-button-wrapper {
-    padding: 0;
-    border: none;
-    background: none;
-    margin: 0;
-    overflow: visible;
+  .item-header paper-icon-button {
+    color: grey;
   }
-}
 
-.widget-panel-right {
-  float: right;
-  margin-bottom: $widget-spacing;
-  overflow: auto;
+  .field-group {
+    border-radius: 3px;
+    margin: $widget-spacing 0;
 
-  .item-info {
-    list-style: none;
-    width: 100%;
+    > .item-header {
+      padding: $widget-spacing;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
 
-    p {
-      white-space: normal;
+    > .item-content {
+      display: flex;
+      flex-direction: column;
+      transition: 0.2s all cubic;
     }
   }
-}
 
-.field-group-wrapper {
-  outline-offset: -1px;
-  outline: 1px solid #EEE;
-  margin-bottom: $widget-spacing;
-}
+  .field-group-content {
+    // padding: $widget-spacing;
 
-.field-group {}
+    > .item-header {
+      padding: $widget-spacing;
+      padding-top: 0;
+    }
 
-@mixin text-input-bg-mixin($color) {
-  background: $color !important;
-}
+    .item-content {
+      padding: $widget-spacing;
+      background: lighten(lightgrey, 10);
+      max-height: 150px;
+      overflow: auto;
+    }
+  }
 
-.form-required_args-group {
-  .focused-line {
+  @mixin text-input-bg-mixin($color) {
+    border-radius: 3px;
+    border-left: 2px solid $color;
+
+    @include shadow(black, 1);
+  }
+
+  .field-required_args-group {
     @include text-input-bg-mixin($input-color);
   }
-}
 
-.form-optional_args-group {
-  paper-input .focused-line {
+  .field-optional_args-group {
     @include text-input-bg-mixin($opt-input-color);
+  }
+
+  .field-returns-group {
+    @include text-input-bg-mixin($output-color);
   }
 }
 
-.form-returns-group {
-  .focused-line {
-    @include text-input-bg-mixin($output-color);
+.form-submit-button-wrapper {
+  padding: 0;
+  border: none;
+  background: none;
+  width: 100%;
+
+  paper-button {
+    width: 100%;
+    padding: $widget-spacing 0;
+    color: white;
+    background: $run-color;
+    margin: 0;
+    font-size: 18px;
+
+    * {
+      margin-left: $widget-spacing;
+    }
   }
 }
 
@@ -212,7 +239,8 @@ button.close, .library-modal-header, .library-modal-footer {
 
 #library-parent {
   min-height: 600px;
-  height: 90vh;
+  min-width: 600px;
+  height: 80vh;
   overflow: hidden;
 }
 
@@ -224,7 +252,7 @@ button.close, .library-modal-header, .library-modal-footer {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  border-left: 1px solid grey;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 #library-task-info {
@@ -232,9 +260,17 @@ button.close, .library-modal-header, .library-modal-footer {
   margin: 0.5em 2em;
 }
 
-#library-task-heading {}
+#library-task-heading {
+  @include ellipsis;
+}
 
-#library-task-package {}
+#library-task-package {
+  @include ellipsis;
+
+  color: grey;
+  text-transform: uppercase;
+  font-size: 16px;
+}
 
 #library-task-info > div {
   * {
@@ -250,13 +286,15 @@ button.close, .library-modal-header, .library-modal-footer {
   }
 }
 
-#library-task-author, #library-task-affiliation {
+#library-task-author {
+  @include ellipsis;
+
   line-height: 2;
 }
 
-#library-task-ref-link {}
-
 #library-task-description {
+  @include ellipsis;
+
   margin: 0.5em 0;
   line-height: 1.5;
 }
@@ -293,10 +331,12 @@ button.close, .library-modal-header, .library-modal-footer {
   overflow-y: auto;
 }
 
-$left-panel-left-padding: 16px;
+$left-panel-padding: 16px;
 
 .library-left-panel-header {
-  padding-left: $left-panel-left-padding;
+  @include ellipsis;
+
+  padding-left: $left-panel-padding;
   padding-bottom: 18px;
   padding-top: 18px;
   margin: 0;
@@ -305,12 +345,12 @@ $left-panel-left-padding: 16px;
 .library-left-panel-inner {
   width: 100%;
   display: flex;
-  background: lightgrey;
+  background: darken(lightgrey, 10%);
   flex-direction: column;
 }
 
 .library-load-text {
-  margin: 0;
+  margin: 50px;
   width: 100px;
   left: calc(50% - 50px);
 }
@@ -320,20 +360,25 @@ $left-panel-left-padding: 16px;
 }
 
 .library-package-header {
-  width: 100%;
-  padding-left: $left-panel-left-padding;
-  background: white;
+  @include ellipsis;
 
-  // border-top: 1px solid grey;
+  width: 100%;
+
+  //
+  // font-size: 16px;
+  padding: $left-panel-padding * 2 / 3;
+  padding-left: $left-panel-padding;
+  background: $jupyter-color;
+  color: white;
   margin: 0;
-  padding: $left-panel-left-padding;
 }
 
 .library-card {
+  @include ellipsis;
+
   box-sizing: border-box;
   display: block;
-  padding: 1em 1.5em;
-  padding-left: $left-panel-left-padding;
+  padding: 18px 16px;
   background: white;
   color: #444;
   width: 100%;
@@ -341,8 +386,6 @@ $left-panel-left-padding: 16px;
   overflow: visible;
   vertical-align: middle;
   margin: 0.5px 0;
-
-  // margin: 0.5px;
   cursor: pointer;
   transition: all 0.08s linear;
   border: 2px solid rgba(0, 0, 0, 0);
@@ -350,29 +393,21 @@ $left-panel-left-padding: 16px;
   &:hover {
     color: #444;
     text-decoration: none;
-    background: lightgrey;
+    background: lighten(lightgrey, 10%);
   }
 }
 
 .library-card-selected {
   font-weight: bold;
-  background: $jupyter-color !important;
+  background: lightgrey !important;
   color: white !important;
 }
 
 .card-label {
+  @include ellipsis;
+
   font-weight: normal;
   margin: 0;
-}
-
-.card-package-title {
-  font-weight: normal;
-  margin-bottom: 0;
-}
-
-#library-task-package, .card-package-title {
-  color: grey;
-  text-transform: uppercase;
 }
 
 .card-description {
