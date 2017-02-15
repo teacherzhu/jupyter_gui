@@ -539,6 +539,6 @@ import {}
         :return:
         """
 
-        # if str_ not in self.namespace:
-        #     str_ = '\'{}\''.format(str_)
+        if str_ not in self.namespace:
+            str_ = remove_nested_quotes('\'{}\''.format(str_))
         return str_

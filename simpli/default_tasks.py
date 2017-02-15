@@ -1,4 +1,4 @@
-from os import listdir, remove, symlink
+from os import listdir, remove, symlink, environ
 from os.path import join, split, islink, relpath
 from shutil import rmtree
 
@@ -82,11 +82,14 @@ def center_align_output_cells():
     display_raw_html(html)
 
 
-def display_start_banner_and_logos(directory='../media'):
+def display_start_banner_and_logos(print_html=False):
     """
 
+    :param print_html: bool;
     :return: None
     """
+
+    directory = environ['DIR_MEDIA']
 
     html = ''
 
@@ -111,20 +114,27 @@ def display_start_banner_and_logos(directory='../media'):
             ''.join(html_logos))
         html += html_logos
 
+    if print_html:
+        print(html)
     display_raw_html(html)
 
 
-def display_end_banner(directory='../media'):
+def display_end_banner(print_html=False):
     """
 
+    :param print_html: bool;
     :return: None
     """
+
+    directory = environ['DIR_MEDIA']
 
     dir_media = relpath(directory)
 
     for f in listdir(dir_media):
         if 'end_banner' in f:
             html = '''<img src="{}" width=400 height=225>'''.format(join(dir_media, f))
+            if print_html:
+                print(html)
             display_raw_html(html)
 
 
@@ -177,3 +187,31 @@ def display_raw_html(html, hide_input_cell=True):
     if hide_input_cell:
         html += '''<script> $('div .input').hide()'''
     display_html(html, raw=True)
+
+
+def get_dir_project():
+    return environ['DIR_PROJECT']
+
+
+def get_dir_tools():
+    return environ['DIR_TOOLS']
+
+
+def get_dir_data():
+    return environ['DIR_DATA']
+
+
+def get_dir_results():
+    return environ['DIR_RESULTS']
+
+
+def get_dir_media():
+    return environ['DIR_MEDIA']
+
+
+def make_data_filepath(filename):
+    return join(get_dir_data(), filename)
+
+
+def make_result_filepath(filename):
+    return join(get_dir_results(), filename)
