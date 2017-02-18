@@ -515,7 +515,8 @@ class Manager:
             optional_args = ', ' + optional_args
             self._print('optional_args: {}'.format(optional_args))
 
-        if library_name.startswith('simpli'):  # Use custom code
+        # TODO: enable
+        if False and library_name.startswith('simpli'):  # Use custom code
             exec('from {} import {}'.format(library_name, function_name))
             custom_code = eval('{}({}{}, namespace=self.namespace)'.format(function_name, required_args, optional_args))
             code = '''# {}

@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f14f75-4f48-413b-a544-9c9cb143b6a1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/simpli/nbpackage_tasks.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/simpli/nbpackage_tasks.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/__init__.py" afterPath="$PROJECT_DIR$/simpli/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/default_tasks.json" afterPath="$PROJECT_DIR$/simpli/default_tasks.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/default_tasks.py" afterPath="$PROJECT_DIR$/simpli/default_tasks.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/manager.py" afterPath="$PROJECT_DIR$/simpli/manager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/startup.py" afterPath="$PROJECT_DIR$/simpli/startup.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpli/support.py" afterPath="$PROJECT_DIR$/simpli/support.py" />
     </list>
     <ignored path="simplex.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="manager.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="manager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/simpli/manager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-68">
-              <caret line="476" column="60" lean-forward="false" selection-start-line="476" selection-start-column="60" selection-end-line="476" selection-end-column="60" />
+            <state relative-caret-position="629">
+              <caret line="517" column="21" lean-forward="false" selection-start-line="517" selection-start-column="21" selection-end-line="517" selection-end-column="21" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -46,22 +37,10 @@
       <file leaf-file-name="default_tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+            <state relative-caret-position="113">
+              <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nbpackage_tasks.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/simpli/nbpackage_tasks.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -143,7 +122,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="52" />
-    <option name="width" value="1317" />
+    <option name="width" value="1081" />
     <option name="height" value="1388" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -526,8 +505,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="52" width="1317" height="1388" extended-state="4" />
-    <editor active="false" />
+    <frame x="0" y="52" width="1081" height="1388" extended-state="4" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18602885" sideWeight="0.492865" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -757,26 +736,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simpli/manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="476" column="60" lean-forward="false" selection-start-line="476" selection-start-column="60" selection-end-line="476" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simpli/support.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -818,10 +777,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/simpli/nbpackage_tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+        <state relative-caret-position="646">
+          <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/default_tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpli/manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="517" column="21" lean-forward="false" selection-start-line="517" selection-start-column="21" selection-end-line="517" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
