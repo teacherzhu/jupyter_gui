@@ -1,0 +1,35 @@
+{
+  "library_path": "",
+  "tasks": [
+    {
+      "label": "Make Data Filepath",
+      "function_path": "simpli.nbpackage_tasks.make_data_filepath",
+      "required_args": [
+        {
+          "name": "filename",
+          "label": "File Name"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Variable for Data File Path"
+        }
+      ]
+    },
+    {
+      "label": "Make Result Filepath",
+      "function_path": "simpli.nbpackage_tasks.make_result_filepath",
+      "required_args": [
+        {
+          "name": "filename",
+          "label": "File Name"
+        }
+      ],
+      "returns": [
+        {
+          "label": "Variable for Result File Path"
+        }
+      ]
+    }
+  ]
+}

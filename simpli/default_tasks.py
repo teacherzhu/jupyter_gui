@@ -5,6 +5,7 @@ from shutil import rmtree
 from IPython.core.display import display_html
 
 from . import SIMPLI_JSON_DIR
+from .support import get_name
 
 
 def link_json(filepath):
@@ -26,17 +27,20 @@ def reset_jsons():
     :return: None
     """
 
+    # TODO; keep the default JSONs
     rmtree(SIMPLI_JSON_DIR)
 
 
-def just_return(value):
+def just_return(value, namespace=None):
     """
     Just return.
     :param value:
     :return: obj
     """
 
-    print('Returning {} ...'.format(value))
+    if isinstance(namespace, dict):
+        return get_name(value, namesapce=namespace)
+
     return value
 
 
@@ -187,31 +191,3 @@ def display_raw_html(html, hide_input_cell=True):
     if hide_input_cell:
         html += '''<script> $('div .input').hide()'''
     display_html(html, raw=True)
-
-
-def get_dir_project():
-    return environ['DIR_PROJECT']
-
-
-def get_dir_tools():
-    return environ['DIR_TOOLS']
-
-
-def get_dir_data():
-    return environ['DIR_DATA']
-
-
-def get_dir_results():
-    return environ['DIR_RESULTS']
-
-
-def get_dir_media():
-    return environ['DIR_MEDIA']
-
-
-def make_data_filepath(filename):
-    return join(get_dir_data(), filename)
-
-
-def make_result_filepath(filename):
-    return join(get_dir_results(), filename)

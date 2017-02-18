@@ -178,7 +178,7 @@ class Manager:
 
         # Load library path, which is common for all tasks
         library_path = tasks_json['library_path']
-        if not isdir(library_path):  # Use absolute path
+        if library_path and not isdir(library_path):  # Use absolute path assuming its in user-home directory
             library_path = join(HOME_DIR, library_path)
             self._print('\tAssumed that library_path ({}) is relative to the user-home directory.'.format(library_path))
 
@@ -420,9 +420,10 @@ class Manager:
         self._print('Updating path, importing function, and executing task ...')
 
         # Prepend library path
-        code = 'sys.path.insert(0, \'{}\')'.format(library_path)
-        self._print('\t{}'.format(code))
-        exec(code)
+        if library_path:
+            code = 'sys.path.insert(0, \'{}\')'.format(library_path)
+            self._print('\t{}'.format(code))
+            exec(code)
 
         # Import function
         code = 'from {} import {} as function'.format(library_name, function_name)
@@ -485,7 +486,7 @@ class Manager:
         :return: str;
         """
 
-        self._print('Representing task ({}, {}) as code ...'.format(task, type(task)))
+        self._print('Representing task ({}, {}) as code ...\n'.format(task, type(task)))
 
         if isinstance(task, str):
             task = loads(task)
@@ -508,25 +509,46 @@ class Manager:
         self._print('required_args: {}'.format(required_args))
 
         # Optional args
-        optional_args = ',\n'.join(['{}={}'.format(d.get('name'), d.get('value')) for d in info.get('optional_args')])
+        optional_args = ',\n'.join(
+            ['{}={}'.format(d.get('name'), self._str_or_name(d.get('value'))) for d in info.get('optional_args')])
         if optional_args:
             optional_args = ', ' + optional_args
-        self._print('optional_args: {}'.format(optional_args))
+            self._print('optional_args: {}'.format(optional_args))
 
-        code = '''# {}
+        if library_name.startswith('simpli'):  # Use custom code
+            exec('from {} import {}'.format(library_name, function_name))
+            custom_code = eval('{}({}{}, namespace=self.namespace)'.format(function_name, required_args, optional_args))
+            code = '''# {}
 
-import sys
-sys.path.insert(0, \'{}\')
-import {}
+{}{}'''.format(label,
+               returns,
+               custom_code)
 
-{}{}.{}({}{})'''.format(label,
-                        library_path,
-                        library_name.split('.')[0],
-                        returns,
-                        library_name,
-                        function_name,
-                        required_args,
-                        optional_args)
+        else:  # Use general code
+            if library_name.split('.')[0] in self.namespace:  # Don't Import library
+                code = '''# {}
+
+    {}{}.{}({}{})'''.format(label,
+                            returns,
+                            library_name,
+                            function_name,
+                            required_args,
+                            optional_args)
+            else:  # Import library
+                code = '''# {}
+
+    import sys
+    sys.path.insert(0, \'{}\')
+    import {}
+
+    {}{}.{}({}{})'''.format(label,
+                            library_path,
+                            library_name.split('.')[0],
+                            returns,
+                            library_name,
+                            function_name,
+                            required_args,
+                            optional_args)
 
         if print_return:
             print(code)
@@ -534,11 +556,13 @@ import {}
 
     def _str_or_name(self, str_):
         """
-
-        :param str_:
-        :return:
+        If str_ is an existing name in the current namespace, then return str_.
+        Else if str_ is a str, then return 'str_'.
+        :param str_: str;
+        :return: str;
         """
 
-        if str_ not in self.namespace:
-            str_ = remove_nested_quotes('\'{}\''.format(str_))
-        return str_
+        if str_ in self.namespace:
+            return str_
+        else:
+            return '\'{}\''.format(str_)

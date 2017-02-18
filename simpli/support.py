@@ -81,6 +81,12 @@ def get_home_dir():
 
 
 def remove_nested_quotes(str_):
+    """
+
+    :param str_:
+    :return:
+    """
+
     if isinstance(str_, str):
         str_ = re.sub(r'^"|"$|^\'|\'$', '', str_)
     return str_

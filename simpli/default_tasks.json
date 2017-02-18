@@ -1,5 +1,5 @@
 {
-  "library_path": "CompBio/simpli",
+  "library_path": "",
   "tasks": [
     {
       "label": "Load JSON",
@@ -123,36 +123,6 @@
     {
       "label": "Execute HTML",
       "function_path": "simpli.default_tasks.display_raw_html"
-    },
-    {
-      "label": "Make Data Filepath",
-      "function_path": "simpli.default_tasks.make_data_filepath",
-      "required_args": [
-        {
-          "name": "filename",
-          "label": "File Name"
-        }
-      ],
-      "returns": [
-        {
-          "label": "Variable for Data File Path"
-        }
-      ]
-    },
-    {
-      "label": "Make Result Filepath",
-      "function_path": "simpli.default_tasks.make_result_filepath",
-      "required_args": [
-        {
-          "name": "filename",
-          "label": "File Name"
-        }
-      ],
-      "returns": [
-        {
-          "label": "Variable for Result File Path"
-        }
-      ]
     }
   ]
 }

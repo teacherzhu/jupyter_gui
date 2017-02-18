@@ -7,8 +7,8 @@ import declarativewidgets as dwidgets
 # ======================================================================================================================
 def sync_notebook_to_manager():
     """
-    Sync namespace: Notebook ==> Manager
-    :return:
+    Sync namespace: Notebook ==> Manager.
+    :return: None
     """
 
     mgr.update_namespace(globals())
@@ -16,7 +16,7 @@ def sync_notebook_to_manager():
 
 def sync_manager_to_notebook():
     """
-    Sync namespace: Manager ==> Notebook
+    Sync namespace: Manager ==> Notebook.
     :return: None
     """
 
@@ -70,13 +70,12 @@ if sync_notebook_to_manager not in get_ipython().events.callbacks['post_execute'
 # Start up Manager
 # ======================================================================================================================
 
-# Initialize a Manager.
+# Initialize a Manager
 import simpli
 
 # TODO: rename to 'manager'
 global mgr
 mgr = simpli.Manager()
-# TODO: remove (nothing to sync in the beginning)?
 sync_notebook_to_manager()
 
 # ======================================================================================================================
@@ -85,11 +84,16 @@ sync_notebook_to_manager()
 load_gui()
 
 # ======================================================================================================================
-# Start up Notebook Package
+# Load extensions
 # ======================================================================================================================
-from environment import *
-
-
 get_ipython().magic('load_ext autoreload')
 get_ipython().magic('autoreload 2')
 get_ipython().magic('matplotlib inline')
+
+# ======================================================================================================================
+# Start up Notebook Package
+# ======================================================================================================================
+try:
+    from environment import *
+except:
+    pass

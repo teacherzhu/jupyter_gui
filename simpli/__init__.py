@@ -1,5 +1,3 @@
-from sys import platform
-from os import environ
 from os.path import join, dirname, realpath
 
 from .support import establish_filepath, get_home_dir
@@ -15,10 +13,11 @@ SIMPLI_DIR = join(HOME_DIR, '.Simpli')
 SIMPLI_JSON_DIR = join(SIMPLI_DIR, 'json', '')
 establish_filepath(SIMPLI_JSON_DIR)
 
-# Link .json for the default functions
+# Link default and nbpackage JSONs
 from .default_tasks import link_json
 
 link_json(join(dirname(realpath(__file__)), 'default_tasks.json'))
+link_json(join(dirname(realpath(__file__)), 'nbpackage_tasks.json'))
 
 from .manager import Manager
 
