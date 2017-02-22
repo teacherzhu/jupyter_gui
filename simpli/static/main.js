@@ -198,14 +198,6 @@ var undoDeleteCell = function() {
 };
 
 /**
- * Hide the input and prompt for the specified notebook cell.
- * @param  {Number} cell Notebook cell to be hidden
- */
-var hideCellInput = function(cell) {
-  cell.element.addClass("simpli-cell");
-}
-
-/**
  * Show the input and prompt for the specified notebook cell.
  * @param  {Number} cell Notebook cell to be hidden
  */
@@ -242,9 +234,6 @@ var toSimpliCell = function(index, taskJSON) {
       } else {
         renderTaskWidget(index, taskJSON);
       }
-
-      // Hide code input
-      hideCellInput(cell);
     }
   }, 10);
 

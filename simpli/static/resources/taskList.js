@@ -95,7 +95,6 @@ var getTask = function(taskLabel, notebook_cell_text, callback) {
     // Use kernel to read library JSONs
     if (!Jupyter.notebook.kernel_busy) {
       clearInterval(interval);
-      console.log(code);
       Jupyter.notebook.kernel.execute(code, {
         'iopub': {
           'output': allCallbacks

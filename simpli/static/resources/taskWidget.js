@@ -30,6 +30,7 @@ var getWidgetData = function(cell) {
  * @return {str}               String representation of widget HTML
  */
 var renderTaskWidget = function(cellIndex, taskJSON) {
+  console.log('RENDERING TASK WIDGET...');
   var cell = Jupyter.notebook.get_cell(cellIndex);
 
   // Scrape JSON from cell
@@ -41,14 +42,15 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
   updateTaskWidget(cell, taskJSON);
   cell.widgetarea._clear();
   cell.execute();
-  cell.expand_output();
 
   // Setup widget interactions after it renders
   var setupInteractions = setInterval(function() {
       if (!Jupyter.notebook.kernel_busy) {
         clearInterval(setupInteractions);
+        cell.expand_output();
+        cell.element.addClass("simpli-cell");
 
-        $('.item-header').each(function(index, element) {
+        $(cell.element).find('.item-header').each(function(index, element) {
 
           // Show all panels except optional args
           if (!$(element).parent().hasClass('field-optional_args-group') &&
@@ -56,9 +58,17 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
             $(element).next().show();
           }
 
+          // Toggle widget and field groups
           $(element).click(function() {
             $(element).next().toggle();
-          })
+          });
+        });
+
+        // Toggle description
+        $(cell.element).find('.info-toggle').each(function(index, element) {
+          $(element).click(function() {
+            $(this).parent().next().toggle();
+          });
         });
 
         // Save user input from form in %%HTML
@@ -90,7 +100,6 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
           setTimeout(function() {
             saveUserInput();
           }, 50);
-
         });
 
         // Link submitting form to executing function
@@ -113,11 +122,14 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
               if (!Jupyter.notebook.kernel_busy) {
                 clearInterval(interval);
                 var output_area = cell.output_area;
+
                 // Delete output displayed after Widget
                 if (output_area.element && output_area.element[0].children.length > 1) {
                   output_area.element[0].removeChild(output_area.element[0].children[1]);
                   output_area.outputs.pop();
                 }
+
+                // Execute output area
                 Jupyter.notebook.kernel.execute(taskCode, {
                   'iopub': {
                     'output': outputCallback
@@ -203,9 +215,7 @@ var generateTaskWidgetHTML = function(taskJSON) {
 
       var fieldGroupHeader = $('<div>')
         .addClass('item-header')
-        .html(
-          `<h3>${groupLabels[groupIndex]}</h3>
-               <paper-icon-button icon="info"></paper-icon-button`)
+        .html(`<h3>${groupLabels[groupIndex]}</h3>`)
         .appendTo(fieldGroup);
 
 
@@ -221,9 +231,8 @@ var generateTaskWidgetHTML = function(taskJSON) {
       for (var argIndex in g) {
         var arg = g[argIndex];
 
-        // TODO toggle itemContent on click
-        var itemHeader = $('<div>')
-          .addClass('item-header')
+        var inputContainer = $('<div>')
+          .addClass('input-parent')
           .appendTo(fieldGroupContentInner);
 
         // Generate a field for each argument
@@ -233,7 +242,7 @@ var generateTaskWidgetHTML = function(taskJSON) {
             name: fieldGroups[groupIndex],
             value: arg.value
           })
-          .appendTo(itemHeader);
+          .appendTo(inputContainer);
 
         if (fieldGroups[groupIndex] != 'optional_args') {
           field.attr({
@@ -242,6 +251,14 @@ var generateTaskWidgetHTML = function(taskJSON) {
             required: ''
           });
         }
+
+        // Toggle itemContent on click
+        var helpIcon = $('<paper-icon-button>')
+          .attr({
+            'icon': 'info'
+          })
+          .addClass('info-toggle')
+          .appendTo(inputContainer);
 
         // Generate info text for each argument field
         var itemContentCollapse = $('<iron-collapse>')
@@ -273,14 +290,3 @@ var generateTaskWidgetHTML = function(taskJSON) {
   // Return raw html for widget
   return `%%HTML\n<!--${AUTO_EXEC_FLAG}-->\n` + widget.prop('outerHTML');
 }
-
-/**
- * [setItemInfo description]
- * @param {[type]} index [description]
- * @param {[type]} cell  [description]
- */
-// var setItemInfo = function(index, cell) {
-//   var items = cell.element.find('.item-info');
-//   items.hide(0);
-//   $(items[index]).fadeIn('fast');
-// }

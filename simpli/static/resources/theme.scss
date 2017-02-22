@@ -50,8 +50,13 @@ body {
   position: relative;
 }
 
+h2 {
+  margin: 0 !important;
+}
+
 h3 {
   font-size: $h3-font-size;
+  margin: 0 !important;
 }
 
 #insert_simpli_below {
@@ -114,10 +119,6 @@ h3 {
   margin: 4px;
   transition: 0.2s all $cubic;
 
-  .item-header paper-icon-button {
-    color: grey;
-  }
-
   .field-group {
     border-radius: 3px;
     margin: $widget-spacing 0;
@@ -137,11 +138,20 @@ h3 {
   }
 
   .field-group-content {
-    // padding: $widget-spacing;
-
-    > .item-header {
+    > .input-parent {
       padding: $widget-spacing;
       padding-top: 0;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+
+      paper-input {
+        width: 100%;
+      }
+
+      paper-icon-button {
+        color: grey;
+      }
     }
 
     .item-content {
