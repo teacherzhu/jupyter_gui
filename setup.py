@@ -4,28 +4,25 @@ from setuptools import setup
 from setuptools.command.install import install
 
 
-class InstallCommand(install):
-    def run(self):
-        install.run(self)
+def _post_install():
+    cmd = ''
 
-        cmd = ''
-
-        if 'linux' in platform:
-            cmd += '''
+    if 'linux' in platform:
+        cmd += '''
             sudo apt install -y npm
             sudo ln -s /usr/bin/nodejs /usr/bin/node
             '''
-        elif 'darwin' in platform:
-            pass
-        elif 'win' in platform:
-            pass
+    elif 'darwin' in platform:
+        pass
+    elif 'win' in platform:
+        pass
 
-        cmd += '''
-        npm install -g bower
+    cmd += '''
+        sudo npm install -g bower
         '''
 
-        # comment out bower installs when running as dev
-        cmd += '''
+    # comment out bower installs when running as dev
+    cmd += '''
         jupyter nbextensions_configurator enable --user
         jupyter nbextension install --py --user simpli --symlink
         jupyter nbextension enable --py --user simpli
@@ -45,23 +42,32 @@ class InstallCommand(install):
         bower install --save PolymerElements/paper-header-panel
         bower install --save PolymerElements/iron-collapse
         bower install --save Collaborne/paper-collapse-item
+        touch /home/cyborg/Desktop/end-1.txt
+        touch /home/cyborg/Desktop/end.txt
         '''
 
-        print('Running installation commands ...\n{}'.format(cmd))
-        try:
-            run(cmd, shell=True)
-        except:
-            print('Installation commands error:\n{}'.format(cmd))
+    try:
+        run(cmd, shell=True,)
+    except:
+        pass
+
+
+
+class InstallCommand(install):
+    def run(self):
+        install.run(self)
+        self.verbose = True
+        self.debug_print('blah')
+        self.execute(_post_install, [], msg='Running post installation commands ...')
 
 
 setup(name='simpli',
       description='A simple execution interface for Jupyter Notebook.',
       packages=['simpli'],
-      version='1.0.0a3',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
-      license='MIT',
       url='https://github.com/ucsd-ccal/simpli',
+      download_url='https://github.com/ucsd-ccal/simpli',
       classifiers=['Development Status :: 3 - Alpha',
                    'License :: OSI Approved :: MIT License',
                    'Programming Language :: Python :: 3.5'],
