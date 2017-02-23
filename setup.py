@@ -8,18 +8,16 @@ def _post_install():
     cmd = ''
 
     if 'linux' in platform:
+        #TODO: avoid using sudo for local install
         cmd += '''
-        sudo apt install -y npm
+        sudo apt-get install -y npm
         sudo ln -s /usr/bin/nodejs /usr/bin/node
         '''
 
     elif 'darwin' in platform:
-        pass
-        # TODO: test and incoorporate
-        # cmd += '''
-        # /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-        # sudo brew install npm
-        # '''
+        cmd += '''
+        brew install npm
+        '''
 
     elif 'win' in platform:
         pass
@@ -51,7 +49,7 @@ def _post_install():
     '''
 
     try:
-        run(cmd, shell=True, )
+        run(cmd, shell=True)
     except:
         pass
 
@@ -65,7 +63,7 @@ class InstallCommand(install):
 setup(name='simpli',
       description='A simple execution interface for Jupyter Notebook.',
       packages=['simpli'],
-      version='1.0.0b1',
+      version='1.0.0b2',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
       url='https://github.com/ucsd-ccal/simpli',
