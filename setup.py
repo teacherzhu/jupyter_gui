@@ -64,6 +64,7 @@ class InstallCommand(install):
 setup(name='simpli',
       description='A simple execution interface for Jupyter Notebook.',
       packages=['simpli'],
+      version='1.0.0a3',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
       url='https://github.com/ucsd-ccal/simpli',
