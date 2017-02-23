@@ -8,7 +8,7 @@ def _post_install():
     cmd = ''
 
     if 'linux' in platform:
-        #TODO: avoid using sudo for local install
+        # TODO: avoid using sudo for local install
         cmd += '''
         sudo apt-get install -y npm
         sudo ln -s /usr/bin/nodejs /usr/bin/node
@@ -61,7 +61,7 @@ class InstallCommand(install):
 
 
 setup(name='simpli',
-      description='A simple execution interface for Jupyter Notebook.',
+      description='Code <== Simpli ==> GUI Widget (in Jupyter Notebook)',
       packages=['simpli'],
       version='1.0.0b2',
       author='Clarence Mah',
