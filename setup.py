@@ -21,7 +21,6 @@ def _post_install():
         sudo npm install -g bower
         '''
 
-    # comment out bower installs when running as dev
     cmd += '''
         jupyter nbextensions_configurator enable --user
         jupyter nbextension install --py --user simpli --symlink
@@ -42,8 +41,6 @@ def _post_install():
         bower install --save PolymerElements/paper-header-panel
         bower install --save PolymerElements/iron-collapse
         bower install --save Collaborne/paper-collapse-item
-        touch /home/cyborg/Desktop/end-1.txt
-        touch /home/cyborg/Desktop/end.txt
         '''
 
     try:
@@ -57,19 +54,18 @@ class InstallCommand(install):
     def run(self):
         install.run(self)
         self.verbose = True
-        self.debug_print('blah')
         self.execute(_post_install, [], msg='Running post installation commands ...')
 
 
 setup(name='simpli',
       description='A simple execution interface for Jupyter Notebook.',
       packages=['simpli'],
-      version='1.0.0a3',
+      version='1.0.0b1',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
       url='https://github.com/ucsd-ccal/simpli',
       download_url='https://github.com/ucsd-ccal/simpli',
-      classifiers=['Development Status :: 3 - Alpha',
+      classifiers=['Development Status :: 4 - Beta',
                    'License :: OSI Approved :: MIT License',
                    'Programming Language :: Python :: 3.5'],
       keywords=['bioinformatics biology development interface widget'],
