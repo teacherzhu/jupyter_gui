@@ -9,52 +9,57 @@ def _post_install():
 
     if 'linux' in platform:
         cmd += '''
-            sudo apt install -y npm
-            sudo ln -s /usr/bin/nodejs /usr/bin/node
-            '''
+        sudo apt install -y npm
+        sudo ln -s /usr/bin/nodejs /usr/bin/node
+        '''
+
     elif 'darwin' in platform:
         pass
+        # TODO: test and incoorporate
+        # cmd += '''
+        # /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        # sudo brew install npm
+        # '''
+
     elif 'win' in platform:
         pass
 
     cmd += '''
-        sudo npm install -g bower
-        '''
+    sudo npm install -g bower
+    '''
 
     cmd += '''
-        jupyter nbextensions_configurator enable --user
-        jupyter nbextension install --py --user simpli --symlink
-        jupyter nbextension enable --py --user simpli
-        jupyter serverextension enable --py --user simpli
-        jupyter nbextension install --py --user widgetsnbextension
-        jupyter nbextension enable --py --user widgetsnbextension
-        jupyter nbextension install --py --user declarativewidgets
-        jupyter nbextension enable --py --user declarativewidgets
-        jupyter serverextension enable --py --user declarativewidgets
+    jupyter nbextensions_configurator enable --user
+    jupyter nbextension install --py --user simpli --symlink
+    jupyter nbextension enable --py --user simpli
+    jupyter serverextension enable --py --user simpli
+    jupyter nbextension install --py --user widgetsnbextension
+    jupyter nbextension enable --py --user widgetsnbextension
+    jupyter nbextension install --py --user declarativewidgets
+    jupyter nbextension enable --py --user declarativewidgets
+    jupyter serverextension enable --py --user declarativewidgets
 
-        bower install --save PolymerElements/iron-form
-        bower install --save PolymerElements/paper-input
-        bower install --save PolymerElements/iron-label
-        bower install --save PolymerElements/paper-button
-        bower install --save PolymerElements/iron-icon
-        bower install --save PolymerElements/paper-material
-        bower install --save PolymerElements/paper-header-panel
-        bower install --save PolymerElements/iron-collapse
-        bower install --save Collaborne/paper-collapse-item
-        '''
+    bower install --save PolymerElements/iron-form
+    bower install --save PolymerElements/paper-input
+    bower install --save PolymerElements/iron-label
+    bower install --save PolymerElements/paper-button
+    bower install --save PolymerElements/iron-icon
+    bower install --save PolymerElements/paper-material
+    bower install --save PolymerElements/paper-header-panel
+    bower install --save PolymerElements/iron-collapse
+    bower install --save Collaborne/paper-collapse-item
+    '''
 
     try:
-        run(cmd, shell=True,)
+        run(cmd, shell=True, )
     except:
         pass
-
 
 
 class InstallCommand(install):
     def run(self):
         install.run(self)
-        self.verbose = True
-        self.execute(_post_install, [], msg='Running post installation commands ...')
+        self.execute(_post_install, [])
 
 
 setup(name='simpli',
@@ -72,9 +77,7 @@ setup(name='simpli',
       install_requires=['jupyter',
                         'notebook>=4.2.0',
                         'ipywidgets>=5.2.0',
-                        'jupyter_declarativewidgets',
-                        'matplotlib',
-                        'IPython'],
+                        'jupyter_declarativewidgets>=0.7.0'],
       cmdclass={'install': InstallCommand},
       package_data={'simpli': ['static/main.js',
                                'static/resources/*',
