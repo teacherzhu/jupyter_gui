@@ -1,5 +1,5 @@
 # Simpli
-CODE <== Simpli ==> GUI (in Jupyter Notebook)
+Code <== Simpli ==> GUI Widget (in Jupyter Notebook)
 
 ---
 ## Install Simpli
