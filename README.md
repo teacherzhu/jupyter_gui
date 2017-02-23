@@ -4,7 +4,7 @@ A simple interface for CompBio & BInf
 The Simpli package is a Jupyter Notebook extension that makes computational biology and bioinformatics - simple.
 
 ---
-## Simpli Install
+## Install Simpli
 
 ### For Mac OS X
 
@@ -31,4 +31,4 @@ pip install .
 :(
 ```
 
-### Start (or restart) Jupyter Notebook and - enjoy __:)__
+## Start (or restart) Jupyter Notebook and - enjoy __:)__
