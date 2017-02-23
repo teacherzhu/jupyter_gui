@@ -55,9 +55,9 @@ class InstallCommand(install):
 
 
 setup(name='simpli',
-      description='TODO: description',
+      description='A simple execution interface for Jupyter Notebook.',
       packages=['simpli'],
-      version='1.0.0a2',
+      version='1.0.0a3',
       author='Clarence Mah',
       author_email='ckmah@ucsd.edu',
       license='MIT',
