@@ -31,4 +31,4 @@ pip install .
 :(
 ```
 
-## Start (or restart) Jupyter Notebook and - enjoy __:)__
+### Start (or restart) Jupyter Notebook and - enjoy __:)__
