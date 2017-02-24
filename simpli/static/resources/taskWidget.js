@@ -86,7 +86,7 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
             // Map user input values to argument JSON
             for (var inputIndex in userInput[group]) {
               var inputValue = userInput[group][inputIndex];
-              inputValue = inputValue.split('"').join('').split("'").join('');
+              //inputValue = inputValue.split('"').join('').split("'").join('');
               taskJSON[Object.keys(taskJSON)[0]][group][inputIndex].value = inputValue;
             }
           }

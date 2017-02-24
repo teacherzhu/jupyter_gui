@@ -574,7 +574,6 @@ class Manager:
 
             if not library_path or not library_name or library_name.split('.')[0] in self.namespace:  # Without import
                 code = '''# {}
-
 {}{}{}({}{})'''.format(
                     # Label
                     label,
@@ -586,18 +585,17 @@ class Manager:
                     optional_args)
 
             else:  # With import
-                code = '''# {}
-
-import sys
+                code = '''import sys
 sys.path.insert(0, \'{}\')
 import {}
 
+# {}
 {}{}{}({}{})'''.format(
-                    # Label
-                    label,
                     # Import
                     library_path,
                     library_name.split('.')[0],
+                    # Label
+                    label,
                     # Execution
                     returns,
                     library_name,
@@ -617,7 +615,9 @@ import {}
         :return: str;
         """
 
-        if str_ in self.namespace:
+        str_ = remove_nested_quotes(str_)
+
+        if str_ in self.namespace or not isinstance(cast_str_to_int_float_bool_or_str(str_), str):  # object
             return str_
-        else:
+        else:  # str
             return '\'{}\''.format(str_)
