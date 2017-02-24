@@ -5,12 +5,12 @@ import re
 
 
 def get_name(obj, namesapce):
-    """
+    '''
 
     :param obj: object;
     :param namesapce: dict;
     :return: str;
-    """
+    '''
 
     # TODO: print non-strings as non-strings
 
@@ -23,11 +23,11 @@ def get_name(obj, namesapce):
 
 
 def establish_filepath(filepath):
-    """
+    '''
     If the path up to the deepest directory in filepath doesn't exist, make the path up to the deepest directory.
     :param filepath: str; filepath
     :return: None
-    """
+    '''
 
     # prefix/suffix
     prefix, suffix = split(filepath)
@@ -48,11 +48,11 @@ def establish_filepath(filepath):
 
 
 def list_only_dirs(directory_path):
-    """
+    '''
 
     :param directory_path: str; directory with all libraries
     :return: list; sorted list of directories in directory_path
-    """
+    '''
 
     dirs = []
     for f in listdir(directory_path):
@@ -65,10 +65,10 @@ def list_only_dirs(directory_path):
 
 
 def get_home_dir():
-    """
+    '''
 
     :return: str; user-home directory
-    """
+    '''
 
     if 'linux' in platform or 'darwin' in platform:
         home_dir = environ['HOME']
@@ -81,11 +81,11 @@ def get_home_dir():
 
 
 def remove_nested_quotes(str_):
-    """
+    '''
 
     :param str_:
     :return:
-    """
+    '''
 
     if isinstance(str_, str):
         str_ = re.sub(r'^"|"$|^\'|\'$', '', str_)
@@ -93,11 +93,11 @@ def remove_nested_quotes(str_):
 
 
 def title_str(str_):
-    """
+    '''
     Title a str_.
     :param str_: str;
     :return: str;
-    """
+    '''
 
     # Remember indices of original uppercase letters
     uppers = []
@@ -138,11 +138,11 @@ def title_str(str_):
 
 
 def cast_str_to_int_float_bool_or_str(str_):
-    """
+    '''
     Convert str_ into the following data types (return the first successful): int, float, bool, or str.
     :param str_: str;
     :return: int, float, bool, or str;
-    """
+    '''
 
     value = str_.strip()
 
@@ -165,22 +165,22 @@ def cast_str_to_int_float_bool_or_str(str_):
 
 
 def reset_encoding(str_):
-    """
+    '''
 
     :param str_: str;
     :return: str;
-    """
+    '''
 
     return str_.replace(u'\u201c', '"').replace(u'\u201d', '"')
 
 
 def merge_dicts(*dicts):
-    """
+    '''
     Shallow copy and merge dicts into a new dict; precedence goes to
     key value pairs in latter dict.
     :param dicts: iterable of dict;
     :return: dict;
-    """
+    '''
 
     merged = dict()
     for d in dicts:

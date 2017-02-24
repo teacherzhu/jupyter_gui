@@ -5,29 +5,29 @@ from IPython import get_ipython  # For syntax (re-imported by default when a Not
 # Define functions
 # ======================================================================================================================
 def sync_notebook_to_manager():
-    """
+    '''
     Sync namespace: Notebook ==> Manager.
     :return: None
-    """
+    '''
 
     mgr.update_namespace(globals())
 
 
 def sync_manager_to_notebook():
-    """
+    '''
     Sync namespace: Manager ==> Notebook.
     :return: None
-    """
+    '''
 
     for n, v in mgr.namespace.items():
         globals()[n] = v
 
 
 def load_gui():
-    """
+    '''
     Load GUI components.
     :return: None
-    """
+    '''
 
     import declarativewidgets
     declarativewidgets.init()
@@ -59,14 +59,14 @@ def load_gui():
 
 
 def log_progress(iterable, every=None, size=None, name='Items'):
-    """
+    '''
 
     :param iterable:
     :param every:
     :param size:
     :param name:
     :return: None
-    """
+    '''
 
     from ipywidgets import IntProgress, HTML, VBox
     from IPython.display import display

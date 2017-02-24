@@ -26,10 +26,10 @@ from .manager import Manager
 # Set up Jupyter widget
 # ======================================================================================================================
 def _jupyter_nbextension_paths():
-    """
+    '''
     Required function to add things to the nbextension path.
     :return: list; List of 1 dictionary
-    """
+    '''
 
     # section: the path is relative to the simpli/ directory (if viewing from the repository: it's simpli/simpli/)
     # dest: Jupyter sets up: server(such as localhost:8888)/nbextensions/dest/
@@ -45,10 +45,10 @@ def _jupyter_nbextension_paths():
 
 
 def _jupyter_server_extension_paths():
-    """
+    '''
     Required function to add things to the server extension path.
     :return: list; List of 1 dictionary
-    """
+    '''
 
     to_return = {'module': 'simpli'}
     return [to_return]
@@ -56,11 +56,11 @@ def _jupyter_server_extension_paths():
 
 # TODO: understand better
 def load_jupyter_server_extension(nbapp):
-    """
+    '''
     Function to be called when server extension is loaded.
     :param nbapp: NotebookWebApplication; handle to the Notebook web-server instance
     :return: None
-    """
+    '''
 
     # Print statement to show extension is loaded
     nbapp.log.info('\n\n********* Simpli on *********\n')
