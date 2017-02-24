@@ -229,81 +229,94 @@ class Manager:
         self._print('*********\n{}\n*********'.format(text))
 
         lines = [s.strip() for s in text.split('\n') if s != '']
-        self._print('\n*** lines: {}'.format(lines))
+        self._print('*** lines: {}'.format(lines))
 
         # Comment lines
         comment_lines = [l for l in lines if l.startswith('#')]
-        self._print('\n*** comment lines: {}'.format(comment_lines))
+        self._print('*** comment lines: {}'.format(comment_lines))
 
         label = comment_lines[0].split('#')[1].strip()
-        self._print('\n*** label: {}'.format(label))
+        self._print('*** label: {}'.format(label))
 
         # Code lines
-
         code_lines = []
         for l in lines:
             if not l.startswith('#'):
-                if 'path.insert' in l or 'import ' in l:
+                if 'path.insert' in l or 'import ' in l:  # Importing a module
                     exec(l)
                 else:
                     code_lines.append(l)
-
-        self._print('\n*** code lines: {}'.format(code_lines))
+        self._print('*** code lines: {}'.format(code_lines))
         code = ''.join(code_lines).replace(' ', '')
 
+        # Get before the 1st '(' and args (after the 1st '(' without the last ')')
         i = code.find('(')
         before, args = code[:i], code[i + 1:-1]
-        self._print('\n*** before: {}'.format(before))
+        self._print('*** before the 1st \'(\': {}'.format(before))
+        self._print('*** args (after the 1st \'(\' without the last \')\'): {}'.format(args))
+        args = args.split(',')
+        self._print('*** args (split): {}'.format(args))
 
+        # Get returns
         i = before.find('=')
-        if i == -1:  # No returns
+        if i == -1:  # '=' not found; so there is not return
             i = 0
         returns = before[:i].split(',')
-        self._print('\n*** returns: {}'.format(returns))
+        self._print('*** returns: {}'.format(returns))
+        returns = [x for x in returns if x != '']
+        returns = [{
+                       'label': 'TODO: get from docstring',
+                       'description': 'TODO: get from docstring',
+                       'value': v,
+                   }
+                   for v in returns]
 
-        if i != 0:
+        # Get function name
+        if i != 0:  # There was a '='
+            # Increment index to skip '='
             i += 1
         function_name = before[i:]
+        self._print('*** function_name: {}'.format(function_name))
+
+        # Get signature
         signature = eval('inspect.signature({})'.format(function_name))
-        self._print('\n*** signature.parameters: {}'.format(signature.parameters))
+        self._print('*** signature.parameters: {}'.format(signature.parameters))
 
-        library_name = eval('{}.__module__'.format(function_name))
-        self._print('\n*** library_name: {}'.format(library_name))
-
-        library_path = \
-            eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.',
-                                                                                                      '/'))[0]
-        self._print('\n*** library_path: {}'.format(library_path))
-
-        function_name = function_name.split('.')[-1]
-        self._print('\n*** function_name: {}'.format(function_name))
-
-        args = args.split(',')
-        self._print('\n*** args: {}'.format(args))
-
+        # Get required args
         required_args = [{
                              'label': n,
                              'description': 'TODO: get from docstring',
                              'name': n,
-                             'value': v}
+                             'value': v,
+                         }
                          for n, v in zip(list(signature.parameters), [x for x in args if '=' not in x])]
-        self._print('\n*** required_args: {}'.format(required_args))
+        self._print('*** required_args: {}'.format(required_args))
 
+        # Get optional args
         optional_args = [{
                              'label': n,
                              'description': 'TODO: get from docstring',
                              'name': n,
-                             'value': v}
+                             'value': v,
+                         }
                          for n, v in [x.split('=') for x in args if '=' in x]]
-        self._print('\n*** optional_args: {}'.format(optional_args))
+        self._print('*** optional_args: {}'.format(optional_args))
 
-        returns = [x for x in returns if x != '']
-        returns = [{
+        # Get module name
+        library_name = eval('{}.__module__'.format(function_name))
+        self._print('*** library_name: {}'.format(library_name))
 
-                       'label': 'TODO: get from docstring',
-                       'description': 'TODO: get from docstring',
-                       'value': v}
-                   for v in returns]
+        # Get library path
+        if library_name == '__main__':  # Function is defined within this Notebook
+            library_path = ''
+        else:  # Function is not defined within this Notebook (it's imported from a module)
+            library_path = \
+                eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.', '/'))[0]
+            function_name = function_name.split('.')[-1]
+            self._print('*** function_name (not defined within this Notebook): {}'.format(function_name))
+        self._print('*** library_path: {}'.format(library_path))
+
+        # Make a task
         task = {
             label: {
                 'description': 'TODO: get from docstring',
@@ -316,7 +329,9 @@ class Manager:
                 'returns': returns}
         }
 
-        # self._update_tasks(task)
+        # Register this task
+        self._update_tasks(task)
+
         return task
 
     def _process_args(self, args):

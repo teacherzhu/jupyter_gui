@@ -83,7 +83,7 @@ setup(name='simpli',
       install_requires=[
           'jupyter',
           'notebook>=4.2.0, <4.3.0',
-          'jupyter_declarativewidgets',
+          'jupyter_declarativewidgets==0.7.0',
       ],
       package_data={'simpli': [
           'static/main.js',
