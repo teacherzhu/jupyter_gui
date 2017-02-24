@@ -36,10 +36,12 @@ def _jupyter_nbextension_paths():
     # src: Jupyter sees this directory (not all files however) when it looks at dest (server/nbextensions/dest/)
     # require: Jupyter loads this file; things in this javascript will be seen
     # in the javascript namespace
-    to_return = {'section': 'notebook',
-                 'src': 'static',
-                 'dest': 'simpli',
-                 'require': 'simpli/main'}
+    to_return = {
+        'section': 'notebook',
+        'src': 'static',
+        'dest': 'simpli',
+        'require': 'simpli/main',
+    }
 
     return [to_return]
 
@@ -50,7 +52,9 @@ def _jupyter_server_extension_paths():
     :return: list; List of 1 dictionary
     """
 
-    to_return = {'module': 'simpli'}
+    to_return = {
+        'module': 'simpli',
+    }
     return [to_return]
 
 
@@ -63,4 +67,4 @@ def load_jupyter_server_extension(nbapp):
     """
 
     # Print statement to show extension is loaded
-    nbapp.log.info('\n\n********* Simpli on *********\n')
+    nbapp.log.info('\n********* Simpli on :) *********\n')
