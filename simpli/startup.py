@@ -1,5 +1,4 @@
 from IPython import get_ipython  # For syntax (re-imported by default when a Notebook starts)
-import declarativewidgets as dwidgets
 
 
 # ======================================================================================================================
@@ -30,7 +29,8 @@ def load_gui():
     :return: None
     """
 
-    dwidgets.init()
+    import declarativewidgets
+    declarativewidgets.init()
 
     imports = '''
         <link rel='import' href='urth_components/iron-form/iron-form.html'

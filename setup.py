@@ -5,10 +5,12 @@ from setuptools.command.install import install
 
 
 def _post_install():
-    cmd = ''
+    cmd = '''
+    rm -rf $HOME/.Simpli
+    '''
 
     if 'linux' in platform:
-        # TODO: avoid using sudo for local install
+        # TODO: avoid using sudo and install locally
         cmd += '''
         sudo apt-get install -y npm
         sudo ln -s /usr/bin/nodejs /usr/bin/node
@@ -17,6 +19,7 @@ def _post_install():
     elif 'darwin' in platform:
         cmd += '''
         brew install npm
+        rm -rf $HOME/Library/Jupyter
         '''
 
     elif 'win' in platform:
@@ -28,14 +31,18 @@ def _post_install():
 
     cmd += '''
     jupyter nbextensions_configurator enable --user
-    jupyter nbextension install --py --user simpli --symlink
-    jupyter nbextension enable --py --user simpli
-    jupyter serverextension enable --py --user simpli
-    jupyter nbextension install --py --user widgetsnbextension
-    jupyter nbextension enable --py --user widgetsnbextension
-    jupyter nbextension install --py --user declarativewidgets
-    jupyter nbextension enable --py --user declarativewidgets
-    jupyter serverextension enable --py --user declarativewidgets
+    jupyter contrib nbextension install --user
+
+    jupyter nbextension install --user --py simpli
+    jupyter nbextension enable --user --py simpli
+    jupyter serverextension enable --user --py simpli
+
+    jupyter nbextension install --user --py widgetsnbextension
+    jupyter nbextension enable --user --py widgetsnbextension
+
+    jupyter nbextension install --user --py declarativewidgets
+    jupyter nbextension enable --user --py declarativewidgets
+    jupyter serverextension enable --user --py declarativewidgets
 
     bower install --save PolymerElements/iron-form
     bower install --save PolymerElements/paper-input
@@ -61,23 +68,31 @@ class InstallCommand(install):
 
 
 setup(name='simpli',
+      version='0.9.0',
       description='Code <== Simpli ==> GUI Widget (in Jupyter Notebook)',
-      packages=['simpli'],
-      version='1.0.0b2',
-      author='Clarence Mah',
-      author_email='ckmah@ucsd.edu',
       url='https://github.com/ucsd-ccal/simpli',
-      download_url='https://github.com/ucsd-ccal/simpli',
-      classifiers=['Development Status :: 4 - Beta',
-                   'License :: OSI Approved :: MIT License',
-                   'Programming Language :: Python :: 3.5'],
-      keywords=['bioinformatics biology development interface widget'],
-      install_requires=['jupyter',
-                        'notebook>=4.2.0',
-                        'ipywidgets>=5.2.0',
-                        'jupyter_declarativewidgets>=0.7.0'],
+      author='Clarence Mah & Huwate Yeerna (Kwat Medetgul-Ernar)',
+      license='MIT',
+      classifiers=[
+          'Development Status :: 4 - Beta',
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python :: 3.5',
+      ],
+      keywords='Jupyter, Notebook, Widget, GUI',
+      packages=['simpli'],
+      install_requires=[
+          'jupyter',
+          'notebook>=4.2.0, <4.3.0',
+          'ipywidgets>=5.2.0',
+          'jupyter_nbextensions_configurator',
+          'jupyter_contrib_nbextensions',
+          'jupyter_declarativewidgets',
+      ],
+      package_data={'simpli': [
+          'static/main.js',
+          'static/resources/*',
+          'default_tasks.json',
+          'nbpackage_tasks.json',
+      ]},
       cmdclass={'install': InstallCommand},
-      package_data={'simpli': ['static/main.js',
-                               'static/resources/*',
-                               'default_tasks.json',
-                               'nbpackage_tasks.json']})
+      )
