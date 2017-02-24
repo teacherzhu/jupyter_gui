@@ -12,14 +12,14 @@ from .support import get_name, merge_dicts, remove_nested_quotes, title_str, cas
 
 
 class Manager:
-    '''
+    """
     Notebook Manager.
-    '''
+    """
 
     def __init__(self, verbose=False):
-        '''
+        """
         Initialize a Notebook Manager.
-        '''
+        """
 
         self._namespace = {}
 
@@ -29,31 +29,31 @@ class Manager:
         self._verbose = verbose
 
     def _print(self, str_):
-        '''
+        """
         Print str_.
         :param str_: str; message to printed
         :return: None
-        '''
+        """
 
         if self._verbose:
             print(str_)
 
     def _get_namespace(self):
-        '''
+        """
         Get namespace.
         :return: dict;
-        '''
+        """
 
         # self._print('(Getting namespace ...)')
 
         return self._namespace
 
     def _set_namespace(self, namespace):
-        '''
+        """
         Set namespace
         :param namespace: dict;
         :return: None
-        '''
+        """
 
         # self._print('(Setting namespace ...)')
 
@@ -63,11 +63,11 @@ class Manager:
     namespace = property(_get_namespace, _set_namespace)
 
     def update_namespace(self, namespace):
-        '''
+        """
         Update namespace.
         :param namespace: dict;
         :return: None
-        '''
+        """
 
         # self._print('Updating namespace with {} ...'.format(namespace))
 
@@ -77,21 +77,21 @@ class Manager:
             globals()[n] = v
 
     def _get_tasks(self):
-        '''
+        """
         Get tasks.
         :return: list; list of dict
-        '''
+        """
 
         # self._print('(Getting tasks ...)')
 
         return self._tasks
 
     def _set_tasks(self, tasks):
-        '''
+        """
         Set tasks.
         :param tasks: list; list of dict
         :return:  None
-        '''
+        """
 
         # self._print('(Setting tasks ...)')
 
@@ -100,10 +100,10 @@ class Manager:
     tasks = property(_get_tasks, _set_tasks)
 
     def print_tasks_as_json(self, json_directory_path=SIMPLI_JSON_DIR):
-        '''
+        """
         Load tasks from task-specifying JSONs in json_directory_path and print all tasks in JSON format.
         :return: None
-        '''
+        """
 
         self._print('Printing tasks in JSON format ...')
 
@@ -112,13 +112,13 @@ class Manager:
         print(dumps(self._tasks))
 
     def get_task(self, task_label=None, notebook_cell_text=None, print_as_json=True):
-        '''
+        """
         Get a task, whose label is task_label.
         :param task_label: str;
         :param notebook_cell_text: str;
         :param print_as_json: bool;
         :return: dict;
-        '''
+        """
 
         self._print('Getting task {} ...'.format(task_label))
 
@@ -136,22 +136,22 @@ class Manager:
         return task
 
     def _update_tasks(self, tasks):
-        '''
+        """
         Set or update a task, whose label is task_label, to be task.
         :param tasks: dict;
         :return: None
-        '''
+        """
 
         self._print('Setting/updating task {} to be {} ...'.format(self.tasks, tasks))
 
         self.tasks = merge_dicts(self.tasks, tasks)
 
     def _load_tasks_from_json_dir(self, json_directory_path):
-        '''
+        """
         Load tasks from task-specifying JSONs in json_directory_path.
         :param json_directory_path: str; directory containing task-specifying JSONs
         :return: None
-        '''
+        """
 
         self._print('Loading task-specifying JSONs in directory {} ...'.format(json_directory_path))
 
@@ -163,11 +163,11 @@ class Manager:
                 pass
 
     def _load_tasks_from_json(self, json_filepath):
-        '''
+        """
         Load a task from a task-specifying JSON, json_filepath
         :param json_filepath: str; filepath to a task-specifying JSON
         :return: None
-        '''
+        """
 
         self._print('Loading task-specifying JSON {} ...'.format(json_filepath))
 
@@ -218,11 +218,11 @@ class Manager:
         self._update_tasks(tasks)
 
     def _load_task_from_notebook_cell(self, text):
-        '''
+        """
         Load task from a notebook cell.
         :param text: str;
         :return: dict;
-        '''
+        """
 
         self._print('Loading a task from a notebook cell ...')
 
@@ -335,11 +335,11 @@ class Manager:
         return task
 
     def _process_args(self, args):
-        '''
+        """
         Process args.
         :param args: list; list of arg dict
         :return: dict;
-        '''
+        """
 
         self._print('Processing args ...')
 
@@ -356,11 +356,11 @@ class Manager:
         return processed_dicts
 
     def _process_returns(self, returns):
-        '''
+        """
         Process returns.
         :param returns: list; list of return dict
         :return: dict;
-        '''
+        """
 
         self._print('Processing returns ...')
 
@@ -375,11 +375,11 @@ class Manager:
         return processed_dicts
 
     def execute_task(self, task):
-        '''
+        """
         Execute task.
         :param task: dict;
         :return: None
-        '''
+        """
 
         # TODO: clear the previous output somewhere else
         # Clear any existing output
@@ -420,7 +420,7 @@ class Manager:
         self._print('self.namespace after execution: {}'.format(self.namespace))
 
     def _path_import_execute(self, library_path, library_name, function_name, args):
-        '''
+        """
         Prepend path, import library, and execute task.
 
         :param library_path: str;
@@ -430,7 +430,7 @@ class Manager:
         :param args: dict;
 
         :return: list; raw output of the function
-        '''
+        """
 
         self._print('Updating path, importing function, and executing task ...')
 
@@ -453,7 +453,7 @@ class Manager:
         return locals()['function'](**args)
 
     def _merge_process_args(self, required_args, default_args, optional_args):
-        '''
+        """
         Convert input str arguments to corresponding values:
             If the str is the name of a existing variable in the Notebook namespace, use its corresponding value;
             If the str contains ',', convert it into a list of str;
@@ -462,7 +462,7 @@ class Manager:
         :param default_args: dict;
         :param optional_args: dict;
         :return: dict; merged and processed args
-        '''
+        """
 
         self._print('\tMerging and processing arguments ...')
 
@@ -494,12 +494,12 @@ class Manager:
         return processed_args
 
     def task_to_code(self, task, print_return=True):
-        '''
+        """
         Represent task as code.
         :param task:  dict;
         :param print_return: bool;
         :return: str; code representation of task
-        '''
+        """
 
         if isinstance(task, str):  # task is a JSON str
             # Read JSON str as dict
@@ -613,12 +613,12 @@ import {}
         return code
 
     def _str_or_name(self, str_):
-        '''
+        """
         If str_ is an existing name in the current namespace, then return str_.
         Else if str_ is a str, then return 'str_'.
         :param str_: str;
         :return: str;
-        '''
+        """
 
         if str_ in self.namespace:
             return str_
