@@ -83,9 +83,6 @@ setup(name='simpli',
       install_requires=[
           'jupyter',
           'notebook>=4.2.0, <4.3.0',
-          'ipywidgets>=5.2.0',
-          'jupyter_nbextensions_configurator',
-          'jupyter_contrib_nbextensions',
           'jupyter_declarativewidgets',
       ],
       package_data={'simpli': [
