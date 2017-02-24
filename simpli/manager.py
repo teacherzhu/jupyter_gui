@@ -1,3 +1,12 @@
+'''
+Defines Manager class which:
+    1) syncs the namespace between Notebook and Simpli;
+    2) keeps track of tasks, which can be added from JSON or Notebook cell;
+    3) makes code representation of task widgets (during task widget ==(flip)==> code);
+    4) executes function;
+    5) ;
+'''
+
 import sys  # Don't remove this import - sys IS used!
 from os import listdir
 from os.path import isdir, join
@@ -55,7 +64,7 @@ class Manager:
         :return: None
         """
 
-        # self._print('(Setting namespace ...)')
+        self._print('(Setting namespace ...)')
 
         self._namespace = namespace
         globals()
@@ -64,12 +73,12 @@ class Manager:
 
     def update_namespace(self, namespace):
         """
-        Update namespace.
+        Update with namespace.
         :param namespace: dict;
         :return: None
         """
 
-        # self._print('Updating namespace with {} ...'.format(namespace))
+        self._print('Updating namespace with {} ...'.format(namespace))
 
         self.namespace = merge_dicts(self.namespace, namespace)
 
@@ -82,7 +91,7 @@ class Manager:
         :return: list; list of dict
         """
 
-        # self._print('(Getting tasks ...)')
+        self._print('(Getting tasks ...)')
 
         return self._tasks
 
@@ -93,7 +102,7 @@ class Manager:
         :return:  None
         """
 
-        # self._print('(Setting tasks ...)')
+        self._print('(Setting tasks ...)')
 
         self._tasks = tasks
 
@@ -144,6 +153,7 @@ class Manager:
 
         self._print('Setting/updating task {} to be {} ...'.format(self.tasks, tasks))
 
+        # TODO: add only new information
         self.tasks = merge_dicts(self.tasks, tasks)
 
     def _load_tasks_from_json_dir(self, json_directory_path):
