@@ -544,27 +544,27 @@ class Manager:
             if library_name.split('.')[0] in self.namespace:  # Don't Import library
                 code = '''# {}
 
-    {}{}.{}({}{})'''.format(label,
-                            returns,
-                            library_name,
-                            function_name,
-                            required_args,
-                            optional_args)
+{}{}.{}({}{})'''.format(label,
+                        returns,
+                        library_name,
+                        function_name,
+                        required_args,
+                        optional_args)
             else:  # Import library
                 code = '''# {}
 
-    import sys
-    sys.path.insert(0, \'{}\')
-    import {}
+import sys
+sys.path.insert(0, \'{}\')
+import {}
 
-    {}{}.{}({}{})'''.format(label,
-                            library_path,
-                            library_name.split('.')[0],
-                            returns,
-                            library_name,
-                            function_name,
-                            required_args,
-                            optional_args)
+{}{}.{}({}{})'''.format(label,
+                        library_path,
+                        library_name.split('.')[0],
+                        returns,
+                        library_name,
+                        function_name,
+                        required_args,
+                        optional_args)
 
         if print_return:
             print(code)
