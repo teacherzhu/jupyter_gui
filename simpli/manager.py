@@ -572,10 +572,7 @@ class Manager:
                 optional_args = sep.join([a for a in optional_args.split(',')])
                 optional_args = sep + optional_args
 
-            if not library_path or library_name == '__main__' or library_name.split('.')[
-                0] in self.namespace:  # Don't import library because it's already in the namespace
-                # Style library name
-
+            if not library_path or not library_name or library_name.split('.')[0] in self.namespace:  # Without import
                 code = '''# {}
 
 {}{}{}({}{})'''.format(
@@ -588,7 +585,7 @@ class Manager:
                     required_args,
                     optional_args)
 
-            else:  # Import library
+            else:  # With import
                 code = '''# {}
 
 import sys
