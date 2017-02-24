@@ -1,4 +1,4 @@
-def a_function_in_a_library(req_arg1, req_arg2, opt_arg1=None, opt_arg2=None):
+def a_function_in_a_file(req_arg1, req_arg2, opt_arg1=None, opt_arg2=None):
     """
     A function in a library.
     :param req_arg1: object; required argument 1.
