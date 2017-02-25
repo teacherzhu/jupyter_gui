@@ -360,7 +360,7 @@ class Manager:
                 'name': d.get('name'),
                 'value': d.get('value', ''),
                 'label': d.get('label', title_str(d['name'])),
-                'description': d.get('description', 'No description')}
+                'description': d.get('description', 'No description.')}
             )
 
         return processed_dicts
@@ -379,7 +379,7 @@ class Manager:
         for d in returns:
             processed_dicts.append({
                 'label': d.get('label'),
-                'description': d.get('description', 'No description')}
+                'description': d.get('description', 'No description.')}
             )
 
         return processed_dicts
@@ -401,9 +401,9 @@ class Manager:
         label, info = list(task.items())[0]
 
         # Process and merge args
-        required_args = {a['name']: a['value'] for a in info['required_args']}
-        default_args = {a['name']: a['value'] for a in info['default_args']}
-        optional_args = {a['name']: a['value'] for a in info['optional_args']}
+        required_args = {a['name']: remove_nested_quotes(a['value']) for a in info['required_args']}
+        default_args = {a['name']: remove_nested_quotes(a['value']) for a in info['default_args']}
+        optional_args = {a['name']: remove_nested_quotes(a['value']) for a in info['optional_args']}
         args = self._merge_process_args(required_args, default_args, optional_args)
 
         # Get returns
@@ -554,9 +554,11 @@ class Manager:
                                           returns,
                                           custom_code)
 
-        elif function_name not in self.namespace:  # Import function
+        elif function_name not in self.namespace:  # Import function - fully
             code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {}\n\n'.format(library_path,
                                                                                    library_name.split('.')[0])
+        else:  # A non-simpli function in namespace
+            library_name = ''
 
         # Style returns
         if returns:
