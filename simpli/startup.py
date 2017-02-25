@@ -30,8 +30,6 @@ imports = '''
               is='urth-core-import' package='PolymerElements/paper-header-panel'>
         <link rel='import' href='urth_components/iron-collapse/iron-collapse.html'
               is='urth-core-import' package='PolymerElements/iron-collapse'>
-        <link rel='import' href='urth_components/paper-collapse-item/paper-collapse-item.html'
-              is='urth-core-import' package='Collaborne/paper-collapse-item'>
         '''
 
 get_ipython().run_cell_magic('HTML', '', imports)

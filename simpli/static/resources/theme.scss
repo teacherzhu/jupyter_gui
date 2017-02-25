@@ -1,5 +1,3 @@
-@import "material";
-
 $jupyter-color: #ff7e2e;
 
 $input-color: #20D9BA;
@@ -196,7 +194,7 @@ h3 {
     margin: 0;
     font-size: 18px;
 
-    * {
+    iron-icon {
       margin-left: $widget-spacing;
     }
   }
