@@ -1,6 +1,6 @@
-'''
+"""
 Defines default tasks useful for working with Notebook Packages.
-'''
+"""
 
 from os import environ
 from os.path import join
