@@ -67,4 +67,4 @@ def load_jupyter_server_extension(nbapp):
     """
 
     # Print statement to show extension is loaded
-    nbapp.log.info('\n********* Simpli on :) *********\n')
+    nbapp.log.info('\n********* Simpli on *********\n')

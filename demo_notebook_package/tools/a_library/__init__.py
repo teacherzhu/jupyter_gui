@@ -1,2 +1,2 @@
-def a_function_in_init():
+def a_function_in_a_init():
     pass
