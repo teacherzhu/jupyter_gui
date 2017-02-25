@@ -133,7 +133,7 @@ To Simplify a Task, just make an Task Entry for the Task in a JSON load the JSON
 
 This is an template for such Task Entry:
 ```
-a = {
+{
     "library_path": "path/to/library/",  # Optional
 
     "tasks":  # Required
