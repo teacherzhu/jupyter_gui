@@ -133,7 +133,7 @@ To Simplify a Task, just make an Task Entry for the Task in a JSON load the JSON
 
 This is an template for such Task Entry:
 ```
-{
+a = {
     "library_path": "path/to/library/",  # Optional
 
     "tasks":  # Required
@@ -141,35 +141,37 @@ This is an template for such Task Entry:
             {
                 "label": "Name of this Task (unique ID)",  # Optional (will be created based on function name if not specified)
 
-                "function_path": "library.path.to.file.function",
+                "description": "This Task performs ...",  # Optional
+
+                "function_path": "library.path.to.file.function",  # Optional (function is assumed to be in the __main__ if not specified)
 
                 "required_args":  # Optional
                     [
                         {
-                            "arg_name": “x",  # Required if specifying required_args
+                            "arg_name": "x",  # Required if specifying required_args
                             "label": "The X",  # Optional if specifying required_args (user sees label instead of arg_name in a Task Widget) (will be created based on arg_name if not specified)
                             "description": "The X is ...",  # Optional if specifying required_args
                         },
-                        (add more required_args)
+                        # (may add more required_args)
                     ],
 
                 "default_args":  # Optional (users won't see these arguments in the Task Widget)
                     [
                         {
-                            "arg_name": “y",  # Required if specifying default_args
+                            "arg_name": "y",  # Required if specifying default_args
                             "value": "100",  # Required if specifying default_args (the default value [y=100 will be an argument when calling this function])
                         },
-                        (add more default_args)
+                        # (may add more default_args)
                     ],
 
                 "optional_args":  # Optional
                     [
                         {
-                            "arg_name": “z",  # Required if specifying optional_args
+                            "arg_name": "z",  # Required if specifying optional_args
                             "label": "The Z",  # Optional if specifying optional_args (user sees label instead of arg_name in a Task Widget) (will be created based on arg_name if not specified)
                             "description": "The Z is ...",  # Optional if specifying optional_args
                         },
-                        (add more optional_args)
+                        # (may add more optional_args)
                     ],
 
                 "returns":  # Optional
@@ -178,19 +180,21 @@ This is an template for such Task Entry:
                             "label": "The A",  # Required
                             "description": "The A is ...",  # Optional if specifying returns
                         },
-                        (add more returns)
-                    ]
+                        # (may add more returns)
+                    ],
 
-                "other":
+                "other_information":  # Optional
                     {
+                        # (add any information in in format: str: list)
                         "version": ["1.0.0"],
                         "server": ["Broad Institute"],
                         "tag": ["RNA", "Sequencing"],
-                        (add any information)
-                    }
-                (add more Tasks)
-          ]
-    }
+                        # (may add more other_information)
+                    },
+            },
+            # (may add more tasks)
+        ]
+}
 ```
 
 # TODO: add example JSON
