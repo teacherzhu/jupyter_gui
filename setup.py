@@ -52,7 +52,6 @@ def _post_install():
     bower install --save PolymerElements/paper-material
     bower install --save PolymerElements/paper-header-panel
     bower install --save PolymerElements/iron-collapse
-    bower install --save Collaborne/paper-collapse-item
     '''
 
     try:
@@ -68,7 +67,7 @@ class InstallCommand(install):
 
 
 setup(name='simpli',
-      version='0.9.0',
+      version='1.0.0a2',
       description='Code <== Simpli ==> GUI Widget (in Jupyter Notebook)',
       url='https://github.com/ucsd-ccal/simpli',
       author='Clarence Mah & Huwate Yeerna (Kwat Medetgul-Ernar)',
