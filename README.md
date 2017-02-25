@@ -139,11 +139,12 @@ This is an template for such Task Entry:
     "tasks":  # Required
         [
             {
-                "label": "Name of this Task (unique ID)",  # Optional (will be created based on function name if not specified)
+                "function_path": "library.path.to.file.function",  # Required
+
+                "label": "Name of this Task (unique ID)",  # Optional (will be created based on function_path if not specified)
 
                 "description": "This Task performs ...",  # Optional
 
-                "function_path": "library.path.to.file.function",  # Optional (function is assumed to be in the __main__ if not specified)
 
                 "required_args":  # Optional
                     [
