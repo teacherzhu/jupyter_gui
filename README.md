@@ -11,6 +11,8 @@ With Simpli, coders can represent their Python code as Task Widgets to non-coder
 
 ## Install Simpli
 
+#### After launching Notebook with Simpli for the 1st time, please give it a minute to downlaod GUI components in the background (you can see the progress in the command line output).
+
 ### For Mac OS X
 ```bash
 # Install brew

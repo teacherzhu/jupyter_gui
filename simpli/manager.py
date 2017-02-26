@@ -169,6 +169,9 @@ class Manager:
             fp_json = join(json_directory_path, f)
             try:
                 self._load_tasks_from_json(fp_json)
+
+            except FileNotFoundError as e:
+                print('FileNotFoundError (JSON doesn\'t exist or the link is broken if it\'s a link): {}'.format(e))
             except KeyError as e:
                 print('JSON key error: {}'.format(e))
             except ValueError as e:
