@@ -169,8 +169,10 @@ class Manager:
             fp_json = join(json_directory_path, f)
             try:
                 self._load_tasks_from_json(fp_json)
-            except KeyError:
-                pass
+            except KeyError as e:
+                print('JSON key error: {}'.format(e))
+            except ValueError as e:
+                print('ValueError: {}'.format(e))
 
     def _load_tasks_from_json(self, json_filepath):
         """
@@ -195,6 +197,7 @@ class Manager:
         # Load each task
         for t in tasks_json['tasks']:
 
+            # Split function path into library_name and function_name
             function_path = t['function_path']
             if '.' in function_path:
                 split = function_path.split('.')
@@ -224,6 +227,8 @@ class Manager:
                 'default_args': self._process_args(t.get('default_args', [])),
                 'optional_args': self._process_args(t.get('optional_args', [])),
                 'returns': self._process_returns(t.get('returns', []))}
+
+            self._print('\t\tLoaded task {}: {}.'.format(label, tasks[label]))
 
         self._update_tasks(tasks)
 

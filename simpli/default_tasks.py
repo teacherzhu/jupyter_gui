@@ -20,8 +20,7 @@ def link_json(filepath):
     """
 
     destination = join(SIMPLI_JSON_DIR, split(filepath)[1])
-    if islink(destination):
-        remove(destination)
+    remove(destination)
     symlink(filepath, destination)
 
 

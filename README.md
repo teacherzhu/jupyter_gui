@@ -149,8 +149,8 @@ This is an template for such Task Entry:
                 "required_args":  # Optional
                     [
                         {
-                            "arg_name": "x",  # Required if specifying required_args
-                            "label": "The X",  # Optional if specifying required_args (user sees label instead of arg_name in a Task Widget) (will be created based on arg_name if not specified)
+                            "name": "x",  # Required if specifying required_args
+                            "label": "The X",  # Optional if specifying required_args (user sees label instead of name in a Task Widget) (will be created based on name if not specified)
                             "description": "The X is ...",  # Optional if specifying required_args
                         },
                         # (may add more required_args)
@@ -159,7 +159,7 @@ This is an template for such Task Entry:
                 "default_args":  # Optional (users won't see these arguments in the Task Widget)
                     [
                         {
-                            "arg_name": "y",  # Required if specifying default_args
+                            "name": "y",  # Required if specifying default_args
                             "value": "100",  # Required if specifying default_args (the default value [y=100 will be an argument when calling this function])
                         },
                         # (may add more default_args)
@@ -168,8 +168,8 @@ This is an template for such Task Entry:
                 "optional_args":  # Optional
                     [
                         {
-                            "arg_name": "z",  # Required if specifying optional_args
-                            "label": "The Z",  # Optional if specifying optional_args (user sees label instead of arg_name in a Task Widget) (will be created based on arg_name if not specified)
+                            "name": "z",  # Required if specifying optional_args
+                            "label": "The Z",  # Optional if specifying optional_args (user sees label instead of name in a Task Widget) (will be created based on name if not specified)
                             "description": "The Z is ...",  # Optional if specifying optional_args
                         },
                         # (may add more optional_args)
