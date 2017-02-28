@@ -16,12 +16,14 @@ def _post_install():
         sudo ln -s /usr/bin/nodejs /usr/bin/node
         '''
 
+    # TODO: avoid deleting $HOME/Library/Jupyter
     elif 'darwin' in platform:
         cmd += '''
-        brew install node
+        brew install npm
         rm -rf $HOME/Library/Jupyter
         '''
 
+    # TODO: use more precise check for Windows
     elif 'win' in platform:
         pass
 
@@ -29,6 +31,7 @@ def _post_install():
     sudo npm install -g bower
     '''
 
+    # TODO: understand why installing on server also
     cmd += '''
     jupyter nbextensions_configurator enable --user
     jupyter contrib nbextension install --user
@@ -48,26 +51,25 @@ def _post_install():
     bower install --save PolymerElements/paper-input
     bower install --save PolymerElements/iron-label
     bower install --save PolymerElements/paper-button
-    bower install --save PolymerElements/paper-material
     bower install --save PolymerElements/iron-icon
+    bower install --save PolymerElements/paper-material
+    bower install --save PolymerElements/paper-header-panel
     bower install --save PolymerElements/iron-collapse
+    bower install --save Collaborne/paper-collapse-item
     '''
 
-    try:
-        run(cmd, shell=True)
-    except:
-        pass
+    run(cmd, shell=True)
 
 
 class InstallCommand(install):
     def run(self):
         install.run(self)
-        # self.execute(_post_install, [])
+        self.execute(_post_install, [])
 
 
 setup(name='simpli',
-      version='1.0.0b1',
-      description='Code <== Simpli ==> GUI Widget (in Jupyter Notebook)',
+      version='0.9.0',
+      description='In Jupyter Notebook, Simpli converts: [Python Code] <==> [GUI Task Widget]',
       url='https://github.com/ucsd-ccal/simpli',
       author='Clarence Mah & Huwate Yeerna (Kwat Medetgul-Ernar)',
       license='MIT',
@@ -79,17 +81,15 @@ setup(name='simpli',
       keywords='Jupyter, Notebook, Widget, GUI',
       packages=['simpli'],
       install_requires=[
+          'IPython',
           'jupyter',
-          'notebook==4.2.0',
-          'ipywidgets==5.2.2',
-	  'jupyter_contrib_nbextensions',
-          'jupyter_declarativewidgets==0.7.0'
+          'notebooks>=4.2.0, <4.3.0',
+          'jupyter_declarativewidgets==0.7.0',
       ],
       package_data={'simpli': [
           'static/main.js',
           'static/resources/*',
           'default_tasks.json',
-          'nbpackage_tasks.json'
       ]},
       cmdclass={'install': InstallCommand},
       )
