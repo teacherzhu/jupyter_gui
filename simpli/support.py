@@ -4,22 +4,22 @@ from os.path import abspath, join, isdir, isfile, islink, split
 import re
 
 
-def get_name(obj, namesapce):
+def get_name(obj, gobals_):
     """
-
+    Get the variable name that references to obj.
     :param obj: object;
-    :param namesapce: dict;
-    :return: str;
+    :param gobals_: dict;
+    :return: str; variable name that references to obj, or native object itself if obj is an native object
     """
 
-    # TODO: print non-strings as non-strings
+    for obj_name_in_namespace, obj_in_namespace in gobals_.items():
+        if obj is obj_in_namespace:  # obj is an existing obj
+            return obj_name_in_namespace  # Return the variable name that references to obj
 
-    for obj_name_in_namespace, obj_in_namespace in namesapce.items():
-        if obj_in_namespace is obj:  # obj is a existing obj
-            return obj_name_in_namespace
+    # TODO: handle the case where obj is not an existing object
 
-    # obj is a str
-    return '\'{}\''.format(obj)
+    # obj is a native object
+    return obj
 
 
 def establish_filepath(filepath):

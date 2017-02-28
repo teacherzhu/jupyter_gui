@@ -3,12 +3,10 @@ from os.path import join, dirname, realpath
 from .support import establish_filepath, get_home_dir
 
 # ======================================================================================================================
-# Set up Simpli
+# Link default JSONs to ~/.Simpli/json
 # ======================================================================================================================
-# Store user-home directory in a variable
-HOME_DIR = get_home_dir()
-
 # Make a hidden directory in the user-home directory
+HOME_DIR = get_home_dir()
 SIMPLI_DIR = join(HOME_DIR, '.Simpli')
 SIMPLI_JSON_DIR = join(SIMPLI_DIR, 'json', '')
 establish_filepath(SIMPLI_JSON_DIR)
@@ -17,13 +15,10 @@ establish_filepath(SIMPLI_JSON_DIR)
 from .default_tasks import link_json
 
 link_json(join(dirname(realpath(__file__)), 'default_tasks.json'))
-link_json(join(dirname(realpath(__file__)), 'nbpackage_tasks.json'))
-
-from .manager import Manager
 
 
 # ======================================================================================================================
-# Set up Jupyter widget
+# Set up Jupyter Notebook extension
 # ======================================================================================================================
 def _jupyter_nbextension_paths():
     """
@@ -37,7 +32,7 @@ def _jupyter_nbextension_paths():
     # require: Jupyter loads this file; things in this javascript will be seen
     # in the javascript namespace
     to_return = {
-        'section': 'notebook',
+        'section': 'notebooks',
         'src': 'static',
         'dest': 'simpli',
         'require': 'simpli/main',
@@ -67,7 +62,4 @@ def load_jupyter_server_extension(nbapp):
     """
 
     # Print statement to show extension is loaded
-    nbapp.log.info('\n********* Simpli on *********\n')
-
-
-
+    nbapp.log.info('********* Simpli On *********')

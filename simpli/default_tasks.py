@@ -9,7 +9,6 @@ from shutil import rmtree
 from IPython.core.display import display_html
 
 from . import SIMPLI_JSON_DIR
-from .support import get_name
 
 
 def link_json(filepath):
@@ -35,15 +34,12 @@ def reset_jsons():
     rmtree(SIMPLI_JSON_DIR)
 
 
-def just_return(value, namespace=None):
+def just_return(value):
     """
     Just return.
     :param value:
     :return: obj
     """
-
-    if isinstance(namespace, dict):
-        return get_name(value, namesapce=namespace)
 
     return value
 
@@ -71,7 +67,7 @@ def slice_dataframe(dataframe, indices=(), ax=0):
 # ======================================================================================================================
 def set_notebook_theme(filepath):
     """
-    Set notebook theme.
+    Set notebooks theme.
     :param filepath: str; .css
     :return: None
     """

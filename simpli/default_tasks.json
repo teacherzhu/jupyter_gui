@@ -2,12 +2,12 @@
   "library_path": "",
   "tasks": [
     {
-      "label": "Load JSON",
+      "label": "Link JSON",
       "function_path": "simpli.default_tasks.link_json",
       "required_args": [
         {
           "name": "filepath",
-          "label": "Simpli JSON to be Loaded"
+          "label": "Simpli JSON to be Linked"
         }
       ]
     },
@@ -85,7 +85,7 @@
       ]
     },
     {
-      "label": "Set Notebook Theme",
+      "label": "Set Theme",
       "function_path": "simpli.default_tasks.set_notebook_theme",
       "required_args": [
         {
@@ -93,36 +93,6 @@
           "label": "CSS File"
         }
       ]
-    },
-    {
-      "label": "Center Align Outputs",
-      "function_path": "simpli.default_tasks.center_align_output_cells"
-    },
-    {
-      "label": "Display Start Banner and Logos",
-      "function_path": "simpli.default_tasks.display_start_banner_and_logos"
-    },
-    {
-      "label": "Display End Banner",
-      "function_path": "simpli.default_tasks.display_end_banner"
-    },
-    {
-      "label": "Link YouTube Video",
-      "function_path": "simpli.default_tasks.youtube",
-      "required_args": [
-        {
-          "name": "url",
-          "label": "YouTube Video URL"
-        }
-      ]
-    },
-    {
-      "label": "Toggle Input Cells",
-      "function_path": "simpli.default_tasks.toggle_input_cells"
-    },
-    {
-      "label": "Execute HTML",
-      "function_path": "simpli.default_tasks.display_raw_html"
     }
   ]
 }
