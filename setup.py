@@ -18,7 +18,7 @@ def _post_install():
 
     elif 'darwin' in platform:
         cmd += '''
-        brew install npm
+        brew install node
         rm -rf $HOME/Library/Jupyter
         '''
 
@@ -83,13 +83,13 @@ setup(name='simpli',
       install_requires=[
           'jupyter',
           'notebook>=4.2.0, <4.3.0',
-          'jupyter_declarativewidgets==0.7.0',
+          'jupyter_declarativewidgets==0.7.0'
       ],
       package_data={'simpli': [
           'static/main.js',
           'static/resources/*',
           'default_tasks.json',
-          'nbpackage_tasks.json',
+          'nbpackage_tasks.json'
       ]},
       cmdclass={'install': InstallCommand},
       )
