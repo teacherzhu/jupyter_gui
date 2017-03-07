@@ -7,7 +7,7 @@ from .support import establish_filepath, get_home_dir
 # ======================================================================================================================
 # Make a hidden directory in the user-home directory
 HOME_DIR = get_home_dir()
-SIMPLI_DIR = join(HOME_DIR, '.Simpli')
+SIMPLI_DIR = join(HOME_DIR, '.simpli')
 SIMPLI_JSON_DIR = join(SIMPLI_DIR, 'json', '')
 establish_filepath(SIMPLI_JSON_DIR)
 
@@ -32,7 +32,7 @@ def _jupyter_nbextension_paths():
     # require: Jupyter loads this file; things in this javascript will be seen
     # in the javascript namespace
     to_return = {
-        'section': 'notebooks',
+        'section': 'notebook',
         'src': 'static',
         'dest': 'simpli',
         'require': 'simpli/main',

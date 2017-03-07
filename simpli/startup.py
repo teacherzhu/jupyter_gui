@@ -49,7 +49,6 @@ def import_export_globals():
     :return: None
     """
 
-    # TODO: test if the sync syncing occurs as expected
     manager.import_export_globals(globals())
 
 

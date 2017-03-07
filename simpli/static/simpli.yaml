@@ -1,5 +1,5 @@
 Type: Jupyter Notebook Extension
-Compatibility: 4.x
+Compatibility: 4.2.3
 Main: main.js
 Name: Simpli
 Description: "A simple execution interface for Jupyter Notebook."

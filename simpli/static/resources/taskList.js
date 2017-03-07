@@ -28,7 +28,7 @@ var leftPanel;
 
 var getTasks = function(callback) {
   // code to read library JSON files
-  var code = `mgr.print_tasks_as_json()`;
+  var code = `manager.update_tasks_and_print_as_json()`;
 
   // Convert tasks JSON to stringified list
   var my_callback = function(out) {
@@ -72,9 +72,9 @@ var getTask = function(taskLabel, notebook_cell_text, callback) {
 
   var code;
   if (taskLabel != null) {
-    code = `mgr.get_task(task_label='''${taskLabel}''')`;
+    code = `manager.get_task(task_label='''${taskLabel}''')`;
   } else if (notebook_cell_text != null) {
-    code = `mgr.get_task(notebook_cell_text='''${notebook_cell_text}''')`;
+    code = `manager.get_task(notebook_cell_text='''${notebook_cell_text}''')`;
   } else {
     throw "Need either task_label or notebook_cell_text.";
   }
