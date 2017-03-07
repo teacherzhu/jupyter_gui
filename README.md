@@ -79,9 +79,16 @@ The master Simpli directory (this repository)
 ### Simpli Library
 The Simpli Python library within the Simpli Repository
 
+## How Simpli Works
+
+[Video](https://www.youtube.com/watch?v=4czT7CTxRDE) on how Simpli works.
+
 ## How to Simplify a code (Simpli automatically registers Simplified Tasks in the Task List)
 
 ### 1) From a Notebook cell
+
+[Video](https://www.youtube.com/watch?v=qX099IM_y8c) on how to simplify code in a notebook cell.
+
 Simpli can convert a Notebook cell with any function call and at least 1 line of comment into a Task Widget (Simpli requires 1 line of comment to serve as the unique ID for this Task in the Task List).
 
 The function calls can return value or assign them to variables. Here are examples of each case:
@@ -124,7 +131,7 @@ If you make another cell with this code (which can also be Simplified into a Tas
 count(0, 10, 2)
 ```
 
-Just as this, Simpli registered 2 modalities (Count Odds & Count Events) of the function count, and these Tasks Widgets for these modalities can be created just by selecting the Task in the Task List.
+Just like this, Simpli registered 2 modalities (Count Odds & Count Events) of the function count, and these Tasks Widgets for these modalities can be created just by selecting the Task in the Task List.
 
 ### 2) From a JSON
 Simpli can also register Tasks specified in a JSON in the Task List, enabling users to insert these Tasks in the Notebook just by selecting them in the Task List.
