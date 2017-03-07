@@ -163,6 +163,9 @@ var initTaskList = function() {
     .addClass('col-xs-5')
     .appendTo(taskListParent);
 
+  var closeIcon = $('<div/>')
+    .attr('id', 'library-right-panel-close')
+    .appendTo(infoPanel);
   //
   getTasks(function(tasks) {
     renderTasks(tasks);
