@@ -172,13 +172,6 @@ var generateTaskWidgetHTML = function(taskJSON) {
     .html(`<h2>${label}</h2>`)
     .appendTo(widget);
 
-  var widgetHeaderIcon = $('<paper-icon-button>')
-    .attr({
-      'icon': 'info'
-    })
-    .addClass('item-header-icon')
-    .appendTo(widgetHeader);
-
   // Outer container
   var widgetContentOuter = $('<iron-collapse>')
     .addClass('task-widget-inner')
@@ -224,12 +217,6 @@ var generateTaskWidgetHTML = function(taskJSON) {
         .html(`<h3>${groupLabels[groupIndex]}</h3>`)
         .appendTo(fieldGroup);
 
-      var fieldGroupHeaderIcon = $('<paper-icon-button>')
-        .attr({
-          'icon': 'info'
-        })
-        .addClass('item-header-icon')
-        .appendTo(fieldGroupHeader);
 
       // Contents = many fields
       var fieldGroupContent = $('<iron-collapse>')

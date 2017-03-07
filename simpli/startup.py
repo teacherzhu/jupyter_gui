@@ -51,8 +51,6 @@ def load_gui():
               is='urth-core-import' package='PolymerElements/iron-icon'>
         <link rel='import' href='urth_components/paper-material/paper-material.html'
               is='urth-core-import' package='PolymerElements/paper-material'>
-        <link rel='import' href='urth_components/paper-header-panel/paper-header-panel.html'
-              is='urth-core-import' package='PolymerElements/paper-header-panel'>
         <link rel='import' href='urth_components/iron-collapse/iron-collapse.html'
               is='urth-core-import' package='PolymerElements/iron-collapse'>
         '''
