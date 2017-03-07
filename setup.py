@@ -18,7 +18,7 @@ def _post_install():
 
     elif 'darwin' in platform:
         cmd += '''
-        brew install npm
+        brew install node
         rm -rf $HOME/Library/Jupyter
         '''
 
@@ -52,6 +52,7 @@ def _post_install():
     bower install --save PolymerElements/paper-material
     bower install --save PolymerElements/paper-header-panel
     bower install --save PolymerElements/iron-collapse
+    bower install --save Collaborne/paper-collapse-item
     '''
 
     try:
@@ -67,7 +68,7 @@ class InstallCommand(install):
 
 
 setup(name='simpli',
-      version='1.0.0a2',
+      version='0.9.0',
       description='Code <== Simpli ==> GUI Widget (in Jupyter Notebook)',
       url='https://github.com/ucsd-ccal/simpli',
       author='Clarence Mah & Huwate Yeerna (Kwat Medetgul-Ernar)',
@@ -81,14 +82,15 @@ setup(name='simpli',
       packages=['simpli'],
       install_requires=[
           'jupyter',
-          'notebook>=4.2.0, <4.3.0',
-          'jupyter_declarativewidgets==0.7.0',
+          'notebook==4.2.0',
+          'ipywidgets==5.2.2',
+          'jupyter_declarativewidgets==0.7.0'
       ],
       package_data={'simpli': [
           'static/main.js',
           'static/resources/*',
           'default_tasks.json',
-          'nbpackage_tasks.json',
+          'nbpackage_tasks.json'
       ]},
       cmdclass={'install': InstallCommand},
       )

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pip uninstall -y simpli jupyter_declarativewidgets
+pip uninstall -y simpli jupyter_declarativewidgets ipywidgets
 
 jupyter nbextension uninstall --py --sys-prefix simpli
 jupyter nbextension disable --py --sys-prefix simpli
