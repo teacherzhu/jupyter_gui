@@ -86,7 +86,6 @@ var renderTaskWidget = function(cellIndex, taskJSON) {
             // Map user input values to argument JSON
             for (var inputIndex in userInput[group]) {
               var inputValue = userInput[group][inputIndex];
-              //inputValue = inputValue.split('"').join('').split("'").join('');
               taskJSON[Object.keys(taskJSON)[0]][group][inputIndex].value = inputValue;
             }
           }
@@ -173,6 +172,13 @@ var generateTaskWidgetHTML = function(taskJSON) {
     .html(`<h2>${label}</h2>`)
     .appendTo(widget);
 
+  var widgetHeaderIcon = $('<paper-icon-button>')
+    .attr({
+      'icon': 'info'
+    })
+    .addClass('item-header-icon')
+    .appendTo(widgetHeader);
+
   // Outer container
   var widgetContentOuter = $('<iron-collapse>')
     .addClass('task-widget-inner')
@@ -218,6 +224,12 @@ var generateTaskWidgetHTML = function(taskJSON) {
         .html(`<h3>${groupLabels[groupIndex]}</h3>`)
         .appendTo(fieldGroup);
 
+      var fieldGroupHeaderIcon = $('<paper-icon-button>')
+        .attr({
+          'icon': 'info'
+        })
+        .addClass('item-header-icon')
+        .appendTo(fieldGroupHeader);
 
       // Contents = many fields
       var fieldGroupContent = $('<iron-collapse>')

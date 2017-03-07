@@ -1,3 +1,12 @@
+"""
+Defines Manager class which:
+    1) syncs the namespace between Notebook and Simpli;
+    2) keeps track of tasks, which can be added from JSON or Notebook cell;
+    3) makes code representation of task widgets (during task widget ==(flip)==> code);
+    4) executes function;
+    5) ;
+"""
+
 import sys  # Don't remove this import - sys IS used!
 from os import listdir
 from os.path import isdir, join
@@ -55,7 +64,7 @@ class Manager:
         :return: None
         """
 
-        # self._print('(Setting namespace ...)')
+        self._print('(Setting namespace ...)')
 
         self._namespace = namespace
         globals()
@@ -64,7 +73,7 @@ class Manager:
 
     def update_namespace(self, namespace):
         """
-        Update namespace.
+        Update with namespace.
         :param namespace: dict;
         :return: None
         """
@@ -82,7 +91,7 @@ class Manager:
         :return: list; list of dict
         """
 
-        # self._print('(Getting tasks ...)')
+        self._print('(Getting tasks ...)')
 
         return self._tasks
 
@@ -93,7 +102,7 @@ class Manager:
         :return:  None
         """
 
-        # self._print('(Setting tasks ...)')
+        self._print('(Setting tasks ...)')
 
         self._tasks = tasks
 
@@ -144,6 +153,7 @@ class Manager:
 
         self._print('Setting/updating task {} to be {} ...'.format(self.tasks, tasks))
 
+        # TODO: add only new information
         self.tasks = merge_dicts(self.tasks, tasks)
 
     def _load_tasks_from_json_dir(self, json_directory_path):
@@ -159,8 +169,13 @@ class Manager:
             fp_json = join(json_directory_path, f)
             try:
                 self._load_tasks_from_json(fp_json)
-            except KeyError:
-                pass
+
+            except FileNotFoundError as e:
+                print('FileNotFoundError (JSON doesn\'t exist or the link is broken if it\'s a link): {}'.format(e))
+            except KeyError as e:
+                print('JSON key error: {}'.format(e))
+            except ValueError as e:
+                print('ValueError: {}'.format(e))
 
     def _load_tasks_from_json(self, json_filepath):
         """
@@ -185,6 +200,7 @@ class Manager:
         # Load each task
         for t in tasks_json['tasks']:
 
+            # Split function path into library_name and function_name
             function_path = t['function_path']
             if '.' in function_path:
                 split = function_path.split('.')
@@ -214,6 +230,8 @@ class Manager:
                 'default_args': self._process_args(t.get('default_args', [])),
                 'optional_args': self._process_args(t.get('optional_args', [])),
                 'returns': self._process_returns(t.get('returns', []))}
+
+            self._print('\t\tLoaded task {}: {}.'.format(label, tasks[label]))
 
         self._update_tasks(tasks)
 
@@ -350,7 +368,7 @@ class Manager:
                 'name': d.get('name'),
                 'value': d.get('value', ''),
                 'label': d.get('label', title_str(d['name'])),
-                'description': d.get('description', 'No description')}
+                'description': d.get('description', 'No description.')}
             )
 
         return processed_dicts
@@ -369,7 +387,7 @@ class Manager:
         for d in returns:
             processed_dicts.append({
                 'label': d.get('label'),
-                'description': d.get('description', 'No description')}
+                'description': d.get('description', 'No description.')}
             )
 
         return processed_dicts
@@ -391,9 +409,9 @@ class Manager:
         label, info = list(task.items())[0]
 
         # Process and merge args
-        required_args = {a['name']: a['value'] for a in info['required_args']}
-        default_args = {a['name']: a['value'] for a in info['default_args']}
-        optional_args = {a['name']: a['value'] for a in info['optional_args']}
+        required_args = {a['name']: remove_nested_quotes(a['value']) for a in info['required_args']}
+        default_args = {a['name']: remove_nested_quotes(a['value']) for a in info['default_args']}
+        optional_args = {a['name']: remove_nested_quotes(a['value']) for a in info['optional_args']}
         args = self._merge_process_args(required_args, default_args, optional_args)
 
         # Get returns
@@ -422,13 +440,10 @@ class Manager:
     def _path_import_execute(self, library_path, library_name, function_name, args):
         """
         Prepend path, import library, and execute task.
-
         :param library_path: str;
         :param library_name: str;
         :param function_name: str;
-
         :param args: dict;
-
         :return: list; raw output of the function
         """
 
@@ -504,7 +519,7 @@ class Manager:
         if isinstance(task, str):  # task is a JSON str
             # Read JSON str as dict
             task = loads(task)
-        self._print('Representing task ({}, {}) as code ...\n'.format(task, type(task)))
+        self._print('Representing task ({}) as code ...\n'.format(task))
 
         label, info = list(task.items())[0]
         library_path = info.get('library_path')
@@ -533,75 +548,55 @@ class Manager:
         returns = ', '.join([self._str_or_name(d.get('value')) for d in returns])
         self._print('returns (_str_or_named): {}'.format(returns))
 
-        # TODO: enable
-        if False and library_name.startswith('simpli'):  # Use custom code
+        # Build code
+        code = ''
+
+        # TODO: enable custom code for simpli's default functions
+        if library_name.startswith('simpli') and False:  # Use custom code
+            # Get custom code
             exec('from {} import {}'.format(library_name, function_name))
             custom_code = eval('{}({}, {}, namespace=self.namespace)'.format(function_name,
                                                                              required_args,
                                                                              optional_args))
-            code = '''# {}
+            code += '# {}\n{}{}\n'.format(label,
+                                          returns,
+                                          custom_code)
 
-{}{}'''.format(
-                # Label
-                label,
-                # Execution
-                returns,
-                custom_code)
+        elif function_name not in self.namespace:  # Import function - fully
+            code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {}\n\n'.format(library_path,
+                                                                                   library_name.split('.')[0])
+        else:  # A non-simpli function in namespace
+            library_name = ''
 
-        else:  # Use general code
-            # Style return
-            if returns:
-                returns += ' = '
+        # Style returns
+        if returns:
+            returns += ' = '
 
-            # Style library name
-            if library_name == '__main__':
-                library_name = ''
-            else:
-                library_name += '.'
+        # Style library name
+        if library_name == '__main__':
+            library_name = ''
+        elif library_name:
+            library_name += '.'
 
-            # Style args
-            s = len(returns + library_name + function_name)
-            sep = ',\n' + ' ' * s
+        # Style args
+        s = len(returns + library_name + function_name)
+        sep = ',\n' + ' ' * s
 
-            # Style required args
-            if required_args:
-                required_args = sep.join([a for a in required_args.split(',')])
+        # Style required args
+        if required_args:
+            required_args = sep.join([a for a in required_args.split(',')])
 
-            # Style optional args
-            if optional_args:
-                optional_args = sep.join([a for a in optional_args.split(',')])
-                optional_args = sep + optional_args
+        # Style optional args
+        if optional_args:
+            optional_args = sep.join([a for a in optional_args.split(',')])
+            optional_args = sep + optional_args
 
-            if not library_path or not library_name or library_name.split('.')[0] in self.namespace:  # Without import
-                code = '''# {}
-{}{}{}({}{})'''.format(
-                    # Label
-                    label,
-                    # Execution
-                    returns,
-                    library_name,
-                    function_name,
-                    required_args,
-                    optional_args)
-
-            else:  # With import
-                code = '''import sys
-sys.path.insert(0, \'{}\')
-import {}
-
-# {}
-{}{}{}({}{})'''.format(
-                    # Import
-                    library_path,
-                    library_name.split('.')[0],
-                    # Label
-                    label,
-                    # Execution
-                    returns,
-                    library_name,
-                    function_name,
-                    required_args,
-                    optional_args)
+        code += '# {}\n{}{}{}({}{})'.format(label,
+                                            returns,
+                                            library_name,
+                                            function_name,
+                                            required_args,
+                                            optional_args)
 
         if print_return:
             print(code)

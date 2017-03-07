@@ -1,3 +1,7 @@
+"""
+Contains codes to be executed in the invisible 1st Notebook cell when a Notebook loads or refreshes.
+"""
+
 from IPython import get_ipython  # For syntax (re-imported by default when a Notebook starts)
 
 

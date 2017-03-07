@@ -1,8 +1,17 @@
 # Simpli
-Code <== Simpli ==> GUI Widget (in Jupyter Notebook)
+In Jupyter Notebook, Simpli converts: [Python Code] <==> [GUI Task Widget]
 
----
+With Simpli, coders can represent their Python code as Task Widgets to non-coders, who then sees easy-to-run Task Widgets instead of code.
+
+1) Coders code,
+
+2) Simpli converts their code as Task Widgets, and
+
+3) non-coders run these easy-to-run Task Widgets (or modify the parameters in the Task Widgets, which can also be converted back to code reflecting these changes).
+
 ## Install Simpli
+
+#### After launching Notebook with Simpli for the 1st time, please give it a minute to downlaod GUI components in the background (you can see the progress in the command line output).
 
 ### For Mac OS X
 ```bash
@@ -19,7 +28,6 @@ git clone https://github.com/UCSD-CCAL/simpli.git
 cd simpli
 pip install .
 ```
-
 
 ### For Linux
 ```bash
@@ -39,127 +47,178 @@ pip install .
 :(
 ```
 
-### Start (or restart) Jupyter Notebook and - enjoy __:)__
+## Terminology
 
+### Task
+A Python function call
 
+### Task Widget
+GUI representation of a Task
 
+### Task Entry
+Entry specifying a Task in a JSON
 
+### Simplify
+To convert a Python function call into a Task; either by 1) specifying the Task via JSON; or 2) within a Notebook
 
+### Simpli Icon
+The button at the top of a Jupyter Notebook (left of Flip Icon); clicking it shows the Task List
 
+### Flip Icon
+The button at the top of a Jupyter Notebook (right of Simpli Icon); clicking it converts a code to a Task Widget, and vice versa
 
+### Task List
+The list of Tasks; appears after clicking the Simpli Icon or pressing 'Shift + X'
 
+### Task Category
+Task category in the Task List; determined by the function library of a Task
 
+### Simpli Repository
+The master Simpli directory (this repository)
 
+### Simpli Library
+The Simpli Python library within the Simpli Repository
 
+## How Simpli Works
 
+[Video](https://www.youtube.com/watch?v=4czT7CTxRDE) on how Simpli works.
 
+## How to Simplify a code (Simpli automatically registers Simplified Tasks in the Task List)
 
+### 1) From a Notebook cell
 
+[Video](https://www.youtube.com/watch?v=qX099IM_y8c) on how to simplify code in a notebook cell.
 
+Simpli can convert a Notebook cell with any function call and at least 1 line of comment into a Task Widget (Simpli requires 1 line of comment to serve as the unique ID for this Task in the Task List).
 
+The function calls can return value or assign them to variables. Here are examples of each case:
 
+without assignment:
+```
+# Label
+foo(arg1, arg2=value, ...)
+```
 
+with assignment:
+```
+# Label
+bar = foo(arg1, arg2=value, ...)
+```
 
+Simpli can also register different modalities of a function. Here is an example:
+If this function (a simple function to count numbers) exists,
+```
+def count(min_, max_, by):
 
+    numbers = []
 
-TODO: clena up and incoorporate the doc below
+    for i in range(min_, max_, by):
+        print(i)
+        numbers.append(i)
 
+    return numbers
+```
 
-How Simpli Works
-Terminology
-Notebook Package
-A package of resources and jupyter notebooks that allows
-Simpli Repository
-The master Simpli folder
-Simpli Library
-The Simpli folder within the repository.
-Simpli Icon
-The widget button (with a lightning bolt) at the top of a jupyter notebook.
-Task List
-The list of available task that appears after clicking the icon or pressing “shift + x”.
-Task Categories
-The categories tasks are organized into in the task list. Task categories are determined by the location of the function that is being simplified. Functions that live in the same .py file will be in the same category in the task list.
-Task Widget
-One or multiple functions wrapped into a single execution widget user interface.
-Simplify
-To wrap one or multiple functions as a task.
-Input Field
-A text entry box for users to enter values for a required argument (defined in the .json) in widgets.
-Input Field Label
-The text in an input field that tells users what type of input is required by the widget.
-Input Help Icon
-The question mark box beside an input field that displays descriptions of what the input field requires.
-Output Field
-A text entry box for users to enter a variable name in which the output of a widget will be saved.
-Output Field Label
-The text in an output field that tells users what type of output will be produced by the widget.
-Output Help Icon
-The question mark box beside an output field that displays descriptions of output will be produced by the widget.
-Run Button
-The button marked “RUN” on a widget. When pressed the run button will execute the wrapped function or functions with the input and output values the user has provided.
-Task Information
-The text that describes what a task does. The task information can be found on the side panel of the task list when a task is selected, and on the right side of task that has been added to a notebook.
-Introduction
-Simpli creates a simple user interface for functions using json files. Simpli reads json files to create the user interfaces of widgets and executes the functions those widgets call. When you install Simpli, it creates the following file structure in your home directory:
+then making a cell with this code enables Simpli to convert this cell into a Task Widget, and register the Task in the Task List as 'Count Odds'.
+```
+# Count Odds
+count(1, 10, 2)
+```
 
-HOME
-.simpli
-json
-simpli.json
-COMPILED.json
+If you make another cell with this code (which can also be Simplified into a Task Widget), Simpli registers this Task as 'Count Evens'.
+```
+# Count Evens
+count(0, 10, 2)
+```
 
-The Simpli.json and COMPILED.json files you see in the file structure above are actually links to the real json files, which sit in the Simpli library in your python packages directory. The functions described in the simpli.json are in a .py file also found in the Simpli library.
-The Simpli .json
-When Simpli looks for json files to read it goes to HOME/.simpli/jsons to find them. The .json file tells Simpli where to look for the functions it describes and how to make widget for those functions. Here is an example of a json that Simpli could read:
+Just like this, Simpli registered 2 modalities (Count Odds & Count Events) of the function count, and these Tasks Widgets for these modalities can be created just by selecting the Task in the Task List.
 
+### 2) From a JSON
+Simpli can also register Tasks specified in a JSON in the Task List, enabling users to insert these Tasks in the Notebook just by selecting them in the Task List.
+
+Simplifying Tasks from JSON is useful when you want to register multiple Tasks at once.
+
+To Simplify a Task, just make an Task Entry for the Task in a JSON load the JSON into Simpli.
+
+This is an template for such Task Entry:
+```
 {
-  "library_path": "path.to.grocery_library",
-  "tasks": [
-    {
-      "label": "Calculate Grocery Costs",
-      "function_path": "ralphs.christmas_shopping.calculate_grocery_costs",
-      "required_args": [
-        {
-          "arg_name": “items",
-           "label": "Items to buy"
-        },
-        {
-          "arg_name": "cost_of_each",
-          "label": "Cost of each item"
-        }
-      ],
-      "default_args": [
-        {
-          "arg_name": "sales_tax",
-          "value": ".08"
-        }
-      ],
-      "returns": [
-        {
-          "label": "cost_of_groceries"
-        },
-      ]
-    }
-  ]
+    "library_path": "path/to/library/",  # Optional
+
+    "tasks":  # Required
+        [
+            {
+                "function_path": "library.path.to.file.function",  # Required
+
+                "label": "Name of this Task (unique ID)",  # Optional (will be created based on function_path if not specified)
+
+                "description": "This Task performs ...",  # Optional
+
+
+                "required_args":  # Optional
+                    [
+                        {
+                            "name": "x",  # Required if specifying required_args
+                            "label": "The X",  # Optional if specifying required_args (user sees label instead of name in a Task Widget) (will be created based on name if not specified)
+                            "description": "The X is ...",  # Optional if specifying required_args
+                        },
+                        # (may add more required_args)
+                    ],
+
+                "default_args":  # Optional (users won't see these arguments in the Task Widget)
+                    [
+                        {
+                            "name": "y",  # Required if specifying default_args
+                            "value": "100",  # Required if specifying default_args (the default value [y=100 will be an argument when calling this function])
+                        },
+                        # (may add more default_args)
+                    ],
+
+                "optional_args":  # Optional
+                    [
+                        {
+                            "name": "z",  # Required if specifying optional_args
+                            "label": "The Z",  # Optional if specifying optional_args (user sees label instead of name in a Task Widget) (will be created based on name if not specified)
+                            "description": "The Z is ...",  # Optional if specifying optional_args
+                        },
+                        # (may add more optional_args)
+                    ],
+
+                "returns":  # Optional
+                    [
+                        {
+                            "label": "The A",  # Required
+                            "description": "The A is ...",  # Optional if specifying returns
+                        },
+                        # (may add more returns)
+                    ],
+
+                "other_information":  # Optional
+                    {
+                        # (add any information in in format: str: list)
+                        "version": ["1.0.0"],
+                        "server": ["Broad Institute"],
+                        "tag": ["RNA", "Sequencing"],
+                        # (may add more other_information)
+                    },
+            },
+            # (may add more tasks)
+        ]
 }
+```
 
-library_path and function_path in .json
+# TODO: add example JSON
 
-When Simpli is reading a .json file, it inserts library_path into the path of your notebook environment (see # Append a library path below). Then Simpli splits the function_path into two parts: the library_name (everything up to the last . in the function_path) and the function_name (everything after the last . in the function_path). Then Simpli imports the function_name from the library_name (see # Import function below).
-
+## How Simpli executes a function
+Since each Task has library_path and function_path, Simpli can execute any function as this (function_path is split into library_name [everything up to the last . in the function_path] and the function_name [everything after the last . in the function_path]):
+```
 # Append a library path
 sys.path.insert(0, library_path)
+
 # Import function
-from {} import  as function
+from library_name import function_name as function
 
-
-'.format(library_name, function_name
-
-Normally, the library_path will be the path to the library that contains the function you want to wrap in the .json and the function_path will be the path to the function in that library.  But there are exceptions. For example, if you want to wap function_x in a .json and function_x is inside, or imported in, the __init__.py file of the library_z, your library_path would be “path.to.library_z” and your function_path would be “function_x”. This will work as well.
-required_args in .json
- All the required_args in a .json are shown as input fields in the Simpli widget that .json describes. Usually, the required_args section of the .json include arguments of the function that don’t have predefined values.
-default_args in .json
-The user interface of this widget with not show an input field for sales tax, because it’s a default argument. And when the calculate_grocery_costs function runs, it will use .08 as the sales tax. However, if a function has an argument with a default value, you can add this argument to the required_args section of the .json, instead of the default_args section, to give the user the ability to change the value for that argument.
-labels in the .json
-The values for the “labels” in the .json above serve as the title and text in the input and output fields of the widget this .json will create. For example, the label “Calculate Grocery Costs” will be the title of this widget and one of the input fields will say “Items to buy”.
+# Run function
+function(required_default_and_optional_args)
+```
 

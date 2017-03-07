@@ -1,3 +1,7 @@
+"""
+Defines default tasks useful in general.
+"""
+
 from os import listdir, remove, symlink, environ
 from os.path import join, split, islink, relpath
 from shutil import rmtree
