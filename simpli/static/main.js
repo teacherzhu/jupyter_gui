@@ -28,7 +28,7 @@ var init = function() {
   addMenuOptions();
   mapKeyboardShortcuts();
 
-  console.log('Simpli nbextension initialized.');
+  console.log('Initialized Simpli nbextension.');
 };
 
 /**
@@ -95,7 +95,7 @@ var addMenuOptions = function() {
         // Convert widget to code
         if (cell_text.indexOf(AUTO_EXEC_FLAG) > -1) {
           var pythonTask = JSON.stringify(getWidgetData(cell));
-          var code = `mgr.task_to_code('''${pythonTask}''')`;
+          var code = `manager.code_task('''${pythonTask}''')`;
           console.log(pythonTask);
 
           var setCode = function(out) {
@@ -112,7 +112,7 @@ var addMenuOptions = function() {
           });
         } else {
           // Convert code to widget
-          var code = `mgr.get_task(notebook_cell_text='''${cell_text}''')`;
+          var code = `manager.get_task(notebook_cell_text='''${cell_text}''')`;
 
           var toSimpliCellWrap = function(out) {
             toSimpliCell(null, out);

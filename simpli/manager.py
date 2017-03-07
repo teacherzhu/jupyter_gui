@@ -104,7 +104,7 @@ class Manager:
 
         self._print('Exporting globals: {} ...'.format(self.globals))
         for n, v in self.globals.items():
-            globals_()[n] = v
+            globals()[n] = v
 
     def get_task(self, task_label=None, notebook_cell_text=None, print_as_json=True):
         """
@@ -299,7 +299,7 @@ class Manager:
         if islink(path) or isfile(path):
             fps = [path]
         else:
-            fps = listdir(path)
+            fps = [join(path, fp) for fp in listdir(path)]
 
         for fp in fps:
             self._print('Loading task-specifying JSON {} ...'.format(fp))
