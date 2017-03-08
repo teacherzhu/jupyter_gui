@@ -82,6 +82,7 @@ setup(name='simpli',
           'jupyter',
           'notebook==4.2.0',
           'ipywidgets==5.2.2',
+	  'jupyter_contrib_nbextensions',
           'jupyter_declarativewidgets==0.7.0'
       ],
       package_data={'simpli': [
