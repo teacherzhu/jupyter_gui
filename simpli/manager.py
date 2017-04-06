@@ -167,7 +167,7 @@ class Manager:
                 # Task label is this task's UID; so no duplicates are allowed
                 label = t.get('label',
                               '{} (no task label)'.format(function_name))
-                              
+
                 tasks[label] = {
                     'library_path':
                     library_path,
@@ -258,7 +258,7 @@ class Manager:
 
         # Get code lines
         code_lines = [l.strip() for l in lines if not l.startswith('#')]
-        print('comment_lines: {}\n'.format(comment_lines))
+        print('code_lines: {}\n'.format(code_lines))
 
         # Make AST
         m = ast.parse(text)
@@ -285,7 +285,11 @@ class Manager:
         print('returns: {}\n')
 
         # Get function name
-        function_name = b.value.func.id
+        l = code_lines[0]
+        if returns:
+            function_name = l[l.find('='):l.find('(')]
+        else:
+            function_name = l[:l.find('(')]
         print('function_name: {}\n'.format(function_name))
 
         # Get args and kwargs
