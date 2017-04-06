@@ -40,6 +40,9 @@ class Manager:
         # Tasks (dict) keyed by their label (unique ID)
         self._tasks = {}
 
+        # Register tasks from JSONs
+        self._update_tasks_from_jsons()
+
     def _print(self, str_):
         """
         Print str_.
@@ -147,8 +150,6 @@ class Manager:
 
             # Load library path, which is common for all tasks in this JSON
             library_path = tasks_json['library_path']
-            if not isdir(library_path):
-                self._print('library_path doesn\'t exist.')
 
             # Load each task
             for t in tasks_json['tasks']:
@@ -196,8 +197,7 @@ class Manager:
                     self._process_returns(t.get('returns', [])),
                 }
 
-                self._print(
-                    '\t\tLoaded task {}: {}.'.format(label, tasks[label]))
+                self._print('\tLoaded {}: {}.'.format(label, tasks[label]))
 
             self._update_tasks(tasks)
             return tasks
