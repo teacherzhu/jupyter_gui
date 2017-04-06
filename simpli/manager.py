@@ -253,8 +253,11 @@ class Manager:
         print('comment_lines: {}\n'.format(comment_lines))
 
         # Get label from the 1st comment line
-        label = ''.join(comment_lines[0].split('#')[1:]).strip()
+        label = ''.join(comment_lines[0].replace('#', '')).strip()
         print('label: {}\n'.format(label))
+
+        description = '\n'.join(
+            [l.replace('#', '').strip() for l in comment_lines[1:]])
 
         # Get code lines
         code_lines = [l.strip() for l in lines if not l.startswith('#')]
@@ -279,7 +282,7 @@ class Manager:
             for t in targets:
                 returns.append({
                     'label': 'Label for {}'.format(t.id),
-                    'description': 'Description.',
+                    'description': '',
                     'value': t.id,
                 })
         print('returns: {}\n')
@@ -290,6 +293,7 @@ class Manager:
             function_name = l[l.find('=') + 1:l.find('(')].strip()
         else:
             function_name = l[:l.find('(')].strip()
+        function_name = function_name.split(',')[-1]
         print('function_name: {}\n'.format(function_name))
 
         # Get args and kwargs
@@ -304,7 +308,7 @@ class Manager:
                 al = al[:-1]
 
             if '#' in al:  # Had description
-                al, d = al.aplit('#')
+                al, d = al.split('#')
                 al = al.strip()
                 d = d.strip()
 
@@ -359,7 +363,7 @@ class Manager:
         # Make a task
         task = {
             label: {
-                'description': 'Description.',
+                'description': description,
                 'library_path': module_path,
                 'library_name': module_name,
                 'function_name': function_name,
