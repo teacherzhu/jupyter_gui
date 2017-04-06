@@ -51,27 +51,8 @@ class Manager:
             print(str_)
 
     # ==========================================================================
-    # globals property
+    # globals
     # ==========================================================================
-    def _get_globals(self):
-        """
-        Get globals.
-        :return: dict;
-        """
-
-        return self._globals
-
-    def _set_globals(self, globals_):
-        """
-        Set globals.
-        :param globals_: dict;
-        :return: None
-        """
-
-        self._globals = globals_
-
-    globals_ = property(_get_globals, _set_globals)
-
     def import_export_globals(self, globals_):
         """
         Import globals and export globals.
@@ -80,64 +61,48 @@ class Manager:
         """
 
         self._print('Importing globals: {} ...'.format(globals_))
-        self.globals_ = merge_dicts(self.globals_, globals_)
+        self._globals = merge_dicts(self._globals, globals_)
 
-        self._print('Exporting globals: {} ...'.format(self.globals_))
-        for n, v in self.globals_.items():
+        self._print('Exporting globals: {} ...'.format(self._globals))
+        for n, v in self._globals.items():
             globals()[n] = v
 
     # ==========================================================================
-    # tasks property
+    # tasks
     # ==========================================================================
-    def _get_tasks(self):
-        """
-        Get tasks.
-        :return: list; list of dict
-        """
-
-        return self._tasks
-
-    def _set_tasks(self, tasks):
-        """
-        Set tasks.
-        :param tasks: list; list of dict
-        :return: None
-        """
-
-        self._tasks = tasks
-
-    tasks = property(_get_tasks, _set_tasks)
-
-    def print_tasks(self, update_tasks_from_jsons=True):
-        """
-        Print tasks to communicate with JavaScript.
-        :return: None
-        """
-
-        self._print('Printing tasks in JSON str ...')
-
-        if update_tasks_from_jsons:
-            self._update_tasks_from_jsons()
-
-        print(dumps(self._tasks))
-
     def _update_tasks(self, tasks):
         """
-        Set or update self.tasks with tasks.
+        Set or update self._tasks with tasks.
         :param tasks: dict;
         :return: None
         """
 
-        self._print('Updating tasks {} with {} ...'.format(self.tasks, tasks))
+        self._print('Updating tasks {} with {} ...'.format(self._tasks, tasks))
 
-        self.tasks = merge_dicts(self.tasks, tasks)
+        self._tasks = merge_dicts(self._tasks, tasks)
+
+    def get_tasks(self, update_tasks_from_jsons=True, print_as_json=True):
+        """
+        Get all tasks.
+        :param update_tasks_from_jsons: bool;
+        :param print_as_json: bool;
+        :return: None
+        """
+
+        if update_tasks_from_jsons:
+            self._update_tasks_from_jsons()
+
+        if print_as_json:  # For communicating with JavaScript
+            print(dumps(self._tasks))
+        return self._tasks
 
     def get_task(self,
                  task_label=None,
                  notebook_cell_text=None,
                  print_as_json=True):
         """
-        Get a task, whose label is task_label.
+        Get an existing task by querying for its ID; or register a task from a
+        notebook cell.
         :param task_label: str;
         :param notebook_cell_text: str;
         :param print_as_json: bool;
@@ -147,7 +112,7 @@ class Manager:
         self._print('Getting task {} ...'.format(task_label))
 
         if task_label:
-            task = {task_label: self.tasks[task_label]}
+            task = {task_label: self._tasks[task_label]}
 
         elif notebook_cell_text:
             task = self._load_task_from_notebook_cell(notebook_cell_text)
@@ -157,9 +122,8 @@ class Manager:
                 'Get an existing task by querying for its ID or register a '
                 'task from a notebook cell.')
 
-        if print_as_json:
+        if print_as_json:  # For communicating with JavaScript
             print(dumps(task))
-
         return task
 
     # ==========================================================================
@@ -202,7 +166,7 @@ class Manager:
                 # Task label is this task's UID; so no duplicates are allowed
                 label = t.get('label',
                               '{} (no task label)'.format(function_name))
-                if label in tasks or label in self.tasks:  # Label is duplicated
+                if label in tasks or label in self._tasks:  # Label is duplicated
                     self._print(
                         'Task label \'{}\' is duplicated; making a new task '
                         'label ...'.format(label))
@@ -245,8 +209,6 @@ class Manager:
         :return: dict;
         """
 
-        self._print('Processing args ...')
-
         processed_dicts = []
 
         for d in args:
@@ -269,8 +231,6 @@ class Manager:
         :param returns: list; list of return dict
         :return: dict;
         """
-
-        self._print('Processing returns ...')
 
         processed_dicts = []
 
@@ -489,7 +449,7 @@ class Manager:
             custom_code = 'TODO: enable custom code for default functions'
             code += '# {}\n{}{}\n'.format(label, returns, custom_code)
 
-        elif function_name not in self.globals_:  # Import function - fully
+        elif function_name not in self._globals:  # Import function - fully
             code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {' \
                     '}\n\n'.format(
                 library_path, library_name.split('.')[0])
@@ -568,13 +528,13 @@ class Manager:
 
         # Handle returns
         if len(returns) == 1:
-            self.globals_[returns[0]] = remove_nested_quotes(returned)
+            self._globals[returns[0]] = remove_nested_quotes(returned)
 
         elif len(returns) > 1:
             for n, v in zip(returns, returned):
-                self.globals_[n] = remove_nested_quotes(v)
+                self._globals[n] = remove_nested_quotes(v)
 
-        self._print('self.globals_ after execution: {}.'.format(self.globals_))
+        self._print('self._globals after execution: {}.'.format(self._globals))
 
     def _merge_and_process_args(self, required_args, default_args,
                                 optional_args):
@@ -607,9 +567,9 @@ class Manager:
         processed_args = {}
         for n, v in merged_args.items():
 
-            if v in self.globals_:  # Process as already defined variable from
+            if v in self._globals:  # Process as already defined variable from
                 #  the Notebook environment
-                processed_v = self.globals_[v]
+                processed_v = self._globals[v]
 
             else:  # Process as float, int, bool, or str
                 # First assume a list of str to be passed
@@ -625,7 +585,7 @@ class Manager:
 
             processed_args[n] = processed_v
             self._print('\t\t{}: {} > {} ({})'.format(
-                n, v, get_name(processed_v, self.globals_), type(processed_v)))
+                n, v, get_name(processed_v, self._globals), type(processed_v)))
 
         return processed_args
 
@@ -658,7 +618,7 @@ class Manager:
         self._print('\tExecuting {} with:'.format(locals()[function_name]))
         for n, v in sorted(args.items()):
             self._print('\t\t{} = {} ({})'.format(
-                n, get_name(v, self.globals_), type(v)))
+                n, get_name(v, self._globals), type(v)))
 
         return locals()[function_name](**args)
 
@@ -676,7 +636,7 @@ class Manager:
 
         str_ = remove_nested_quotes(str_)
 
-        if str_ in self.globals_ or not isinstance(
+        if str_ in self._globals or not isinstance(
                 cast_str_to_int_float_bool_or_str(str_), str):  # object
             return str_
         else:  # str
