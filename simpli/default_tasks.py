@@ -10,30 +10,6 @@ from IPython.core.display import display_html
 from . import SIMPLI_JSON_DIR
 
 
-def link_json(filepath):
-    """
-    Soft link JSON filepath to $HOME/.simpli/json/ directory.
-    :param filepath: str; JSON filepath
-    :return: None
-    """
-
-    destination = join(SIMPLI_JSON_DIR, split(filepath)[1])
-    if islink(destination):
-        remove(destination)
-    symlink(filepath, destination)
-
-
-def reset_jsons():
-    """
-    Delete all files except default_tasks.json in $HOME/.simpli/json/ directory.
-    :return: None
-    """
-
-    for f in listdir(SIMPLI_JSON_DIR):
-        if f != 'default_tasks.json':
-            remove(join(SIMPLI_JSON_DIR, f))
-
-
 def just_return(value):
     """
     Just return.
@@ -60,6 +36,33 @@ def slice_dataframe(dataframe, indices=(), ax=0):
         return dataframe.ix[indices, :]
     elif ax == 1:
         return dataframe.ix[:, indices]
+
+
+# ==============================================================================
+# JSON
+# ==============================================================================
+def link_json(filepath):
+    """
+    Soft link JSON filepath to $HOME/.simpli/json/ directory.
+    :param filepath: str; JSON filepath
+    :return: None
+    """
+
+    destination = join(SIMPLI_JSON_DIR, split(filepath)[1])
+    if islink(destination):
+        remove(destination)
+    symlink(filepath, destination)
+
+
+def reset_jsons():
+    """
+    Delete all files except default_tasks.json in $HOME/.simpli/json/ directory.
+    :return: None
+    """
+
+    for f in listdir(SIMPLI_JSON_DIR):
+        if f != 'default_tasks.json':
+            remove(join(SIMPLI_JSON_DIR, f))
 
 
 # ==============================================================================
