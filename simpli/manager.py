@@ -106,13 +106,17 @@ class Manager:
 
     tasks = property(_get_tasks, _set_tasks)
 
-    def print_tasks(self):
+    def print_tasks(self, update_tasks_from_jsons=True):
         """
-        Printing is for communicating with JavaScript.
+        Print tasks to communicate with JavaScript.
         :return: None
         """
 
         self._print('Printing tasks in JSON str ...')
+
+        if update_tasks_from_jsons:
+            self._update_tasks_from_jsons()
+
         print(dumps(self._tasks))
 
     def _update_tasks(self, tasks):
@@ -150,6 +154,128 @@ class Manager:
         if print_as_json:
             print(dumps(task))
         return task
+
+    # ==========================================================================
+    # Get a task(s) from JSON(s)
+    # ==========================================================================
+    def _update_tasks_from_jsons(self):
+        """
+        Load tasks from a task-specifying JSON or JSONs in a directory.
+        :return: dict;
+        """
+
+        tasks = {}
+
+        for f in listdir(SIMPLI_JSON_DIR):
+            fp = join(SIMPLI_JSON_DIR, f)
+
+            self._print('Loading task-specifying JSON {} ...'.format(fp))
+
+            with open(fp) as f:
+                tasks_json = loads(reset_encoding(f.read()))
+
+            # Load library path, which is common for all tasks in this JSON
+            library_path = tasks_json['library_path']
+            if not isdir(library_path):
+                raise ValueError('library_path doesn\'t exist.')
+
+            # Load each task
+            for t in tasks_json['tasks']:
+
+                # Split function path into library_name and function_name
+                function_path = t['function_path']
+                if '.' in function_path:
+                    split = function_path.split('.')
+                    library_name = '.'.join(split[:-1])
+                    function_name = split[-1]
+                else:
+                    raise ValueError(
+                        'function_path must be like: \'file.function\'.')
+
+                # Task label is this task's UID; so no duplicates are allowed
+                label = t.get('label',
+                              '{} (no task label)'.format(function_name))
+                if label in tasks or label in self.tasks:  # Label is duplicated
+                    self._print(
+                        'Task label \'{}\' is duplicated; making a new task label ...'.
+                        format(label))
+                    i = 2
+                    new_label = '{} (v{})'.format(label, i)
+                    while new_label in tasks:
+                        i += 1
+                        new_label = '{} (v{})'.format(label, i)
+                    label = new_label
+
+                tasks[label] = {
+                    'library_path':
+                    library_path,
+                    'library_name':
+                    library_name,
+                    'function_name':
+                    function_name,
+                    'description':
+                    t.get('description', 'No description.'),
+                    'required_args':
+                    self._process_args(t.get('required_args', [])),
+                    'default_args':
+                    self._process_args(t.get('default_args', [])),
+                    'optional_args':
+                    self._process_args(t.get('optional_args', [])),
+                    'returns':
+                    self._process_returns(t.get('returns', [])),
+                }
+
+                self._print(
+                    '\t\tLoaded task {}: {}.'.format(label, tasks[label]))
+
+            self._update_tasks(tasks)
+            return tasks
+
+    def _process_args(self, args):
+        """
+        Process args.
+        :param args: list; list of arg dict
+        :return: dict;
+        """
+
+        self._print('Processing args ...')
+
+        processed_dicts = []
+
+        for d in args:
+            processed_dicts.append({
+                'name':
+                d.get('name'),
+                'value':
+                d.get('value', ''),
+                'label':
+                d.get('label', '{} Label'.format(d.get('name'))),
+                'description':
+                d.get('description', 'No description.'),
+            })
+
+        return processed_dicts
+
+    def _process_returns(self, returns):
+        """
+        Process returns.
+        :param returns: list; list of return dict
+        :return: dict;
+        """
+
+        self._print('Processing returns ...')
+
+        processed_dicts = []
+
+        for d in returns:
+            processed_dicts.append({
+                'label':
+                d.get('label'),
+                'description':
+                d.get('description', 'No description.'),
+            })
+
+        return processed_dicts
 
     # ==========================================================================
     # Get a task from a Notebook cell
@@ -283,133 +409,119 @@ class Manager:
         return task
 
     # ==========================================================================
-    # Get a task(s) from JSON(s)
+    # Code task
     # ==========================================================================
-    def _update_tasks_from_jsons(self):
+    def code_task(self, task, print_return=True):
         """
-        Load tasks from a task-specifying JSON or JSONs in a directory.
-        :return: dict;
-        """
-
-        tasks = {}
-
-        for f in listdir(SIMPLI_JSON_DIR):
-            fp = join(SIMPLI_JSON_DIR, f)
-
-            self._print('Loading task-specifying JSON {} ...'.format(fp))
-
-            with open(fp) as f:
-                tasks_json = loads(reset_encoding(f.read()))
-
-            # Load library path, which is common for all tasks in this JSON
-            library_path = tasks_json['library_path']
-            if not isdir(library_path):
-                raise ValueError('library_path doesn\'t exist.')
-
-            # Load each task
-            for t in tasks_json['tasks']:
-
-                # Split function path into library_name and function_name
-                function_path = t['function_path']
-                if '.' in function_path:
-                    split = function_path.split('.')
-                    library_name = '.'.join(split[:-1])
-                    function_name = split[-1]
-                else:
-                    raise ValueError(
-                        'function_path must be like: \'file.function\'.')
-
-                # Task label is this task's UID; so no duplicates are allowed
-                label = t.get('label',
-                              '{} (no task label)'.format(function_name))
-                if label in tasks or label in self.tasks:  # Label is duplicated
-                    self._print(
-                        'Task label \'{}\' is duplicated; making a new task label ...'.
-                        format(label))
-                    i = 2
-                    new_label = '{} (v{})'.format(label, i)
-                    while new_label in tasks:
-                        i += 1
-                        new_label = '{} (v{})'.format(label, i)
-                    label = new_label
-
-                tasks[label] = {
-                    'library_path':
-                    library_path,
-                    'library_name':
-                    library_name,
-                    'function_name':
-                    function_name,
-                    'description':
-                    t.get('description', 'No description.'),
-                    'required_args':
-                    self._process_args(t.get('required_args', [])),
-                    'default_args':
-                    self._process_args(t.get('default_args', [])),
-                    'optional_args':
-                    self._process_args(t.get('optional_args', [])),
-                    'returns':
-                    self._process_returns(t.get('returns', [])),
-                }
-
-                self._print(
-                    '\t\tLoaded task {}: {}.'.format(label, tasks[label]))
-
-            self._update_tasks(tasks)
-            return tasks
-
-    def _process_args(self, args):
-        """
-        Process args.
-        :param args: list; list of arg dict
-        :return: dict;
+        Represent task as code.
+        :param task:  dict;
+        :param print_return: bool;
+        :return: str; code representation of task
         """
 
-        self._print('Processing args ...')
+        if isinstance(task, str):  # task is a JSON str
+            # Read JSON str as dict
+            task = loads(task)
 
-        processed_dicts = []
+        self._print('Representing task ({}) as code ...\n'.format(task))
 
-        for d in args:
-            processed_dicts.append({
-                'name':
-                d.get('name'),
-                'value':
-                d.get('value', ''),
-                'label':
-                d.get('label', '{} Label'.format(d.get('name'))),
-                'description':
-                d.get('description', 'No description.'),
-            })
+        label, info = list(task.items())[0]
+        library_path = info.get('library_path')
+        self._print('library_path: {}'.format(library_path))
+        library_name = info.get('library_name')
+        self._print('library_name: {}'.format(library_name))
+        function_name = info.get('function_name')
+        self._print('function_name: {}'.format(function_name))
+        required_args = info.get('required_args')
+        self._print('required_args: {}'.format(required_args))
+        default_args = info.get('default_args')
+        self._print('default_args: {}'.format(default_args))
+        optional_args = info.get('optional_args')
+        self._print('optional_args: {}'.format(optional_args))
+        returns = info.get('returns')
+        self._print('returns: {}'.format(returns))
 
-        return processed_dicts
+        args_d = {}
+        for a in required_args + default_args + optional_args:
+            args_d[a['name']] = a['value']
 
-    def _process_returns(self, returns):
-        """
-        Process returns.
-        :param returns: list; list of return dict
-        :return: dict;
-        """
+        if library_path:
+            exec('sys.path.insert(0, \'{}\')'.format(library_path))
 
-        self._print('Processing returns ...')
+        # Import function
+        exec('from {} import {}'.format(library_name, function_name))
 
-        processed_dicts = []
+        s = eval('signature({})'.format(function_name))
 
-        for d in returns:
-            processed_dicts.append({
-                'label':
-                d.get('label'),
-                'description':
-                d.get('description', 'No description.'),
-            })
+        # Args
+        args_l = [
+            '{}={}'.format(n, self._str_or_name(args_d[n]))
+            for n in s.parameters if n in args_d
+        ]
+        self._print('args_l (_str_or_named): {}'.format(args_l))
 
-        return processed_dicts
+        # Keyword args
+        kwargs_l = [
+            '\'{}\':{}'.format(n, self._str_or_name(v))
+            for n, v in args_d.items() if n not in s.parameters
+        ]
+        self._print('kwargs_l (_str_or_named): {}'.format(kwargs_l))
+
+        # _str_or_name returns
+        returns = ', '.join([d.get('value') for d in returns])
+        self._print('returns (_str_or_named): {}'.format(returns))
+
+        # Build code
+        code = ''
+
+        # TODO: enable custom code for default functions
+        if library_name.startswith('simpli') and False:  # Use custom code
+            # Get custom code
+            custom_code = 'TODO: enable custom code for default functions'
+            code += '# {}\n{}{}\n'.format(label, returns, custom_code)
+
+        elif function_name not in self.globals:  # Import function - fully
+            code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {}\n\n'.format(
+                library_path, library_name.split('.')[0])
+        else:  # A non-simpli function in globals
+            library_name = ''
+
+        # Style returns
+        if returns:
+            returns += ' = '
+
+        # Style library name
+        if library_name == '__main__':
+            library_name = ''
+        elif library_name:
+            library_name += '.'
+
+        # Make args separator
+        sep = ',\n' + ' ' * (len(returns + library_name + function_name) +
+                             library_name.count('.') - 1)
+
+        if kwargs_l:
+            kwargs_s = sep + '**{'
+            kwargs_s += (sep + '   ').join(kwargs_l)
+            kwargs_s += sep + '  }'
+        else:
+            kwargs_s = '{}'
+
+        # Add function code
+        code += '# {}\n{}{}{}({}{}{})'.format(label, returns, library_name,
+                                              function_name,
+                                              sep.join(args_l), kwargs_s, sep)
+
+        if print_return:
+            print(code)
+        return code
 
     # ==========================================================================
     # Execute task
     # ==========================================================================
     def execute_task(self, task):
         """
-        Execute task.
+        Execute a task.
         :param task: dict;
         :return: None
         """
@@ -536,114 +648,6 @@ class Manager:
                 n, get_name(v, self.globals), type(v)))
 
         return locals()[function_name](**args)
-
-    # ==========================================================================
-    # Code task
-    # ==========================================================================
-    def code_task(self, task, print_return=True):
-        """
-        Represent task as code.
-        :param task:  dict;
-        :param print_return: bool;
-        :return: str; code representation of task
-        """
-
-        if isinstance(task, str):  # task is a JSON str
-            # Read JSON str as dict
-            task = loads(task)
-
-        self._print('Representing task ({}) as code ...\n'.format(task))
-
-        label, info = list(task.items())[0]
-        library_path = info.get('library_path')
-        self._print('library_path: {}'.format(library_path))
-        library_name = info.get('library_name')
-        self._print('library_name: {}'.format(library_name))
-        function_name = info.get('function_name')
-        self._print('function_name: {}'.format(function_name))
-        required_args = info.get('required_args')
-        self._print('required_args: {}'.format(required_args))
-        default_args = info.get('default_args')
-        self._print('default_args: {}'.format(default_args))
-        optional_args = info.get('optional_args')
-        self._print('optional_args: {}'.format(optional_args))
-        returns = info.get('returns')
-        self._print('returns: {}'.format(returns))
-
-        args_d = {}
-        for a in required_args + default_args + optional_args:
-            args_d[a['name']] = a['value']
-
-        if library_path:
-            exec('sys.path.insert(0, \'{}\')'.format(library_path))
-
-        # Import function
-        exec('from {} import {}'.format(library_name, function_name))
-
-        s = eval('signature({})'.format(function_name))
-
-        # Args
-        args_l = [
-            '{}={}'.format(n, self._str_or_name(args_d[n]))
-            for n in s.parameters if n in args_d
-        ]
-        self._print('args_l (_str_or_named): {}'.format(args_l))
-
-        # Keyword args
-        kwargs_l = [
-            '\'{}\':{}'.format(n, self._str_or_name(v))
-            for n, v in args_d.items() if n not in s.parameters
-        ]
-        self._print('kwargs_l (_str_or_named): {}'.format(kwargs_l))
-
-        # _str_or_name returns
-        returns = ', '.join([d.get('value') for d in returns])
-        self._print('returns (_str_or_named): {}'.format(returns))
-
-        # Build code
-        code = ''
-
-        # TODO: enable custom code for default functions
-        if library_name.startswith('simpli') and False:  # Use custom code
-            # Get custom code
-            custom_code = 'TODO: enable custom code for default functions'
-            code += '# {}\n{}{}\n'.format(label, returns, custom_code)
-
-        elif function_name not in self.globals:  # Import function - fully
-            code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {}\n\n'.format(
-                library_path, library_name.split('.')[0])
-        else:  # A non-simpli function in globals
-            library_name = ''
-
-        # Style returns
-        if returns:
-            returns += ' = '
-
-        # Style library name
-        if library_name == '__main__':
-            library_name = ''
-        elif library_name:
-            library_name += '.'
-
-        # Make args separator
-        sep = ',\n' + ' ' * (len(returns + library_name + function_name) +
-                             library_name.count('.') - 1)
-
-        if kwargs_l:
-            kwargs_s = sep + '**{'
-            kwargs_s += (sep + '   ').join(kwargs_l)
-            kwargs_s += sep + '  }'
-        else:
-            kwargs_s = '{}'
-
-        # Add function code
-        code += '# {}\n{}{}{}({}{}{})'.format(label, returns, library_name,
-                                              function_name,
-                                              sep.join(args_l), kwargs_s, sep)
-
-        if print_return:
-            print(code)
-        return code
 
     # TODO: consider removing
     # ==========================================================================
