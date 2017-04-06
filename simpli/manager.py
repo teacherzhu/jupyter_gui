@@ -399,6 +399,9 @@ class Manager:
 
         label, info = list(task.items())[0]
 
+        description = info.get('description')
+        self._print('description: {}'.format(description))
+
         library_path = info.get('library_path')
         self._print('library_path: {}'.format(library_path))
 
@@ -423,6 +426,9 @@ class Manager:
         # Write code
         code = '# {}\n'.format(label)
 
+        if description:
+            code += '# {}'.format(description)
+
         if function_name not in self._globals:  # Import function
             if library_path:
                 code += 'import sys\n'
@@ -442,10 +448,15 @@ class Manager:
             library_name += '.'
 
         # Style args
-        args_s = '\n'
-        args_s += ',\n'.join([a.get('value') for a in required_args])
-        args_s += ',\n'.join(
-            [a.get('value') for a in default_args + optional_args])
+        args_s = '\n\t'
+        args_s += ',\n\t'.join([
+            '{}  # {}'.format(a.get('value'), a.get('description')).strip(),
+            for a in required_args
+        ])
+        args_s += ',\n\t'.join([
+            '{}={}  # {}'.format(a.get('name'), a.get('value')).strip(),
+            for a in default_args + optional_args
+        ])
         args_s += '\n'
 
         # Add function code
