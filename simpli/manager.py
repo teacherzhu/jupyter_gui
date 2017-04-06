@@ -167,17 +167,7 @@ class Manager:
                 # Task label is this task's UID; so no duplicates are allowed
                 label = t.get('label',
                               '{} (no task label)'.format(function_name))
-                if label in tasks or label in self._tasks:  # Label is duplicated
-                    self._print(
-                        'Task label \'{}\' is duplicated; making a new task '
-                        'label ...'.format(label))
-                    i = 2
-                    new_label = '{} (v{})'.format(label, i)
-                    while new_label in tasks:
-                        i += 1
-                        new_label = '{} (v{})'.format(label, i)
-                    label = new_label
-
+                              
                 tasks[label] = {
                     'library_path':
                     library_path,
