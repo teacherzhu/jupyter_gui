@@ -12,7 +12,7 @@ import sys
 from inspect import _empty, signature
 from json import dumps, loads
 from os import listdir
-from os.path import isdir, join
+from os.path import join
 
 from .default_tasks import SIMPLI_JSON_DIR
 from .support import (cast_str_to_int_float_bool_or_str, get_name, merge_dicts,
