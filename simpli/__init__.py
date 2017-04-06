@@ -1,3 +1,7 @@
+"""
+Makes ~/.simpli/json/default_tasks.json and initializes as an Jupyter extension.
+"""
+
 from os.path import dirname, join, realpath
 
 from .default_tasks import link_json
@@ -24,9 +28,14 @@ def _jupyter_nbextension_paths():
     :return: list; List of 1 dictionary
     """
 
-    # section: the path is relative to the simpli/ directory (if viewing from the repository: it's simpli/simpli/)
+    # section: the path is relative to the simpli/ directory
+    # (if viewing from the repository: it's simpli/simpli/)
+    #
     # dest: Jupyter sets up: server(such as localhost:8888)/nbextensions/dest/
-    # src: Jupyter sees this directory (not all files however) when it looks at dest (server/nbextensions/dest/)
+    #
+    # src: Jupyter sees this directory (not all files however) when it looks at
+    # dest (server/nbextensions/dest/)
+    #
     # require: Jupyter loads this file; things in this javascript will be seen
     # in the javascript namespace
     to_return = {
@@ -54,7 +63,7 @@ def _jupyter_server_extension_paths():
 def load_jupyter_server_extension(nbapp):
     """
     Function to be called when server extension is loaded.
-    :param nbapp: NotebookWebApplication; handle to the Notebook web-server instance
+    :param nbapp: NotebookWebApplication; handle to the Notebook web-server
     :return: None
     """
 
