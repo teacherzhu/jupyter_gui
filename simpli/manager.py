@@ -14,7 +14,7 @@ from json import dumps, loads
 from os import listdir
 from os.path import isdir, join
 
-from . import SIMPLI_JSON_DIR
+from .default_tasks import SIMPLI_JSON_DIR
 from .support import (cast_str_to_int_float_bool_or_str, get_name, merge_dicts,
                       remove_nested_quotes, reset_encoding)
 
@@ -70,8 +70,7 @@ class Manager:
 
         self._globals = globals_
 
-    # TODO: rename
-    _globals = property(_get_globals, _set_globals)
+    globals_ = property(_get_globals, _set_globals)
 
     def import_export_globals(self, globals_):
         """
@@ -81,10 +80,10 @@ class Manager:
         """
 
         self._print('Importing globals: {} ...'.format(globals_))
-        self._globals = merge_dicts(self._globals, globals_)
+        self.globals_ = merge_dicts(self.globals_, globals_)
 
-        self._print('Exporting globals: {} ...'.format(self._globals))
-        for n, v in self._globals.items():
+        self._print('Exporting globals: {} ...'.format(self.globals_))
+        for n, v in self.globals_.items():
             globals()[n] = v
 
     # ==========================================================================
@@ -185,7 +184,7 @@ class Manager:
             # Load library path, which is common for all tasks in this JSON
             library_path = tasks_json['library_path']
             if not isdir(library_path):
-                raise ValueError('library_path doesn\'t exist.')
+                self._print('library_path doesn\'t exist.')
 
             # Load each task
             for t in tasks_json['tasks']:
@@ -490,7 +489,7 @@ class Manager:
             custom_code = 'TODO: enable custom code for default functions'
             code += '# {}\n{}{}\n'.format(label, returns, custom_code)
 
-        elif function_name not in self._globals:  # Import function - fully
+        elif function_name not in self.globals_:  # Import function - fully
             code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {' \
                     '}\n\n'.format(
                 library_path, library_name.split('.')[0])
@@ -569,13 +568,13 @@ class Manager:
 
         # Handle returns
         if len(returns) == 1:
-            self._globals[returns[0]] = remove_nested_quotes(returned)
+            self.globals_[returns[0]] = remove_nested_quotes(returned)
 
         elif len(returns) > 1:
             for n, v in zip(returns, returned):
-                self._globals[n] = remove_nested_quotes(v)
+                self.globals_[n] = remove_nested_quotes(v)
 
-        self._print('self._globals after execution: {}.'.format(self._globals))
+        self._print('self.globals_ after execution: {}.'.format(self.globals_))
 
     def _merge_and_process_args(self, required_args, default_args,
                                 optional_args):
@@ -608,9 +607,9 @@ class Manager:
         processed_args = {}
         for n, v in merged_args.items():
 
-            if v in self._globals:  # Process as already defined variable from
+            if v in self.globals_:  # Process as already defined variable from
                 #  the Notebook environment
-                processed_v = self._globals[v]
+                processed_v = self.globals_[v]
 
             else:  # Process as float, int, bool, or str
                 # First assume a list of str to be passed
@@ -626,7 +625,7 @@ class Manager:
 
             processed_args[n] = processed_v
             self._print('\t\t{}: {} > {} ({})'.format(
-                n, v, get_name(processed_v, self._globals), type(processed_v)))
+                n, v, get_name(processed_v, self.globals_), type(processed_v)))
 
         return processed_args
 
@@ -659,7 +658,7 @@ class Manager:
         self._print('\tExecuting {} with:'.format(locals()[function_name]))
         for n, v in sorted(args.items()):
             self._print('\t\t{} = {} ({})'.format(
-                n, get_name(v, self._globals), type(v)))
+                n, get_name(v, self.globals_), type(v)))
 
         return locals()[function_name](**args)
 
@@ -677,7 +676,7 @@ class Manager:
 
         str_ = remove_nested_quotes(str_)
 
-        if str_ in self._globals or not isinstance(
+        if str_ in self.globals_ or not isinstance(
                 cast_str_to_int_float_bool_or_str(str_), str):  # object
             return str_
         else:  # str

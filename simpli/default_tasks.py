@@ -7,7 +7,13 @@ from os.path import islink, join, split
 
 from IPython.core.display import display_html
 
-from . import SIMPLI_JSON_DIR
+from .support import establish_filepath, get_home_dir
+
+# Make a hidden directory in the user-home directory
+HOME_DIR = get_home_dir()
+SIMPLI_DIR = join(HOME_DIR, '.simpli')
+SIMPLI_JSON_DIR = join(SIMPLI_DIR, 'json/')
+establish_filepath(SIMPLI_JSON_DIR)
 
 
 def just_return(value):
