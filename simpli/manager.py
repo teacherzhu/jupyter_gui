@@ -293,7 +293,7 @@ class Manager:
             function_name = l[l.find('=') + 1:l.find('(')].strip()
         else:
             function_name = l[:l.find('(')].strip()
-        function_name = function_name.split(',')[-1]
+        function_name = function_name.split('.')[-1]
         print('function_name: {}\n'.format(function_name))
 
         # Get args and kwargs
