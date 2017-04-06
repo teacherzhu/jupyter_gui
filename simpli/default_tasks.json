@@ -1,98 +1,78 @@
 {
-  "library_path": "",
-  "tasks": [
-    {
-      "label": "Link JSON",
-      "function_path": "simpli.default_tasks.link_json",
-      "required_args": [
-        {
-          "name": "filepath",
-          "label": "Simpli JSON to be Linked"
-        }
-      ]
-    },
-    {
-      "label": "Reset JSONs",
-      "function_path": "simpli.default_tasks.reset_jsons"
-    },
-    {
-      "label": "Assign",
-      "function_path": "simpli.default_tasks.just_return",
-      "required_args": [
-        {
-          "name": "value",
-          "label": "Value to Assign"
-        }
-      ],
-      "returns": [
-        {
-          "label": "Variable Name to Assign to"
-        }
-      ]
-    },
-    {
-      "label": "Slice DataFrame by Row",
-      "function_path": "simpli.default_tasks.slice_dataframe",
-      "description": "Return a subset of rows of a given DataFrame object.",
-      "required_args": [
-        {
-          "name": "dataframe",
-          "label": "DataFrame",
-          "description": "Target dataframe object."
+    "library_path": "",
+    "tasks": [{
+            "label": "Assign",
+            "function_path": "simpli.default_tasks.just_return",
+            "required_args": [{
+                "name": "value",
+                "label": "Value to Assign"
+            }],
+            "returns": [{
+                "label": "Variable Name to Assign to"
+            }]
         },
         {
-          "name": "indices",
-          "label": "Row Index(ices)",
-          "description": "An integer or list of integers separated by commas of the rows to slice. Note that indices are 0 based."
-        }
-      ],
-      "default_args": [
-        {
-          "name": "ax",
-          "value": "0"
-        }
-      ],
-      "returns": [
-        {
-          "label": "Sliced DataFrame",
-          "description": "A slice of the DataFrame including the specified rows."
-        }
-      ]
-    },
-    {
-      "label": "Slice DataFrame by Column",
-      "function_path": "simpli.default_tasks.slice_dataframe",
-      "required_args": [
-        {
-          "name": "dataframe",
-          "label": "DataFrame"
+            "label": "Slice DataFrame by Row",
+            "function_path": "simpli.default_tasks.slice_dataframe",
+            "description": "Return a subset of rows of a given DataFrame object.",
+            "required_args": [{
+                    "name": "dataframe",
+                    "label": "DataFrame",
+                    "description": "Target dataframe object."
+                },
+                {
+                    "name": "indices",
+                    "label": "Row Index(ices)",
+                }
+            ],
+            "default_args": [{
+                "name": "ax",
+                "value": "0"
+            }],
+            "returns": [{
+                "label": "Sliced DataFrame",
+                "description": "A slice of the DataFrame including the specified rows."
+            }]
         },
         {
-          "name": "indices",
-          "label": "Column Index(ices)"
-        }
-      ],
-      "default_args": [
+            "label": "Slice DataFrame by Column",
+            "function_path": "simpli.default_tasks.slice_dataframe",
+            "required_args": [{
+                    "name": "dataframe",
+                    "label": "DataFrame"
+                },
+                {
+                    "name": "indices",
+                    "label": "Column Index(ices)",
+                }
+            ],
+            "default_args": [{
+                "name": "ax",
+                "value": "1"
+            }],
+            "returns": [{
+                "label": "Sliced DataFrame"
+            }]
+        },
         {
-          "name": "ax",
-          "value": "1"
-        }
-      ],
-      "returns": [
+            "label": "Link JSON",
+            "function_path": "simpli.default_tasks.link_json",
+            "required_args": [{
+                "name": "filepath",
+                "label": "Simpli JSON to be Linked"
+            }]
+        },
         {
-          "label": "Sliced DataFrame"
-        }
-      ]
-    },
-    {
-      "label": "Set Theme",
-      "function_path": "simpli.default_tasks.set_notebook_theme",
-      "required_args": [
+            "label": "Reset JSONs",
+            "function_path": "simpli.default_tasks.reset_jsons"
+        },
         {
-          "name": "filepath",
-          "label": "CSS File"
+            "label": "Set Theme",
+            "function_path": "simpli.default_tasks.set_notebook_theme",
+            "required_args": [{
+                "name": "filepath",
+                "label": "CSS File"
+            }]
         }
-      ]
-    }
-  ]
+    ]
 }
