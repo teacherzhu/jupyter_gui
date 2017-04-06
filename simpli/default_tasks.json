@@ -22,7 +22,7 @@
                 },
                 {
                     "name": "indices",
-                    "label": "Row Index(ices)",
+                    "label": "Row Index(ices)"
                 }
             ],
             "default_args": [{
@@ -43,7 +43,7 @@
                 },
                 {
                     "name": "indices",
-                    "label": "Column Index(ices)",
+                    "label": "Column Index(ices)"
                 }
             ],
             "default_args": [{

@@ -5,17 +5,10 @@ Makes ~/.simpli/json/default_tasks.json and initializes as an Jupyter extension.
 from os.path import dirname, join, realpath
 
 from .default_tasks import link_json
-from .support import establish_filepath, get_home_dir
 
 # ==============================================================================
 # Link default JSON to ~/.simpli/json
 # ==============================================================================
-# Make a hidden directory in the user-home directory
-HOME_DIR = get_home_dir()
-SIMPLI_DIR = join(HOME_DIR, '.simpli')
-SIMPLI_JSON_DIR = join(SIMPLI_DIR, 'json/')
-establish_filepath(SIMPLI_JSON_DIR)
-
 link_json(join(dirname(realpath(__file__)), 'default_tasks.json'))
 
 
