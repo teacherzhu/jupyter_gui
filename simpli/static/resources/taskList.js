@@ -28,7 +28,7 @@ var leftPanel;
 
 var getTasks = function(callback) {
   // code to read library JSON files
-  var code = `manager.update_tasks_and_print_as_json()`;
+  var code = `manager.print_tasks()`;
 
   // Convert tasks JSON to stringified list
   var my_callback = function(out) {
