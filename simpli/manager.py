@@ -450,11 +450,11 @@ class Manager:
         # Style args
         args_s = '\n\t'
         args_s += ',\n\t'.join([
-            '{}  # {}'.format(a.get('value'), a.get('description')).strip(),
+            '{}  # {}'.format(a.get('value'), a.get('description')).strip()
             for a in required_args
         ])
         args_s += ',\n\t'.join([
-            '{}={}  # {}'.format(a.get('name'), a.get('value')).strip(),
+            '{}={}  # {}'.format(a.get('name'), a.get('value')).strip()
             for a in default_args + optional_args
         ])
         args_s += '\n'
