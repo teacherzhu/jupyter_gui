@@ -19,6 +19,9 @@ from .support import (cast_str_to_int_float_bool_or_str, get_name, merge_dicts,
                       remove_nested_quotes, reset_encoding)
 
 
+# TODO: communicate with JavaScript without dumps or printing
+
+
 class Manager:
     """
     Notebook Manager.
@@ -150,9 +153,14 @@ class Manager:
         elif notebook_cell_text:
             task = self._load_task_from_notebook_cell(notebook_cell_text)
 
-        # TODO: communicate with JavaScript without dumps
+        else:
+            raise ValueError(
+                'Get an existing task by querying for its ID or register a '
+                'task from a notebook cell.')
+
         if print_as_json:
             print(dumps(task))
+
         return task
 
     # ==========================================================================
@@ -166,8 +174,8 @@ class Manager:
 
         tasks = {}
 
-        for f in listdir(SIMPLI_JSON_DIR):
-            fp = join(SIMPLI_JSON_DIR, f)
+        for fn in listdir(SIMPLI_JSON_DIR):
+            fp = join(SIMPLI_JSON_DIR, fn)
 
             self._print('Loading task-specifying JSON {} ...'.format(fp))
 
@@ -197,8 +205,8 @@ class Manager:
                               '{} (no task label)'.format(function_name))
                 if label in tasks or label in self.tasks:  # Label is duplicated
                     self._print(
-                        'Task label \'{}\' is duplicated; making a new task label ...'.
-                        format(label))
+                        'Task label \'{}\' is duplicated; making a new task '
+                        'label ...'.format(label))
                     i = 2
                     new_label = '{} (v{})'.format(label, i)
                     while new_label in tasks:
@@ -316,6 +324,8 @@ class Manager:
                 targets = peek.elts
             elif isinstance(peek, ast.Name):
                 targets = b.targets
+            else:
+                raise ValueError('Unknown target class: {}.'.format(peek))
 
             for t in targets:
                 returns.append({
@@ -381,7 +391,8 @@ class Manager:
         print('module_name: {}\n'.format(module_name))
 
         # Get module path
-        if module_name == '__main__':  # Function is defined within this Notebook
+        if module_name == '__main__':  # Function is defined within this
+            # Notebook
             module_path = ''
         else:  # Function is imported from a module
             module_path = eval('{}.__globals__.get(\'__file__\')'.format(
@@ -474,14 +485,14 @@ class Manager:
         # Build code
         code = ''
 
-        # TODO: enable custom code for default functions
         if library_name.startswith('simpli') and False:  # Use custom code
             # Get custom code
             custom_code = 'TODO: enable custom code for default functions'
             code += '# {}\n{}{}\n'.format(label, returns, custom_code)
 
         elif function_name not in self.globals:  # Import function - fully
-            code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {}\n\n'.format(
+            code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {' \
+                    '}\n\n'.format(
                 library_path, library_name.split('.')[0])
         else:  # A non-simpli function in globals
             library_name = ''
@@ -570,9 +581,11 @@ class Manager:
                                 optional_args):
         """
         Convert input str arguments to corresponding values:
-            If the str is the name of a existing variable in the Notebook globals, use its corresponding value;
+            If the str is the name of a existing variable in the Notebook
+            globals, use its corresponding value;
             If the str contains ',', convert it into a list of str;
-            Try to cast str in the following order and use the 1st match: int, float, bool, and str;
+            Try to cast str in the following order and use the 1st match:
+            int, float, bool, and str;
         :param required_args: dict;
         :param default_args: dict;
         :param optional_args: dict;
@@ -595,7 +608,8 @@ class Manager:
         processed_args = {}
         for n, v in merged_args.items():
 
-            if v in self.globals:  # Process as already defined variable from the Notebook environment
+            if v in self.globals:  # Process as already defined variable from
+                #  the Notebook environment
                 processed_v = self.globals[v]
 
             else:  # Process as float, int, bool, or str
@@ -605,9 +619,9 @@ class Manager:
                     if s
                 ]
 
-                if len(
-                        processed_v
-                ) == 1:  # If there is only 1 item in the assumed list, use it directly
+                if len(processed_v
+                       ) == 1:  # If there is only 1 item in the assumed list,
+                    # use it directly
                     processed_v = processed_v[0]
 
             processed_args[n] = processed_v
