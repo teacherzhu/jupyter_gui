@@ -6,8 +6,10 @@ Defines Manager class which:
     4) executes task widget.
 """
 
-import inspect  # Don't remove this import - inspect IS used
+import ast
 import sys  # Don't remove this import - sys IS used
+from inspect import (_empty,  # Don't remove this import - inspect IS used
+                     signature)
 from json import dumps, loads
 from os import listdir
 from os.path import isdir, isfile, islink, join
@@ -129,138 +131,121 @@ class Manager:
         :return: dict;
         """
 
-        self._print('Loading a task from a notebooks cell ...')
+        # Split text into lines
+        lines = text.split('\n')
+        print('lines: {}\n'.format(lines))
 
-        self._print('\n*********\n{}\n*********\n'.format(text))
+        # Get comment lines
+        comment_lines = [l.strip() for l in lines if l.startswith('#')]
+        print('comment_lines: {}\n'.format(comment_lines))
 
-        lines = [s.strip() for s in text.split('\n') if s != '']
-        self._print('********* lines: {}'.format(lines))
-
-        # Comment lines
-        comment_lines = [l for l in lines if l.startswith('#')]
-        self._print('********* comment lines: {}'.format(comment_lines))
-
+        # Get label from the 1st comment line
         label = ''.join(comment_lines[0].split('#')[1:]).strip()
-        self._print('********* label: {}'.format(label))
+        print('label: {}\n'.format(label))
 
-        # Code lines
-        code_lines = []
-        for l in lines:
-            if not l.startswith('#'):
-                if not ('path.insert' in l or 'import ' in l):  # Importing a module
-                    code_lines.append(l)
-        self._print('********* code lines: {}'.format(code_lines))
-        code = ''.join(code_lines).replace(' ', '')
-        self._print('********* code (compressed): {}'.format(code))
+        # Get code lines
+        code_lines = [l.strip() for l in lines if not l.startswith('#')]
+        print('comment_lines: {}\n'.format(comment_lines))
 
-        # Get before the 1st '(' and args (after the 1st '(' without the last ')')
-        i = code.find('(')
-        before, args = code[:i], code[i + 1:-1]
-        self._print('********* before the 1st \'(\': {}'.format(before))
-        self._print(
-            '********* args (after the 1st \'(\' without the last \')\'): {}'.
-            format(args))
-        if '**{' in args:
-            i1 = args.find('**{') + 2
-            n = 1
-            for i, s in enumerate(args[i1 + 1:]):
-                if s == '}':
-                    n -= 1
-                    if n == 0:
-                        i2 = i1 + i + 1
-                        break
-                elif s == '{':
-                    n += 1
-        kwargs = eval(args[i1:i2 + 1])
-        for k, v in kwargs.items():
-            kwargs[k] = get_name(v, self.globals)
-
-        args = args[:i1 - 2] + args[i2 + 1]
-        args = args.split(',')
-        self._print('********* args (kwargs removed & split): {}'.format(args))
+        # Make AST
+        m = ast.parse(text)
+        b = m.body[0]
 
         # Get returns
-        i = before.find('=')
-        if i == -1:  # '=' not found; so there is not return
-            i = 0
-        returns = before[:i].split(',')
-        self._print('********* returns: {}'.format(returns))
-        returns = [x for x in returns if x != '']
-        returns = [{
-            'label': 'TODO: get from docstring',
-            'description': 'TODO: get from docstring',
-            'value': v,
-        } for v in returns]
+        returns = []
+        if isinstance(b, ast.Assign):
+
+            peek = b.targets[0]
+            if isinstance(peek, ast.Tuple):
+                targets = peek.elts
+            elif isinstance(peek, ast.Name):
+                targets = b.targets
+
+            for t in targets:
+                returns.append({
+                    'label': '{} Label'.format(t.id),
+                    'description': 'Description.',
+                    'value': t.id,
+                })
+        print('returns: {}\n')
 
         # Get function name
-        if i != 0:  # There was a '='
-            # Increment index to skip '='
-            i += 1
-        function_name = before[i:]
-        self._print('********* function_name: {}'.format(function_name))
+        function_name = b.value.func.id
+        print('function_name: {}\n'.format(function_name))
 
-        # Get signature
-        s = eval('inspect.signature({})'.format(function_name))
-        self._print('*** signature.parameters: {}'.format(s.parameters))
+        # Get args and kwargs
+        args = []
+        kwargs = {}
+        for a in [
+                l for l in code_lines
+                if not (l.endswith('(') or l.startswith(')'))
+        ]:
+
+            if '=' in a:  # kwarg
+                k, v = a.split('=')
+                if v.endswith(','):
+                    v = v[:-1]
+                kwargs[k] = v
+
+            else:  # arg
+                if a.endswith(','):
+                    a = a[:-1]
+                args.append(a)
+        print('args: {}\n'.format(args))
+        print('kwargs: {}\n'.format(kwargs))
+
+        # Get function's signature
+        print('inspecting parameters ...')
+        s = eval('signature({})'.format(function_name))
+        for k, v in s.parameters.items():
+            print('\t{}: {}'.format(k, v))
 
         # Get required args
         required_args = [{
-            'label': n,
-            'description': 'TODO: get from docstring',
+            'label': '{} Label'.format(n),
+            'description': 'Description.',
             'name': n,
             'value': v,
-        } for n, v in zip([p for p in s.parameters if p != 'kwargs'],
-                          [x for x in args if '=' not in x])]
-        self._print('********* required_args: {}'.format(required_args))
+        } for n, v in zip([
+            v.name for v in s.parameters.values() if v.default == _empty
+        ], args)]
+        print('required_args: {}\n'.format(required_args))
 
         # Get optional args
         optional_args = [{
-            'label': n,
-            'description': 'TODO: get from docstring',
-            'name': n,
-            'value': v,
-        } for n, v in [x.split('=') for x in args if '=' in x]]
-        self._print('********* optional_args: {}'.format(optional_args))
-
-        # Get default args (from kwargs)
-        default_args = [{
-            'label': n,
-            'description': 'Keyword argument',
+            'label': '{} Label'.format(n),
+            'description': 'Description.',
             'name': n,
             'value': v,
         } for n, v in kwargs.items()]
-        self._print(
-            '********* default_args (from kwargs): {}'.format(optional_args))
+        print('optional_args: {}\n'.format(optional_args))
 
         # Get module name
-        library_name = eval('{}.__module__'.format(function_name))
-        self._print('********* library_name: {}'.format(library_name))
+        module_name = eval('{}.__module__'.format(function_name))
+        print('module_name: {}\n'.format(module_name))
 
-        # Get library path
-        if library_name == '__main__':  # Function is defined within this Notebook
-            library_path = ''
-        else:  # Function is not defined within this Notebook (it's imported from a module)
-            library_path = \
-                eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.', '/'))[0]
-            function_name = function_name.split('.')[-1]
-            self._print(
-                '*** function_name (not defined within this Notebook): {}'.
-                format(function_name))
-        self._print('********* library_path: {}'.format(library_path))
+        # Get module path
+        if module_name == '__main__':  # Function is defined within this Notebook
+            module_path = ''
+        else:  # Function is imported from a module
+            module_path = eval('{}.__globals__.get(\'__file__\')'.format(
+                function_name)).split(module_name.replace('.', '/'))[0]
+        print('module_path: {}\n'.format(module_path))
 
         # Make a task
         task = {
             label: {
-                'description': 'TODO: get from docstring',
-                'library_path': library_path,
-                'library_name': library_name,
+                'description': 'Description.',
+                'library_path': module_path,
+                'library_name': module_name,
                 'function_name': function_name,
                 'required_args': required_args,
-                'default_args': default_args,
+                'default_args': [],
                 'optional_args': optional_args,
-                'returns': returns
+                'returns': returns,
             }
         }
+        print('task: {}\n'.format(task))
 
         # Register this task
         self._update_tasks(task)
@@ -591,7 +576,7 @@ class Manager:
         # Import function
         exec('from {} import {}'.format(library_name, function_name))
 
-        s = eval('inspect.signature({})'.format(function_name))
+        s = eval('signature({})'.format(function_name))
 
         # Args
         args_l = [
