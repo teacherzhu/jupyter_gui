@@ -7,16 +7,16 @@ Defines Manager class which:
 """
 
 import ast
-import sys  # Don't remove this import - sys IS used
-from inspect import (_empty,  # Don't remove this import - inspect IS used
-                     signature)
+# Don't remove importing sys and inspect: they are used within eval()
+import sys
+from inspect import _empty, signature
 from json import dumps, loads
 from os import listdir
-from os.path import isdir, isfile, islink, join
+from os.path import isdir, join
 
-from . import HOME_DIR, SIMPLI_JSON_DIR
+from . import SIMPLI_JSON_DIR
 from .support import (cast_str_to_int_float_bool_or_str, get_name, merge_dicts,
-                      remove_nested_quotes, reset_encoding, title_str)
+                      remove_nested_quotes, reset_encoding)
 
 
 class Manager:
@@ -47,6 +47,9 @@ class Manager:
         if self._verbose:
             print(str_)
 
+    # ==========================================================================
+    # globals property
+    # ==========================================================================
     def _get_globals(self):
         """
         Get globals.
@@ -64,8 +67,26 @@ class Manager:
 
         self._globals = globals_
 
+    # TODO: rename
     globals = property(_get_globals, _set_globals)
 
+    def import_export_globals(self, globals_):
+        """
+        Import globals and export globals.
+        :param globals_: dict;
+        :return: None
+        """
+
+        self._print('Importing globals: {} ...'.format(globals_))
+        self.globals = merge_dicts(self.globals, globals_)
+
+        self._print('Exporting globals: {} ...'.format(self.globals))
+        for n, v in self.globals.items():
+            globals()[n] = v
+
+    # ==========================================================================
+    # tasks property
+    # ==========================================================================
     def _get_tasks(self):
         """
         Get tasks.
@@ -85,19 +106,25 @@ class Manager:
 
     tasks = property(_get_tasks, _set_tasks)
 
-    def import_export_globals(self, globals_):
+    def print_tasks(self):
         """
-        Import globals and export globals.
-        :param globals_: dict;
+        Printing is for communicating with JavaScript.
         :return: None
         """
 
-        self._print('Import globals: {} ...'.format(globals_))
-        self.globals = merge_dicts(self.globals, globals_)
+        self._print('Printing tasks in JSON str ...')
+        print(dumps(self._tasks))
 
-        self._print('Exporting globals: {} ...'.format(self.globals))
-        for n, v in self.globals.items():
-            globals()[n] = v
+    def _update_tasks(self, tasks):
+        """
+        Set or update self.tasks with tasks.
+        :param tasks: dict;
+        :return: None
+        """
+
+        self._print('Updating tasks {} with {} ...'.format(self.tasks, tasks))
+
+        self.tasks = merge_dicts(self.tasks, tasks)
 
     def get_task(self,
                  task_label=None,
@@ -124,11 +151,14 @@ class Manager:
             print(dumps(task))
         return task
 
+    # ==========================================================================
+    # Get a task from a Notebook cell
+    # ==========================================================================
     def _load_task_from_notebook_cell(self, text):
         """
-        Load task from a notebooks cell.
+        Load a task from a noteboos cell.
         :param text: str;
-        :return: dict;
+        :return: dict; {str: str}
         """
 
         # Split text into lines
@@ -206,9 +236,9 @@ class Manager:
             'description': 'Description.',
             'name': n,
             'value': v,
-        } for n, v in zip([
-            v.name for v in s.parameters.values() if v.default == _empty
-        ], args)]
+        } for n, v in zip(
+            [v.name for v in s.parameters.values()
+             if v.default == _empty], args)]
         print('required_args: {}\n'.format(required_args))
 
         # Get optional args
@@ -252,48 +282,29 @@ class Manager:
 
         return task
 
-    def update_tasks_and_print_as_json(self, path=SIMPLI_JSON_DIR):
+    # ==========================================================================
+    # Get a task(s) from JSON(s)
+    # ==========================================================================
+    def _update_tasks_from_jsons(self):
         """
-        Load tasks from task-specifying JSONs in json_directory_path and print all tasks in JSON format.
-        Printing is for communicating with JavaScript.
-        :return: None
-        """
-
-        self._print('Printing tasks in JSON str ...')
-
-        self._update_tasks_from_jsons(path)
-
-        print(dumps(self._tasks))
-
-    def _update_tasks_from_jsons(self, path):
-        """
-        Load tasks from a JSON or from JSONs in a directory.
-        :param path: str; filepath to a task-specifying JSON or directory path containing JSONs
+        Load tasks from a task-specifying JSON or JSONs in a directory.
         :return: dict;
         """
 
         tasks = {}
 
-        if islink(path) or isfile(path):
-            fps = [path]
-        else:
-            fps = [join(path, fp) for fp in listdir(path)]
+        for f in listdir(SIMPLI_JSON_DIR):
+            fp = join(SIMPLI_JSON_DIR, f)
 
-        for fp in fps:
             self._print('Loading task-specifying JSON {} ...'.format(fp))
 
             with open(fp) as f:
                 tasks_json = loads(reset_encoding(f.read()))
 
-            # Load library path, which is common for all tasks
+            # Load library path, which is common for all tasks in this JSON
             library_path = tasks_json['library_path']
-            if library_path and not isdir(
-                    library_path
-            ):  # Use absolute path assuming its in user-home directory
-                library_path = join(HOME_DIR, library_path)
-                self._print(
-                    '\tAssumed library_path ({}) is relative to the user-home directory.'.
-                    format(library_path))
+            if not isdir(library_path):
+                raise ValueError('library_path doesn\'t exist.')
 
             # Load each task
             for t in tasks_json['tasks']:
@@ -306,8 +317,7 @@ class Manager:
                     function_name = split[-1]
                 else:
                     raise ValueError(
-                        'function_path must be like: \'path.to.file.function_name\'.'
-                    )
+                        'function_path must be like: \'file.function\'.')
 
                 # Task label is this task's UID; so no duplicates are allowed
                 label = t.get('label',
@@ -366,7 +376,7 @@ class Manager:
                 'value':
                 d.get('value', ''),
                 'label':
-                d.get('label', title_str(d['name'])),
+                d.get('label', '{} Label'.format(d.get('name'))),
                 'description':
                 d.get('description', 'No description.'),
             })
@@ -394,18 +404,9 @@ class Manager:
 
         return processed_dicts
 
-    def _update_tasks(self, tasks):
-        """
-        Set or update self.tasks with tasks.
-        :param tasks: dict;
-        :return: None
-        """
-
-        self._print(
-            'Setting/updating tasks {} with {} ...'.format(self.tasks, tasks))
-
-        self.tasks = merge_dicts(self.tasks, tasks)
-
+    # ==========================================================================
+    # Execute task
+    # ==========================================================================
     def execute_task(self, task):
         """
         Execute task.
@@ -536,6 +537,9 @@ class Manager:
 
         return locals()[function_name](**args)
 
+    # ==========================================================================
+    # Code task
+    # ==========================================================================
     def code_task(self, task, print_return=True):
         """
         Represent task as code.
@@ -641,6 +645,10 @@ class Manager:
             print(code)
         return code
 
+    # TODO: consider removing
+    # ==========================================================================
+    # Support function
+    # ==========================================================================
     def _str_or_name(self, str_):
         """
         If str_ is an existing name in the current globals, then return str_.
