@@ -208,7 +208,7 @@ class Manager:
                 'value':
                 d.get('value', ''),
                 'label':
-                d.get('label', '{} Label'.format(d.get('name'))),
+                d.get('label', 'Label for {}'.format(d.get('name'))),
                 'description':
                 d.get('description', 'No description.'),
             })
@@ -278,7 +278,7 @@ class Manager:
 
             for t in targets:
                 returns.append({
-                    'label': '{} Label'.format(t.id),
+                    'label': 'Label for {}'.format(t.id),
                     'description': 'Description.',
                     'value': t.id,
                 })
@@ -287,29 +287,33 @@ class Manager:
         # Get function name
         l = code_lines[0]
         if returns:
-            function_name = l[l.find('='):l.find('(')]
+            function_name = l[l.find('=') + 1:l.find('(')].strip()
         else:
-            function_name = l[:l.find('(')]
+            function_name = l[:l.find('(')].strip()
         print('function_name: {}\n'.format(function_name))
 
         # Get args and kwargs
         args = []
-        kwargs = {}
-        for a in [
+        kwargs = []
+        for al in [
                 l for l in code_lines
                 if not (l.endswith('(') or l.startswith(')'))
         ]:
 
-            if '=' in a:  # kwarg
-                k, v = a.split('=')
-                if v.endswith(','):
-                    v = v[:-1]
-                kwargs[k] = v
+            if al.endswith(','):
+                al = al[:-1]
 
-            else:  # arg
-                if a.endswith(','):
-                    a = a[:-1]
-                args.append(a)
+            if '#' in al:  # Had description
+                al, d = al.aplit('#')
+                al = al.strip()
+                d = d.strip()
+
+            if '=' in al:  # Is kwarg
+                n, v = al.split('=')
+                kwargs.append((n, v, d))
+
+            else:  # Is arg
+                args.append((al, d))
         print('args: {}\n'.format(args))
         print('kwargs: {}\n'.format(kwargs))
 
@@ -321,22 +325,22 @@ class Manager:
 
         # Get required args
         required_args = [{
-            'label': '{} Label'.format(n),
-            'description': 'Description.',
+            'label': 'Label for {}'.format(n),
+            'description': d,
             'name': n,
             'value': v,
-        } for n, v in zip(
+        } for n, (v, d) in zip(
             [v.name for v in s.parameters.values()
              if v.default == _empty], args)]
         print('required_args: {}\n'.format(required_args))
 
         # Get optional args
         optional_args = [{
-            'label': '{} Label'.format(n),
-            'description': 'Description.',
+            'label': 'Label for {}'.format(n),
+            'description': d,
             'name': n,
             'value': v,
-        } for n, v in kwargs.items()]
+        } for n, v, d in kwargs]
         print('optional_args: {}\n'.format(optional_args))
 
         # Get module name
