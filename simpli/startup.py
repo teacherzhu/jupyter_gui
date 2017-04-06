@@ -3,6 +3,8 @@ Contains code to be executed in the invisible 1st Notebook cell when a Notebook
 loads or refreshes.
 """
 
+from IPython import get_ipython
+
 import declarativewidgets
 from simpli.manager import Manager
 
@@ -11,10 +13,7 @@ from simpli.manager import Manager
 # ==============================================================================
 # TODO: remove; the new version of declarativewidgets doesn't require this call
 declarativewidgets.init()
-get_ipython().run_cell_magic(
-'HTML',
-'',
-'''
+get_ipython().run_cell_magic('HTML', '', '''
 <link rel='import' href='urth_components/iron-form/iron-form.html'
       is='urth-core-import' package='PolymerElements/iron-form'>
 <link rel='import' href='urth_components/iron-collapse/iron-collapse.html'
