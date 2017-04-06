@@ -306,10 +306,12 @@ class Manager:
             if al.endswith(','):
                 al = al[:-1]
 
-            if '#' in al:  # Had description
+            if '#' in al:  # Has description
                 al, d = al.split('#')
                 al = al.strip()
                 d = d.strip()
+            else:
+                d = ''
 
             if '=' in al:  # Is kwarg
                 n, v = al.split('=')
@@ -427,7 +429,7 @@ class Manager:
         code = '# {}\n'.format(label)
 
         if description:
-            code += '# {}'.format(description)
+            code += '# {}\n'.format(description)
 
         if function_name not in self._globals:  # Import function
             if library_path:
@@ -454,7 +456,8 @@ class Manager:
             for a in required_args
         ])
         args_s += ',\n\t'.join([
-            '{}={}  # {}'.format(a.get('name'), a.get('value')).strip()
+            '{}={}  # {}'.format(
+                a.get('name'), a.get('value'), a.get('description')).strip()
             for a in default_args + optional_args
         ])
         args_s += '\n'
