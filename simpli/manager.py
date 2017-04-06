@@ -2,20 +2,19 @@
 Defines Manager class which:
     1) syncs the globals between Notebook and Simpli;
     2) keeps track of tasks, which can be added from JSON or Notebook cell;
-    3) makes code representation of task widgets (during task widget ==(flip)==> code);
-    4) executes function;
-    5) ;
+    3) converts task widgets into code cells; and
+    4) executes task widget.
 """
 
+import inspect  # Don't remove this import - inspect IS used
 import sys  # Don't remove this import - sys IS used
+from json import dumps, loads
 from os import listdir
 from os.path import isdir, isfile, islink, join
-import inspect  # Don't remove this import - inspect IS used
-from json import loads, dumps
 
 from . import HOME_DIR, SIMPLI_JSON_DIR
-from .support import get_name, merge_dicts, remove_nested_quotes, title_str, cast_str_to_int_float_bool_or_str, \
-    reset_encoding
+from .support import (cast_str_to_int_float_bool_or_str, get_name, merge_dicts,
+                      remove_nested_quotes, reset_encoding, title_str)
 
 
 class Manager:
@@ -52,8 +51,6 @@ class Manager:
         :return: dict;
         """
 
-        self._print('(Getting globals ...)')
-
         return self._globals
 
     def _set_globals(self, globals_):
@@ -62,8 +59,6 @@ class Manager:
         :param globals_: dict;
         :return: None
         """
-
-        self._print('(Setting globals ...)')
 
         self._globals = globals_
 
@@ -75,18 +70,14 @@ class Manager:
         :return: list; list of dict
         """
 
-        self._print('(Getting tasks ...)')
-
         return self._tasks
 
     def _set_tasks(self, tasks):
         """
         Set tasks.
         :param tasks: list; list of dict
-        :return:  None
+        :return: None
         """
-
-        self._print('(Setting tasks ...)')
 
         self._tasks = tasks
 
@@ -106,7 +97,10 @@ class Manager:
         for n, v in self.globals.items():
             globals()[n] = v
 
-    def get_task(self, task_label=None, notebook_cell_text=None, print_as_json=True):
+    def get_task(self,
+                 task_label=None,
+                 notebook_cell_text=None,
+                 print_as_json=True):
         """
         Get a task, whose label is task_label.
         :param task_label: str;
@@ -123,9 +117,7 @@ class Manager:
         elif notebook_cell_text:
             task = self._load_task_from_notebook_cell(notebook_cell_text)
 
-        else:
-            raise ValueError('Need either task_label or notebook_cell_text to make a task.')
-
+        # TODO: communicate with JavaScript without dumps
         if print_as_json:
             print(dumps(task))
         return task
@@ -148,16 +140,14 @@ class Manager:
         comment_lines = [l for l in lines if l.startswith('#')]
         self._print('********* comment lines: {}'.format(comment_lines))
 
-        label = comment_lines[0].split('#')[1].strip()
+        label = ''.join(comment_lines[0].split('#')[1:]).strip()
         self._print('********* label: {}'.format(label))
 
         # Code lines
         code_lines = []
         for l in lines:
             if not l.startswith('#'):
-                if 'path.insert' in l or 'import ' in l:  # Importing a module
-                    exec(l)
-                else:
+                if not ('path.insert' in l or 'import ' in l):  # Importing a module
                     code_lines.append(l)
         self._print('********* code lines: {}'.format(code_lines))
         code = ''.join(code_lines).replace(' ', '')
@@ -167,7 +157,9 @@ class Manager:
         i = code.find('(')
         before, args = code[:i], code[i + 1:-1]
         self._print('********* before the 1st \'(\': {}'.format(before))
-        self._print('********* args (after the 1st \'(\' without the last \')\'): {}'.format(args))
+        self._print(
+            '********* args (after the 1st \'(\' without the last \')\'): {}'.
+            format(args))
         if '**{' in args:
             i1 = args.find('**{') + 2
             n = 1
@@ -195,11 +187,10 @@ class Manager:
         self._print('********* returns: {}'.format(returns))
         returns = [x for x in returns if x != '']
         returns = [{
-                       'label': 'TODO: get from docstring',
-                       'description': 'TODO: get from docstring',
-                       'value': v,
-                   }
-                   for v in returns]
+            'label': 'TODO: get from docstring',
+            'description': 'TODO: get from docstring',
+            'value': v,
+        } for v in returns]
 
         # Get function name
         if i != 0:  # There was a '='
@@ -214,33 +205,32 @@ class Manager:
 
         # Get required args
         required_args = [{
-                             'label': n,
-                             'description': 'TODO: get from docstring',
-                             'name': n,
-                             'value': v,
-                         }
-                         for n, v in zip([p for p in s.parameters if p != 'kwargs'], [x for x in args if '=' not in x])]
+            'label': n,
+            'description': 'TODO: get from docstring',
+            'name': n,
+            'value': v,
+        } for n, v in zip([p for p in s.parameters if p != 'kwargs'],
+                          [x for x in args if '=' not in x])]
         self._print('********* required_args: {}'.format(required_args))
 
         # Get optional args
         optional_args = [{
-                             'label': n,
-                             'description': 'TODO: get from docstring',
-                             'name': n,
-                             'value': v,
-                         }
-                         for n, v in [x.split('=') for x in args if '=' in x]]
+            'label': n,
+            'description': 'TODO: get from docstring',
+            'name': n,
+            'value': v,
+        } for n, v in [x.split('=') for x in args if '=' in x]]
         self._print('********* optional_args: {}'.format(optional_args))
 
         # Get default args (from kwargs)
         default_args = [{
-                            'label': n,
-                            'description': 'Keyword argument',
-                            'name': n,
-                            'value': v,
-                        }
-                        for n, v in kwargs.items()]
-        self._print('********* default_args (from kwargs): {}'.format(optional_args))
+            'label': n,
+            'description': 'Keyword argument',
+            'name': n,
+            'value': v,
+        } for n, v in kwargs.items()]
+        self._print(
+            '********* default_args (from kwargs): {}'.format(optional_args))
 
         # Get module name
         library_name = eval('{}.__module__'.format(function_name))
@@ -253,7 +243,9 @@ class Manager:
             library_path = \
                 eval('{}.__globals__.get(\'__file__\')'.format(function_name)).split(library_name.replace('.', '/'))[0]
             function_name = function_name.split('.')[-1]
-            self._print('*** function_name (not defined within this Notebook): {}'.format(function_name))
+            self._print(
+                '*** function_name (not defined within this Notebook): {}'.
+                format(function_name))
         self._print('********* library_path: {}'.format(library_path))
 
         # Make a task
@@ -266,7 +258,8 @@ class Manager:
                 'required_args': required_args,
                 'default_args': default_args,
                 'optional_args': optional_args,
-                'returns': returns}
+                'returns': returns
+            }
         }
 
         # Register this task
@@ -309,9 +302,13 @@ class Manager:
 
             # Load library path, which is common for all tasks
             library_path = tasks_json['library_path']
-            if library_path and not isdir(library_path):  # Use absolute path assuming its in user-home directory
+            if library_path and not isdir(
+                    library_path
+            ):  # Use absolute path assuming its in user-home directory
                 library_path = join(HOME_DIR, library_path)
-                self._print('\tAssumed library_path ({}) is relative to the user-home directory.'.format(library_path))
+                self._print(
+                    '\tAssumed library_path ({}) is relative to the user-home directory.'.
+                    format(library_path))
 
             # Load each task
             for t in tasks_json['tasks']:
@@ -323,12 +320,17 @@ class Manager:
                     library_name = '.'.join(split[:-1])
                     function_name = split[-1]
                 else:
-                    raise ValueError('function_path must be like: \'path.to.file.function_name\'.')
+                    raise ValueError(
+                        'function_path must be like: \'path.to.file.function_name\'.'
+                    )
 
                 # Task label is this task's UID; so no duplicates are allowed
-                label = t.get('label', '{} (no task label)'.format(function_name))
+                label = t.get('label',
+                              '{} (no task label)'.format(function_name))
                 if label in tasks or label in self.tasks:  # Label is duplicated
-                    self._print('Task label \'{}\' is duplicated; making a new task label ...'.format(label))
+                    self._print(
+                        'Task label \'{}\' is duplicated; making a new task label ...'.
+                        format(label))
                     i = 2
                     new_label = '{} (v{})'.format(label, i)
                     while new_label in tasks:
@@ -337,17 +339,26 @@ class Manager:
                     label = new_label
 
                 tasks[label] = {
-                    'library_path': library_path,
-                    'library_name': library_name,
-                    'function_name': function_name,
-                    'description': t.get('description', 'No description.'),
-                    'required_args': self._process_args(t.get('required_args', [])),
-                    'default_args': self._process_args(t.get('default_args', [])),
-                    'optional_args': self._process_args(t.get('optional_args', [])),
-                    'returns': self._process_returns(t.get('returns', [])),
+                    'library_path':
+                    library_path,
+                    'library_name':
+                    library_name,
+                    'function_name':
+                    function_name,
+                    'description':
+                    t.get('description', 'No description.'),
+                    'required_args':
+                    self._process_args(t.get('required_args', [])),
+                    'default_args':
+                    self._process_args(t.get('default_args', [])),
+                    'optional_args':
+                    self._process_args(t.get('optional_args', [])),
+                    'returns':
+                    self._process_returns(t.get('returns', [])),
                 }
 
-                self._print('\t\tLoaded task {}: {}.'.format(label, tasks[label]))
+                self._print(
+                    '\t\tLoaded task {}: {}.'.format(label, tasks[label]))
 
             self._update_tasks(tasks)
             return tasks
@@ -365,12 +376,15 @@ class Manager:
 
         for d in args:
             processed_dicts.append({
-                'name': d.get('name'),
-                'value': d.get('value', ''),
-                'label': d.get('label', title_str(d['name'])),
-                'description': d.get('description', 'No description.'),
-            }
-            )
+                'name':
+                d.get('name'),
+                'value':
+                d.get('value', ''),
+                'label':
+                d.get('label', title_str(d['name'])),
+                'description':
+                d.get('description', 'No description.'),
+            })
 
         return processed_dicts
 
@@ -387,10 +401,11 @@ class Manager:
 
         for d in returns:
             processed_dicts.append({
-                'label': d.get('label'),
-                'description': d.get('description', 'No description.'),
-            }
-            )
+                'label':
+                d.get('label'),
+                'description':
+                d.get('description', 'No description.'),
+            })
 
         return processed_dicts
 
@@ -401,7 +416,8 @@ class Manager:
         :return: None
         """
 
-        self._print('Setting/updating tasks {} with {} ...'.format(self.tasks, tasks))
+        self._print(
+            'Setting/updating tasks {} with {} ...'.format(self.tasks, tasks))
 
         self.tasks = merge_dicts(self.tasks, tasks)
 
@@ -418,14 +434,25 @@ class Manager:
         label, info = list(task.items())[0]
 
         # Process and merge args
-        required_args = {a['name']: remove_nested_quotes(a['value']) for a in info['required_args']}
-        default_args = {a['name']: remove_nested_quotes(a['value']) for a in info['default_args']}
-        optional_args = {a['name']: remove_nested_quotes(a['value']) for a in info['optional_args']}
-        args = self._merge_and_process_args(required_args, default_args, optional_args)
+        required_args = {
+            a['name']: remove_nested_quotes(a['value'])
+            for a in info['required_args']
+        }
+        default_args = {
+            a['name']: remove_nested_quotes(a['value'])
+            for a in info['default_args']
+        }
+        optional_args = {
+            a['name']: remove_nested_quotes(a['value'])
+            for a in info['optional_args']
+        }
+        args = self._merge_and_process_args(required_args, default_args,
+                                            optional_args)
 
         # Execute function
-        returned = self._path_import_and_execute(info['library_path'], info['library_name'], info['function_name'],
-                                                 args)
+        returned = self._path_import_and_execute(info['library_path'],
+                                                 info['library_name'],
+                                                 info['function_name'], args)
 
         # Get returns
         returns = [r['value'] for r in info['returns']]
@@ -441,7 +468,8 @@ class Manager:
 
         self._print('self.globals after execution: {}.'.format(self.globals))
 
-    def _merge_and_process_args(self, required_args, default_args, optional_args):
+    def _merge_and_process_args(self, required_args, default_args,
+                                optional_args):
         """
         Convert input str arguments to corresponding values:
             If the str is the name of a existing variable in the Notebook globals, use its corresponding value;
@@ -458,9 +486,11 @@ class Manager:
         if None in required_args or '' in required_args:
             raise ValueError('Missing required_args.')
 
-        repeating_args = set(required_args.keys() & default_args.keys() & optional_args.keys())
+        repeating_args = set(required_args.keys() & default_args.keys() &
+                             optional_args.keys())
         if any(repeating_args):
-            raise ValueError('Argument \'{}\' is repeated.'.format(required_args))
+            raise ValueError(
+                'Argument \'{}\' is repeated.'.format(required_args))
 
         merged_args = merge_dicts(required_args, default_args, optional_args)
 
@@ -472,17 +502,24 @@ class Manager:
 
             else:  # Process as float, int, bool, or str
                 # First assume a list of str to be passed
-                processed_v = [cast_str_to_int_float_bool_or_str(s) for s in v.split(',') if s]
+                processed_v = [
+                    cast_str_to_int_float_bool_or_str(s) for s in v.split(',')
+                    if s
+                ]
 
-                if len(processed_v) == 1:  # If there is only 1 item in the assumed list, use it directly
+                if len(
+                        processed_v
+                ) == 1:  # If there is only 1 item in the assumed list, use it directly
                     processed_v = processed_v[0]
 
             processed_args[n] = processed_v
-            self._print('\t\t{}: {} > {} ({})'.format(n, v, get_name(processed_v, self.globals), type(processed_v)))
+            self._print('\t\t{}: {} > {} ({})'.format(
+                n, v, get_name(processed_v, self.globals), type(processed_v)))
 
         return processed_args
 
-    def _path_import_and_execute(self, library_path, library_name, function_name, args):
+    def _path_import_and_execute(self, library_path, library_name,
+                                 function_name, args):
         """
         Prepend path, import library, and execute task.
         :param library_path: str;
@@ -492,7 +529,8 @@ class Manager:
         :return: list; raw output of the function
         """
 
-        self._print('Updating path, importing function, and executing task ...')
+        self._print(
+            'Updating path, importing function, and executing task ...')
 
         # Prepend library path
         if library_path:
@@ -508,7 +546,8 @@ class Manager:
         # Execute
         self._print('\tExecuting {} with:'.format(locals()[function_name]))
         for n, v in sorted(args.items()):
-            self._print('\t\t{} = {} ({})'.format(n, get_name(v, self.globals), type(v)))
+            self._print('\t\t{} = {} ({})'.format(
+                n, get_name(v, self.globals), type(v)))
 
         return locals()[function_name](**args)
 
@@ -555,11 +594,17 @@ class Manager:
         s = eval('inspect.signature({})'.format(function_name))
 
         # Args
-        args_l = ['{}={}'.format(n, self._str_or_name(args_d[n])) for n in s.parameters if n in args_d]
+        args_l = [
+            '{}={}'.format(n, self._str_or_name(args_d[n]))
+            for n in s.parameters if n in args_d
+        ]
         self._print('args_l (_str_or_named): {}'.format(args_l))
 
         # Keyword args
-        kwargs_l = ['\'{}\':{}'.format(n, self._str_or_name(v)) for n, v in args_d.items() if n not in s.parameters]
+        kwargs_l = [
+            '\'{}\':{}'.format(n, self._str_or_name(v))
+            for n, v in args_d.items() if n not in s.parameters
+        ]
         self._print('kwargs_l (_str_or_named): {}'.format(kwargs_l))
 
         # _str_or_name returns
@@ -576,8 +621,8 @@ class Manager:
             code += '# {}\n{}{}\n'.format(label, returns, custom_code)
 
         elif function_name not in self.globals:  # Import function - fully
-            code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {}\n\n'.format(library_path,
-                                                                                   library_name.split('.')[0])
+            code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {}\n\n'.format(
+                library_path, library_name.split('.')[0])
         else:  # A non-simpli function in globals
             library_name = ''
 
@@ -592,7 +637,8 @@ class Manager:
             library_name += '.'
 
         # Make args separator
-        sep = ',\n' + ' ' * (len(returns + library_name + function_name) + library_name.count('.') - 1)
+        sep = ',\n' + ' ' * (len(returns + library_name + function_name) +
+                             library_name.count('.') - 1)
 
         if kwargs_l:
             kwargs_s = sep + '**{'
@@ -602,8 +648,9 @@ class Manager:
             kwargs_s = '{}'
 
         # Add function code
-        code += '# {}\n{}{}{}({}{}{})'.format(label, returns, library_name, function_name, sep.join(args_l), kwargs_s,
-                                              sep)
+        code += '# {}\n{}{}{}({}{}{})'.format(label, returns, library_name,
+                                              function_name,
+                                              sep.join(args_l), kwargs_s, sep)
 
         if print_return:
             print(code)
@@ -619,7 +666,8 @@ class Manager:
 
         str_ = remove_nested_quotes(str_)
 
-        if str_ in self.globals or not isinstance(cast_str_to_int_float_bool_or_str(str_), str):  # object
+        if str_ in self.globals or not isinstance(
+                cast_str_to_int_float_bool_or_str(str_), str):  # object
             return str_
         else:  # str
             return '\'{}\''.format(str_)
