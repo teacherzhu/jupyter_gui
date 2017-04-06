@@ -84,31 +84,31 @@ class Manager:
 
         self._tasks = merge_dicts(self._tasks, tasks)
 
-    def get_tasks(self, update_tasks_from_jsons=True, print_as_json=True):
+    def get_tasks(self, update_tasks_from_jsons=True, print_return=True):
         """
         Get all tasks.
         :param update_tasks_from_jsons: bool;
-        :param print_as_json: bool;
+        :param print_return: bool;
         :return: None
         """
 
         if update_tasks_from_jsons:
             self._update_tasks_from_jsons()
 
-        if print_as_json:  # For communicating with JavaScript
+        if print_return:  # For communicating with JavaScript
             print(dumps(self._tasks))
         return self._tasks
 
     def get_task(self,
                  task_label=None,
                  notebook_cell_text=None,
-                 print_as_json=True):
+                 print_return=True):
         """
         Get an existing task by querying for its ID; or register a task from a
         notebook cell.
         :param task_label: str;
         :param notebook_cell_text: str;
-        :param print_as_json: bool;
+        :param print_return: bool;
         :return: dict;
         """
 
@@ -125,7 +125,7 @@ class Manager:
                 'Get an existing task by querying for its ID or register a '
                 'task from a notebook cell.')
 
-        if print_as_json:  # For communicating with JavaScript
+        if print_return:  # For communicating with JavaScript
             print(dumps(task))
         return task
 
