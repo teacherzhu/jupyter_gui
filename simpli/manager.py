@@ -389,74 +389,48 @@ class Manager:
         :return: str; code representation of task
         """
 
+        # TODO: remove (for communicating with JavaScript)
         if isinstance(task, str):  # task is a JSON str
             # Read JSON str as dict
             task = loads(task)
 
-        self._print('Representing task ({}) as code ...\n'.format(task))
+        self._print('Representing task {} as code ...\n'.format(task))
 
         label, info = list(task.items())[0]
+
         library_path = info.get('library_path')
         self._print('library_path: {}'.format(library_path))
+
         library_name = info.get('library_name')
         self._print('library_name: {}'.format(library_name))
+
         function_name = info.get('function_name')
         self._print('function_name: {}'.format(function_name))
+
         required_args = info.get('required_args')
         self._print('required_args: {}'.format(required_args))
+
         default_args = info.get('default_args')
         self._print('default_args: {}'.format(default_args))
+
         optional_args = info.get('optional_args')
         self._print('optional_args: {}'.format(optional_args))
+
         returns = info.get('returns')
         self._print('returns: {}'.format(returns))
 
-        args_d = {}
-        for a in required_args + default_args + optional_args:
-            args_d[a['name']] = a['value']
+        # Write code
+        code = '# {}\n'.format(label)
 
-        if library_path:
-            exec('sys.path.insert(0, \'{}\')'.format(library_path))
-
-        # Import function
-        exec('from {} import {}'.format(library_name, function_name))
-
-        s = eval('signature({})'.format(function_name))
-
-        # Args
-        args_l = [
-            '{}={}'.format(n, self._str_or_name(args_d[n]))
-            for n in s.parameters if n in args_d
-        ]
-        self._print('args_l (_str_or_named): {}'.format(args_l))
-
-        # Keyword args
-        kwargs_l = [
-            '\'{}\':{}'.format(n, self._str_or_name(v))
-            for n, v in args_d.items() if n not in s.parameters
-        ]
-        self._print('kwargs_l (_str_or_named): {}'.format(kwargs_l))
-
-        # _str_or_name returns
-        returns = ', '.join([d.get('value') for d in returns])
-        self._print('returns (_str_or_named): {}'.format(returns))
-
-        # Build code
-        code = ''
-
-        if library_name.startswith('simpli') and False:  # Use custom code
-            # Get custom code
-            custom_code = 'TODO: enable custom code for default functions'
-            code += '# {}\n{}{}\n'.format(label, returns, custom_code)
-
-        elif function_name not in self._globals:  # Import function - fully
-            code += 'import sys\nsys.path.insert(0, \'{}\')\nimport {' \
-                    '}\n\n'.format(
-                library_path, library_name.split('.')[0])
-        else:  # A non-simpli function in globals
-            library_name = ''
+        if function_name not in self._globals:  # Import function
+            if library_path:
+                code += 'import sys\n'
+                code += 'sys.path.insert(0, \'{}\')\n'.format(library_path)
+            code += 'import {}\n'.format(library_name.split('.')[0])
 
         # Style returns
+        returns = ', '.join([d.get('value', '') for d in returns])
+        print(returns)
         if returns:
             returns += ' = '
 
@@ -466,21 +440,16 @@ class Manager:
         elif library_name:
             library_name += '.'
 
-        # Make args separator
-        sep = ',\n' + ' ' * (len(returns + library_name + function_name) +
-                             library_name.count('.') - 1)
-
-        if kwargs_l:
-            kwargs_s = sep + '**{'
-            kwargs_s += (sep + '   ').join(kwargs_l)
-            kwargs_s += sep + '  }'
-        else:
-            kwargs_s = '{}'
+        # Style args
+        args_s = '\n'
+        args_s += ',\n'.join([a.get('value') for a in required_args])
+        args_s += ',\n'.join(
+            [a.get('value') for a in default_args + optional_args])
+        args_s += '\n'
 
         # Add function code
-        code += '# {}\n{}{}{}({}{}{})'.format(label, returns, library_name,
-                                              function_name,
-                                              sep.join(args_l), kwargs_s, sep)
+        code += '{}{}{}({})'.format(returns, library_name, function_name,
+                                    args_s)
 
         if print_return:
             print(code)
