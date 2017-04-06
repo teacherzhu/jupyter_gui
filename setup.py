@@ -1,37 +1,32 @@
-from sys import platform
 from subprocess import run
+from sys import platform
+
 from setuptools import setup
 from setuptools.command.install import install
 
 
 def _post_install():
-    cmd = '''
-    rm -rf $HOME/.simpli
-    '''
+    cmd = ''
 
     if 'linux' in platform:
-        # TODO: avoid using sudo and install locally
         cmd += '''
-        sudo apt-get install -y npm
-        sudo ln -s /usr/bin/nodejs /usr/bin/node
+        rm -rf $HOME/.simpli
         '''
 
-    # TODO: avoid deleting $HOME/Library/Jupyter
     elif 'darwin' in platform:
         cmd += '''
-        brew install node
-        rm -rf $HOME/Library/Jupyter
+        rm -rf $HOME/.simpli
         '''
 
-    # TODO: use more precise check for Windows
     elif 'win' in platform:
         pass
 
+    # Assuming that npm is installed
     cmd += '''
-    sudo npm install -g bower
+    npm install --global bower
     '''
 
-    # TODO: understand why installing on server also
+    # TODO: understand why installing also on server
     cmd += '''
     jupyter nbextensions_configurator enable --user
     jupyter contrib nbextension install --user
@@ -67,30 +62,32 @@ class InstallCommand(install):
         self.execute(_post_install, [])
 
 
-setup(name='simpli',
-      version='0.9.0',
-      description='In Jupyter Notebook, Simpli converts: [Python Code] <==> [GUI Task Widget]',
-      url='https://github.com/ucsd-ccal/simpli',
-      author='Clarence Mah & Huwate Yeerna (Kwat Medetgul-Ernar)',
-      license='MIT',
-      classifiers=[
-          'Development Status :: 4 - Beta',
-          'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python :: 3.5',
-      ],
-      keywords='Jupyter, Notebook, Widget, GUI',
-      packages=['simpli'],
-      install_requires=[
-          'IPython',
-          'jupyter',
-          'notebook==4.2.3',
-          'jupyter_contrib_nbextensions',
-          'jupyter_declarativewidgets==0.7.0',
-      ],
-      package_data={'simpli': [
-          'static/main.js',
-          'static/resources/*',
-          'default_tasks.json',
-      ]},
-      cmdclass={'install': InstallCommand},
-      )
+setup(
+    name='simpli',
+    version='1.0.3',
+    description='In Jupyter Notebook, Simpli converts: [Python Code] <==> [GUI Task Widget]',
+    url='https://github.com/UCSD-CCAL/simpli',
+    author='Clarence Mah & Huwate Yeerna (Kwat Medet-Ernar)',
+    license='MIT',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.5',
+    ],
+    keywords='Jupyter, Notebook, Widget, GUI',
+    packages=['simpli'],
+    install_requires=[
+        'IPython',
+        'jupyter',
+        'notebook==4.2.3',  # TODO: make it compatible with the new notebook
+        'jupyter_contrib_nbextensions',  # TODO: does not depend on this
+        'jupyter_declarativewidgets==0.7.0',
+    ],
+    package_data={
+        'simpli': [
+            'static/main.js',
+            'static/resources/*',
+            'default_tasks.json',
+        ]
+    },
+    cmdclass={'install': InstallCommand}, )
