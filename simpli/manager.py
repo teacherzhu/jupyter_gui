@@ -54,6 +54,18 @@ class Manager:
             print(str_)
 
     # ==========================================================================
+    # globals
+    # ==========================================================================
+    def import_export_globals(self, globals_):
+        """
+        globals_ ==> self._globals & self._globals ==> globals()
+        :return: None
+        """
+
+        self._globals.update(globals_)
+        globals().update(self._globals)
+
+    # ==========================================================================
     # tasks
     # ==========================================================================
     def _update_tasks(self, tasks):
