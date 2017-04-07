@@ -285,7 +285,8 @@ class Manager:
             if not (l.startswith('sys.path.insert(') or l.startswith('import ')
                     )
         ]
-        self._print('code_lines (path & import ignored): {}\n'.format(code_lines))
+        self._print(
+            'code_lines (path & import ignored): {}\n'.format(code_lines))
 
         # Get function name
         l = code_lines[0]
@@ -303,15 +304,15 @@ class Manager:
                 if not (l.endswith('(') or l.startswith(')'))
         ]:
 
-            if al.endswith(','):
-                al = al[:-1]
-
             if '#' in al:  # Has description
                 al, d = al.split('#')
                 al = al.strip()
                 d = d.strip()
             else:
                 d = ''
+
+            if al.endswith(','):
+                al = al[:-1]
 
             if '=' in al:  # Is kwarg
                 n, v = al.split('=')
@@ -451,11 +452,11 @@ class Manager:
         # Style args
         sargs = ''
         for a in required_args:
-            sargs += '\n\t'
+            sargs += '\n    '
             sargs += '{}  # {}'.format(a.get('value'),
                                        a.get('description')).strip()
         for a in optional_args:
-            sargs += '\n\t'
+            sargs += '\n    '
             sargs += '{}={}  # {}'.format(
                 a.get('name'), a.get('value'), a.get('description')).strip()
         sargs += '\n'
@@ -603,23 +604,3 @@ class Manager:
                 n, get_name(v, self._globals), type(v)))
 
         return locals()[function_name](**args)
-
-    # TODO: consider removing
-    # ==========================================================================
-    # Support function
-    # ==========================================================================
-    def _str_or_name(self, str_):
-        """
-        If str_ is an existing name in the current globals, then return str_.
-        Else if str_ is a str, then return 'str_'.
-        :param str_: str;
-        :return: str;
-        """
-
-        str_ = remove_nested_quotes(str_)
-
-        if str_ in self._globals or not isinstance(
-                cast_str_to_int_float_bool_or_str(str_), str):  # object
-            return str_
-        else:  # str
-            return '\'{}\''.format(str_)
