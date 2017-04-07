@@ -248,29 +248,20 @@ class Manager:
         lines = text.split('\n')
         print('lines: {}\n'.format(lines))
 
-        # Get comment lines
+        # Get comment lines and get label (line 1) and description (line 1<)
         comment_lines = [l.strip() for l in lines if l.startswith('#')]
         print('comment_lines: {}\n'.format(comment_lines))
-
-        # Get label from the 1st comment line
         label = ''.join(comment_lines[0].replace('#', '')).strip()
         print('label: {}\n'.format(label))
-
         description = '\n'.join(
             [l.replace('#', '').strip() for l in comment_lines[1:]])
+        print('description: {}\n'.format(description))
 
-        # Get code lines
-        code_lines = [l.strip() for l in lines if not l.startswith('#')]
-        print('code_lines: {}\n'.format(code_lines))
-
-        # Make AST
+        # Make AST and get returns
         m = ast.parse(text)
-        b = m.body[0]
-
-        # Get returns
+        b = m.body[-1]
         returns = []
         if isinstance(b, ast.Assign):
-
             peek = b.targets[0]
             if isinstance(peek, ast.Tuple):
                 targets = peek.elts
@@ -278,20 +269,23 @@ class Manager:
                 targets = b.targets
             else:
                 raise ValueError('Unknown target class: {}.'.format(peek))
-
             for t in targets:
                 returns.append({
                     'label': 'Label for {}'.format(t.id),
                     'description': '',
                     'value': t.id,
                 })
-        print('returns: {}\n')
+        elif not isinstance(b, ast.Expr):
+            raise ValueError('Not ast.Assign or ast.Expr.')
+        print('returns: {}\n'.format(returns))
 
+        # Get code lines
         code_lines = [
-            l for l in code_lines
+            l for l in [l.strip() for l in lines if not l.startswith('#')]
             if not (l.startswith('sys.path.insert(') or l.startswith('import ')
                     )
         ]
+        print('code_lines (path & import ignored): {}\n'.format(code_lines))
 
         # Get function name
         l = code_lines[0]
