@@ -450,21 +450,20 @@ class Manager:
             library_name += '.'
 
         # Style args
-        args_s = '\n\t'
-        args_s += ',\n\t'.join([
-            '{}  # {}'.format(a.get('value'), a.get('description')).strip()
-            for a in required_args
-        ])
-        args_s += ',\n\t'.join([
-            '{}={}  # {}'.format(
+        sargs = ''
+        for a in required_args:
+            sargs +='\n\t'
+            sargs += '{}  # {}'.format(
+                a.get('value'), a.get('description')).strip()
+        for a in optional_args:
+            sargs +='\n\t'
+            sargs += '{}={}  # {}'.format(
                 a.get('name'), a.get('value'), a.get('description')).strip()
-            for a in default_args + optional_args
-        ])
-        args_s += '\n'
+        sargs += '\n'
 
         # Add function code
         code += '{}{}{}({})'.format(returns, library_name, function_name,
-                                    args_s)
+                                    sargs)
 
         if print_return:
             print(code)
