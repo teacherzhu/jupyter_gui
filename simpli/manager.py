@@ -246,16 +246,16 @@ class Manager:
 
         # Split text into lines
         lines = text.split('\n')
-        print('lines: {}\n'.format(lines))
+        self._print('lines: {}\n'.format(lines))
 
         # Get comment lines and get label (line 1) and description (line 1<)
         comment_lines = [l.strip() for l in lines if l.startswith('#')]
-        print('comment_lines: {}\n'.format(comment_lines))
+        self._print('comment_lines: {}\n'.format(comment_lines))
         label = ''.join(comment_lines[0].replace('#', '')).strip()
-        print('label: {}\n'.format(label))
+        self._print('label: {}\n'.format(label))
         description = '\n'.join(
             [l.replace('#', '').strip() for l in comment_lines[1:]])
-        print('description: {}\n'.format(description))
+        self._print('description: {}\n'.format(description))
 
         # Make AST and get returns
         m = ast.parse(text)
@@ -277,7 +277,7 @@ class Manager:
                 })
         elif not isinstance(b, ast.Expr):
             raise ValueError('Not ast.Assign or ast.Expr.')
-        print('returns: {}\n'.format(returns))
+        self._print('returns: {}\n'.format(returns))
 
         # Get code lines
         code_lines = [
@@ -285,7 +285,7 @@ class Manager:
             if not (l.startswith('sys.path.insert(') or l.startswith('import ')
                     )
         ]
-        print('code_lines (path & import ignored): {}\n'.format(code_lines))
+        self._print('code_lines (path & import ignored): {}\n'.format(code_lines))
 
         # Get function name
         l = code_lines[0]
@@ -293,7 +293,7 @@ class Manager:
             function_name = l[l.find('=') + 1:l.find('(')].strip()
         else:
             function_name = l[:l.find('(')].strip()
-        print('function_name: {}\n'.format(function_name))
+        self._print('function_name: {}\n'.format(function_name))
 
         # Get args and kwargs
         args = []
@@ -319,14 +319,14 @@ class Manager:
 
             else:  # Is arg
                 args.append((al, d))
-        print('args: {}\n'.format(args))
-        print('kwargs: {}\n'.format(kwargs))
+        self._print('args: {}\n'.format(args))
+        self._print('kwargs: {}\n'.format(kwargs))
 
         # Get function's signature
-        print('inspecting parameters ...')
+        self._print('inspecting parameters ...')
         s = eval('signature({})'.format(function_name))
         for k, v in s.parameters.items():
-            print('\t{}: {}'.format(k, v))
+            self._print('\t{}: {}'.format(k, v))
 
         # Get required args
         required_args = [{
@@ -337,7 +337,7 @@ class Manager:
         } for n, (v, d) in zip(
             [v.name for v in s.parameters.values()
              if v.default == _empty], args)]
-        print('required_args: {}\n'.format(required_args))
+        self._print('required_args: {}\n'.format(required_args))
 
         # Get optional args
         optional_args = [{
@@ -346,11 +346,11 @@ class Manager:
             'name': n,
             'value': v,
         } for n, v, d in kwargs]
-        print('optional_args: {}\n'.format(optional_args))
+        self._print('optional_args: {}\n'.format(optional_args))
 
         # Get module name
         module_name = eval('{}.__module__'.format(function_name))
-        print('module_name: {}\n'.format(module_name))
+        self._print('module_name: {}\n'.format(module_name))
 
         # Get module path
         if module_name == '__main__':  # Function is defined within this
@@ -359,7 +359,7 @@ class Manager:
         else:  # Function is imported from a module
             module_path = eval('{}.__globals__.get(\'__file__\')'.format(
                 function_name)).split(module_name.replace('.', '/'))[0]
-        print('module_path: {}\n'.format(module_path))
+        self._print('module_path: {}\n'.format(module_path))
 
         # Make a task
         task = {
@@ -374,7 +374,7 @@ class Manager:
                 'returns': returns,
             }
         }
-        print('task: {}\n'.format(task))
+        self._print('task: {}\n'.format(task))
 
         # Register this task
         self._update_tasks(task)
@@ -439,7 +439,6 @@ class Manager:
 
         # Style returns
         returns = ', '.join([d.get('value', '') for d in returns])
-        print(returns)
         if returns:
             returns += ' = '
 
