@@ -15,7 +15,7 @@ from os import listdir
 from os.path import join
 
 from .default_tasks import SIMPLI_JSON_DIR
-from .support import (cast_str_to_int_float_bool_or_str, get_name, merge_dicts,
+from .support import (cast_str_to_int_float_bool_or_str, get_name,
                       remove_nested_quotes, reset_encoding)
 
 
@@ -54,23 +54,6 @@ class Manager:
             print(str_)
 
     # ==========================================================================
-    # globals
-    # ==========================================================================
-    def import_export_globals(self, globals_):
-        """
-        Import globals and export globals.
-        :param globals_: dict;
-        :return: None
-        """
-
-        self._print('Importing globals: {} ...'.format(globals_))
-        self._globals = merge_dicts(self._globals, globals_)
-
-        self._print('Exporting globals: {} ...'.format(self._globals))
-        for n, v in self._globals.items():
-            globals()[n] = v
-
-    # ==========================================================================
     # tasks
     # ==========================================================================
     def _update_tasks(self, tasks):
@@ -82,7 +65,7 @@ class Manager:
 
         self._print('Updating tasks {} with {} ...'.format(self._tasks, tasks))
 
-        self._tasks = merge_dicts(self._tasks, tasks)
+        self._tasks.update(tasks)
 
     def get_tasks(self, update_tasks_from_jsons=True, print_return=True):
         """
@@ -479,6 +462,7 @@ class Manager:
         :return: None
         """
 
+        # TODO: remove (for communicating with JavaScript)
         if isinstance(task, str):
             task = loads(task)
 
@@ -545,7 +529,10 @@ class Manager:
             raise ValueError(
                 'Argument \'{}\' is repeated.'.format(required_args))
 
-        merged_args = merge_dicts(required_args, default_args, optional_args)
+        merged_args = {}
+        merged_args.update(required_args)
+        merged_args.update(default_args)
+        merged_args.update(optional_args)
 
         processed_args = {}
         for n, v in merged_args.items():

@@ -1,7 +1,7 @@
-from sys import platform
-from os import listdir, mkdir, environ
-from os.path import abspath, join, isdir, isfile, islink, split
 import re
+from os import environ, listdir, mkdir
+from os.path import abspath, isdir, isfile, islink, join, split
+from sys import platform
 
 
 def get_name(obj, gobals_):
@@ -35,7 +35,8 @@ def establish_filepath(filepath):
 
     # Get missing directories
     missing_directories = []
-    while not (isdir(prefix) or isfile(prefix) or islink(prefix)):  # prefix isn't file, directory, or link
+    while not (isdir(prefix) or isfile(prefix) or
+               islink(prefix)):  # prefix isn't file, directory, or link
         missing_directories.append(prefix)
 
         # Check prefix's prefix next
@@ -128,11 +129,15 @@ def title_str(str_):
 
     # Upper all original uppercase letters
     for start, end in uppers:
-        str_ = str_[:start] + str_[start: end].upper() + str_[end:]
+        str_ = str_[:start] + str_[start:end].upper() + str_[end:]
 
     # Lower some words
-    for lowercase in ['a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at', 'to', 'from', 'of', 'vs', 'vs']:
-        str_ = str_.replace(' ' + lowercase.title() + ' ', ' ' + lowercase + ' ')
+    for lowercase in [
+            'a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at',
+            'to', 'from', 'of', 'vs', 'vs'
+    ]:
+        str_ = str_.replace(' ' + lowercase.title() + ' ',
+                            ' ' + lowercase + ' ')
 
     return str_
 
@@ -172,18 +177,3 @@ def reset_encoding(str_):
     """
 
     return str_.replace(u'\u201c', '"').replace(u'\u201d', '"')
-
-
-def merge_dicts(*dicts):
-    """
-    Shallow copy and merge dicts into a new dict; precedence goes to
-    key value pairs in latter dict.
-    :param dicts: iterable of dict;
-    :return: dict;
-    """
-
-    merged = dict()
-    for d in dicts:
-        merged.update(d)
-
-    return merged
