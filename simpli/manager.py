@@ -287,6 +287,12 @@ class Manager:
                 })
         print('returns: {}\n')
 
+        code_lines = [
+            l for l in code_lines
+            if not (l.startswith('sys.path.insert(') or l.startswith('import ')
+                    )
+        ]
+
         # Get function name
         l = code_lines[0]
         if returns:
@@ -452,11 +458,11 @@ class Manager:
         # Style args
         sargs = ''
         for a in required_args:
-            sargs +='\n\t'
-            sargs += '{}  # {}'.format(
-                a.get('value'), a.get('description')).strip()
+            sargs += '\n\t'
+            sargs += '{}  # {}'.format(a.get('value'),
+                                       a.get('description')).strip()
         for a in optional_args:
-            sargs +='\n\t'
+            sargs += '\n\t'
             sargs += '{}={}  # {}'.format(
                 a.get('name'), a.get('value'), a.get('description')).strip()
         sargs += '\n'
