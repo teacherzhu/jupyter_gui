@@ -48,6 +48,7 @@ def import_export_globals():
     """
 
     manager.import_export_globals(globals())
+    globals().update(manager._globals)
 
 
 import_export_globals()
