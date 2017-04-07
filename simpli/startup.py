@@ -10,8 +10,7 @@ from simpli.manager import Manager
 # ==============================================================================
 # Initialize declarativewidgets
 # ==============================================================================
-# TODO: remove; the new version of declarativewidgets doesn't require this call
-# declarativewidgets.init()
+declarativewidgets.init()
 get_ipython().run_cell_magic('HTML', '', '''
 <link rel='import' href='urth_components/iron-form/iron-form.html'
       is='urth-core-import' package='PolymerElements/iron-form'>

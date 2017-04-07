@@ -81,7 +81,7 @@ setup(
         'jupyter',
         'notebook==4.2.3',  # TODO: make it compatible with the new notebook
         'jupyter_contrib_nbextensions',  # TODO: does not depend on this
-        'jupyter_declarativewidgets==0.7.0',
+        'jupyter_declarativewidgets',
     ],
     package_data={
         'simpli': [
