@@ -3,16 +3,15 @@ Contains code to be executed in the invisible 1st Notebook cell when a Notebook
 loads or refreshes.
 """
 
-from IPython import get_ipython
-
 import declarativewidgets
+from IPython import get_ipython
 from simpli.manager import Manager
 
 # ==============================================================================
 # Initialize declarativewidgets
 # ==============================================================================
 # TODO: remove; the new version of declarativewidgets doesn't require this call
-declarativewidgets.init()
+# declarativewidgets.init()
 get_ipython().run_cell_magic('HTML', '', '''
 <link rel='import' href='urth_components/iron-form/iron-form.html'
       is='urth-core-import' package='PolymerElements/iron-form'>
@@ -49,10 +48,10 @@ def import_export_globals():
     :return: None
     """
 
-    manager.import_export_globals(globals())
+    manager._globals.update(globals())
+    globals().update(manager._globals)
 
 
-# Sync globals with manager
 import_export_globals()
 
 # Register post execute cell callback (get_ipython is imported by when a Notebook starts)
