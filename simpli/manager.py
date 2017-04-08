@@ -267,13 +267,19 @@ class Manager:
         self._print('returns: {}\n'.format(returns))
 
         # Get code lines
-        code_lines = [
-            l for l in [l.strip() for l in lines if not l.startswith('#')]
-            if not (l.startswith('sys.path.insert(') or l.startswith('import ')
-                    )
-        ]
+        code_lines = []
+        for l in lines:
+            if l.startswith('#'):
+                continue
+            else:
+                l = l.strip()
+                if l.startswith('sys.path.insert(') or l.startswith('import '):
+                    exec(l)
+                else:
+                    code_lines.append(l)
+
         self._print(
-            'code_lines (path & import ignored): {}\n'.format(code_lines))
+            'code_lines (processed path & import): {}\n'.format(code_lines))
 
         # Get function name
         l = code_lines[0]
