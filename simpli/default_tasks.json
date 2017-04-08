@@ -12,49 +12,6 @@
             }]
         },
         {
-            "label": "Slice DataFrame by Row",
-            "function_path": "simpli.default_tasks.slice_dataframe",
-            "description": "Return a subset of rows of a given DataFrame object.",
-            "required_args": [{
-                    "name": "dataframe",
-                    "label": "DataFrame",
-                    "description": "Target dataframe object."
-                },
-                {
-                    "name": "indices",
-                    "label": "Row Index(ices)"
-                }
-            ],
-            "default_args": [{
-                "name": "ax",
-                "value": "0"
-            }],
-            "returns": [{
-                "label": "Sliced DataFrame",
-                "description": "A slice of the DataFrame including the specified rows."
-            }]
-        },
-        {
-            "label": "Slice DataFrame by Column",
-            "function_path": "simpli.default_tasks.slice_dataframe",
-            "required_args": [{
-                    "name": "dataframe",
-                    "label": "DataFrame"
-                },
-                {
-                    "name": "indices",
-                    "label": "Column Index(ices)"
-                }
-            ],
-            "default_args": [{
-                "name": "ax",
-                "value": "1"
-            }],
-            "returns": [{
-                "label": "Sliced DataFrame"
-            }]
-        },
-        {
             "label": "Link JSON",
             "function_path": "simpli.default_tasks.link_json",
             "required_args": [{

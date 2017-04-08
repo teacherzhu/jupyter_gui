@@ -35,7 +35,7 @@ get_ipython().run_cell_magic('HTML', '', '''
 ''')
 
 # ==============================================================================
-# Start up Simpli
+# Initialize a manager
 # ==============================================================================
 # Initialize a Manager
 manager = Manager()

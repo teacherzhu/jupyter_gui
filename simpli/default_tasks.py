@@ -26,24 +26,6 @@ def just_return(value):
     return value
 
 
-def slice_dataframe(dataframe, indices=(), ax=0):
-    """
-    Slice dataframe.
-    :param dataframe: dataframe;
-    :param indices: iterable;
-    :param ax: int;
-    :return: dataframe;
-    """
-
-    if isinstance(indices, str):
-        indices = [indices]
-
-    if ax == 0:
-        return dataframe.ix[indices, :]
-    elif ax == 1:
-        return dataframe.ix[:, indices]
-
-
 # ==============================================================================
 # JSON
 # ==============================================================================

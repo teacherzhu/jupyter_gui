@@ -497,9 +497,9 @@ class Manager:
                                             optional_args)
 
         # Execute function
-        returned = self._path_import_and_execute(info['library_path'],
-                                                 info['library_name'],
-                                                 info['function_name'], args)
+        returned = self._path_import_execute(info['library_path'],
+                                             info['library_name'],
+                                             info['function_name'], args)
 
         # Get returns
         returns = [r['value'] for r in info['returns']]
@@ -571,8 +571,8 @@ class Manager:
 
         return processed_args
 
-    def _path_import_and_execute(self, library_path, library_name,
-                                 function_name, args):
+    def _path_import_execute(self, library_path, library_name,
+                             function_name, args):
         """
         Prepend path, import library, and execute task.
         :param library_path: str;
