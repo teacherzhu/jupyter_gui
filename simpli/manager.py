@@ -445,11 +445,11 @@ class Manager:
         sargs = ''
         for a in required_args:
             sargs += '\n    '
-            sargs += '{}  # {},'.format(a.get('value'),
-                                       a.get('description')).strip()
+            sargs += '{},  # {}'.format(a.get('value'),
+                                        a.get('description')).strip()
         for a in optional_args:
             sargs += '\n    '
-            sargs += '{}={}  # {},'.format(
+            sargs += '{}={},  # {}'.format(
                 a.get('name'), a.get('value'), a.get('description')).strip()
         sargs += '\n'
 
