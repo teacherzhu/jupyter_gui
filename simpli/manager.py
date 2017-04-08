@@ -425,32 +425,31 @@ class Manager:
         if description:
             code += '# {}\n'.format(description)
 
-        if function_name not in self._globals:  # Import function
-            if library_path:
-                code += 'import sys\n'
-                code += 'sys.path.insert(0, \'{}\')\n'.format(library_path)
-            code += 'import {}\n'.format(library_name.split('.')[0])
+        if function_name not in self._globals:  # Import root module
+            if library_name not in self._globals:
+                if library_path:
+                    code += 'import sys\n'
+                    code += 'sys.path.insert(0, \'{}\')\n'.format(library_path)
+                code += 'import {}\n'.format(library_name.split('.')[0])
+
+        # Style library name
+        if library_name:
+            library_name += '.'
 
         # Style returns
         returns = ', '.join([d.get('value', '') for d in returns])
         if returns:
             returns += ' = '
 
-        # Style library name
-        if library_name == '__main__':
-            library_name = ''
-        elif library_name:
-            library_name += '.'
-
         # Style args
         sargs = ''
         for a in required_args:
             sargs += '\n    '
-            sargs += '{}  # {}'.format(a.get('value'),
+            sargs += '{}  # {},'.format(a.get('value'),
                                        a.get('description')).strip()
         for a in optional_args:
             sargs += '\n    '
-            sargs += '{}={}  # {}'.format(
+            sargs += '{}={}  # {},'.format(
                 a.get('name'), a.get('value'), a.get('description')).strip()
         sargs += '\n'
 
