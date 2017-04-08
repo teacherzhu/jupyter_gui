@@ -47,8 +47,8 @@ def import_export_globals():
     :return: None
     """
 
-    manager.import_export_globals(globals())
     globals().update(manager._globals)
+    manager.import_globals(globals())
 
 
 import_export_globals()

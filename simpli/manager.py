@@ -56,7 +56,7 @@ class Manager:
     # ==========================================================================
     # globals
     # ==========================================================================
-    def import_export_globals(self, globals_):
+    def import_globals(self, globals_):
         """
         globals_ ==> self._globals & self._globals ==> globals()
         :return: None
