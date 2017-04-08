@@ -41,17 +41,17 @@ get_ipython().run_cell_magic('HTML', '', '''
 manager = Manager()
 
 
-def import_export_globals():
+def sync_globals():
     """
-    Import (Notebook ==> Manager) & export (Manager ==> Notebook) globals.
+    Manager ==> Notebook & Notebook ==> Manager.
     :return: None
     """
 
     globals().update(manager._globals)
-    manager.import_globals(globals())
+    manager.update_globals(globals())
 
 
-import_export_globals()
+sync_globals()
 
 # Register post execute cell callback (get_ipython is imported by when a Notebook starts)
-get_ipython().events.register('post_execute', import_export_globals)
+get_ipython().events.register('post_execute', sync_globals)

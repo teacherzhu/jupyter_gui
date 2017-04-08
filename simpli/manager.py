@@ -2,8 +2,9 @@
 Defines Manager class which:
     1) syncs the globals between Notebook and Simpli;
     2) keeps track of tasks, which can be added from JSON or Notebook cell;
-    3) converts task widgets into code cells; and
-    4) executes task widget.
+    3) provides access to tasks;
+    4) converts task widgets into code cells; and
+    5) executes task widget.
 """
 
 import ast
@@ -17,9 +18,6 @@ from os.path import join
 from .default_tasks import SIMPLI_JSON_DIR
 from .support import (cast_str_to_int_float_bool_or_str, get_name,
                       remove_nested_quotes, reset_encoding)
-
-
-# TODO: communicate with JavaScript without dumps or printing
 
 
 class Manager:
@@ -53,10 +51,7 @@ class Manager:
         if self._verbose:
             print(str_)
 
-    # ==========================================================================
-    # globals
-    # ==========================================================================
-    def import_globals(self, globals_):
+    def update_globals(self, globals_):
         """
         globals_ ==> self._globals & self._globals ==> globals()
         :return: None
@@ -65,9 +60,6 @@ class Manager:
         self._globals.update(globals_)
         globals().update(self._globals)
 
-    # ==========================================================================
-    # tasks
-    # ==========================================================================
     def _update_tasks(self, tasks):
         """
         Set or update self._tasks with tasks.
@@ -571,8 +563,8 @@ class Manager:
 
         return processed_args
 
-    def _path_import_execute(self, library_path, library_name,
-                             function_name, args):
+    def _path_import_execute(self, library_path, library_name, function_name,
+                             args):
         """
         Prepend path, import library, and execute task.
         :param library_path: str;
