@@ -161,8 +161,8 @@ var mapKeyboardShortcuts = function() {
     }
 
     // Close the library
-    if (event.keyCode == 27 && $('#library-cancel-btn').length) {
-      $('#library-cancel-btn').click();
+    if (event.keyCode == 27 && $('#library-right-panel-close').length) {
+      $('#library-right-panel-close').click();
       return;
     }
 

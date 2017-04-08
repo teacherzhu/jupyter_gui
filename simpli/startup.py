@@ -26,12 +26,8 @@ imports = '''
               is='urth-core-import' package='PolymerElements/iron-icon'>
         <link rel='import' href='urth_components/paper-material/paper-material.html'
               is='urth-core-import' package='PolymerElements/paper-material'>
-        <link rel='import' href='urth_components/paper-header-panel/paper-header-panel.html'
-              is='urth-core-import' package='PolymerElements/paper-header-panel'>
         <link rel='import' href='urth_components/iron-collapse/iron-collapse.html'
               is='urth-core-import' package='PolymerElements/iron-collapse'>
-        <link rel='import' href='urth_components/paper-collapse-item/paper-collapse-item.html'
-              is='urth-core-import' package='Collaborne/paper-collapse-item'>
         '''
 
 get_ipython().run_cell_magic('HTML', '', imports)

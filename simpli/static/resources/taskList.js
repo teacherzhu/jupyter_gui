@@ -163,6 +163,13 @@ var initTaskList = function() {
     .addClass('col-xs-5')
     .appendTo(taskListParent);
 
+  var closeIcon = $('<div/>')
+    .attr('id', 'library-right-panel-close')
+    .attr('data-dismiss', 'modal')
+    .html('CLOSE')
+    .appendTo(infoPanel);
+  // .click(function() {
+  // });
   //
   getTasks(function(tasks) {
     renderTasks(tasks);
@@ -306,7 +313,7 @@ var renderInfoPanel = function(task) {
   }
 
   // Render if first call. Otherwise update with selected task data
-  if (infoPanel.children().length == 0) {
+  if (infoPanel.children().length == 1) {
     render();
   } else {
     update();
