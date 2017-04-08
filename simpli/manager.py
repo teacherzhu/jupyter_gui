@@ -304,7 +304,7 @@ class Manager:
             else:
                 d = ''
 
-            if al.endswith(','):
+            if al.endswith(',') or al.endswith(')'):
                 al = al[:-1]
 
             if '=' in al:  # Is kwarg
