@@ -278,7 +278,7 @@ var generateTaskWidgetHTML = function(taskJSON) {
     var submitButton = $('<paper-button>')
         .addClass('form-submit-button')
         .attr('raised', '')
-        .html('submit')
+        .html('run')
         .appendTo(submitButtonWrapper);
 
     // Create icon for submit button
