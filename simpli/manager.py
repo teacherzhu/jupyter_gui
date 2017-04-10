@@ -425,12 +425,13 @@ class Manager:
         if description:
             code += '# {}\n'.format(description)
 
+        root_module = library_name.split('.')[0]
         if function_name not in self._globals:  # Import root module
-            if library_name not in self._globals:
+            if root_module not in self._globals:
                 if library_path:
                     code += 'import sys\n'
                     code += 'sys.path.insert(0, \'{}\')\n'.format(library_path)
-                code += 'import {}\n'.format(library_name.split('.')[0])
+                code += 'import {}\n'.format(root_module)
 
         # Style library name
         if library_name:
