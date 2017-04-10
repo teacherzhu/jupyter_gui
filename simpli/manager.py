@@ -428,22 +428,22 @@ class Manager:
         if description:
             code += '# {}\n'.format(description)
 
-        root_module = library_name.split('.')[0]
-        if function_name not in self._globals:  # Import root module
-            if root_module not in self._globals:
-                if library_path:
-                    code += 'import sys\n'
-                    code += 'sys.path.insert(0, \'{}\')\n'.format(library_path)
-                code += 'import {}\n'.format(root_module)
-
-        # Style library name
-        if library_name:
-            library_name += '.'
-
         # Style returns
         returns = ', '.join([d.get('value', '') for d in returns])
         if returns:
             returns += ' = '
+
+        # Style function
+        if function_name in self._globals:
+            function = function_name
+        else:
+            root_module = library_name.split('.')[0]
+            self._print('root_module: {}'.format(root_module))
+            if root_module not in self._globals:
+                code += 'import sys\n'
+                code += 'sys.path.insert(0, \'{}\')\n'.format(library_path)
+                code += 'import {}\n'.format(root_module)
+            function = '{}.{}'.format(library_name, function_name)
 
         # Style args
         sargs = ''
@@ -458,8 +458,7 @@ class Manager:
         sargs += '\n'
 
         # Add function code
-        code += '{}{}{}({})'.format(returns, library_name, function_name,
-                                    sargs)
+        code += '{}{}({})'.format(returns, function, sargs)
 
         if print_return:
             print(code)
