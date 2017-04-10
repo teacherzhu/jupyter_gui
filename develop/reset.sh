@@ -6,10 +6,6 @@ jupyter nbextension uninstall --py --sys-prefix simpli
 jupyter nbextension disable --py --sys-prefix simpli
 jupyter serverextension disable --py --sys-prefix simpli
 
-rm -rf ~/.jupyter/
-rm -rf ~/.ipython/
-rm -rf ~/Library/Jupyter
+rm -rf ~/.ipython/ ~/.jupyter/ ~/Library/Jupyter ~/.simpli/
 
-sudo npm uninstall -g bower
-sudo apt-get remove -y npm
-brew remove npm
+npm uninstall -g bower
