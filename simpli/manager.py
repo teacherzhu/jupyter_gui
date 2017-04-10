@@ -16,8 +16,7 @@ from os import listdir
 from os.path import join
 
 from . import SIMPLI_JSON_DIR
-from .support import (cast_str_to_int_float_bool_or_str, get_name,
-                      reset_encoding)
+from .support import get_name, reset_encoding
 
 
 class Manager:
@@ -237,6 +236,8 @@ class Manager:
 
         # Get comment lines and get label (line 1) and description (line 1<)
         comment_lines = [l.strip() for l in lines if l.startswith('#')]
+        if len(comment_lines) == 0:
+            raise ValueError('Missing taks label (1st comment line).')
         self._print('comment_lines: {}\n'.format(comment_lines))
         label = ''.join(comment_lines[0].replace('#', '')).strip()
         self._print('label: {}\n'.format(label))
@@ -275,7 +276,7 @@ class Manager:
                 l = l.strip()
                 if l.startswith('sys.path.insert(') or l.startswith('import '):
                     exec(l)
-                else:
+                elif l:
                     code_lines.append(l)
 
         self._print(
@@ -283,6 +284,8 @@ class Manager:
 
         # Get function name
         l = code_lines[0]
+        if not l.endswith('('):
+            raise ValueError('1st code line must end with \'(\'.')
         if returns:
             function_name = l[l.find('=') + 1:l.find('(')].strip()
         else:
@@ -478,79 +481,54 @@ class Manager:
 
         label, info = list(task.items())[0]
 
+        self._print('\tMerging and evaluating arguments ...')
         # Get args
         required_args = {a['name']: a['value'] for a in info['required_args']}
         default_args = {a['name']: a['value'] for a in info['default_args']}
         optional_args = {a['name']: a['value'] for a in info['optional_args']}
-
         # Check for missing required_args
         if None in required_args or '' in required_args:
             raise ValueError('Missing required_args.')
-
-        # Check for repeating args
-        repeating_args = set(required_args.keys() & default_args.keys() &
-                             optional_args.keys())
-        if len(repeating_args):
+        # Check for repeated args
+        repeated_args = set(required_args.keys() & default_args.keys() &
+                            optional_args.keys())
+        if len(repeated_args):
             raise ValueError(
-                'Argument \'{}\' is repeated.'.format(repeating_args))
-
-        self._print('\tMerging and evaluating arguments ...')
+                'Argument \'{}\' is repeated.'.format(repeated_args))
         # Merge args
         merged_args = {}
         merged_args.update(required_args)
         merged_args.update(default_args)
         merged_args.update(optional_args)
-
         # Evaluate args
         args = {n: eval(v) for n, v in merged_args.items()}
 
         # Execute function
-        returned = self._path_import_execute(info['library_path'],
-                                             info['library_name'],
-                                             info['function_name'], args)
-
-        # Get returns
-        returns = [r['value'] for r in info['returns']]
-        self._print('returns: {}'.format(returns))
-
-        # Handle returns
-        if len(returns) == 1:
-            self._globals[returns[0]] = returned
-        elif 1 < len(returns):
-            for n, v in zip(returns, returned):
-                self._globals[n] = v
-
-        self._print('self._globals after execution: {}.'.format(self._globals))
-
-    def _path_import_execute(self, library_path, library_name, function_name,
-                             args):
-        """
-        Prepend path, import library, and execute task.
-        :param library_path: str;
-        :param library_name: str;
-        :param function_name: str;
-        :param args: dict;
-        :return: list; raw output of the function
-        """
-
         self._print(
             'Updating path, importing function, and executing task ...')
-
         # Prepend library path
-        if library_path:
+        library_path = info['library_path']
+        library_name = info['library_name']
+        function_name = info['function_name']
+        if library_path:  # Update path
             code = 'sys.path.insert(0, \'{}\')'.format(library_path)
             self._print('\t{}'.format(code))
             exec(code)
-
         # Import function
         code = 'from {} import {}'.format(library_name, function_name)
         self._print('\t{}'.format(code))
         exec(code)
 
         # Execute
-        self._print('\tExecuting {} with:'.format(locals()[function_name]))
-        for n, v in sorted(args.items()):
-            self._print('\t\t{} = {} ({})'.format(
-                n, get_name(v, self._globals), type(v)))
+        returned = globals()[function_name](**args)
 
-        return locals()[function_name](**args)
+        # Get returns
+        returns = [r['value'] for r in info['returns']]
+
+        # Update globals() with returns
+        self._print('Updating globals() with returns ...')
+        if len(returns) == 1:
+            self._globals[returns[0]] = returned
+        elif 1 < len(returns):
+            for n, v in zip(returns, returned):
+                self._globals[n] = v
