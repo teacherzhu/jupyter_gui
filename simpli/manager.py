@@ -17,7 +17,7 @@ from os.path import join
 
 from . import SIMPLI_JSON_DIR
 from .support import (cast_str_to_int_float_bool_or_str, get_name,
-                      remove_nested_quotes, reset_encoding)
+                      reset_encoding)
 
 
 class Manager:
@@ -478,21 +478,31 @@ class Manager:
 
         label, info = list(task.items())[0]
 
-        # Process and merge args
-        required_args = {
-            a['name']: remove_nested_quotes(a['value'])
-            for a in info['required_args']
-        }
-        default_args = {
-            a['name']: remove_nested_quotes(a['value'])
-            for a in info['default_args']
-        }
-        optional_args = {
-            a['name']: remove_nested_quotes(a['value'])
-            for a in info['optional_args']
-        }
-        args = self._merge_and_process_args(required_args, default_args,
-                                            optional_args)
+        # Get args
+        required_args = {a['name']: a['value'] for a in info['required_args']}
+        default_args = {a['name']: a['value'] for a in info['default_args']}
+        optional_args = {a['name']: a['value'] for a in info['optional_args']}
+
+        # Check for missing required_args
+        if None in required_args or '' in required_args:
+            raise ValueError('Missing required_args.')
+
+        # Check for repeating args
+        repeating_args = set(required_args.keys() & default_args.keys() &
+                             optional_args.keys())
+        if len(repeating_args):
+            raise ValueError(
+                'Argument \'{}\' is repeated.'.format(repeating_args))
+
+        self._print('\tMerging and evaluating arguments ...')
+        # Merge args
+        merged_args = {}
+        merged_args.update(required_args)
+        merged_args.update(default_args)
+        merged_args.update(optional_args)
+
+        # Evaluate args
+        args = {n: eval(v) for n, v in merged_args.items()}
 
         # Execute function
         returned = self._path_import_execute(info['library_path'],
@@ -505,69 +515,12 @@ class Manager:
 
         # Handle returns
         if len(returns) == 1:
-            self._globals[returns[0]] = remove_nested_quotes(returned)
-
-        elif len(returns) > 1:
+            self._globals[returns[0]] = returned
+        elif 1 < len(returns):
             for n, v in zip(returns, returned):
-                self._globals[n] = remove_nested_quotes(v)
+                self._globals[n] = v
 
         self._print('self._globals after execution: {}.'.format(self._globals))
-
-    def _merge_and_process_args(self, required_args, default_args,
-                                optional_args):
-        """
-        Convert input str arguments to corresponding values:
-            If the str is the name of a existing variable in the Notebook
-            globals, use its corresponding value;
-            If the str contains ',', convert it into a list of str;
-            Try to cast str in the following order and use the 1st match:
-            int, float, bool, and str;
-        :param required_args: dict;
-        :param default_args: dict;
-        :param optional_args: dict;
-        :return: dict; merged and processed args
-        """
-
-        self._print('\tMerging and processing arguments ...')
-
-        if None in required_args or '' in required_args:
-            raise ValueError('Missing required_args.')
-
-        repeating_args = set(required_args.keys() & default_args.keys() &
-                             optional_args.keys())
-        if any(repeating_args):
-            raise ValueError(
-                'Argument \'{}\' is repeated.'.format(required_args))
-
-        merged_args = {}
-        merged_args.update(required_args)
-        merged_args.update(default_args)
-        merged_args.update(optional_args)
-
-        processed_args = {}
-        for n, v in merged_args.items():
-
-            if v in self._globals:  # Process as already defined variable from
-                #  the Notebook environment
-                processed_v = self._globals[v]
-
-            else:  # Process as float, int, bool, or str
-                # First assume a list of str to be passed
-                processed_v = [
-                    cast_str_to_int_float_bool_or_str(s) for s in v.split(',')
-                    if s
-                ]
-
-                if len(processed_v
-                       ) == 1:  # If there is only 1 item in the assumed list,
-                    # use it directly
-                    processed_v = processed_v[0]
-
-            processed_args[n] = processed_v
-            self._print('\t\t{}: {} > {} ({})'.format(
-                n, v, get_name(processed_v, self._globals), type(processed_v)))
-
-        return processed_args
 
     def _path_import_execute(self, library_path, library_name, function_name,
                              args):
