@@ -16,7 +16,7 @@ from os import listdir
 from os.path import join
 
 from . import SIMPLI_JSON_DIR
-from .support import get_name, reset_encoding
+from .support import reset_encoding
 
 
 class Manager:

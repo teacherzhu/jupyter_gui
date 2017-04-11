@@ -1,25 +1,6 @@
-import re
 from os import environ, listdir, mkdir
 from os.path import abspath, isdir, isfile, islink, join, split
 from sys import platform
-
-
-def get_name(obj, gobals_):
-    """
-    Get the variable name that references to obj.
-    :param obj: object;
-    :param gobals_: dict;
-    :return: str; variable name that references to obj, or native object itself if obj is an native object
-    """
-
-    for obj_name_in_namespace, obj_in_namespace in gobals_.items():
-        if obj is obj_in_namespace:  # obj is an existing obj
-            return obj_name_in_namespace  # Return the variable name that references to obj
-
-    # TODO: handle the case where obj is not an existing object
-
-    # obj is a native object
-    return obj
 
 
 def establish_filepath(filepath):
@@ -81,18 +62,6 @@ def get_home_dir():
     return home_dir
 
 
-def remove_nested_quotes(str_):
-    """
-
-    :param str_:
-    :return:
-    """
-
-    if isinstance(str_, str):
-        str_ = re.sub(r'^"|"$|^\'|\'$', '', str_)
-    return str_
-
-
 def title_str(str_):
     """
     Title a str_.
@@ -140,33 +109,6 @@ def title_str(str_):
                             ' ' + lowercase + ' ')
 
     return str_
-
-
-def cast_str_to_int_float_bool_or_str(str_):
-    """
-    Convert str_ into the following data types (return the first successful): int, float, bool, or str.
-    :param str_: str;
-    :return: int, float, bool, or str;
-    """
-
-    value = str_.strip()
-
-    # try to cast to int or float
-    for var_type in [int, float]:
-        try:
-            converted_var = var_type(value)
-            return converted_var
-        except ValueError:
-            pass
-
-    # try to cast as boolean
-    if value == 'True':
-        return True
-    elif value == 'False':
-        return False
-
-    # return as string last priority
-    return str(value)
 
 
 def reset_encoding(str_):
