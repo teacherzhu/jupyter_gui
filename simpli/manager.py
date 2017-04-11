@@ -426,7 +426,8 @@ class Manager:
         code = '# {}\n'.format(label)
 
         if description:
-            code += '# {}\n'.format(description)
+            for l in description.split('\n'):
+                code += '# {}\n'.format(l)
 
         # Style returns
         returns = ', '.join([d.get('value', '') for d in returns])
@@ -519,7 +520,7 @@ class Manager:
         exec(code)
 
         # Execute
-        returned = globals()[function_name](**args)
+        returned = locals()[function_name](**args)
 
         # Get returns
         returns = [r['value'] for r in info['returns']]

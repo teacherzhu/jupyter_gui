@@ -79,8 +79,8 @@ setup(
     install_requires=[
         'IPython',
         'jupyter',
-        'notebook==4.2.3',  # TODO: make it compatible with the new notebook
-        'jupyter_contrib_nbextensions',  # TODO: does not depend on this
+        'notebook==4.2.3',  # TODO: make it compatible with the newer versions
+        'jupyter_contrib_nbextensions',  # TODO: do not depend on this
         'jupyter_declarativewidgets',
     ],
     package_data={
