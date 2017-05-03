@@ -1,5 +1,5 @@
 # Simpli
-In Jupyter Notebook, Simpli converts: [Python Code] <==> [GUI Task Widget]
+:mortar_board: Python Code :left_right_arrow: GUI :baby_bottle: :baby:
 
 With Simpli, coders can represent their Python code as Task Widgets to non-coders, who then sees easy-to-run Task Widgets instead of code.
 
