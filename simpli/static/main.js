@@ -88,37 +88,7 @@ var addMenuOptions = function() {
       'label': 'Simpli Widget <-> Code',
       'icon': 'fa-exchange', // select from http://fortawesome.github.io/Font-Awesome/icons/
       'callback': function() {
-        var cellIndex = Jupyter.notebook.get_selected_index();
-        var cell = Jupyter.notebook.get_selected_cell();
-        var cell_text = cell.get_text();
-
-        // Convert widget to code
-        if (cell_text.indexOf(AUTO_EXEC_FLAG) > -1) {
-          var pythonTask = JSON.stringify(getWidgetData(cell));
-          var code = `manager.code_task('''${pythonTask}''')`;
-          console.log(pythonTask);
-
-          var setCode = function(out) {
-            console.log(out);
-            cell.set_text(out.content.text.trim());
-            cell.clear_output();
-            showCellInput(cell);
-          }
-
-          Jupyter.notebook.kernel.execute(code, {
-            'iopub': {
-              'output': setCode
-            }
-          });
-        } else {
-          // Convert code to widget
-          var code = `manager.get_task(notebook_cell_text='''${cell_text}''')`;
-
-          var toSimpliCellWrap = function(out) {
-            toSimpliCell(null, out);
-          }
-          getTask(null, cell_text, toSimpliCellWrap);
-        }
+        toggleSimpliCell();
       }
     }
   ]);
@@ -131,14 +101,68 @@ var addMenuOptions = function() {
 };
 
 /**
+ * Handle converting cell between code and Simpli widget.
+ */
+var toggleSimpliCell = function() {
+  var cell = Jupyter.notebook.get_selected_cell();
+  var cell_text = cell.get_text();
+
+  // Convert widget to code
+  if (cell_text.indexOf(AUTO_EXEC_FLAG) > -1) {
+    toSimpliCodeCell(cell);
+  } else {
+    // Convert code to widget
+    var code = `manager.get_task(notebook_cell_text='''${cell_text}''')`;
+
+    var toSimpliCellWrap = function(out) {
+      toSimpliCell(null, out);
+    }
+
+    getTask(null, cell_text, toSimpliCellWrap);
+  }
+}
+
+/**
+ * Convert Simpli widget to code representation of the task.
+ */
+var toSimpliCodeCell = function(cell) {
+  var pythonTask = JSON.stringify(getWidgetData(cell));
+  var code = `manager.code_task('''${pythonTask}''')`;
+  console.log(pythonTask);
+
+  // Set code in cell
+  var setCode = function(out) {
+    console.log(out);
+    cell.set_text(out.content.text.trim());
+    cell.clear_output();
+    showCellInput(cell);
+  }
+
+  Jupyter.notebook.kernel.execute(code, {
+    'iopub': {
+      'output': setCode
+    }
+  });
+}
+
+/**
  * Initialize custom keyboard shortcuts for Simpli.
  */
 var mapKeyboardShortcuts = function() {
   // Initialize the Simpli cell type keyboard shortcut
   Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-x', {
-    help: 'to Simpli',
+    help: 'show Simpli task list',
     handler: function() {
       showTaskList();
+      return false;
+    }
+  });
+
+  // Initialize the Simpli flip cell keyboard shortcut
+  Jupyter.keyboard_manager.command_shortcuts.add_shortcut('shift-f', {
+    help: 'toggle Simpli cell code <-> widget',
+    handler: function() {
+      toggleSimpliCell();
       return false;
     }
   });
