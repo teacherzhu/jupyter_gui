@@ -1,5 +1,5 @@
 # Jupyter GUI
-## :mortar_board: Python code :left_right_arrow: GUI :baby_bottle::baby:
+:mortar_board: Python code :left_right_arrow: GUI :baby_bottle::baby:
 
 With Simpli, coders can represent their Python code as Task Widgets to non-coders, who then sees easy-to-run Task Widgets instead of code.
 
