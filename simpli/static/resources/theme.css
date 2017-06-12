@@ -187,7 +187,7 @@ h3 {
   width: 20px;
 }
 
-button.close, .library-modal-header, .library-modal-footer {
+#library-parent button.close, .library-modal-header, .library-modal-footer {
   display: none;
 }
 
