@@ -11,7 +11,7 @@ With Simpli, coders can represent their Python code as Task Widgets to non-coder
 
 ## Install Simpli
 
-#### After launching Notebook with Simpli for the 1st time, please give it a minute to downlaod GUI components in the background (you can see the progress in the command line output).
+**After launching Notebook with Simpli for the 1st time, please give it a minute to download GUI components in the background (you can see the progress in the command line output).**
 
 ### For Mac OS X
 ```bash
@@ -20,6 +20,9 @@ With Simpli, coders can represent their Python code as Task Widgets to non-coder
 
 # Install git
 brew install git
+
+# Install Node.js and NPM
+brew install node
 
 # Download simpli
 git clone https://github.com/UCSD-CCAL/simpli.git
@@ -33,6 +36,9 @@ pip install .
 ```bash
 # Install git
 sudo apt-get install git
+
+# Install Node.js and NPM
+sudo apt-get install nodejs npm
 
 # Download simpli
 git clone https://github.com/UCSD-CCAL/simpli.git
