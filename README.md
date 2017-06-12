@@ -94,20 +94,20 @@ Simpli can convert a Notebook cell with any function call and at least 1 line of
 The function calls can return value or assign them to variables. Here are examples of each case:
 
 without assignment:
-```
+```python
 # Label
 foo(arg1, arg2=value, ...)
 ```
 
 with assignment:
-```
+```python
 # Label
 bar = foo(arg1, arg2=value, ...)
 ```
 
 Simpli can also register different modalities of a function. Here is an example:
 If this function (a simple function to count numbers) exists,
-```
+```python
 def count(min_, max_, by):
 
     numbers = []
@@ -120,13 +120,13 @@ def count(min_, max_, by):
 ```
 
 then making a cell with this code enables Simpli to convert this cell into a Task Widget, and register the Task in the Task List as 'Count Odds'.
-```
+```python
 # Count Odds
 count(1, 10, 2)
 ```
 
 If you make another cell with this code (which can also be Simplified into a Task Widget), Simpli registers this Task as 'Count Evens'.
-```
+```python
 # Count Evens
 count(0, 10, 2)
 ```
@@ -211,7 +211,7 @@ This is an template for such Task Entry:
 
 ## How Simpli executes a function
 Since each Task has library_path and function_path, Simpli can execute any function as this (function_path is split into library_name [everything up to the last . in the function_path] and the function_name [everything after the last . in the function_path]):
-```
+```python
 # Append a library path
 sys.path.insert(0, library_path)
 
