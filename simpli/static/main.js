@@ -49,7 +49,7 @@ exec(getsource(startup))
 
   // TODO: Initialize extension on kernel restart
   console.log('Called setupCallbacks()');
-};
+}
 
 /**
  * Automatically run all Simpli widgets on initialization.
@@ -116,11 +116,11 @@ var toggleSimpliCell = function() {
 
     var toSimpliCellWrap = function(out) {
       toSimpliCell(null, out);
-    };
+    }
 
     getTask(null, cell_text, toSimpliCellWrap);
   }
-};
+}
 
 /**
  * Convert Simpli widget to code representation of the task.
@@ -136,14 +136,14 @@ var toSimpliCodeCell = function(cell) {
     cell.set_text(out.content.text.trim());
     cell.clear_output();
     showCellInput(cell);
-  };
+  }
 
   Jupyter.notebook.kernel.execute(code, {
     'iopub': {
       'output': setCode
     }
   });
-};
+}
 
 /**
  * Initialize custom keyboard shortcuts for Simpli.
@@ -180,22 +180,22 @@ var mapKeyboardShortcuts = function() {
   $('body').keydown(function(event) {
 
     // Remove focus from active element
-    if (event.keyCode === 27 && event.shiftKey) {
+    if (event.keyCode == 27 && event.shiftKey) {
       document.activeElement.blur();
     }
 
     // Close the library
-    if (event.keyCode === 27 && $('#library-right-panel-close').length) {
+    if (event.keyCode == 27 && $('#library-right-panel-close').length) {
       $('#library-right-panel-close').click();
       return;
     }
 
     // Select current task
-    if (event.keyCode === 13 && $('#library-select-btn').length) {
+    if (event.keyCode == 13 && $('#library-select-btn').length) {
       $('#library-select-btn').click();
     }
   });
-};
+}
 
 /**
  * Undo deleting last set of cells/widgets.
@@ -203,7 +203,7 @@ var mapKeyboardShortcuts = function() {
  */
 var undoDeleteCell = function() {
   // Make sure there are deleted cells to restore
-  if (Jupyter.notebook.undelete_backup === null)
+  if (Jupyter.notebook.undelete_backup == null)
     return;
 
   var backup = Jupyter.notebook.undelete_backup;
@@ -227,7 +227,7 @@ var undoDeleteCell = function() {
  */
 var showCellInput = function(cell) {
   cell.element.removeClass("simpli-cell");
-};
+}
 
 /**
  * Converts indicated cell to Simpli widget and hiding code input.
@@ -236,7 +236,7 @@ var showCellInput = function(cell) {
  */
 var toSimpliCell = function(index, taskJSON) {
   // Use index if provided. Otherwise use index of currently selected cell.
-  if (index === null) {
+  if (index == null) {
     index = Jupyter.notebook.get_selected_index();
   }
 
@@ -253,7 +253,7 @@ var toSimpliCell = function(index, taskJSON) {
         Jupyter.notebook.to_code(index);
       }
 
-      if (taskJSON === undefined) {
+      if (taskJSON == undefined) {
         renderTaskWidget(index);
       } else {
         renderTaskWidget(index, taskJSON);
