@@ -263,14 +263,14 @@ var toSimpliCell = function(index, taskJSON) {
 
 };
 
-var STATIC_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simpli/resources/";
+var SIMPLI_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simpli/resources/";
 
 define([
     'base/js/namespace',
     'base/js/events',
     'jquery',
-    STATIC_PATH + 'taskList.js',
-    STATIC_PATH + 'taskWidget.js'
+    SIMPLI_PATH + 'taskList.js',
+    SIMPLI_PATH + 'taskWidget.js'
 ], function(Jupyter, events) {
   function load_ipython_extension() {
     // Inject custom CSS
@@ -279,7 +279,7 @@ define([
         $('<link />')
         .attr('rel', 'stylesheet')
         .attr('type', 'text/css')
-        .attr('href', STATIC_PATH + 'theme.css')
+        .attr('href', SIMPLI_PATH + 'theme.css')
       );
 
     // Wait for the kernel to be ready and then initialize the widgets

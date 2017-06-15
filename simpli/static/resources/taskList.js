@@ -1,5 +1,5 @@
 // Add shim to support Jupyter 3.x and 4.x
-var Jupyter = Jupyter || IPython || {}
+var Jupyter = Jupyter || IPython || {};
 Jupyter.notebook = Jupyter.notebook || {};
 const STATIC_LIB_PATH = location.origin + Jupyter.contents.base_url + "nbextensions/simpli/resources/";
 
@@ -33,19 +33,26 @@ var getTasks = function(callback) {
   // Convert tasks JSON to stringified list
   var my_callback = function(out) {
     console.log(out);
-    var tasksDict = JSON.parse(out.content.text);
-    tasks = Object.keys(tasksDict).map(function(key) {
-      var task = tasksDict[key];
-      task.label = key;
-      return task;
-    });
-    return tasks;
-  }
+    if (out.content.text) {
+      var tasksDict = JSON.parse(out.content.text);
+      var tasks = Object.keys(tasksDict).map(function(key) {
+        var task = tasksDict[key];
+        task.label = key;
+        return task;
+      });
+      return tasks;
+    }
+    else {
+      // If out.content.text is null or undefined an error has probably been thrown
+      // This will be indicated when out is logged to the cinsole above
+      return [];
+    }
+  };
 
   var allCallbacks = function(out) {
     var tasks = my_callback(out);
     callback(tasks);
-  }
+  };
 
   // Wait for kernel to not be busy
   var interval = setInterval(function() {
@@ -59,7 +66,7 @@ var getTasks = function(callback) {
       });
     }
   }, 10);
-}
+};
 
 /**
  * Request a task from the Simpli manager.
@@ -83,12 +90,12 @@ var getTask = function(taskLabel, notebook_cell_text, callback) {
   var my_callback = function(out) {
     var task = JSON.parse(out.content.text);
     return task;
-  }
+  };
 
   var allCallbacks = function(out) {
     var task = my_callback(out);
     callback(task);
-  }
+  };
 
   // Wait for kernel to not be busy
   var interval = setInterval(function() {
@@ -102,7 +109,7 @@ var getTask = function(taskLabel, notebook_cell_text, callback) {
       });
     }
   }, 10);
-}
+};
 
 /******************** MAIN FUNCTIONS ********************/
 /**
@@ -131,7 +138,7 @@ var showTaskList = function() {
       clearInterval(interval);
     }
   }, 100);
-}
+};
 
 /**
  * Initialize panels inside task dialog and saves to taskListParent object.
@@ -175,7 +182,7 @@ var initTaskList = function() {
     renderTasks(tasks);
     renderInfoPanel();
   });
-}
+};
 
 /**
  * Create left panel showing list of tasks.
@@ -211,7 +218,7 @@ var renderTasks = function(tasks) {
     } else {
       return -1;
     }
-  })
+  });
 
   // Hide loading text
   $(leftPanel).find('.library-load-text').addClass('library-load-text-hidden');
@@ -233,7 +240,7 @@ var renderTasks = function(tasks) {
       renderTask(task);
     }
   }, 200);
-}
+};
 
 /**
  * Render info panel and only updates inner content when necessary.
@@ -310,15 +317,15 @@ var renderInfoPanel = function(task) {
       $(infoPanel).find('#library-task-description').html(task.description);
     });
 
-  }
+  };
 
   // Render if first call. Otherwise update with selected task data
-  if (infoPanel.children().length == 1) {
+  if (infoPanel.children().length === 1) {
     render();
   } else {
     update();
   }
-}
+};
 
 /**
  * Render a card for a given task JSON string. Also responsible for triggering right panel display.
@@ -358,4 +365,4 @@ var renderTask = function(task) {
   // Structure elements appropriately
   label.appendTo(card);
   card.appendTo($('.library-left-panel-inner'));
-}
+};
