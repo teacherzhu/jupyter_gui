@@ -24,11 +24,11 @@ brew install git
 # Install Node.js and NPM
 brew install node
 
-# Download simpli
-git clone https://github.com/UCSD-CCAL/jupytergui.git
+# Download Jupyter GUI
+https://github.com/KwatME/jupytergui.git
 
-# Install simpli
-cd simpli
+# Install Jupter GUI
+cd jupytergui
 pip install .
 ```
 
@@ -40,11 +40,11 @@ sudo apt-get install git
 # Install Node.js and NPM
 sudo apt-get install nodejs npm
 
-# Download simpli
-git clone https://github.com/UCSD-CCAL/simpli.git
+# Download Jupyter GUI
+git clone https://github.com/KwatME/jupytergui.git
 
-# Install simpli
-cd simpli
+# Install Jupyter GUI
+cd jupytergui
 pip install .
 ```
 
@@ -227,4 +227,3 @@ from library_name import function_name as function
 # Run function
 function(required_default_and_optional_args)
 ```
-
