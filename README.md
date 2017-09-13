@@ -1,4 +1,5 @@
 # Jupyter GUI
+
 :mortar_board: Python code :left_right_arrow: GUI :baby_bottle::baby:
 
 With Jupyter GUI, coders can represent their Python code as Task Widgets to non-coders, who then sees easy-to-run Task Widgets instead of code.
@@ -14,6 +15,7 @@ With Jupyter GUI, coders can represent their Python code as Task Widgets to non-
 **After launching Notebook with Simpli for the 1st time, please give it a minute to download GUI components in the background (you can see the progress in the command line output).**
 
 ### For Mac OS X
+
 ```bash
 # Install brew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -25,7 +27,7 @@ brew install git
 brew install node
 
 # Download Jupyter GUI
-https://github.com/KwatME/jupytergui.git
+https://github.com/kwatme/jupyter_gui.git
 
 # Install Jupter GUI
 cd jupytergui
@@ -33,6 +35,7 @@ pip install .
 ```
 
 ### For Linux
+
 ```bash
 # Install git
 sudo apt-get install git
@@ -41,7 +44,7 @@ sudo apt-get install git
 sudo apt-get install nodejs npm
 
 # Download Jupyter GUI
-git clone https://github.com/KwatME/jupytergui.git
+git clone https://github.com/kwatme/jupyter_gui.git
 
 # Install Jupyter GUI
 cd jupytergui
@@ -49,6 +52,7 @@ pip install .
 ```
 
 ### For Windows
+
 ```bash
 :(
 ```
@@ -56,33 +60,43 @@ pip install .
 ## Terminology
 
 ### Task
+
 A Python function call
 
 ### Task Widget
+
 GUI representation of a Task
 
 ### Task Entry
+
 Entry specifying a Task in a JSON
 
 ### Simplify
+
 To convert a Python function call into a Task; either by 1) specifying the Task via JSON; or 2) within a Notebook
 
 ### Jupyter GUI Icon
+
 The button at the top of a Jupyter Notebook (left of Flip Icon); clicking it shows the Task List
 
 ### Flip Icon
+
 The button at the top of a Jupyter Notebook (right of Simpli Icon); clicking it converts a code to a Task Widget, and vice versa
 
 ### Task List
+
 The list of Tasks; appears after clicking the Simpli Icon or pressing 'Shift + X'
 
 ### Task Category
+
 Task category in the Task List; determined by the function library of a Task
 
 ### Jupyter GUI Repository
+
 The master Simpli directory (this repository)
 
 ### Jupyter GUI Library
+
 The Simpli Python library within the Simpli Repository
 
 ## How Jupyter GUI Works
@@ -100,19 +114,21 @@ Jupyter GUI can convert a Notebook cell with any function call and at least 1 li
 The function calls can return value or assign them to variables. Here are examples of each case:
 
 without assignment:
+
 ```python
 # Label
 foo(arg1, arg2=value, ...)
 ```
 
 with assignment:
+
 ```python
 # Label
 bar = foo(arg1, arg2=value, ...)
 ```
 
-Jupyter GUI can also register different modalities of a function. Here is an example:
-If this function (a simple function to count numbers) exists,
+Jupyter GUI can also register different modalities of a function. Here is an example: If this function (a simple function to count numbers) exists,
+
 ```python
 def count(min_, max_, by):
 
@@ -126,12 +142,14 @@ def count(min_, max_, by):
 ```
 
 then making a cell with this code enables Jupyter GUI to convert this cell into a Task Widget, and register the Task in the Task List as 'Count Odds'.
+
 ```python
 # Count Odds
 count(1, 10, 2)
 ```
 
 If you make another cell with this code (which can also be Simplified into a Task Widget), Jupyter GUI registers this Task as 'Count Evens'.
+
 ```python
 # Count Evens
 count(0, 10, 2)
@@ -140,6 +158,7 @@ count(0, 10, 2)
 Just like this, Jupyter GUI registered 2 modalities (Count Odds & Count Events) of the function count, and these Tasks Widgets for these modalities can be created just by selecting the Task in the Task List.
 
 ### 2) From a JSON
+
 Jupyter GUI can also register Tasks specified in a JSON in the Task List, enabling users to insert these Tasks in the Notebook just by selecting them in the Task List.
 
 Simplifying Tasks from JSON is useful when you want to register multiple Tasks at once.
@@ -147,6 +166,7 @@ Simplifying Tasks from JSON is useful when you want to register multiple Tasks a
 To Simplify a Task, just make an Task Entry for the Task in a JSON load the JSON into Simpli.
 
 This is an template for such Task Entry:
+
 ```
 {
     "library_path": "path/to/library/",  # Optional
@@ -213,10 +233,10 @@ This is an template for such Task Entry:
 }
 ```
 
-# TODO: add example JSON
-
 ## How Jupyter GUI executes a function
+
 Since each Task has library_path and function_path, Jupyter GUI can execute any function as this (function_path is split into library_name [everything up to the last . in the function_path] and the function_name [everything after the last . in the function_path]):
+
 ```python
 # Append a library path
 sys.path.insert(0, library_path)
@@ -227,3 +247,5 @@ from library_name import function_name as function
 # Run function
 function(required_default_and_optional_args)
 ```
+
+and_optional_args) ```

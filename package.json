@@ -1,5 +1,5 @@
 {
-  "name": "simpli",
+  "name": "jupyter_gui",
   "version": "1.0.3",
   "description": "Gulp workflow for generating proper stylesheets.",
   "main": "gulpfile.js",
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/UCSD-CCAL/simpli.git"
+    "url": "git+ssh://git@github.com/kwatme/jupyter_gui.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/UCSD-CCAL/simpli/issues"
+    "url": "https://github.com/kwatme/jupyter_gui/issues"
   },
-  "homepage": "https://github.com/UCSD-CCAL/simpli#readme"
+  "homepage": "https://github.com/kwatme/jupyter_gui#readme"
 }
