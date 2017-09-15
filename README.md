@@ -1,6 +1,6 @@
 # Jupyter GUI
 
-:mortar_board: Python code :left_right_arrow: GUI :baby_bottle::baby:
+Library for dynamically converting between Jupyter Notebook code cell and GUI :computer: :left_right_arrow: :video_game:
 
 With Jupyter GUI, coders can represent their Python code as Task Widgets to non-coders, who then sees easy-to-run Task Widgets instead of code.
 
