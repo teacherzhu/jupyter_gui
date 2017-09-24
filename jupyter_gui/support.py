@@ -57,7 +57,7 @@ def get_home_dir():
     elif 'win' in platform:
         home_dir = environ['HOMEPATH']
     else:
-        raise ValueError('Unknown platform {}.'.format(platform))
+        raise ValueError('Unknown platform: {}.'.format(platform))
 
     return home_dir
 
