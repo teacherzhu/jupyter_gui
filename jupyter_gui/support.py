@@ -16,8 +16,8 @@ def establish_filepath(filepath):
 
     # Get missing directories
     missing_directories = []
-    while not (isdir(prefix) or isfile(prefix) or
-               islink(prefix)):  # prefix isn't file, directory, or link
+    while not (isdir(prefix) or isfile(prefix)
+               or islink(prefix)):  # prefix isn't file, directory, or link
         missing_directories.append(prefix)
 
         # Check prefix's prefix next
@@ -44,22 +44,6 @@ def list_only_dirs(directory_path):
     dirs = sorted(dirs)
 
     return dirs
-
-
-def get_home_dir():
-    """
-
-    :return: str; user-home directory
-    """
-
-    if 'linux' in platform or 'darwin' in platform:
-        home_dir = environ['HOME']
-    elif 'win' in platform:
-        home_dir = environ['HOMEPATH']
-    else:
-        raise ValueError('Unknown platform: {}.'.format(platform))
-
-    return home_dir
 
 
 def title_str(str_):

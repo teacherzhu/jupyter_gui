@@ -4,7 +4,7 @@ makes ~/.simpli/jsons/default_tasks.json, and
 initializes simpli as an Jupyter extension.
 """
 from os import listdir, remove, symlink
-from os.path import dirname, islink, join, realpath, split
+from os.path import dirname, expanduser, islink, join, realpath, split
 
 from IPython.core.display import display_html
 
@@ -75,7 +75,7 @@ def display_raw_html(html, hide_input_cell=True):
 # ==============================================================================
 # Link ~/.simpli/jsons/default_tasks.json
 # ==============================================================================
-HOME_DIR = get_home_dir()
+HOME_DIR = expanduser('~')
 SIMPLI_DIR = join(HOME_DIR, '.simpli')
 SIMPLI_JSON_DIR = join(SIMPLI_DIR, 'jsons/')
 establish_filepath(SIMPLI_JSON_DIR)
