@@ -27,7 +27,7 @@ brew install git
 brew install node
 
 # Download Jupyter GUI
-https://github.com/kwatme/jupyter_gui.git
+https://github.com/KwatME/jupyter_gui.git
 
 # Install Jupter GUI
 cd jupytergui
@@ -44,7 +44,7 @@ sudo apt-get install git
 sudo apt-get install nodejs npm
 
 # Download Jupyter GUI
-git clone https://github.com/kwatme/jupyter_gui.git
+git clone https://github.com/KwatME/jupyter_gui.git
 
 # Install Jupyter GUI
 cd jupytergui

@@ -67,7 +67,7 @@ setup(
     version='1.0.3',
     description='In Jupyter Notebook, Simpli converts: [Python Code] <==> [GUI Task Widget]',
     url='https://github.com/UCSD-CCAL/simpli',
-    author='Clarence Mah & Huwate Yeerna (Kwat Medet-Ernar)',
+    author='Clarence Mah & (Kwat) Huwate Yeerna',
     license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',

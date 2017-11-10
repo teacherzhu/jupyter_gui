@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/kwatme/jupyter_gui.git"
+    "url": "git+ssh://git@github.com/KwatME/jupyter_gui.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kwatme/jupyter_gui/issues"
+    "url": "https://github.com/KwatME/jupyter_gui/issues"
   },
-  "homepage": "https://github.com/kwatme/jupyter_gui#readme"
+  "homepage": "https://github.com/KwatME/jupyter_gui#readme"
 }
