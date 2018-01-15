@@ -327,7 +327,7 @@ class Manager:
 
         # Get required args
         required_args = [{
-            'label': 'Label for {}'.format(n),
+            'label': 'Label for {}'.format(n, ),
             'description': d,
             'name': n,
             'value': v,
@@ -338,7 +338,7 @@ class Manager:
 
         # Get optional args
         optional_args = [{
-            'label': 'Label for {}'.format(n),
+            'label': 'Label for {}'.format(n, ),
             'description': d,
             'name': n,
             'value': v,
