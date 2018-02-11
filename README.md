@@ -167,71 +167,69 @@ To Simplify a Task, just make an Task Entry for the Task in a JSON load the JSON
 
 This is an template for such Task Entry:
 
-```
-{
-    "library_path": "path/to/library/",  # Optional
+    {
+        "library_path": "path/to/library/",  # Optional
 
-    "tasks":  # Required
-        [
-            {
-                "function_path": "library.path.to.file.function",  # Required
+        "tasks":  # Required
+            [
+                {
+                    "function_path": "library.path.to.file.function",  # Required
 
-                "label": "Name of this Task (unique ID)",  # Optional (will be created based on function_path if not specified)
+                    "label": "Name of this Task (unique ID)",  # Optional (will be created based on function_path if not specified)
 
-                "description": "This Task performs ...",  # Optional
+                    "description": "This Task performs ...",  # Optional
 
 
-                "required_args":  # Optional
-                    [
+                    "required_args":  # Optional
+                        [
+                            {
+                                "name": "x",  # Required if specifying required_args
+                                "label": "The X",  # Optional if specifying required_args (user sees label instead of name in a Task Widget) (will be created based on name if not specified)
+                                "description": "The X is ...",  # Optional if specifying required_args
+                            },
+                            # (may add more required_args)
+                        ],
+
+                    "default_args":  # Optional (users won't see these arguments in the Task Widget)
+                        [
+                            {
+                                "name": "y",  # Required if specifying default_args
+                                "value": "100",  # Required if specifying default_args (the default value [y=100 will be an argument when calling this function])
+                            },
+                            # (may add more default_args)
+                        ],
+
+                    "optional_args":  # Optional
+                        [
+                            {
+                                "name": "z",  # Required if specifying optional_args
+                                "label": "The Z",  # Optional if specifying optional_args (user sees label instead of name in a Task Widget) (will be created based on name if not specified)
+                                "description": "The Z is ...",  # Optional if specifying optional_args
+                            },
+                            # (may add more optional_args)
+                        ],
+
+                    "returns":  # Optional
+                        [
+                            {
+                                "label": "The A",  # Required
+                                "description": "The A is ...",  # Optional if specifying returns
+                            },
+                            # (may add more returns)
+                        ],
+
+                    "other_information":  # Optional
                         {
-                            "name": "x",  # Required if specifying required_args
-                            "label": "The X",  # Optional if specifying required_args (user sees label instead of name in a Task Widget) (will be created based on name if not specified)
-                            "description": "The X is ...",  # Optional if specifying required_args
+                            # (add any information in in format: str: list)
+                            "version": ["1.0.0"],
+                            "server": ["Broad Institute"],
+                            "tag": ["RNA", "Sequencing"],
+                            # (may add more other_information)
                         },
-                        # (may add more required_args)
-                    ],
-
-                "default_args":  # Optional (users won't see these arguments in the Task Widget)
-                    [
-                        {
-                            "name": "y",  # Required if specifying default_args
-                            "value": "100",  # Required if specifying default_args (the default value [y=100 will be an argument when calling this function])
-                        },
-                        # (may add more default_args)
-                    ],
-
-                "optional_args":  # Optional
-                    [
-                        {
-                            "name": "z",  # Required if specifying optional_args
-                            "label": "The Z",  # Optional if specifying optional_args (user sees label instead of name in a Task Widget) (will be created based on name if not specified)
-                            "description": "The Z is ...",  # Optional if specifying optional_args
-                        },
-                        # (may add more optional_args)
-                    ],
-
-                "returns":  # Optional
-                    [
-                        {
-                            "label": "The A",  # Required
-                            "description": "The A is ...",  # Optional if specifying returns
-                        },
-                        # (may add more returns)
-                    ],
-
-                "other_information":  # Optional
-                    {
-                        # (add any information in in format: str: list)
-                        "version": ["1.0.0"],
-                        "server": ["Broad Institute"],
-                        "tag": ["RNA", "Sequencing"],
-                        # (may add more other_information)
-                    },
-            },
-            # (may add more tasks)
-        ]
-}
-```
+                },
+                # (may add more tasks)
+            ]
+    }
 
 ## How Jupyter GUI executes a function
 
@@ -248,4 +246,4 @@ from library_name import function_name as function
 function(required_default_and_optional_args)
 ```
 
-and_optional_args) ```
+and_optional_args) \```
